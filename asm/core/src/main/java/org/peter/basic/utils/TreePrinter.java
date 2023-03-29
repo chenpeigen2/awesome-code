@@ -1,5 +1,6 @@
 package org.peter.basic.utils;
 
+import org.objectweb.asm.*;
 import org.objectweb.asm.util.Printer;
 
 import java.util.Collections;

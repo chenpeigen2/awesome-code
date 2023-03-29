@@ -1,5 +1,7 @@
 package org.peter.basic.course.core;
 
+import org.objectweb.asm.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 
