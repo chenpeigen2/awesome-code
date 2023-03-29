@@ -27,14 +27,16 @@ tasks.test {
     useJUnitPlatform()
 }
 
-tasks.withType<JavaCompile> {
-    options.release.set(17)
-    options.isIncremental = true
-    options.isFork = true
-    options.isFailOnError = true
-}
+allprojects {
+    tasks.withType<JavaCompile> {
+        options.release.set(17)
+        options.isIncremental = true
+        options.isFork = true
+        options.isFailOnError = true
+    }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
-    kotlinOptions.jvmTarget = "17"
+    tasks.withType<KotlinCompile> {
+        kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
+        kotlinOptions.jvmTarget = "17"
+    }
 }

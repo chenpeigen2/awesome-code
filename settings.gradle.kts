@@ -29,3 +29,5 @@ findProject(":database:mongodb")?.name = "mongodb"
 include("nacos:simple-nacos-demo")
 findProject(":nacos:simple-nacos-demo")?.name = "simple-nacos-demo"
 include("jwt")
+include("web:simple-webflux")
+findProject(":web:simple-webflux")?.name = "simple-webflux"
