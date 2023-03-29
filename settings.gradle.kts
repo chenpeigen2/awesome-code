@@ -5,3 +5,5 @@ include("time:chrono")
 findProject(":time:chrono")?.name = "chrono"
 include("reflect:anno")
 findProject(":reflect:anno")?.name = "anno"
+include("asm:poet")
+findProject(":asm:poet")?.name = "poet"
