@@ -7,3 +7,5 @@ include("reflect:anno")
 findProject(":reflect:anno")?.name = "anno"
 include("asm:poet")
 findProject(":asm:poet")?.name = "poet"
+include("json:gson")
+findProject(":json:gson")?.name = "gson"
