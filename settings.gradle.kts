@@ -18,3 +18,5 @@ include("rxjava3")
 include("pref")
 include("io:okio")
 findProject(":io:okio")?.name = "okio"
+include("asm:core")
+findProject(":asm:core")?.name = "core"
