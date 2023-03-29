@@ -28,3 +28,4 @@ include("database:mongodb")
 findProject(":database:mongodb")?.name = "mongodb"
 include("nacos:simple-nacos-demo")
 findProject(":nacos:simple-nacos-demo")?.name = "simple-nacos-demo"
+include("jwt")
