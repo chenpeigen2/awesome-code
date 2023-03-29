@@ -16,3 +16,5 @@ include("compile:apt")
 findProject(":compile:apt")?.name = "apt"
 include("rxjava3")
 include("pref")
+include("io:okio")
+findProject(":io:okio")?.name = "okio"
