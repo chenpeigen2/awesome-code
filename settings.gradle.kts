@@ -20,3 +20,5 @@ include("io:okio")
 findProject(":io:okio")?.name = "okio"
 include("asm:core")
 findProject(":asm:core")?.name = "core"
+include("asm:model")
+findProject(":asm:model")?.name = "model"
