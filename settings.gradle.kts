@@ -22,3 +22,7 @@ include("asm:core")
 findProject(":asm:core")?.name = "core"
 include("asm:model")
 findProject(":asm:model")?.name = "model"
+include("database:couchdb")
+findProject(":database:couchdb")?.name = "couchdb"
+include("database:mongodb")
+findProject(":database:mongodb")?.name = "mongodb"
