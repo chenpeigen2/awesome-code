@@ -37,3 +37,5 @@ include("spi:serviceprovider")
 findProject(":spi:serviceprovider")?.name = "serviceprovider"
 include("explore:jcommander")
 findProject(":explore:jcommander")?.name = "jcommander"
+include("explore:spoon")
+findProject(":explore:spoon")?.name = "spoon"
