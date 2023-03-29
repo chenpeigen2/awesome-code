@@ -15,3 +15,4 @@ include("groovy")
 include("compile:apt")
 findProject(":compile:apt")?.name = "apt"
 include("rxjava3")
+include("pref")
