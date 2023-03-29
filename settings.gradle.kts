@@ -14,3 +14,4 @@ findProject(":http:okhttp")?.name = "okhttp"
 include("groovy")
 include("compile:apt")
 findProject(":compile:apt")?.name = "apt"
+include("rxjava3")
