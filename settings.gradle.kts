@@ -31,3 +31,5 @@ findProject(":nacos:simple-nacos-demo")?.name = "simple-nacos-demo"
 include("jwt")
 include("web:simple-webflux")
 findProject(":web:simple-webflux")?.name = "simple-webflux"
+include("spi:autoservice")
+findProject(":spi:autoservice")?.name = "autoservice"
