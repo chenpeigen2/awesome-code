@@ -1,0 +1,110 @@
+### hello world
+HEAD / HTTP/1.1
+Host: localhost:5984
+
+### auth
+POST /_session HTTP/1.1
+Accept: application/json
+Content-Length: 37
+Content-Type: application/json
+Host: localhost:5984
+
+{
+    "name": "admin",
+    "password": "123456"
+}
+
+### create the database 创建新数据库。数据库名称 {{db}}
+PUT /albums HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+
+
+### get the database 获取有关指定数据库的信息。
+GET /albums HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+
+### auth for a test
+GET /_session HTTP/1.1
+Host: localhost:5984
+Accept: application/json
+Cookie: AuthSession=YWRtaW46NjI1MTk0MkM6qD6HbFpKFTqwr7vbt3q675ZMvE4
+
+### get the item albums
+GET /albums/6e1295ed6c29495e54cc05947f18c8af HTTP/1.1
+Host: localhost:5984
+Accept: application/json
+Cookie: AuthSession=YWRtaW46NjI1MTk2QTA6iY66Iah0_LGLsy6yCQW93jSYGNI
+
+### test build for a doc
+HEAD /db/SpaghettiWithMeatballs HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+
+### create a specfic doc for the albumn database 
+#使用提供的JSON文档结构在指定的数据库中创建新文档。
+POST /albums HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+Content-Length: 81
+Content-Type: application/json
+Cookie: YWRtaW46NjI1MTlGRDc67xHuRjkKKoXzgsNgVJUPTr3qQ3k
+
+{
+    "servings": 4,
+    "subtitle": "Delicious with fresh bread",
+    "title": "Fish Stew"
+}
+
+### if you want to sepc the id you can try this
+POST /albums HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+Content-Length: 98
+Content-Type: application/json
+Cookie: YWRtaW46NjI1MTlGRDc67xHuRjkKKoXzgsNgVJUPTr3qQ3k
+
+{
+    "_id": "FishStew",
+    "servings": 4,
+    "subtitle": "Delicious with fresh bread",
+    "title": "Fish Stew"
+}
+
+### query the spec data with the id
+GET /albums/FishStew HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+Cookie: AuthSession=YWRtaW46NjI1MUE3MTE6KnNNwFQcOkwcmeKtCuloYi5_VXI
+
+### update the spec data with the id
+POST /albums HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+Content-Length: 98
+Content-Type: application/json
+Cookie: YWRtaW46NjI1MUEzMzQ6gTk5_E0ZqqkJXbDECOWSpjiaFck
+
+{
+    "_rev" : "2-d953b18035b76f2a5b1d1d93f25d3aea",
+    "_id": "FishStew",
+    "servings": 4,
+    "subtitle": "------Delicious with fresh bread",
+    "title": "Fish Stew"
+}
+
+
+### uuids for a test
+GET /_uuids?count=10 HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+
+# Introduction For The HTTP Protocol
+# https://www.cnblogs.com/shamo89/p/10151968.html
+
+# Introduction For The CouchDB
+# https://www.osgeo.cn/couchdb-documentation/api/index.html
+
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cookie

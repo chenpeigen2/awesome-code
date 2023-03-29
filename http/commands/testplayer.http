@@ -1,0 +1,70 @@
+### auth
+POST /_session HTTP/1.1
+Accept: application/json
+Content-Length: 37
+Content-Type: application/json
+Host: localhost:5984
+
+{
+    "name": "admin",
+    "password": "123456"
+}
+
+### create the database
+PUT /testplayer HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+
+### get the database info
+GET /testplayer HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+
+### init the database
+POST /testplayer HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+Content-Type: application/json
+
+{"docs": [{"name":"Tom", "age": 10, "sex": "boy"}, {"name":"Jerry", "age": 25, "sex": "boy"}, {"name":"Mike", "age": 26, "sex": "boy"}, {"name":"Lucy", "age": 18, "sex": "girl"}, {"name":"Lily", "age": 35, "sex": "girl"}, {"name":"Eva", "age": 82, "sex": "girl"}, {"name":"Bill", "age": 50, "sex": "boy"}, {"name":"David", "age": 27, "sex": "boy"}, {"name":"Jim", "age": 75, "sex": "boy"}, {"name":"Henry", "age": 80, "sex": "boy"}]}
+
+### init the database-01
+POST /testplayer/_bulk_docs HTTP/1.1
+Accept: application/json
+Content-Type:application/json
+Host: localhost:5984
+
+{"docs": [{"name":"Tom", "age": 10, "sex": "boy"}, {"name":"Jerry", "age": 25, "sex": "boy"}, {"name":"Mike", "age": 26, "sex": "boy"}, {"name":"Lucy", "age": 18, "sex": "girl"}, {"name":"Lily", "age": 35, "sex": "girl"}, {"name":"Eva", "age": 82, "sex": "girl"}, {"name":"Bill", "age": 50, "sex": "boy"}, {"name":"David", "age": 27, "sex": "boy"}, {"name":"Jim", "age": 75, "sex": "boy"}, {"name":"Henry", "age": 80, "sex": "boy"}]}
+
+### get the data
+GET /testplayer/fcfb051250b722e3f47f2716a30005da HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+
+
+### create the index
+POST /testplayer/_index HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+Content-Type: application/json
+
+{"index": {"fields": ["age"]}, "name": "age-index", "type": "json"}
+
+
+### find the data
+POST /testplayer/_find HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+Content-Type: application/json
+
+{"selector": {"age": {"$gte": 18, "$lte": 65}}, "fields": ["_id", "name", "age", "_rev"], "limit": 10, "skip": 0}
+
+### for find the all docs
+GET /testplayer/_all_docs HTTP/1.1
+Accept: application/json
+Host: localhost:5984
+
+### find design docs
+GET /testplayer/_design_docs HTTP/1.1
+Accept: application/json
+Host: localhost:5984

@@ -9,3 +9,5 @@ include("asm:poet")
 findProject(":asm:poet")?.name = "poet"
 include("json:gson")
 findProject(":json:gson")?.name = "gson"
+include("http:okhttp")
+findProject(":http:okhttp")?.name = "okhttp"
