@@ -33,3 +33,5 @@ include("web:simple-webflux")
 findProject(":web:simple-webflux")?.name = "simple-webflux"
 include("spi:autoservice")
 findProject(":spi:autoservice")?.name = "autoservice"
+include("spi:serviceprovider")
+findProject(":spi:serviceprovider")?.name = "serviceprovider"
