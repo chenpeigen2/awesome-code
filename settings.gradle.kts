@@ -12,3 +12,5 @@ findProject(":json:gson")?.name = "gson"
 include("http:okhttp")
 findProject(":http:okhttp")?.name = "okhttp"
 include("groovy")
+include("compile:apt")
+findProject(":compile:apt")?.name = "apt"
