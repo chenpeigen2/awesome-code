@@ -39,3 +39,5 @@ include("explore:jcommander")
 findProject(":explore:jcommander")?.name = "jcommander"
 include("explore:spoon")
 findProject(":explore:spoon")?.name = "spoon"
+include("explore:graphQL")
+findProject(":explore:graphQL")?.name = "graphQL"
