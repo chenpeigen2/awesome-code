@@ -41,3 +41,5 @@ include("explore:spoon")
 findProject(":explore:spoon")?.name = "spoon"
 include("explore:graphQL")
 findProject(":explore:graphQL")?.name = "graphQL"
+include("explore:javaParser")
+findProject(":explore:javaParser")?.name = "javaParser"
