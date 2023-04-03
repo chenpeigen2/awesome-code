@@ -46,6 +46,9 @@ public class Solution {
                 // 找到递减的那个数字
                 // 1 2 3 4 5
                 // 1 2 2 2 3
+
+//                [3,1,1,3]
+//                [1,3,1,3]
                 while (arr[j] >= arr[i] || arr[j] == arr[j - 1]) {
                     j--;
                 }
