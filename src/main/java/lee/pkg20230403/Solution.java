@@ -11,7 +11,7 @@ public class Solution {
 
         for (int i = len - 2; i >= 0; i--) {
             // 8 6 9 4 3 7
-            if (arr[i + 1] < arr[i]) {
+            if (arr[i] > arr[i + 1]) {
 
                 for (int j = i + 1; j < len; j++) {
                     // [3,1,1,3]
