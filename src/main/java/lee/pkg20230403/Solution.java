@@ -35,4 +35,26 @@ public class Solution {
 
         return arr;
     }
+
+    public int[] prevPermOpt11(int[] arr) {
+        int n = arr.length;
+        // 5 1 2 3 4
+        for (int i = n - 2; i >= 0; i--) {
+            if (arr[i] > arr[i + 1]) {
+                int j = n - 1;
+                // 之前都是递增的
+                // 找到递减的那个数字
+                // 1 2 3 4 5
+                // 1 2 2 2 3
+                while (arr[j] >= arr[i] || arr[j] == arr[j - 1]) {
+                    j--;
+                }
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+                break;
+            }
+        }
+        return arr;
+    }
 }
