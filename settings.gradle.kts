@@ -44,3 +44,4 @@ findProject(":explore:graphQL")?.name = "graphQL"
 include("explore:javaParser")
 findProject(":explore:javaParser")?.name = "javaParser"
 include("grpc")
+include("dagger")
