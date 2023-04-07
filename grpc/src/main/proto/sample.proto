@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+//    message  <message_name> {
+//<filed_rule>  <filed_type> <filed_name> = <field_number>
+//    规则          类型          名称           编号
+//    }
+
+
+message Foo {
+  reserved 2, 15, 9 to 11;
+  reserved "foo", "bar";
+}
+
+
+enum Corpus {
+  option allow_alias = true; // config option
+  UNKNOWN = 0;
+  STARTED = 1;
+  RUNNING = 1;
+}
+
+message MyMessage1 {
+  enum EnumAllowingAlias {
+    option allow_alias = true;
+    UNKNOWN = 0;
+    STARTED = 1;
+    RUNNING = 1;
+  }
+}
+message MyMessage2 {
+  enum EnumNotAllowingAlias {
+    UNKNOWN = 0;
+    STARTED = 1;
+    // RUNNING = 1;  // Uncommenting this line will cause a compile error inside Google and a warning message outside.
+  }
+}
+
+
+enum Foo1 {
+  UNIVERSAL = 0;
+  WEB = 1;
+  // IMAGES = 2; //Enum value 'IMAGES' uses reserved number 2
+  YOUTUBE = 3;
+  reserved 2, 15, 9 to 11, 40 to max;
+  reserved "FOO", "BAR";
+}
+
+
+message  Result {
+  int32 age = 1;
+  string name = 2;
+}
+
+// using the Result
+message SearchResponse {
+  repeated Result result = 1;
+}
+
+
+// 当无法明确定义数据类型的时候， 可以使用Any表示:
+import "google/protobuf/any.proto"; //引用包
+
+message ErrorStatus {
+  string message = 1;
+  repeated google.protobuf.Any details = 2;
+}
+
+
+// 类型嵌套
+message Outer {// Level 0
+  message MiddleAA {// Level 1
+    message Inner {// Level 2
+      int64 ival = 1;
+      bool  booly = 2;
+    }
+  }
+  message MiddleBB {// Level 1
+    message Inner {// Level 2
+      int32 ival = 1;
+      bool  booly = 2;
+    }
+  }
+}
+
+//    如果您有一条包含多个字段的消息，并且最多同时设置一个字段，您可以强制执行此行为并使用 oneof 功能节省内存。
+message SampleMessage {
+  oneof test_oneof {
+    string name = 4;
+    int32 id = 5;
+  }
+}
+
+
+
+//    单数：格式良好的消息可以有零个或一个此字段（但不能超过一个）。这是 proto3 语法的默认字段规则。
+//    repeated：该字段可以在格式良好的消息中重复任意次数（包括零次）。重复值的顺序将被保留。
