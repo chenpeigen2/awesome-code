@@ -1,10 +1,7 @@
 package org.peter;
 
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.ObservableEmitter;
-import io.reactivex.rxjava3.core.ObservableOnSubscribe;
-import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.*;
 import io.reactivex.rxjava3.disposables.Disposable;
 
 public class App {
@@ -46,6 +43,8 @@ public class App {
         }
     };
 
+
+
 //    onNext：用来发送数据，可多次调用，每调用一次发送一条数据
 //
 //    onError：用来发送异常通知，只发送一次，若多次调用只发送第一条
@@ -58,5 +57,14 @@ public class App {
 
     public static void main(String[] args) {
         observable.subscribe(observer);
+
+//        Disposable.fromRunnable()
+//
+//        Completable.create(new CompletableOnSubscribe() {
+//            @Override
+//            public void subscribe(@NonNull CompletableEmitter emitter) throws Throwable {
+//                emitter.
+//            }
+//        })
     }
 }
