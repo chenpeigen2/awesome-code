@@ -56,7 +56,7 @@ public class App {
 
 
     public static void main(String[] args) {
-        observable.subscribe(observer);
+//        observable.subscribe(observer);
 
 //        Disposable.fromRunnable()
 //
@@ -66,5 +66,28 @@ public class App {
 //                emitter.
 //            }
 //        })
+
+        Completable.create(new CompletableOnSubscribe() {
+            @Override
+            public void subscribe(@NonNull CompletableEmitter emitter) throws Throwable {
+                emitter.onComplete();
+            }
+        }).subscribe(new CompletableObserver() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+                System.out.println(d.getClass());
+                System.out.println("7777");
+            }
+
+            @Override
+            public void onComplete() {
+                System.out.println("555555");
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                System.out.println("66666");
+            }
+        });
     }
 }
