@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class TimeTest {
@@ -12,6 +14,9 @@ public class TimeTest {
 
     //    Package java.text java.util
     public static void main(String[] args) throws InterruptedException {
+
+        testCalendar();
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         String str3 = "1900-01-01 08:05:42";
@@ -33,6 +38,17 @@ public class TimeTest {
 //        Arrays.stream(ids).forEach(System.out::println);
 
         jdk8time();
+    }
+
+    public static void testCalendar() {
+        System.out.println(System.currentTimeMillis());
+        Calendar calendar = GregorianCalendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.add(Calendar.MINUTE, 1);
+
+        System.out.println(calendar.getTime());
     }
 
 
