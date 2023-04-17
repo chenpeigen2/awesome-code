@@ -232,6 +232,18 @@ public class Solution {
         }
     }
 
+    //    https://leetcode.cn/problems/same-tree/
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null || q == null) {
+            if (p == null && q == null) return true;
+            return false;
+        }
+        if (p.val != q.val) return false;
+        boolean l = isSameTree(p.left, q.left);
+        boolean r = isSameTree(p.right, q.right);
+        return l & r;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
