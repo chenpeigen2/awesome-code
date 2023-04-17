@@ -244,6 +244,15 @@ public class Solution {
         return l & r;
     }
 
+    //    https://leetcode.cn/problems/single-number/
+    public int singleNumber(int[] nums) {
+        int ans = 0;
+        for (int num : nums) {
+            ans ^= num;
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
