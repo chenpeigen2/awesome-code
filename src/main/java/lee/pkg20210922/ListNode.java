@@ -1,10 +1,10 @@
 package lee.pkg20210922;
 
 public class ListNode {
-    int val;
-    ListNode next;
+    public int val;
+    public ListNode next;
 
-    ListNode() {
+    public ListNode() {
     }
 
     ListNode(int val) {
