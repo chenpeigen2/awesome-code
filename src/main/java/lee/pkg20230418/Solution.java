@@ -5,6 +5,15 @@ import lee.adds.TreeNode;
 public class Solution {
 
     //    https://leetcode.cn/problems/maximum-difference-between-node-and-ancestor/
+    // 因此，无需记录递归路径中的全部节点值，只需要记录递归路径中的最小值
+    //mn
+    //mn 和最大值
+    //mx
+    //mx。
+    //
+    //每递归到一个节点
+    //�
+    //B，计算
     public int maxAncestorDiff(TreeNode root) {
         return dfs(root, root.val, root.val);
     }
