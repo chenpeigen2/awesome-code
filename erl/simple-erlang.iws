@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86740cb0-3d94-4edb-8a4f-c6b6942020bc" name="Changes" comment="add erl">
+    <list default="true" id="86740cb0-3d94-4edb-8a4f-c6b6942020bc" name="Changes" comment="add erl-1">
       <change beforePath="$PROJECT_DIR$/simple-erlang.iws" beforeDir="false" afterPath="$PROJECT_DIR$/simple-erlang.iws" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/simple-erlang/src/helloworld.erl" beforeDir="false" afterPath="$PROJECT_DIR$/simple-erlang/src/helloworld.erl" afterDir="false" />
     </list>
@@ -84,11 +84,19 @@
       <option name="project" value="LOCAL" />
       <updated>1682044906029</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="add erl-1">
+      <created>1682057274470</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682057274470</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="add erl" />
-    <option name="LAST_COMMIT_MESSAGE" value="add erl" />
+    <MESSAGE value="add erl-1" />
+    <option name="LAST_COMMIT_MESSAGE" value="add erl-1" />
   </component>
 </project>
