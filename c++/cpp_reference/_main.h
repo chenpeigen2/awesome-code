@@ -12,4 +12,6 @@ void test_map();
 
 void test_set();
 
+void test_string();
+
 #endif //CPP_REFERENCE__MAIN_H

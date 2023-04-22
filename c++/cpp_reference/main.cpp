@@ -146,6 +146,7 @@ int main() {
         test_vec();
         test_map();
         test_set();
+        test_string();
     }
 
 //    std::string ss = text;
