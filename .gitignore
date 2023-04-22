@@ -1,3 +1,5 @@
 /.gradle/
 /build/
 /.idea/
+/c++/cpp_reference/.idea/
+/c++/cpp_reference/cmake-build-debug
