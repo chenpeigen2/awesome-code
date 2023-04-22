@@ -147,6 +147,7 @@ int main() {
         test_map();
         test_set();
         test_string();
+        test_struct();
     }
 
 //    std::string ss = text;

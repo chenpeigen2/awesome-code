@@ -14,4 +14,6 @@ void test_set();
 
 void test_string();
 
+void test_struct();
+
 #endif //CPP_REFERENCE__MAIN_H
