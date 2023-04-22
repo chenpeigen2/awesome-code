@@ -8,7 +8,7 @@
 #include <string>
 #include <openssl/aes.h>
 
-#include "_vector.h"
+#include "_main.h"
 
 
 std::string encode(const char *src, size_t src_len) {
@@ -144,22 +144,23 @@ int main() {
 
     {
         test_vec();
+        test_map();
     }
 
-    std::string ss = text;
-    int a = text.compare("");
-    int &z = aab();
-    int &&zzz = getaa();
-    std::cout << &z << std::endl;
-    if (a == 0) {
-        std::cout << "566" << std::endl;
-    }
-    std::string aesKey = "0123456789abcdefghijklmn";
-    std::string ree11 = "MHWAz7lun/x9nQDf64ncsRN0Wp1EJ1v6sPqkSlMF43/jYyz4++ZOX/J0QfIR/WwvGE/roh12tcff6KvPrCf08ZFXb52pwMOQHM/YkeX0EIEPS6+PGGApU/h3QBO9g5+i4Tar9tZRhkVKE0oBqOoB5fPjF5PETPxRsrPyfNRSj0GQLfCcqslyDy6UPCrHQHZtUJjZzpc9EIcYqdhFNM5MCMI+1t7l4UDXRWE1m8xmc7QguCLHNaLRCOWkee7M/lhKeWqRbJTAOTx6EAnvlkb1BbKlGQC/c/MsUJJFcJ6Aa7DJAq6P6j1BTbckA2FwP7vwkr6pAAICFpvykmgUUpVvqDZd8xn/Dc8fLiAjcvlE516ty8yrofG/Buq3CSeS7Yl5NGrKCjNwgQCSfs+YvsKh1RqG/GPkjHG/CRGAfkYkIi9aCbzhybe58tO8qJGbhLBDX8OEbaZATnqZ5HDWKXRiUFkdnDZMzhJogb7Dv50rRT8RKaQTmUMJNuSmwgBy4u4E9IE+uL89qWZlxWZf9cXeG/5g54wvL4AGyt7zXGc35CLsLCUzoEAvn5b/t2nABy/XraMJYiMvh8Q7dMNm9SWj8DU2VUxuBeTx8HWOB6syCoSBOrheV8ZuRgEy1mSJHvd0kQ6p6a0Z+HqGUIipU5hDOg==";
-    ree11 = decode(ree11.c_str(), strlen(ree11.c_str()));
-    std::string text = ecb_decrypt(ree11.c_str(), ree11.length(),
-                                   reinterpret_cast<const unsigned char *>(aesKey.c_str()),
-                                   aesKey.length());
-    printf("\nthe text: %s\n", text.c_str());
+//    std::string ss = text;
+//    int a = text.compare("");
+//    int &z = aab();
+//    int &&zzz = getaa();
+//    std::cout << &z << std::endl;
+//    if (a == 0) {
+//        std::cout << "566" << std::endl;
+//    }
+//    std::string aesKey = "0123456789abcdefghijklmn";
+//    std::string ree11 = "MHWAz7lun/x9nQDf64ncsRN0Wp1EJ1v6sPqkSlMF43/jYyz4++ZOX/J0QfIR/WwvGE/roh12tcff6KvPrCf08ZFXb52pwMOQHM/YkeX0EIEPS6+PGGApU/h3QBO9g5+i4Tar9tZRhkVKE0oBqOoB5fPjF5PETPxRsrPyfNRSj0GQLfCcqslyDy6UPCrHQHZtUJjZzpc9EIcYqdhFNM5MCMI+1t7l4UDXRWE1m8xmc7QguCLHNaLRCOWkee7M/lhKeWqRbJTAOTx6EAnvlkb1BbKlGQC/c/MsUJJFcJ6Aa7DJAq6P6j1BTbckA2FwP7vwkr6pAAICFpvykmgUUpVvqDZd8xn/Dc8fLiAjcvlE516ty8yrofG/Buq3CSeS7Yl5NGrKCjNwgQCSfs+YvsKh1RqG/GPkjHG/CRGAfkYkIi9aCbzhybe58tO8qJGbhLBDX8OEbaZATnqZ5HDWKXRiUFkdnDZMzhJogb7Dv50rRT8RKaQTmUMJNuSmwgBy4u4E9IE+uL89qWZlxWZf9cXeG/5g54wvL4AGyt7zXGc35CLsLCUzoEAvn5b/t2nABy/XraMJYiMvh8Q7dMNm9SWj8DU2VUxuBeTx8HWOB6syCoSBOrheV8ZuRgEy1mSJHvd0kQ6p6a0Z+HqGUIipU5hDOg==";
+//    ree11 = decode(ree11.c_str(), strlen(ree11.c_str()));
+//    std::string text = ecb_decrypt(ree11.c_str(), ree11.length(),
+//                                   reinterpret_cast<const unsigned char *>(aesKey.c_str()),
+//                                   aesKey.length());
+//    printf("\nthe text: %s\n", text.c_str());
     return 0;
 }
