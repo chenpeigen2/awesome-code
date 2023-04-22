@@ -10,4 +10,6 @@ void test_vec();
 
 void test_map();
 
+void test_set();
+
 #endif //CPP_REFERENCE__MAIN_H
