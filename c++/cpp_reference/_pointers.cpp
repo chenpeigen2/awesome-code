@@ -31,7 +31,43 @@ void func(int **p)  //2
     cout << "func:&p=" << &p << ",p=" << p << endl;
 }
 
+void hello_(char *p) {
+    *p = 'z';
+    *(p + 1) = 'w';
+}
+
+void hello_int(int *p) {
+//    int z = 123;
+//    p = &z;
+    *p = 12;
+}
+
 void test_pointer() {
+
+//    char *a = "Peter";
+//    char b[] = "Peter";
+//    char *c = new char[6];
+//    strcpy_s(c, 6, "Peter");
+
+//    a所指的Peter位于常量区
+//
+//            b所指的位于栈上
+//
+//    c所指的位于堆上
+
+
+
+    int p2 = 47;
+
+    hello_int(&p2);
+
+    char arr1[] = "1232142314";
+
+    hello_(arr1);
+
+    cout << arr1 << endl;
+
+
     char *res[3];
     cout << "hello " << res[2] << endl;
 
