@@ -148,6 +148,7 @@ int main() {
         test_set();
         test_string();
         test_struct();
+        test_pointer();
     }
 
 //    std::string ss = text;
