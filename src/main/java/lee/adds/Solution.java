@@ -253,6 +253,20 @@ public class Solution {
         return ans;
     }
 
+    //    https://leetcode.cn/problems/remove-duplicates-from-sorted-list/
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode node = head;
+        while (node != null) {
+            ListNode next = node.next;
+            while (next != null && node.val == next.val) {
+                next = next.next;
+            }
+            node.next = next;
+            node = node.next;
+        }
+        return head;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
