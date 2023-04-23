@@ -267,6 +267,21 @@ public class Solution {
         return head;
     }
 
+    List<Integer> l = new ArrayList<>();
+
+    //    https://leetcode.cn/problems/binary-tree-preorder-traversal/
+    public List<Integer> preorderTraversal(TreeNode root) {
+        dfs(root);
+        return l;
+    }
+
+    void dfs(TreeNode node) {
+        if (node == null) return;
+        l.add(node.val);
+        dfs(node.left);
+        dfs(node.right);
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
