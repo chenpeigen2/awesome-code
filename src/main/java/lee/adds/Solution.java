@@ -282,6 +282,19 @@ public class Solution {
         dfs(node.right);
     }
 
+    //    https://leetcode.cn/problems/reverse-linked-list/
+    public ListNode reverseList(ListNode head) {
+        ListNode result = new ListNode();
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode tmp = cur;
+            cur = cur.next;
+            tmp.next = result.next;
+            result.next = tmp;
+        }
+        return result.next;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
