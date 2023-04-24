@@ -11,6 +11,10 @@ void myFunction(char myArray[]);
 
 char *myFunction();
 
+void provide_query(const std::string &source) {
+    cout << source << endl;
+    cout << "stringggggggggggggggggggggggggggggggggggggggg" << endl;
+}
 //https://cplusplus.com/reference/string/string/
 void test_string() {
     char buffer[20];
@@ -27,6 +31,10 @@ void test_string() {
     // Do something with myReturnedArray
     cout << myReturnedArray << endl;
     delete[] myReturnedArray; // Remember to deallocate the memory
+
+    const char *aaa = "sdafsadfdfg";
+    std::string xx = "123123213245";
+    provide_query(aaa);
 }
 
 // 请注意，当你将字符数组作为参数传递给函数时，它实际上是一个指向该数组的指针。
@@ -41,3 +49,5 @@ char *myFunction() {
     strcpy(myArray, "Hello, world!");
     return myArray;
 }
+
+
