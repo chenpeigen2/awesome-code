@@ -5,7 +5,9 @@
 #include <iostream>
 #include <cstring>
 
-using namespace std;
+using std::string;
+using std::cout;
+using std::endl;
 
 void myFunction(char myArray[]);
 
@@ -15,6 +17,7 @@ void provide_query(const std::string &source) {
     cout << source << endl;
     cout << "stringggggggggggggggggggggggggggggggggggggggg" << endl;
 }
+
 //https://cplusplus.com/reference/string/string/
 void test_string() {
     char buffer[20];
