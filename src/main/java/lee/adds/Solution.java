@@ -295,6 +295,20 @@ public class Solution {
         return result.next;
     }
 
+    //    https://leetcode.cn/problems/linked-list-cycle/
+    public boolean hasCycle(ListNode head) {
+        if (head == null || head.next == null) return false;
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null) {
+            if (slow == fast) return true;
+            fast = fast.next;
+            slow = slow.next;
+            if (fast != null) fast = fast.next;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
