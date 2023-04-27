@@ -8,6 +8,7 @@ public class Solution {
 
     //    https://leetcode.cn/problems/longest-string-chain/
     // https://leetcode.cn/problems/longest-string-chain/solution/zi-fu-chuan-geng-chang-shi-de-onmjie-fa-bjk1b/
+    // 该问题如果设计思想层面涉及两个dp
     public int longestStrChain(String[] words) {
         Arrays.sort(words, (a, b) -> a.length() - b.length());
         Map<String, Integer> cnt = new HashMap<String, Integer>();
