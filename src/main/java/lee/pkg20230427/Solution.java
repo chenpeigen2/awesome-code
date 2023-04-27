@@ -7,6 +7,7 @@ import java.util.Map;
 public class Solution {
 
     //    https://leetcode.cn/problems/longest-string-chain/
+    // https://leetcode.cn/problems/longest-string-chain/solution/zi-fu-chuan-geng-chang-shi-de-onmjie-fa-bjk1b/
     public int longestStrChain(String[] words) {
         Arrays.sort(words, (a, b) -> a.length() - b.length());
         Map<String, Integer> cnt = new HashMap<String, Integer>();
