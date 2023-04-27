@@ -18,10 +18,10 @@ public class Solution {
             for (int j = 0; j < word.length(); j++) {
                 String w = word.substring(0, j) + word.substring(j + 1);
                 if (cnt.containsKey(w)) {
-                    cnt.put(word, Math.max(cnt.get(word), cnt.get(w) + 1));
+                    cnt.put(word, Math.max(cnt.get(word), cnt.get(w) + 1)); // dp1
                 }
             }
-            res = Math.max(res, cnt.get(word));
+            res = Math.max(res, cnt.get(word)); // dp2
         }
         return res;
     }
