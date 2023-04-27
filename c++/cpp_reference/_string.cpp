@@ -4,10 +4,18 @@
 #include <string>
 #include <iostream>
 #include <cstring>
+#include <random>
+
+#include <random>
+#include <string>
+#include <array>
+#include <algorithm>
 
 using std::string;
 using std::cout;
 using std::endl;
+
+using namespace std;
 
 void myFunction(char myArray[]);
 
@@ -18,8 +26,44 @@ void provide_query(const std::string &source) {
     cout << "stringggggggggggggggggggggggggggggggggggggggg" << endl;
 }
 
+
+std::string generateRandomString(size_t length) {
+    // 定义所使用的字符集
+    const std::array<char, 64> charset{
+            "0123456789"
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            "abcdefghijklmnopqrstuvwxyz"
+    };
+    const size_t charsetLength = charset.size();
+
+    // 生成随机数引擎
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, charsetLength - 1);
+
+    // 生成随机字符串
+    std::string result;
+    result.reserve(length);
+    for (size_t i = 0; i < length; ++i) {
+        result.push_back(charset[dis(gen)]);
+    }
+    return result;
+}
+
+string random_string(int len) {
+    string str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    random_device rd;
+    mt19937 generator(rd());
+    shuffle(str.begin(), str.end(), generator);
+    return str.substr(0, len);
+}
+
 //https://cplusplus.com/reference/string/string/
 void test_string() {
+    cout << "endingggggggggg" << endl;
+
+    cout << generateRandomString(16) << endl;
+
     char buffer[20];
     std::string str("Test string...");
     std::size_t length = str.copy(buffer, 6, 5);
