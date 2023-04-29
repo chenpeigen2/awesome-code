@@ -156,6 +156,7 @@ int main() {
         std::cout << "after copy constructor..." << std::endl << std::endl;
         // 引用右值，避免生成新对象
         Foo &&foo2 = FooFactory();
+        Foo &foo3 = foo2;
         std::cout << "life time ends!" << std::endl << std::endl;
     }
 
