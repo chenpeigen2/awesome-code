@@ -3,6 +3,8 @@ package lee.pkg20230429;
 import java.util.*;
 
 public class Solution {
+
+    //    https://leetcode.cn/problems/remove-letter-to-equalize-frequency/
     public boolean equalFrequency(String word) {
         Map<Character, Integer> m = new HashMap<>();
         for (char ch : word.toCharArray()) {
