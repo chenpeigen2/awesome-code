@@ -118,11 +118,11 @@ void test_map() {
 
     {
         map<int, string> myMap;
-        myMap.insert({1,"a"});
-        myMap.insert({2,"b"});
-        myMap.insert({3,"c"});
-        myMap.insert({1,"d"});
-        myMap.insert({1,"d"});
+        myMap.insert({1, "a"});
+        myMap.insert({2, "b"});
+        myMap.insert({3, "c"});
+        myMap.insert({1, "d"});
+        myMap.insert({1, "d"});
 
     }
 
@@ -137,6 +137,24 @@ void test_map() {
             std::cout << person.getName() << " is a " << profession << ", aged " << person.getAge() << std::endl;
         }
 
+    }
+
+    {
+        std::map<char, int> mymap;
+        char c;
+        mymap['a'] = 101;
+        mymap['a'] = 345;
+        cout << "mappppppppppppppppppp" << endl;
+        cout << mymap['a'] << endl;
+    }
+
+    {
+        std::map<char, string> mymap;
+        mymap['a'] = "aaaabcdede";
+
+        cout << mymap['b'] << endl;
+        cout << mymap['c'] << endl;
+        cout << "hello " << endl;
     }
 
 }
