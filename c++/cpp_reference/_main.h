@@ -18,4 +18,6 @@ void test_struct();
 
 void test_pointer();
 
+void test_rv();
+
 #endif //CPP_REFERENCE__MAIN_H

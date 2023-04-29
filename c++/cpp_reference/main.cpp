@@ -162,12 +162,13 @@ int main() {
 
 
     {
-        test_vec();
-        test_map();
-        test_set();
-        test_string();
-        test_struct();
-        test_pointer();
+//        test_vec();
+//        test_map();
+//        test_set();
+//        test_string();
+//        test_struct();
+//        test_pointer();
+        test_rv();
     }
 
 //    std::string ss = text;
