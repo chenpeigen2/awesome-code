@@ -20,7 +20,7 @@ void refreshIfNeeded() {
     }
     auto elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(now - start); // 计算时间差
     if (elapsed_time >= refresh_time) { // 如果达到刷新时间间隔
-        std::cout << "5分钟已经过去了，重新刷新！"
+        std::cout << "3秒已经过去了，重新刷新！"
                   << std::chrono::time_point_cast<std::chrono::seconds>(now).time_since_epoch().count()
                   << std::endl; // 输出消息
         start = now; // 更新起始时间点
