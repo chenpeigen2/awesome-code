@@ -3,5 +3,5 @@ project(cpp_reference)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(cpp_reference main.cpp _vector.cpp _main.h _map.cpp _set.cpp _string.cpp _struct.cpp _pointers.cpp _rv.cpp)
+add_executable(cpp_reference main.cpp _vector.cpp _main.h _map.cpp _set.cpp _string.cpp _struct.cpp _pointers.cpp _rv.cpp _chrono.cpp)
 target_link_libraries(cpp_reference crypto) #关键，如果不加会报错，编译的时候找不到函数

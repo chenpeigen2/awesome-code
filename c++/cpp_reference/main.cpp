@@ -8,6 +8,11 @@
 #include <string>
 #include <openssl/aes.h>
 
+#include <iostream>
+#include <chrono>
+#include <thread>
+
+
 #include "_main.h"
 
 
@@ -168,7 +173,9 @@ int main() {
 //        test_string();
 //        test_struct();
 //        test_pointer();
-        test_rv();
+//        test_rv();
+
+        test_chrono();
     }
 
 //    std::string ss = text;

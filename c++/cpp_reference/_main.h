@@ -20,4 +20,6 @@ void test_pointer();
 
 void test_rv();
 
+void test_chrono();
+
 #endif //CPP_REFERENCE__MAIN_H
