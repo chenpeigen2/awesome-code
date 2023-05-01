@@ -133,38 +133,8 @@ std::string ecb_decrypt(const char *src, size_t src_len,
 //        }
 //    });
 
-std::string text;
-
-int &aab() {
-    int b = 5;
-    return b;
-}
-
-int &&getaa() {
-
-    return 12;
-}
-
-struct Foo {
-    ~Foo() { std::cout << "destruction" << std::endl; }
-};
-
-Foo FooFactory() {
-    return Foo();
-}
 
 int main() {
-
-    {
-        std::cout << "before copy constructor..." << std::endl;
-        Foo foo1 = FooFactory();
-        std::cout << "after copy constructor..." << std::endl << std::endl;
-        // 引用右值，避免生成新对象
-        Foo &&foo2 = FooFactory();
-        Foo &foo3 = foo2;
-        std::cout << "life time ends!" << std::endl << std::endl;
-    }
-
 
     {
 //        test_vec();
