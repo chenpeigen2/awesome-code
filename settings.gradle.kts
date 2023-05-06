@@ -45,3 +45,5 @@ include("explore:javaParser")
 findProject(":explore:javaParser")?.name = "javaParser"
 include("grpc")
 include("dagger")
+include("kotlin:basic-kotlin")
+findProject(":kotlin:basic-kotlin")?.name = "basic-kotlin"
