@@ -1,5 +1,6 @@
 package org.peter.kotlin.delegation.properties
 
+import kotlin.properties.Delegates
 import kotlin.reflect.KProperty
 
 /**
@@ -21,9 +22,28 @@ class Example {
     var p: String by Delegate3()
 }
 
+val lazyValue: String by lazy {
+    println("computed!")
+    "Hello"
+}
+
+
+class User {
+    var name: String by Delegates.observable("<no name>") { prop, old, new ->
+        println("$old -> $new")
+    }
+}
+
 fun main() {
 //    当我们从委托到一个 Delegate 实例的 p 读取时，将调用 Delegate 中的 getValue() 函数， 所以它第一个参数是读出 p 的对象、第二个参数保存了对 p 自身的描述 （例如你可以取它的名字)。 例如:
     val e = Example()
     e.p = "NEW"
     println(e.p)
+
+    println(lazyValue)
+    println(lazyValue)
+
+    val user = User()
+    user.name = "first"
+    user.name = "second"
 }
