@@ -22,4 +22,6 @@ void test_rv();
 
 void test_chrono();
 
+void test_json();
+
 #endif //CPP_REFERENCE__MAIN_H
