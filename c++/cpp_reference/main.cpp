@@ -50,7 +50,7 @@ int main() {
 //        test_rv();
 
 //        test_chrono();
-//        test_json();
+        test_json();
     }
 
 //    std::string ss = text;
