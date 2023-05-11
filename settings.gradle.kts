@@ -47,3 +47,5 @@ include("grpc")
 include("dagger")
 include("kotlin:basic-kotlin")
 findProject(":kotlin:basic-kotlin")?.name = "basic-kotlin"
+include("explore:spring-shell")
+findProject(":explore:spring-shell")?.name = "spring-shell"
