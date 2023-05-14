@@ -18,8 +18,35 @@ public class Solution {
         for (int x : barcodes) {
             ++cnt[x];
         }
-
         Arrays.sort(t, (a, b) -> cnt[a] == cnt[b] ? a - b : cnt[b] - cnt[a]);
+        int[] ans = new int[n];
+        for (int k = 0, j = 0; k < 2; k++) {
+            for (int i = k; i < n; i += 2) {
+                ans[i] = t[j++];
+            }
+        }
+        return ans;
+    }
+
+    public int[] rearrangeBarcodes1(int[] barcodes) {
+        int n = barcodes.length;
+        Integer[] t = new Integer[n];
+        int mx = 0;
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < n; ++i) {
+            t[i] = barcodes[i];
+//            mx = Math.max(mx, barcodes[i]);
+            map.put(barcodes[i], map.getOrDefault(barcodes[i], 0) + 1);
+        }
+//        int[] cnt = new int[mx + 1];
+//        for (int x : barcodes) {
+//            ++cnt[x];
+//        }
+
+        // 记数不要用 Integer ！！！
+        Arrays.sort(t, (a, b) -> map.get(a).intValue() == map.get(b).intValue() ? a - b : map.get(b) - map.get(a));
 
 
         int[] ans = new int[n];
