@@ -7,6 +7,9 @@
 #include <fstream>
 #include <nlohmann/json.hpp>
 #include <iostream>
+#include <fstream>
+#include <iosfwd>
+#include <ios>
 
 using json = nlohmann::json;
 
@@ -14,8 +17,49 @@ using namespace std;
 
 json j_arr = nullptr;
 
+void read_json_file(json **data, const std::string &file_name) {
+    ifstream file(file_name);
+    ifstream valid_file(file_name);
+    if (!valid_file.is_open() || !json::accept(valid_file)) {
+        file.close();
+        valid_file.close();
+        return;
+    };
+    json j = json::parse(file);
+    *data = new json(std::move(j));
+    file.close();
+}
+
+int z = 134;
+
+void abc(int *a) {
+    *a = 456;
+}
 
 void test_json() {
+
+    {
+        int b = 2345;
+        abc(&b);
+        cout << b << endl;
+        json *j;
+        read_json_file(&j, "/home/chenpeigen/awesome-code/c++/cpp_reference/hello.json");
+
+        auto zx1 = j->at("a").get<string>();
+
+        cout << zx1 << endl;
+
+
+//        std::istream
+        std::ifstream f("/home/chenpeigen/awesome-code/c++/cpp_reference/hello.json");
+        json data = json::parse(f);
+        // parse from a file
+
+        auto zx = data.at("a").get<string>();
+
+        std::cout << "hello world" << std::endl;
+    }
+
 
 
     // create some JSON values
