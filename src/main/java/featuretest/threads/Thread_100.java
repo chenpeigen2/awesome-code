@@ -2,22 +2,168 @@ package featuretest.threads;
 
 public class Thread_100 {
 
+    static int count = 1;
+
     //    https://blog.csdn.net/permeability/article/details/117235608
     public static void main(String[] args) throws InterruptedException {
-        Object A = new Object();
-        Object B = new Object();
-        Object C = new Object();
+        Object obj1 = new Object();
+        Object obj2 = new Object();
+        Object obj3 = new Object();
 
-        Thread t1 = new Thread(new Print(A, B), "A");
-        Thread t2 = new Thread(new Print(B, C), "B");
-        Thread t3 = new Thread(new Print(C, A), "C");
 
-        //Thread.sleep(1)为了让打印的时候依次执行
+//
+        Thread t1 = new Thread(() -> {
+            while (true) {
+                synchronized (obj1) {
+                    try {
+                        obj1.wait();
+                        if (count == 101) {
+                            synchronized (obj2) {
+                                obj2.notify();
+                            }
+                            break;
+                        }
+
+                        System.out.println(count++);
+                        synchronized (obj2) {
+                            obj2.notify();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }, "A");
+        Thread t2 = new Thread(() -> {
+            while (true) {
+                synchronized (obj2) {
+                    try {
+                        obj2.wait();
+                        if (count == 101) {
+                            synchronized (obj3) {
+                                obj3.notify();
+                            }
+                            break;
+                        }
+                        System.out.println(count++);
+                        synchronized (obj3) {
+                            obj3.notify();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }, "B");
+        Thread t3 = new Thread(() -> {
+            while (true) {
+                synchronized (obj3) {
+                    try {
+                        obj3.wait();
+                        if (count == 101) {
+                            synchronized (obj1) {
+                                obj1.notify();
+                            }
+                            break;
+                        }
+                        System.out.println(count++);
+                        synchronized (obj1) {
+                            obj1.notify();
+                        }
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }, "C");
+
+
         t1.start();
-        Thread.sleep(1);
         t2.start();
-        Thread.sleep(1);
         t3.start();
+
+        synchronized (obj1) {
+            obj1.notify();
+        }
+
+//        PrintNumber printNumber = new PrintNumber();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (int i = 0; i < 34; i++) {
+//                    printNumber.firstPrint();
+//                }
+//            }
+//        }, "线程一").start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (int i = 0; i < 33; i++) {
+//                    printNumber.secondPrint();
+//                }
+//            }
+//        }, "线程二").start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                for (int i = 0; i < 33; i++) {
+//                    printNumber.thirdPrint();
+//                }
+//            }
+//        }, "线程三").start();
+    }
+}
+
+class PrintNumber {
+    private volatile int number = 1;
+    private volatile int value = 1;
+
+    void firstPrint() {
+        synchronized (this) {
+            while (value != 1) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(Thread.currentThread().getName() + ": " + number);
+            number++;
+            value = 2;
+            notifyAll();
+        }
+    }
+
+    void secondPrint() {
+        synchronized (this) {
+            while (value != 2) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(Thread.currentThread().getName() + ": " + number);
+            number++;
+            value = 3;
+            notifyAll();
+        }
+    }
+
+    void thirdPrint() {
+        synchronized (this) {
+            while (value != 3) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(Thread.currentThread().getName() + ": " + number);
+            number++;
+            value = 1;
+            notifyAll();
+        }
     }
 }
 
