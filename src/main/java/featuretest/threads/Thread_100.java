@@ -38,11 +38,12 @@ class Print implements Runnable {
         while (true) {
             synchronized (self) {
                 synchronized (next) {
-                    System.out.println(value++);
-                    next.notify();
                     if (value == 100) {
+                        System.out.println(value);
                         break;
                     }
+                    System.out.println(value++);
+                    next.notify();
                 }
                 try {
                     self.wait();
