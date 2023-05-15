@@ -2,7 +2,7 @@ package featuretest.threads;
 
 public class Thread_100 {
 
-    static int count = 1;
+    static volatile int count = 1;
 
     //    https://blog.csdn.net/permeability/article/details/117235608
     public static void main(String[] args) throws InterruptedException {
@@ -17,7 +17,7 @@ public class Thread_100 {
                 synchronized (obj1) {
                     try {
                         obj1.wait();
-                        if (count == 101) {
+                        if (count == 10001) {
                             synchronized (obj2) {
                                 obj2.notify();
                             }
@@ -39,7 +39,7 @@ public class Thread_100 {
                 synchronized (obj2) {
                     try {
                         obj2.wait();
-                        if (count == 101) {
+                        if (count == 10001) {
                             synchronized (obj3) {
                                 obj3.notify();
                             }
@@ -60,7 +60,7 @@ public class Thread_100 {
                 synchronized (obj3) {
                     try {
                         obj3.wait();
-                        if (count == 101) {
+                        if (count == 10001) {
                             synchronized (obj1) {
                                 obj1.notify();
                             }
