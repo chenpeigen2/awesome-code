@@ -43,7 +43,7 @@ public class Solution {
         String c = event2[0];
         String d = event2[1];
 
-        if (c.compareTo(b) > 0 || a.compareTo(b) > 0) return false;
+        if (c.compareTo(b) > 0 || a.compareTo(d) > 0) return false;
         return true;
     }
 }
