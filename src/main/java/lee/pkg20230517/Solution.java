@@ -17,6 +17,8 @@ public class Solution {
         }
     }
 
+    //    当两个事件不存在冲突的充要条件是一个事件的结束时间早于另一个事件的开始时间
+    //    https://leetcode.cn/problems/determine-if-two-events-have-conflict/
     public boolean haveConflict(String[] event1, String[] event2) {
         DateFormat format = new SimpleDateFormat("HH:mm");
         try {
