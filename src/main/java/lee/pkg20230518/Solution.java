@@ -14,6 +14,7 @@ public class Solution {
         return baseNeg2(a + b);
     }
 
+    //    https://leetcode.cn/problems/adding-two-negabinary-numbers/solution/python3javacgotypescript-yi-ti-yi-jie-mo-mg0a/
     public int[] addNegabinary(int[] arr1, int[] arr2) {
         int i = arr1.length - 1, j = arr2.length - 1;
         List<Integer> ans = new ArrayList<>();
@@ -22,7 +23,6 @@ public class Solution {
             int b = j < 0 ? 0 : arr2[j];
             int x = a + b + c;
             c = 0;
-
             if (x >= 2) {
                 x -= 2;
                 c -= 1;
