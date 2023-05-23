@@ -1,0 +1,1 @@
+// we expect that all usage for selector should be treat as or
