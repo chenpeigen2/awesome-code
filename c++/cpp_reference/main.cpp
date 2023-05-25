@@ -50,16 +50,16 @@ using namespace std;
 
 int main() {
 
-    cout << "改变前的值" << endl;
-    for (int i = 0; i < 5; i++) {
-        cout << "vals[" << i << "] = ";
-        cout << vals[i] << endl;
-    }
-
-    setValues(1) = 20.23; // 改变第 2 个元素
-    setValues(3) = 70.8;  // 改变第 4 个元素
-    double &zz = setValues(3);
-    zz = 567;
+//    cout << "改变前的值" << endl;
+//    for (int i = 0; i < 5; i++) {
+//        cout << "vals[" << i << "] = ";
+//        cout << vals[i] << endl;
+//    }
+//
+//    setValues(1) = 20.23; // 改变第 2 个元素
+//    setValues(3) = 70.8;  // 改变第 4 个元素
+//    double &zz = setValues(3);
+//    zz = 567;
 
     {
 //        test_vec();
