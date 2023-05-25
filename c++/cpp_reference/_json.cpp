@@ -36,6 +36,9 @@ void abc(int *a) {
     *a = 456;
 }
 
+
+vector<vector<string>> *res;
+
 void test_json() {
 
 //    {
@@ -288,7 +291,6 @@ void test_json() {
                 nestedVector.push_back(vec);
             }
         }
-
         if (nestedVector.empty()) {
             vector<string> vec;
             for (auto &element: selector.items()) {
@@ -304,7 +306,7 @@ void test_json() {
                 }
             }
         }
-
+        res = new vector<vector<string>>(nestedVector);
 //
         std::cout << selector.dump() << std::endl;
     }
