@@ -36,6 +36,9 @@ void abc(int *a) {
     *a = 456;
 }
 
+void ppp3();
+
+void ppp4();
 
 vector<vector<string>> *res;
 
@@ -309,5 +312,26 @@ void test_json() {
         res = new vector<vector<string>>(nestedVector);
 //
         std::cout << selector.dump() << std::endl;
+
+        ppp3();
+        ppp4();
+    }
+}
+
+void ppp3() {
+    for (int i = 0; i < res->size(); ++i) {
+        for (int j = 0; j < res->at(i).size(); ++j) {
+            std::cout << res->at(i).at(j) << endl;
+        }
+        std::cout << "==========" << std::endl;
+    }
+}
+
+void ppp4() {
+    for (auto &re: *res) {
+        for (const auto &j: re) {
+            std::cout << j << endl;
+        }
+        std::cout << "==========" << std::endl;
     }
 }
