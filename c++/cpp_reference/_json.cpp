@@ -411,3 +411,30 @@ void ppp4() {
         std::cout << "==========" << std::endl;
     }
 }
+
+std::string convert_vec_to_json(std::vector<std::string> &vec) {
+    std::string ret = "[";
+    for (auto it = vec.begin(); it != vec.end(); ++it) {
+        ret += "\"" + *it + "\"";
+        if (it != vec.end() - 1) {
+            ret += ",";
+        }
+    }
+    ret += "]";
+    return ret;
+}
+
+std::vector<std::string> convert_json_to_vec(std::string basicString) {
+    std::vector<std::string> vec;
+    std::string token;
+    for (size_t i = 1; i < basicString.size() - 1; ++i) {
+        if (basicString[i] == ',') {
+            vec.push_back(token);
+            token = "";
+        } else if (basicString[i] != '\"') {
+            token += basicString[i];
+        }
+    }
+    vec.push_back(token);
+    return vec;
+}

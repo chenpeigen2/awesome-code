@@ -92,6 +92,8 @@ int main() {
             while (std::getline(ss, token, '#')) {
                 vec.push_back(token);
             }
+            std::cout << convert_vec_to_json(vec) << std::endl;
+            vec = convert_json_to_vec(convert_vec_to_json(vec));
             nestVec.push_back(vec);
         }
 
