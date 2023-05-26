@@ -24,4 +24,8 @@ void test_chrono();
 
 void test_json();
 
+int acquire_json();
+
+char *acquireVector(int idx);
+
 #endif //CPP_REFERENCE__MAIN_H

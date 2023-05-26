@@ -10,6 +10,9 @@
 #include <fstream>
 #include <iosfwd>
 #include <ios>
+#include <vector>
+#include <numeric>
+
 
 using json = nlohmann::json;
 
@@ -316,6 +319,79 @@ void test_json() {
         ppp3();
         ppp4();
     }
+}
+
+int acquire_json() {
+    // we need to parser the given json_string for further execution
+    json j_test = json::parse("{\n"
+                              "  \"selector\": {\n"
+                              "    \"$or\": [\n"
+                              "      {\n"
+                              "        \"data.countryid\": {\n"
+                              "          \"$gt\": -1\n"
+                              "        }\n"
+                              "      },\n"
+                              "      {\n"
+                              "        \"message\": \"success\"\n"
+                              "      }\n"
+                              "    ],\n"
+                              "    \"code\": 0,\n"
+                              "    \"data.id\" : 1\n"
+                              "  }\n"
+                              "}");
+
+    auto selector = j_test.at("selector");
+
+    vector<vector<string>> nestedVector;
+    std::cout << nestedVector.size() << std::endl;
+    if (selector.contains("$or")) {
+        auto $or = selector.at("$or");
+        for (auto &number_object: $or) {
+            vector<string> vec; // define a vec
+            // 遍历对象并打印每个键
+            for (auto &element: number_object.items()) {
+                std::cout << element.key() << std::endl;
+                vec.push_back(element.key());
+            }
+            nestedVector.push_back(vec);
+        }
+    }
+    if (nestedVector.empty()) {
+        vector<string> vec;
+        for (auto &element: selector.items()) {
+            vec.push_back(element.key());
+        }
+        nestedVector.push_back(vec);
+    } else {
+        for (auto &element: selector.items()) {
+            if (element.key() != "$or") {
+                for (auto &number_object: nestedVector) {
+                    number_object.push_back(element.key());
+                }
+            }
+        }
+    }
+    res = new vector<vector<string>>(nestedVector);
+    std::cout << selector.dump() << std::endl;
+
+    return res->size();
+}
+
+char *acquireVector(int idx) {
+    auto vec = res->at(idx);
+    std::string str;
+    for (auto it = vec.begin(); it != vec.end(); ++it) {
+        str += *it;
+        if (it != vec.end() - 1) {
+            str += "#";
+        }
+    }
+
+    size_t len = str.length();
+    char *p = new char[len + 1];
+    str.copy(p, len);
+    p[len] = '\0';
+    return p;
 }
 
 void ppp3() {

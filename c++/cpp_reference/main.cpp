@@ -11,6 +11,8 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <vector>
+#include <sstream>
 
 
 #include "_main.h"
@@ -71,7 +73,37 @@ int main() {
 //        test_rv();
 
 //        test_chrono();
-        test_json();
+//        test_json();
+
+        int size = acquire_json();
+
+        std::cout << size << std::endl;
+
+        vector<vector<string>> nestVec;
+
+        for (int i = 0; i < size; ++i) {
+            char *ret = acquireVector(i);
+            std::string rss(ret);
+            std::cout << rss << std::endl;
+
+            std::vector<std::string> vec;
+            std::stringstream ss(ret);
+            std::string token;
+            while (std::getline(ss, token, '#')) {
+                vec.push_back(token);
+            }
+            nestVec.push_back(vec);
+        }
+
+
+        std::cout << "wwwwwwwwwwww" << std::endl;
+        for (auto &re: nestVec) {
+            for (const auto &j: re) {
+                std::cout << j << endl;
+            }
+            std::cout << "==========" << std::endl;
+        }
+
     }
 
 //    std::string ss = text;
