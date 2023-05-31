@@ -14,12 +14,11 @@ public class Solution {
         int mct = 0;
 
         for (int i = 0; i < arr.length; i++) {
-            while (arr[i] >= st.peek()) {
+            while (arr[i] > st.peek()) {
                 mct += st.pop() * Math.min(st.peek(), arr[i]);
             }
             st.push(arr[i]);
         }
-        //
         while (st.size() > 2) {
             mct += st.pop() * st.peek();
         }
