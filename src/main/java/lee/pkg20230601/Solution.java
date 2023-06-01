@@ -20,8 +20,8 @@ public class Solution {
 
     // https://leetcode.cn/problems/maximum-tastiness-of-candy-basket/solution/li-he-de-zui-da-tian-mi-du-by-leetcode-s-sq44/
     public boolean check(int[] price, int k, int tastiness) {
-        int prev = Integer.MIN_VALUE / 2;
-        int cnt = 0;
+        int prev = price[0];
+        int cnt = 1;
         for (int p : price) {
             if (p - prev >= tastiness) {
                 cnt++;
