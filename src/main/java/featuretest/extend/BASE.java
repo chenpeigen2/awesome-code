@@ -70,3 +70,38 @@ class CC {
         new CC();
     }
 }
+
+class Inner {
+}
+
+class A1 {
+    final Inner a = new Inner();
+}
+
+class B1 extends A1 {
+    @Override
+    public String toString() {
+        return a.toString();
+    }
+}
+
+class C1 extends A1 {
+    final Inner a = new Inner();
+
+    @Override
+    public String toString() {
+        System.out.println(super.a.toString());
+        System.out.println("fff");
+        return a.toString();
+    }
+}
+
+class FFF {
+    public static void main(String[] args) {
+        var c1 = new C1();
+        var b1 = new B1();
+
+        System.out.println(c1);
+        System.out.println(b1);
+    }
+}
