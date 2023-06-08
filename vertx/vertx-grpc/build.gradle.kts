@@ -30,7 +30,9 @@ dependencies {
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
     testImplementation("org.mockito:mockito-core:3.4.0")
 
-
+// https://mvnrepository.com/artifact/io.vertx/vertx-grpc-server
+    implementation("io.vertx:vertx-grpc-server:4.4.3")
+    implementation("io.vertx:vertx-grpc-client:4.4.3")
 }
 
 protobuf {
