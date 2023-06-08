@@ -49,3 +49,5 @@ include("kotlin:basic-kotlin")
 findProject(":kotlin:basic-kotlin")?.name = "basic-kotlin"
 include("explore:spring-shell")
 findProject(":explore:spring-shell")?.name = "spring-shell"
+include("vertx:vertx-grpc")
+findProject(":vertx:vertx-grpc")?.name = "vertx-grpc"
