@@ -13,11 +13,12 @@
 
 %% API
 
--export([while/1, while/2, start/0, add/2, add/1]).
+-export([while/1, while/2, start/0, add/2, add/1, fac/1, covert/2]).
 
 while(L) -> while(L, 0).
-while([], Acc) -> Acc;
 
+%%split here
+while([], Acc) -> Acc;
 while([_ | T], Acc) ->
   io:fwrite("~w~n", [Acc]),
   while(T, Acc + 1).
@@ -35,6 +36,21 @@ add(X, Y, Z) ->
 %%在 Erlang 中函数也都有保护序列的能力。这些都不算什么它只不过是一个表达式，只有当评估(计算)为 true 时函数才运行。
 add(X) when X > 3 ->
   io:fwrite("~w~n", [X]).
+
+%%需要注意的是，这一部分是以分号结束的，这也就表示后面还有 fac 函数的更多内容。
+fac(1) ->
+  1;
+%%与前面不同，这部分是以句号结尾的。这也就是说，后面没有这个函数更多的内容了。
+fac(N) ->
+  N * fac(N - 1).
+
+%%原子类型
+%%原子类型是 Erlang 语言中另一种数据类型。所有原子类型都以小写字母开头 （参见 原子类型）。
+%% 例如，charles，centimeter，inch 等。原子类型就是名字而已，没有其它含义。它们与变量不同，变量拥有值，而原子类型没有。
+covert(M, inch) ->
+  M / 2.54;
+covert(M, centimeter) ->
+  M * 2.54.
 
 %%the main func
 start() ->
