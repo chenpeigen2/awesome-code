@@ -18,6 +18,7 @@
 while(L) -> while(L, 0).
 
 %%split here
+%%Acc means i
 while([], Acc) -> Acc;
 while([_ | T], Acc) ->
   io:fwrite("~w~n", [Acc]),
