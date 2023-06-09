@@ -58,6 +58,15 @@ convert_length({centimeter, X}) ->
 convert_length({inch, Y}) ->
   {centimeter, Y * 2.54}.
 
+%%翻转数组
+reverse(List) ->
+  reverse(List, []).
+
+reverse([Head | Rest], Reversed_List) ->
+  reverse(Rest, [Head | Reversed_List]);
+reverse([], Reversed_List) ->
+  Reversed_List.
+
 
 %%the main func
 start() ->
@@ -75,4 +84,6 @@ start() ->
   io:fwrite("Hello, world!\n"),
   X1 = [1, 2, 3, 4],
   add(5, 6),
+  [M1 | T1] = [paris, london, rome],
+  L1 = [madrid | T1],
   while(X1).
