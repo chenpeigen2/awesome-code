@@ -52,6 +52,13 @@ covert(M, inch) ->
 covert(M, centimeter) ->
   M * 2.54.
 
+%%元组
+convert_length({centimeter, X}) ->
+  {inch, X / 2.54};
+convert_length({inch, Y}) ->
+  {centimeter, Y * 2.54}.
+
+
 %%the main func
 start() ->
 %%  在 Erlang，所有的变量都与‘ =’语句绑定。所有变量都需要以大写字母开头。在其他编程语言中，“ =”符号用于赋值，但不适用于 Erlang。如前所述，变量是通过使用‘ =’语句定义的。
