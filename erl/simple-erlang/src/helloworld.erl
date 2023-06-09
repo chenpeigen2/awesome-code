@@ -68,6 +68,16 @@ reverse([Head | Rest], Reversed_List) ->
 reverse([], Reversed_List) ->
   Reversed_List.
 
+my_function(X) ->
+  if
+    X < 0 ->
+      io:format("X is negative.~n");
+    X == 0 ->
+      io:format("X is zero.~n");
+    X > 0 ->
+      io:format("X is positive.~n")
+  end.
+
 
 %%the main func
 start() ->
