@@ -1,7 +1,4 @@
-package lee.pkg20210907;
-
-import java.util.ArrayList;
-import java.util.List;
+package lee.pkg20230623;
 
 public class Solution {
     //    https://leetcode.cn/problems/maximum-value-of-a-string-in-an-array/solution/
