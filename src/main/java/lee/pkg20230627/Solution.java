@@ -8,7 +8,7 @@ public class Solution {
 
         for (int i = 1; i < arr.length; i++) {
             dp1 = Math.max(dp0, dp1 + arr[i]);
-            dp0 = Math.max(dp0, 0) + arr[i];
+            dp0 = Math.max(dp0, 0) + arr[i]; // if pre <1 than we need to jump
 
             res = Math.max(res, Math.max(dp0, dp1));
         }
