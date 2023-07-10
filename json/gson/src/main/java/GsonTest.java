@@ -1,5 +1,7 @@
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
+import com.google.gson.annotations.Expose;
 import org.json.CDL;
 import org.json.JSONObject;
 
@@ -48,7 +50,39 @@ public class GsonTest {
             }
             """;
 
+    static class User {
+        @Expose(serialize = false, deserialize = true)
+        private String name;
+
+        @Expose
+        private int age;
+
+        public User(String name, int age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "name='" + name + '\'' +
+                    ", age=" + age +
+                    '}';
+        }
+    }
+
     public static void main(String[] args) throws IOException {
+
+        // 序列化时只包含@Expose注解标记的字段
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+        User user = new User("John", 30);
+        String json = gson.toJson(user); // {"name":"John"}
+        System.out.println(json);
+
+// 反序列化时只包含@Expose注解标记的字段
+        String json2 = "{\"name\":\"John\",\"age\":30}";
+        User user2 = gson.fromJson(json2, User.class); // user2.name = "John",
+        System.out.println(user2);
 
         // gson
         var books_obj = JsonParser.parseString(s1).getAsJsonObject().get("store").getAsJsonObject();
