@@ -13,21 +13,12 @@ public class Solution {
     }
 
     private int dfs(TreeNode root) {
-        int moveleft = 0;
-        int moveright = 0;
-        if (root == null) {
-            return 0;
-        }
-        if (root.left != null) {
-            moveleft = dfs(root.left);
-        }
-        if (root.right != null) {
-            moveright = dfs(root.right);
-        }
-        // 把左右节点都做到只有1个金币
-        // 统计当前节点与其子节点之间的移动金币的次数
-        move += Math.abs(moveleft) + Math.abs(moveright);
-        // 返回其父节点需要从node「拿走」的金币数目
-        return moveleft + moveright + root.val - 1;
+        if (root == null) return 0;
+        int leftExceed = dfs(root.left);
+        int rightExceed = dfs(root.right);
+        // 把左右节点都做到只有1个金币， 统计当前节点与其子节点之间的移动金币的次数， 子节点平衡需要执行多少次操作
+        move += Math.abs(leftExceed) + Math.abs(rightExceed);
+        // 返回其需要从父节点 拿走的金币数量 （可能为负数）
+        return root.val - 1 + leftExceed + rightExceed;
     }
 }
