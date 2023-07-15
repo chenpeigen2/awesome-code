@@ -24,6 +24,10 @@ public class Solution {
                 continue;
             }
             for (int j = i + 1; j < length - 2; j++) {
+                // 由于nums[i]对应的元素值已经枚举过了，不需要再次枚举了
+                // 这里就算第二个元素为特定值的已经枚举过，不能持续
+                // 1 2 3
+                // 1 2 3
                 if (j > i + 1 && nums[j] == nums[j - 1]) {
                     continue;
                 }
