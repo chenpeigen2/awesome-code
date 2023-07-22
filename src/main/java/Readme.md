@@ -35,8 +35,9 @@ Defines the API of the Java SE Platform.
 -[xp]java.naming
 >Defines the Java Naming and Directory Interface (JNDI) API.
 
-java.net.http
+-[xp]java.net.http
 >Defines the HTTP Client and WebSocket APIs.
+> have replacement !!! see okHttp3 !!!
 
 -[xP]java.prefs
 >Defines the Preferences API.
