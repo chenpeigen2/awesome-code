@@ -1,7 +1,7 @@
-java.base
-Defines the foundational APIs of the Java SE Platform.
-java.compiler
-Defines the Language Model, Annotation Processing, and Java Compiler APIs.
+- java.base
+>Defines the foundational APIs of the Java SE Platform.
+- java.compiler
+>Defines the Language Model, Annotation Processing, and Java Compiler APIs.
 
 ```text
 # No Usage
@@ -24,33 +24,33 @@ Defines the API of the Java SE Platform.
 ```
 
 -[XP]java.management
-Defines the Java Management Extensions (JMX) API.
+>Defines the Java Management Extensions (JMX) API.
 
 -[xP]java.instrument
-Defines services that allow agents to instrument programs running on the JVM.
+>Defines services that allow agents to instrument programs running on the JVM.
 
 -[xP]java.logging
-Defines the Java Logging API.
+>Defines the Java Logging API.
 
 -[xp]java.naming
-Defines the Java Naming and Directory Interface (JNDI) API.
+>Defines the Java Naming and Directory Interface (JNDI) API.
 
 java.net.http
-Defines the HTTP Client and WebSocket APIs.
+>Defines the HTTP Client and WebSocket APIs.
 
 -[xP]java.prefs
-Defines the Preferences API.
+>Defines the Preferences API.
 
-> security No USAGE YET
 ```text
+> security No USAGE YET
 java.security.jgss
 Defines the Java binding of the IETF Generic Security Services API (GSS-API).
 java.security.sasl
 Defines Java support for the IETF Simple Authentication and Security Layer (SASL).
 ```
 
-> define the sql
  ```text
+> define the sql
 java.sql
 Defines the JDBC API.
 java.sql.rowset
@@ -59,8 +59,8 @@ java.transaction.xa
 Defines an API for supporting distributed transactions in JDBC.
 ```
 
-> define The XML
 ```text
+> define The XML
 -[x]java.xml
 Defines the Java API for XML Processing (JAXP), the Streaming API for XML (StAX), the Simple API for XML (SAX), and the W3C Document Object Model (DOM) API.
 -[x]java.xml.crypto
