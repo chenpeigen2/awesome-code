@@ -282,6 +282,19 @@ public class Solution {
         dfs(node.right);
     }
 
+    //    https://leetcode.cn/problems/reorder-list/
+    public void reorderList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        ListNode mid = middleNode(head);
+        ListNode l1 = head;
+        ListNode l2 = mid.next;
+        mid.next = null;
+        l2 = reverseList(l2);
+        mergeList(l1, l2);
+    }
+
     //    https://leetcode.cn/problems/reverse-linked-list/
     public ListNode reverseList(ListNode head) {
         ListNode result = new ListNode();
@@ -293,6 +306,53 @@ public class Solution {
             result.next = tmp;
         }
         return result.next;
+    }
+
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    public void mergeList(ListNode l1, ListNode l2) {
+
+        while (l1 != null && l2 != null) {
+            ListNode l1_tmp = l1.next;
+            ListNode l2_tmp = l2.next;
+
+            l1.next = l2;
+            l1 = l1_tmp;
+
+            l2.next = l1;
+            l2 = l2_tmp;
+        }
+    }
+
+    public void reorderList1(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        List<ListNode> list = new ArrayList<ListNode>();
+        ListNode node = head;
+        while (node != null) {
+            list.add(node);
+            node = node.next;
+        }
+        int i = 0, j = list.size() - 1;
+        while (i < j) {
+            list.get(i).next = list.get(j);
+            i++;
+            if (i == j) {
+                break;
+            }
+            list.get(j).next = list.get(i);
+            j--;
+        }
+        list.get(i).next = null;
     }
 
     //    https://leetcode.cn/problems/linked-list-cycle/
