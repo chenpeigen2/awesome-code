@@ -4,9 +4,7 @@ import lee.pkg20210922.ListNode;
 import org.openjdk.nashorn.api.tree.Tree;
 
 import java.lang.annotation.Native;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Solution {
     //    https://leetcode-cn.com/problems/3sum/
@@ -398,6 +396,30 @@ public class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         dfs1(root);
         return l;
+    }
+
+    //    https://leetcode.cn/problems/binary-tree-level-order-traversal/
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) return ans;
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int len = queue.size();
+            List<Integer> l = new ArrayList<>();
+            for (int i = 0; i < len; i++) {
+                TreeNode node = queue.poll();
+                l.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            ans.add(l);
+        }
+        return ans;
     }
 
     void dfs1(TreeNode node) {
