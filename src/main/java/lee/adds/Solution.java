@@ -369,6 +369,24 @@ public class Solution {
         return false;
     }
 
+    //    https://leetcode.cn/problems/merge-sorted-array/
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        int[] tmp = new int[m + n];
+
+        for (int i = 0, j = 0, idx = 0; i < m || j < n; idx++) {
+            if (i == m) {
+                tmp[idx] = nums2[j++];
+            } else if (j == n) {
+                tmp[idx] = nums1[i++];
+            } else if (nums1[i] < nums2[j]) {
+                tmp[idx] = nums1[i++];
+            } else {
+                tmp[idx] = nums2[j++];
+            }
+        }
+        System.arraycopy(tmp, 0, nums1, 0, m + n);
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
