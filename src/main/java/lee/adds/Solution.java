@@ -392,6 +392,21 @@ public class Solution {
         return haystack.indexOf(needle);
     }
 
+    List<Integer> l1 = new ArrayList<>();
+
+    //    https://leetcode.cn/problems/binary-tree-postorder-traversal/
+    public List<Integer> postorderTraversal(TreeNode root) {
+        dfs1(root);
+        return l;
+    }
+
+    void dfs1(TreeNode node) {
+        if (node == null) return;
+        dfs1(node.left);
+        dfs1(node.right);
+        l.add(node.val);
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
