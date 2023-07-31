@@ -387,6 +387,11 @@ public class Solution {
         System.arraycopy(tmp, 0, nums1, 0, m + n);
     }
 
+    //    https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/
+    public int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
