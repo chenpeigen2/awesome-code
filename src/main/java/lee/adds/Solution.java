@@ -429,6 +429,18 @@ public class Solution {
         l.add(node.val);
     }
 
+    //    https://leetcode.cn/problems/subtract-the-product-and-sum-of-digits-of-an-integer/description/
+    public int subtractProductAndSum(int n) {
+        int a = 1;
+        int b = 0;
+        while (n > 0) {
+            a *= (n % 10);
+            b += (n % 10);
+            n /= 10;
+        }
+        return a - b;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
