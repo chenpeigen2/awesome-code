@@ -441,6 +441,19 @@ public class Solution {
         return a - b;
     }
 
+    //    https://leetcode.cn/problems/reverse-string/
+    public void reverseString(char[] s) {
+        int len = s.length;
+        int i = 0,j = len-1;
+        while (i < j) {
+            char tmp = s[i];
+            s[i] = s[j];
+            s[j] = tmp;
+            i++;
+            j--;
+        }
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         int[] arr = new int[]{-1, 0, 1, 2, -1, -4};
