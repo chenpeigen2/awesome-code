@@ -444,7 +444,7 @@ public class Solution {
     //    https://leetcode.cn/problems/reverse-string/
     public void reverseString(char[] s) {
         int len = s.length;
-        int i = 0,j = len-1;
+        int i = 0, j = len - 1;
         while (i < j) {
             char tmp = s[i];
             s[i] = s[j];
@@ -460,5 +460,84 @@ public class Solution {
 //        var ans = app.threeSum(arr);
         var ans = app.romanToInt("IV");
         System.out.println(ans);
+    }
+
+    //    https://blog.csdn.net/m0_50043893/article/details/126543373
+    public static String getMaxLessNum(int[] nums, int N) {
+        Arrays.sort(nums);
+        String maxBelow = getMaxBelowN(nums, N);
+        StringBuilder sb = new StringBuilder();
+        boolean flag = false;
+        for (int i = 0; i < maxBelow.length(); i++) {
+            /*
+            每位都找小于等于该位最大的数，如果maxBelow这个位置的数大于等于nums的最大值，就用最大值
+            否则去数组找最接近的
+            如果当前从数组中找的数字小于maxBelow对应这位的数字，此后选择的数字都可以是数组中的最大值
+            例如2513和{2,4,6,8}
+            选到第二位4之后，4比5小，此后就可以都选择8，组成2488
+             */
+            char c = maxBelow.charAt(i);
+            if (flag) {
+                sb.append(nums[nums.length - 1]);
+            } else {
+                //拿到应该选择数字的下标
+                int index = getIndex(nums, maxBelow, i);
+                sb.append(nums[index]);
+                //如果选择的数字比当前这位小，此后就都选最大值
+                if (nums[index] < c - '0') flag = true;
+            }
+        }
+        return sb.toString();
+    }
+
+    /*
+    能否拼出N长度的数？还是只能拼出N长度-1的数
+    怎么判断能拼出来？
+    判断str的第一位与nums[0]的大小关系
+     */
+    public static String getMaxBelowN(int[] nums, int N) {
+        String str = String.valueOf(N);
+        int min = nums[0];
+        boolean flag = check(str, min);
+        int num = flag ? (N - 1) : (int) Math.pow(10, str.length() - 1) - 1;
+        return String.valueOf(num);
+    }
+
+    //检查能否用数组拼出相同长度的数字字符串
+    public static boolean check(String str, int minValue) {
+        if (str.equals("")) return true;
+        char c = str.charAt(0);
+        if (c - '0' > minValue) {
+            return true;
+        } else if (c - '0' < minValue) {
+            return false;
+        } else {
+            return check(str.substring(1), minValue);
+        }
+    }
+
+    public static int getIndex(int[] nums, String maxBelow, int index) {
+        int curNum = maxBelow.charAt(index) - '0';
+        if (index < maxBelow.length() - 1) {
+            int nextNum = maxBelow.charAt(index + 1) - '0';
+            //下一位不能小于等于nums[0]，否则就要选小于curNum的数
+            if (nextNum <= nums[0]) {
+                curNum -= 1;
+            }
+        }
+
+        //curNum处理完成后，找到小于等于curNum的数
+        int left = 0, right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[mid] == curNum) {
+                left = mid + 1;
+            } else if (nums[mid] < curNum) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return right;
     }
 }
