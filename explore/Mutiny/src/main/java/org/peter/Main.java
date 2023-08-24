@@ -10,5 +10,13 @@ public class Main {
                 .onItem().transform(item -> item + " mutiny")
                 .onItem().transform(String::toUpperCase)
                 .subscribe().with(item -> System.out.println(">> " + item));
+
+
+        Uni<String> uni = Uni.createFrom().item("hello");
+        uni = uni.onItem().transform(item -> item + " mutiny");
+        uni = uni.onItem().transform(String::toUpperCase);
+        uni.subscribe().with(item -> System.out.println(">> " + item));
+
+
     }
 }
