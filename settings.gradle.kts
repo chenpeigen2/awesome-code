@@ -53,3 +53,5 @@ include("vertx:vertx-grpc")
 findProject(":vertx:vertx-grpc")?.name = "vertx-grpc"
 include("database:postgres")
 findProject(":database:postgres")?.name = "postgres"
+include("explore:Mutiny")
+findProject(":explore:Mutiny")?.name = "Mutiny"
