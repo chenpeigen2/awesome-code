@@ -55,3 +55,5 @@ include("database:postgres")
 findProject(":database:postgres")?.name = "postgres"
 include("explore:Mutiny")
 findProject(":explore:Mutiny")?.name = "Mutiny"
+include("explore:disruptor")
+findProject(":explore:disruptor")?.name = "disruptor"
