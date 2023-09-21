@@ -1,5 +1,8 @@
 package jdkversions.jdk17;
 
+import java.nio.ByteBuffer;
+import java.nio.MappedByteBuffer;
+
 public sealed class SealedClassDemo permits Hello, SubClass {
 
 }
@@ -39,6 +42,8 @@ class App {
 //https://baijiahao.baidu.com/s?id=1732041493754048192&wfr=spider&for=pc
 sealed class ZA permits ZA1, ZA2 {
 
+    public static void main(String[] args) {
+    }
 }
 
 non-sealed class ZA1 extends ZA {
