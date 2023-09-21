@@ -35,3 +35,20 @@ class App {
 //        }
 //    }
 }
+
+//https://baijiahao.baidu.com/s?id=1732041493754048192&wfr=spider&for=pc
+sealed class ZA permits ZA1, ZA2 {
+
+}
+
+non-sealed class ZA1 extends ZA {
+
+}
+
+//sealed class ZA3 extends ZA {
+//
+//}
+
+final class ZA2 extends ZA {
+
+}
