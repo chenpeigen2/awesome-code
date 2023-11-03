@@ -46,4 +46,22 @@ public class Solution {
         }
         return ret;
     }
+
+    public int sumNumbers(TreeNode root) {
+        if (root == null) return 0;
+        dfs_sumNumbers(0, root);
+        return sumNumbers_sum;
+    }
+
+    int sumNumbers_sum = 0;
+
+    void dfs_sumNumbers(int level_sum, TreeNode node) {
+        level_sum = level_sum * 10 + node.val;
+        if (node.left == null && node.right == null) {
+            sumNumbers_sum += level_sum;
+        }
+        if (node.left != null) dfs_sumNumbers(level_sum, node.left);
+        if (node.right != null) dfs_sumNumbers(level_sum, node.right);
+    }
+
 }
