@@ -6,24 +6,28 @@ public class Solution {
     //    https://leetcode.cn/problems/successful-pairs-of-spells-and-potions/?envType=daily-question&envId=2023-11-10
     public int[] successfulPairs(int[] spells, int[] potions, long success) {
         Arrays.sort(potions);
-        int n = spells.length, m = potions.length;
+        int n = spells.length;
         int[] res = new int[n];
+        int m = potions.length;
         for (int i = 0; i < n; i++) {
-            long t = (success + spells[i] - 1) / spells[i] - 1;
-            res[i] = m - binarySearch(potions, 0, m - 1, t);
+            int target = (int) Math.ceil(success / (double) spells[i]);//向上取整
+            int id = binarySearch(potions, target);//二分查找第一个大于等于target的元素
+            res[i] = m - id;
         }
         return res;
     }
 
-    private int binarySearch(int[] arr, int low, int high, long target) {
-        while (low <= high) {
-            int mid = low + high >> 1;
-            if (arr[mid] > target) {
-                high = mid - 1;
+    public int binarySearch(int[] potions, int target) {
+        int left = 0;
+        int right = potions.length;
+        while (left < right) {
+            int mid = (left + right) >> 1;
+            if (potions[mid] >= target) {
+                right = mid;
             } else {
-                low = mid + 1;
+                left = mid + 1;
             }
         }
-        return low;
+        return left;
     }
 }
