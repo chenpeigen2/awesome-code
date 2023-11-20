@@ -57,3 +57,5 @@ include("explore:Mutiny")
 findProject(":explore:Mutiny")?.name = "Mutiny"
 include("explore:disruptor")
 findProject(":explore:disruptor")?.name = "disruptor"
+include("vertx:vertx-config")
+findProject(":vertx:vertx-config")?.name = "vertx-config"

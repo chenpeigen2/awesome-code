@@ -1,0 +1,9 @@
+user:
+  name: Jim1
+  age: 20
+  birth: 2012-10-21
+  sex: 1
+
+server:
+  port: 8000
+a : 2323
