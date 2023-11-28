@@ -59,3 +59,5 @@ include("explore:disruptor")
 findProject(":explore:disruptor")?.name = "disruptor"
 include("vertx:vertx-config")
 findProject(":vertx:vertx-config")?.name = "vertx-config"
+include("explore:velocity")
+findProject(":explore:velocity")?.name = "velocity"

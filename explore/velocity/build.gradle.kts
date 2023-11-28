@@ -1,0 +1,26 @@
+plugins {
+    id("java")
+}
+
+group = "org.peter"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core
+    implementation("org.apache.velocity:velocity-engine-core:2.3")
+    // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-examples
+    implementation("org.apache.velocity:velocity-engine-examples:2.3")
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    implementation("org.slf4j:slf4j-simple:2.0.9")
+
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
