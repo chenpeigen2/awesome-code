@@ -63,3 +63,5 @@ include("explore:velocity")
 findProject(":explore:velocity")?.name = "velocity"
 include("explore:reactivestreams")
 findProject(":explore:reactivestreams")?.name = "reactivestreams"
+include("vertx:service-discovery")
+findProject(":vertx:service-discovery")?.name = "service-discovery"
