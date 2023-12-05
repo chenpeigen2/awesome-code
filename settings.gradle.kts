@@ -65,3 +65,5 @@ include("explore:reactivestreams")
 findProject(":explore:reactivestreams")?.name = "reactivestreams"
 include("vertx:service-discovery")
 findProject(":vertx:service-discovery")?.name = "service-discovery"
+include("vertx:vertx-web")
+findProject(":vertx:vertx-web")?.name = "vertx-web"
