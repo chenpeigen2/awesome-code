@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "1.9.21"
-    kotlin("kapt") version "1.9.21"
+    kotlin("jvm") version "1.9.22"
+    kotlin("kapt") version "1.9.22"
 }
 
 group = "org.peter"
