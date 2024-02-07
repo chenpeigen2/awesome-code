@@ -12,7 +12,7 @@ public class Solution {
         queue.offer(root);
         root.val = 0;
         while (!queue.isEmpty()) {
-            Queue<TreeNode> queue2 = new ArrayDeque<TreeNode>();
+            Queue<TreeNode> queue2 = new ArrayDeque<>();
             int sum = 0;
 
             for (TreeNode fa : queue) {
@@ -38,8 +38,6 @@ public class Solution {
             }
 
             queue = queue2;
-
-
         }
 
         return root;
