@@ -32,4 +32,28 @@ public class Solution {
         }
         return n - 1;
     }
+
+    public int maxMoves1(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        Set<Integer> q = new HashSet<>();
+        for (int i = 0; i < m; i++) {
+            q.add(i);
+        }
+        for (int j = 1; j < n; j++) {
+            // level order -- grid level order
+            Set<Integer> q2 = new HashSet<>(); // new instance the queue
+            for (int i : q) {
+                for (int i2 = i - 1; i2 <= i + 1; i2++) {
+                    if (i2 >= 0 && i2 < m && grid[i][j - 1] < grid[i2][j]) {
+                        q2.add(i2);
+                    }
+                }
+            }
+            q = q2; // eq to queue offer
+            if (q.isEmpty()) {
+                return j - 1;
+            }
+        }
+        return n - 1;
+    }
 }
