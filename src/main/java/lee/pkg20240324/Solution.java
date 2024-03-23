@@ -23,6 +23,8 @@ public class Solution {
         return Arrays.stream(nums).sum();
     }
 
+    // 当 n>1n \gt 1n>1 时，那么经过多次操作后，一定可以将 n−1,n−2,…,2n - 1, n - 2, \ldots, 2n−1,n−2,…,2 依次放到桌面上。
+    // 当 n=1n = 1n=1 时，桌面只有一个数字 111。
     public int distinctIntegers1(int n) {
         return n == 1 ? 1 : n - 1;
     }
