@@ -1,31 +1,26 @@
 package lee.pkg20240324;
 
-import java.util.*;
+import java.util.Arrays;
 
 public class Solution {
+    //    https://leetcode.cn/problems/coin-change/?envType=daily-question&envId=2024-03-24
+    public int coinChange(int[] coins, int amount) {
+        int max = amount + 1;
+        int[] dp = new int[amount + 1];
 
-    //    https://leetcode.cn/problems/count-distinct-numbers-on-board/?envType=daily-question&envId=2024-03-23
-    public int distinctIntegers(int n) {
-        int[] nums = new int[n + 1];
-        nums[n] = 1;
-        for (int k = 0; k < n; k++) {
-            for (int x = 1; x <= n; x++) {
-                if (nums[x] == 0) continue;
+        Arrays.fill(dp, max);
 
-                for (int i = 1; i <= n; i++) {
-                    if (x % i == 1) {
-                        nums[i] = 1;
-                    }
+        dp[0] = 0;
+
+        for (int i = 1; i <= amount; i++) {
+            for (int j = 0; j < coins.length; j++) {
+                if (coins[j] <= i) {
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
                 }
-
             }
         }
-        return Arrays.stream(nums).sum();
-    }
 
-    // 当 n>1n \gt 1n>1 时，那么经过多次操作后，一定可以将 n−1,n−2,…,2n - 1, n - 2, \ldots, 2n−1,n−2,…,2 依次放到桌面上。
-    // 当 n=1n = 1n=1 时，桌面只有一个数字 111。
-    public int distinctIntegers1(int n) {
-        return n == 1 ? 1 : n - 1;
+        return dp[amount] > amount ? -1 : dp[amount];
+
     }
 }
