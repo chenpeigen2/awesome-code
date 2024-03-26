@@ -42,11 +42,11 @@ class Graph {
             for (int[] nextArr : graph[cur]) {
                 int next = nextArr[0], ncost = nextArr[1];
                 if (dist[next] > cost + ncost) {
+                    dist[next] = cost + ncost;
                     pq.offer(new int[]{cost + ncost, next});
                 }
             }
         }
-
         return -1;
     }
 }
