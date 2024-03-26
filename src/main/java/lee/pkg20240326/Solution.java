@@ -36,14 +36,16 @@ class Graph {
         dist[node1] = 0;
         pq.offer(new int[]{0, node1});
         while (!pq.isEmpty()) {
-            int[] arr = pq.poll();
-            int cost = arr[0], cur = arr[1];
+            int[] polled = pq.poll();
+            int cost = polled[0];
+            int cur = polled[1];
             if (cur == node2) return cost;
-            for (int[] nextArr : graph[cur]) {
-                int next = nextArr[0], ncost = nextArr[1];
-                if (dist[next] > cost + ncost) {
-                    dist[next] = cost + ncost;
-                    pq.offer(new int[]{cost + ncost, next});
+            for (int[] edge : graph[cur]) {
+                int nCost = edge[1];
+                int nNode = edge[0];
+                if (dist[nNode] > nCost + cost) {
+                    dist[nNode] = nCost + cost;
+                    pq.offer(new int[]{dist[nNode], nNode});
                 }
             }
         }
