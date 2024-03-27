@@ -32,6 +32,7 @@ class Graph {
     public int shortestPath(int node1, int node2) {
         PriorityQueue<int[]> pq = new PriorityQueue<int[]>((a, b) -> a[0] - b[0]);
         int[] dist = new int[graph.length];
+        boolean[] visit = new boolean[graph.length];
         Arrays.fill(dist, Integer.MAX_VALUE);
         dist[node1] = 0;
         pq.offer(new int[]{0, node1});
@@ -39,6 +40,8 @@ class Graph {
             int[] polled = pq.poll();
             int cost = polled[0];
             int cur = polled[1];
+            if (visit[cur]) continue;
+            visit[cur] = true;
             if (cur == node2) return cost;
             for (int[] edge : graph[cur]) {
                 int nCost = edge[1];
