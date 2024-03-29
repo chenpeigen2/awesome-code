@@ -155,6 +155,32 @@ public class Solution {
         System.arraycopy(newArr, 0, nums, 0, len);
     }
 
+    public int maxProfit(int[] prices) {
+        int min = prices[0];
+
+        int res = 0;
+        for (int price : prices) {
+            res = Math.max(res, price - min);
+            min = Math.min(min, price);
+        }
+        return res;
+    }
+
+    //    https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii/?envType=study-plan-v2&envId=top-interview-150
+    public int maxProfit1(int[] prices) {
+        int res = 0;
+
+        int prev = prices[0];
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prev) {
+                res += (prices[i] - prev);
+            }
+            prev = prices[i];
+        }
+
+        return res;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
