@@ -29,6 +29,6 @@ public class Solution {
     }
 
     public int firstDayBeenInAllRooms(int[] nextVisit) {
-
+        return -1;
     }
 }
