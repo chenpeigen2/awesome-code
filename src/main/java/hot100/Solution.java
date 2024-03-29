@@ -118,4 +118,29 @@ public class Solution {
         return left + 1;
     }
 
+    // you can change the 2 -> 1
+    //    https://leetcode.cn/problems/remove-duplicates-from-sorted-array-ii/?envType=study-plan-v2&envId=top-interview-150
+    public int removeDuplicates1(int[] nums) {
+        int n = nums.length;
+        if (n <= 2) {
+            return n;
+        }
+
+        int slow = 2, fast = 2;
+
+        while (fast < n) {
+            if (nums[slow - 2] != nums[fast]) {
+                nums[slow] = nums[fast];
+                slow++;
+            }
+            fast++;
+        }
+        return slow;
+    }
+
+    public static void main(String[] args) {
+        var app = new Solution();
+        app.removeDuplicates1(new int[]{2, 2, 2, 3});
+    }
+
 }
