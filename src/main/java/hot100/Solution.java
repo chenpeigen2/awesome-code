@@ -138,6 +138,12 @@ public class Solution {
         return slow;
     }
 
+    //    https://leetcode.cn/problems/majority-element/?envType=study-plan-v2&envId=top-interview-150
+    public int majorityElement(int[] nums) {
+        Arrays.sort(nums);
+        return nums[nums.length / 2];
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
