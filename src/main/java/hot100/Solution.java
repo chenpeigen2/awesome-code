@@ -144,6 +144,17 @@ public class Solution {
         return nums[nums.length / 2];
     }
 
+    //    https://leetcode.cn/problems/rotate-array/?envType=study-plan-v2&envId=top-interview-150
+    public void rotate(int[] nums, int k) {
+        int len = nums.length;
+        k = k % len;
+        int[] newArr = new int[len];
+        for (int i = 0; i < len; i++) {
+            newArr[(i + (k)) % len] = nums[i];
+        }
+        System.arraycopy(newArr, 0, nums, 0, len);
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
