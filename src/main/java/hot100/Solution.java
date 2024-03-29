@@ -81,4 +81,41 @@ public class Solution {
         }
     }
 
+    public int removeElement(int[] nums, int val) {
+//        int l = 0;
+//        int r = nums.length;
+//
+//
+//        while (l < r) {
+//            if (nums[l] == val) {
+//                nums[l] = nums[r - 1];
+//                r--;
+//            } else {
+//                l++;
+//            }
+//        }
+//        return l;
+
+        int left = 0;
+        for (int right = 0; right < nums.length; right++) {
+            if (nums[right] != val) {
+                nums[left] = nums[right];
+                left++;
+            }
+        }
+        return left;
+    }
+
+    //    https://leetcode.cn/problems/remove-duplicates-from-sorted-array/?envType=study-plan-v2&envId=top-interview-150
+    public int removeDuplicates(int[] nums) {
+        int left = 0;
+
+        for (int right = 0; right < nums.length; right++) {
+            if (nums[left] == nums[right]) continue;
+            nums[++left] = nums[right];
+        }
+
+        return left + 1;
+    }
+
 }
