@@ -4,29 +4,29 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class Solution {
+    //    https://leetcode.cn/problems/verify-preorder-serialization-of-a-binary-tree/description/?envType=daily-question&envId=2024-03-31
     public boolean isValidSerialization(String preorder) {
-        int n = preorder.length();
+        int len = preorder.length();
         int i = 0;
         Deque<Integer> stack = new ArrayDeque<>();
         stack.push(1);
-
-        while (i < n) {
+        while (i < len) {
             if (stack.isEmpty()) return false;
             if (preorder.charAt(i) == ',') {
                 i++;
             } else if (preorder.charAt(i) == '#') {
-                int top = stack.pop() - 1;
-                if (top > 0) {
-                    stack.push(top);
+                int pop = stack.pop() - 1;
+                if (pop > 0) {
+                    stack.push(pop);
                 }
                 i++;
             } else {
-                while (i < n && preorder.charAt(i) != ',') {
+                while (i < len && preorder.charAt(i) != ',') {
                     i++;
                 }
-                int top = stack.pop() - 1;
-                if (top > 0) {
-                    stack.push(top);
+                int pop = stack.pop() - 1;
+                if (pop > 0) {
+                    stack.push(pop);
                 }
                 stack.push(2);
             }
