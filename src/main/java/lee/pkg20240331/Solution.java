@@ -16,30 +16,27 @@ public class Solution {
                 i++;
             } else if (preorder.charAt(i) == '#') {
                 int top = stack.pop() - 1;
-
                 if (top > 0) {
                     stack.push(top);
                 }
-
                 i++;
             } else {
                 while (i < n && preorder.charAt(i) != ',') {
                     i++;
                 }
-
                 int top = stack.pop() - 1;
-
                 if (top > 0) {
                     stack.push(top);
                 }
-
-
                 stack.push(2);
             }
         }
-
-
         return stack.isEmpty();
+    }
 
+    public static void main(String[] args) {
+        var preorder = "9,#,92,#,#";
+        var solution = new Solution();
+        solution.isValidSerialization(preorder);
     }
 }
