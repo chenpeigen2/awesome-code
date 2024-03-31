@@ -5,6 +5,9 @@ import java.util.Deque;
 
 public class Solution {
     //    https://leetcode.cn/problems/verify-preorder-serialization-of-a-binary-tree/description/?envType=daily-question&envId=2024-03-31
+
+    // 一个槽位可以被看作「当前二叉树中正在等待被节点填充」的那些位置。
+
     public boolean isValidSerialization(String preorder) {
         int len = preorder.length();
         int i = 0;
