@@ -34,6 +34,19 @@ public class Solution {
         return stack.isEmpty();
     }
 
+    public boolean isValidSerialization1(String preorder) {
+        String[] arr = preorder.split(",");
+        Deque<String> stack = new ArrayDeque<>();
+        for (int i = 0; i < arr.length; i++) {
+            stack.push(arr[i]);
+//            while len(stack) >= 3 and stack[-1] == stack[-2] == '#' and stack[-3] != '#':
+//            stack.pop(), stack.pop(), stack.pop()
+//            stack.append('#')
+        }
+
+        return stack.size() == 1 && "#".equals(stack.peek());
+    }
+
     public static void main(String[] args) {
         var preorder = "9,#,92,#,#";
         var solution = new Solution();
