@@ -48,4 +48,33 @@ public class Solution {
         }
         return tmpHead;
     }
+
+    public List<TreeNode> allPossibleFBT1(int n) {
+        if (n % 2 == 0) {
+            return new ArrayList<>();
+        }
+
+        List<TreeNode>[] dp = new List[n + 1];
+        for (int i = 0; i <= n; i++) {
+            dp[i] = new ArrayList<>();
+        }
+
+        dp[1].add(new TreeNode(0));
+
+        for (int i = 3; i <= n; i += 2) {
+            for (int j = 1; j < i; j += 2) {
+                for (TreeNode leftSubtree : dp[j]) {
+                    for (TreeNode rightSubtrees : dp[i - j - 1]) {
+                        TreeNode root = new TreeNode(0, leftSubtree, rightSubtrees);
+                        dp[i].add(root);
+                    }
+                }
+            }
+        }
+
+        return dp[n];
+
+    }
+
+
 }
