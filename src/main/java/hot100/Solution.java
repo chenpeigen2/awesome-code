@@ -191,6 +191,41 @@ public class Solution {
         return true;
     }
 
+    //    https://leetcode.cn/problems/jump-game-ii/?envType=study-plan-v2&envId=top-interview-150
+
+//    int jump(vector<int>& nums) {
+//        int n=nums.size();
+//        vector<int>v(n);
+//        for(int i=0;i<n-1;i++){
+//            int border=(nums[i]+i)>=n?n-1:nums[i]+i;
+//            for(int j=i+1;j<=border;j++){
+//                if(v[j]==0||v[i]+1<v[j]){
+//                    v[j]=v[i]+1;
+//                }
+//            }
+//        }
+//        return v[n-1];
+//    }
+
+    public int jump(int[] nums) {
+        int length = nums.length;
+        // 记录所用步数
+        int steps = 0;
+        // 记录在边界范围内，能跳跃的最远位置的下标
+        int maxPosition = 0;
+        // 记录在边界范围内，能跳跃的最远位置的下标
+        int end = 0;
+        for (int i = 0; i < length - 1; i++) {
+            maxPosition = Math.max(maxPosition, i + nums[i]);
+            if (i == end) {
+                end = maxPosition;
+                steps++;
+            }
+        }
+
+        return steps;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
