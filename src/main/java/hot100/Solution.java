@@ -207,6 +207,7 @@ public class Solution {
 //        return v[n-1];
 //    }
 
+    // 每次在上次能跳到的范围（end）内选择一个能跳的最远的位置（也就是能跳到max_far位置的点）作为下次的起跳点 ！
     public int jump(int[] nums) {
         int length = nums.length;
         // 记录所用步数
