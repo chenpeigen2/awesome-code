@@ -290,6 +290,25 @@ public class Solution {
      * int param_3 = obj.getRandom();
      */
 
+//    https://leetcode.cn/problems/product-of-array-except-self/?envType=study-plan-v2&envId=top-interview-150
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] sum = new int[n];
+        Arrays.fill(sum, 1);
+        int beforeSum = 1;
+        int afterSum = 1;
+        for (int i = 0, j = n - 1; i < n; i++, j--) {
+
+            sum[i] *= beforeSum;
+            sum[j] *= afterSum;
+
+            beforeSum *= nums[i];
+            afterSum *= nums[j];
+        }
+
+        return sum;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
