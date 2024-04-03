@@ -245,6 +245,51 @@ public class Solution {
         return h;
     }
 
+    //    https://leetcode.cn/problems/insert-delete-getrandom-o1/description/?envType=study-plan-v2&envId=top-interview-150
+    class RandomizedSet {
+
+        static int[] nums = new int[200010];
+
+        Random r = new Random();
+        Map<Integer, Integer> m = new HashMap<>();
+        int idx = -1;
+
+        public RandomizedSet() {
+        }
+
+        /**
+         * @param val the key we should input
+         * @return true if succeed
+         */
+        public boolean insert(int val) {
+            if (m.containsKey(val)) return false;
+            nums[++idx] = val;
+            m.put(val, idx);
+            return true;
+        }
+
+        public boolean remove(int val) {
+            if (!m.containsKey(val)) return false;
+            int loc = m.remove(val); // the idx the val hold
+            // value -- > index
+            if (loc != idx) m.put(nums[idx], loc); // not the last, then put the map last insert-value into the loc
+            nums[loc] = nums[idx--]; // index --> value
+            return true;
+        }
+
+        public int getRandom() {
+            return nums[r.nextInt(idx + 1)];
+        }
+    }
+
+    /**
+     * Your RandomizedSet object will be instantiated and called as such:
+     * RandomizedSet obj = new RandomizedSet();
+     * boolean param_1 = obj.insert(val);
+     * boolean param_2 = obj.remove(val);
+     * int param_3 = obj.getRandom();
+     */
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
