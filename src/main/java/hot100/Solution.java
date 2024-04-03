@@ -227,6 +227,19 @@ public class Solution {
         return steps;
     }
 
+    //    https://leetcode.cn/problems/h-index/?envType=study-plan-v2&envId=top-interview-150
+    public int hIndex(int[] citations) {
+        Arrays.sort(citations);
+        int len = citations.length;
+        int h = 0;
+        for (int i = len - 1; i >= 0 && citations[i] > h; ) {
+            h++;
+            i--;
+        }
+
+        return h;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
