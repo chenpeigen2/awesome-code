@@ -232,9 +232,14 @@ public class Solution {
         Arrays.sort(citations);
         int len = citations.length;
         int h = 0;
-        for (int i = len - 1; i >= 0 && citations[i] > h; ) {
-            h++;
-            i--;
+//        for (int i = len - 1; i >= 0 && citations[i] > h; ) {
+//            h++;
+//            i--;
+//        }
+        for (int i = len - 1; i >= 0; i--) {
+            if (citations[i] >= len - i) {
+                h++;
+            }
         }
 
         return h;
