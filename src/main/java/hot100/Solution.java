@@ -391,6 +391,8 @@ public class Solution {
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
+        int ans = app.romanToInt("IV");
+        System.out.println(ans);
     }
 
 }
