@@ -309,6 +309,46 @@ public class Solution {
         return sum;
     }
 
+    //    https://leetcode.cn/problems/gas-station/?envType=study-plan-v2&envId=top-interview-150
+//    public int canCompleteCircuit(int[] gas, int[] cost) {
+//        int len = gas.length;
+//        int[] offset = new int[len];
+//        for (int i = 0; i < len; i++) {
+//            offset[i] = gas[i] - cost[i];
+//        }
+//        int idx = -1;
+//        int sum = 0;
+//        for (int i = 0; i < len; i++) {
+//            sum += offset[i];
+//            if (offset[i] > 0 && idx == -1) {
+//                idx = i;
+//            }
+//        }
+//
+//        return sum >= 0 ? idx : -1;
+//    }
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        int start = -1;
+        int gasSum = 0;
+        int costSum = 0;
+
+        for (int i = 0, suffixSum = 0; i < gas.length; i++) {
+            gasSum += gas[i];
+            costSum += cost[i];
+            suffixSum += gas[i] - cost[i];
+
+            if (suffixSum < 0) {
+                start = -1;
+                suffixSum = 0;
+            } else {
+                if (start == -1) start = i;
+            }
+        }
+
+        return costSum > gasSum ? -1 : start;
+    }
+
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
