@@ -9,11 +9,8 @@ public class ThroneInheritance {
     private Set<String> dead = new HashSet<>();
     private Map<String, List<String>> g = new HashMap<>();
 
-    private List<String> ans = new ArrayList<>();
-
-
     public ThroneInheritance(String kingName) {
-        kingName = kingName;
+        king = kingName;
     }
 
     public void birth(String parentName, String childName) {
@@ -25,17 +22,17 @@ public class ThroneInheritance {
     }
 
     public List<String> getInheritanceOrder() {
-        ans.clear();
-        dfs(king);
+        List<String> ans = new ArrayList<>();
+        dfs(ans, king);
         return ans;
     }
 
-    private void dfs(String x) {
+    private void dfs(List<String> ans, String x) {
         if (!dead.contains(x)) {
             ans.add(x);
         }
         for (String y : g.getOrDefault(x, List.of())) {
-            dfs(y);
+            dfs(ans, y);
         }
     }
 }
