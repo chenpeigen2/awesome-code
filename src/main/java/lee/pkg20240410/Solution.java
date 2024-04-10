@@ -38,4 +38,21 @@ public class Solution {
         }
         return new String(s);
     }
+
+    // https://leetcode.cn/problems/integer-to-roman/description/?envType=study-plan-v2&envId=top-interview-150
+    public String intToRoman(int num) {
+        int[] numArr = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] str = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        StringBuilder sb = new StringBuilder();
+        while (num > 0) {
+            for (int i = 0; i < numArr.length; i++) {
+                if (numArr[i] <= num) {
+                    sb.append(str[i]);
+                    num -= numArr[i];
+                    break;
+                }
+            }
+        }
+        return sb.toString();
+    }
 }
