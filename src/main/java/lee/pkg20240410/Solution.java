@@ -1,5 +1,6 @@
 package lee.pkg20240410;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -97,6 +98,27 @@ public class Solution {
         List<String> wordList = Arrays.asList(s.split("\\s+"));
         Collections.reverse(wordList);
         return String.join(" ", wordList);
+    }
+
+    //    https://leetcode.cn/problems/zigzag-conversion/description/?envType=study-plan-v2&envId=top-interview-150
+    public String convert(String s, int numRows) {
+        if (numRows < 2) return s;
+        List<StringBuilder> rows = new ArrayList<StringBuilder>();
+        for (int i = 0; i < numRows; i++) rows.add(new StringBuilder());
+        int i = 0, flag = -1;
+        for (char c : s.toCharArray()) {
+            rows.get(i).append(c);
+            if (i == 0 || i == numRows - 1) flag = -flag;
+            i += flag;
+        }
+        StringBuilder res = new StringBuilder();
+        for (StringBuilder row : rows) res.append(row);
+        return res.toString();
+    }
+
+    //    https://leetcode.cn/problems/find-the-index-of-the-first-occurrence-in-a-string/?envType=study-plan-v2&envId=top-interview-150
+    public int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
     }
 
 }
