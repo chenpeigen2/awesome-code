@@ -56,5 +56,36 @@ public class Solution {
         return sb.toString();
     }
 
+    //    https://leetcode.cn/problems/length-of-last-word/?envType=study-plan-v2&envId=top-interview-150
+    public int lengthOfLastWord(String s) {
+        int ans = 0;
+        int len = s.length();
+        boolean entered = false;
+        for (int i = len - 1; i >= 0; i--) {
+            if (!entered && s.charAt(i) == ' ') continue;
+            if (s.charAt(i) != ' ') {
+                entered = true;
+                ans++;
+            } else {
+                return ans;
+            }
+        }
+        return ans;
+    }
+
+    //    https://leetcode.cn/problems/longest-common-prefix/?envType=study-plan-v2&envId=top-interview-150
+    public String longestCommonPrefix(String[] strs) {
+        String s = strs[0];
+        for (String str : strs) {
+            while (true) {
+                if (!str.startsWith(s)) {
+                    s = s.substring(0, s.length() - 1);
+                } else {
+                    break;
+                }
+            }
+        }
+        return s;
+    }
 
 }
