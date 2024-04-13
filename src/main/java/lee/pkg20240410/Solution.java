@@ -143,4 +143,15 @@ public class Solution {
         return true;
     }
 
+    //    https://leetcode.cn/problems/is-subsequence/?envType=study-plan-v2&envId=top-interview-150
+    public boolean isSubsequence(String s, String t) {
+        int idx = 0;
+        int len = s.length();
+        for (int i = 0; i < t.length(); i++) {
+            if (idx >= len) break;
+            if (s.charAt(idx) == t.charAt(i)) idx++;
+        }
+        return idx >= len;
+    }
+
 }
