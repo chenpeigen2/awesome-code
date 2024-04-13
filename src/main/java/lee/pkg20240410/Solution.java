@@ -211,4 +211,22 @@ public class Solution {
         return ans;
     }
 
+    //    https://leetcode.cn/problems/container-with-most-water/?envType=study-plan-v2&envId=top-interview-150
+    public int maxArea(int[] height) {
+        int left = 0;
+        int right = height.length - 1;
+        int area = 0;
+        while (left < right) {
+            int tmp = (right - left) * Math.min(height[left], height[right]);
+            area = Math.max(area, tmp);
+            if (height[left] > height[right]) {
+                right--;
+            } else {
+                left++;
+            }
+        }
+
+        return area;
+    }
+
 }
