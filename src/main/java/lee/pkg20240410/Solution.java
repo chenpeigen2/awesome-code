@@ -262,4 +262,16 @@ public class Solution {
         return max;
     }
 
+    //    https://leetcode.cn/problems/ransom-note/?envType=study-plan-v2&envId=top-interview-150
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[] arr = new int[26];
+        for (char character : magazine.toCharArray()) {
+            arr[character - 'a']++;
+        }
+        for (char character : ransomNote.toCharArray()) {
+            if ((--arr[character - 'a']) < 0) return false;
+        }
+        return true;
+    }
+
 }
