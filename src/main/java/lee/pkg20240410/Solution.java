@@ -274,4 +274,20 @@ public class Solution {
         return true;
     }
 
+    //    https://leetcode.cn/problems/isomorphic-strings/?envType=study-plan-v2&envId=top-interview-150
+    public boolean isIsomorphic(String s, String t) {
+        Map<Character, Character> s2t = new HashMap<Character, Character>();
+        Map<Character, Character> t2s = new HashMap<Character, Character>();
+        int len = s.length();
+
+        for (int i = 0; i < len; i++) {
+            char x = s.charAt(i), y = t.charAt(i);
+            if (!(s2t.getOrDefault(x, y) == y && t2s.getOrDefault(y, x) == x)) return false;
+            s2t.put(x, y);
+            t2s.put(y, x);
+        }
+
+        return true;
+    }
+
 }
