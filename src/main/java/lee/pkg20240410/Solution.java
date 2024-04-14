@@ -1,9 +1,6 @@
 package lee.pkg20240410;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Solution {
     //    https://leetcode.cn/problems/maximum-binary-string-after-change/description/?envType=daily-question&envId=2024-04-10
@@ -245,6 +242,24 @@ public class Solution {
             }
         }
         return ans == Integer.MAX_VALUE ? 0 : ans;
+    }
+
+    //    https://leetcode.cn/problems/longest-substring-without-repeating-characters/?envType=study-plan-v2&envId=top-interview-150
+    public int lengthOfLongestSubstring(String s) {
+        if (s.length() == 0) return 0;
+        Map<Character, Integer> map = new HashMap<>();
+        int max = 0;
+        int left = 0;
+        int right = 0;
+        while (right < s.length()) {
+            if (map.containsKey(s.charAt(right))) {
+                left = Math.max(left, map.get(s.charAt(right)) + 1); // move to new left
+            }
+            map.put(s.charAt(right), right);
+            max = Math.max(max, right - left + 1);
+            right++;
+        }
+        return max;
     }
 
 }
