@@ -407,6 +407,18 @@ public class Solution {
         return true;
     }
 
+    //    https://leetcode.cn/problems/valid-anagram/?envType=study-plan-v2&envId=top-interview-150
+    public boolean isAnagram(String s, String t) {
+        int[] arr = new int[26];
+        for (char ch : s.toCharArray()) {
+            arr[ch - 'a']++;
+        }
+        for (char ch : t.toCharArray()) {
+            arr[ch - 'a']--;
+            if (arr[ch-'a'] < 0) return false;
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
         var app = new Solution();
