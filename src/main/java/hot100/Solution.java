@@ -387,6 +387,26 @@ public class Solution {
         }
     }
 
+    //    https://leetcode.cn/problems/word-pattern/?envType=study-plan-v2&envId=top-interview-150
+    public boolean wordPattern(String pattern, String s) {
+        HashMap<Character, String> map = new HashMap<>();
+        int len = pattern.length();
+        String[] str = s.split(" ");
+        if (len != str.length) return false;
+        for (int i = 0; i < len; i++) {
+            char key = pattern.charAt(i);
+            if (!map.containsKey(key)) {
+                if (map.containsValue(str[i])) {
+                    return false;
+                }
+                map.put(key, str[i]);
+            } else if (!map.get(key).equals(str[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public static void main(String[] args) {
         var app = new Solution();
