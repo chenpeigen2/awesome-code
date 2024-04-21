@@ -440,6 +440,21 @@ public class Solution {
         return totalSum;
     }
 
+    //    https://leetcode.cn/problems/contains-duplicate-ii/?envType=study-plan-v2&envId=top-interview-150
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        Set<Integer> s = new HashSet<>();
+        int len = nums.length;
+//        0 1 2 3 4
+        // idx4 and will remove idx0 k = 3
+        for (int i = 0; i < len; i++) {
+            if (i > k) {
+                s.remove(nums[i - k - 1]);
+            }
+            if (!s.add(nums[i])) return true;
+        }
+        return false;
+    }
+
 
     public static void main(String[] args) {
         var app = new Solution();
