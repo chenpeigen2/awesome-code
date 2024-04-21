@@ -415,10 +415,31 @@ public class Solution {
         }
         for (char ch : t.toCharArray()) {
             arr[ch - 'a']--;
-            if (arr[ch-'a'] < 0) return false;
+            if (arr[ch - 'a'] < 0) return false;
         }
         return true;
     }
+
+    //    https://leetcode.cn/problems/happy-number/?envType=study-plan-v2&envId=top-interview-150
+    public boolean isHappy(int n) {
+        Set<Integer> seen = new HashSet<>();
+        while (n != 1 && !seen.contains(n)) {
+            seen.add(n);
+            n = getNext(n);
+        }
+        return n == 1;
+    }
+
+    private int getNext(int n) {
+        int totalSum = 0;
+        while (n > 0) {
+            int d = n % 10;
+            n /= 10;
+            totalSum += d * d;
+        }
+        return totalSum;
+    }
+
 
     public static void main(String[] args) {
         var app = new Solution();
