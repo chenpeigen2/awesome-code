@@ -488,6 +488,19 @@ public class Solution {
         return root;
     }
 
+    //    https://leetcode.cn/problems/symmetric-tree/?envType=study-plan-v2&envId=top-interview-150
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        return dfsIsSymmetric(root.left, root.right);
+    }
+
+    private boolean dfsIsSymmetric(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        if (left.val != right.val) return false;
+        return dfsIsSymmetric(left.left, right.right) && dfsIsSymmetric(left.right, right.left);
+    }
+
 
     public static void main(String[] args) {
         var app = new Solution();
