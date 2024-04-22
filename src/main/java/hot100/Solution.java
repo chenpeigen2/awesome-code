@@ -462,7 +462,7 @@ public class Solution {
         return Math.max(maxDepth(root.right), maxDepth(root.left)) + 1;
     }
 
-
+    //    https://leetcode.cn/problems/same-tree/description/?envType=study-plan-v2&envId=top-interview-150
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null || q == null) {
             if (p == null && q == null) return true;
@@ -472,6 +472,20 @@ public class Solution {
         boolean l = isSameTree(p.left, q.left);
         boolean r = isSameTree(p.right, q.right);
         return l & r;
+    }
+
+    //    https://leetcode.cn/problems/invert-binary-tree/description/?envType=study-plan-v2&envId=top-interview-150
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) return null;
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+
+        root.left = right;
+        root.right = left;
+
+        invertTree(root.left);
+        invertTree(root.right);
+        return root;
     }
 
 
