@@ -456,6 +456,23 @@ public class Solution {
     }
 
     // here we need to deal with the tree problem
+//    https://leetcode.cn/problems/maximum-depth-of-binary-tree/description/?envType=study-plan-v2&envId=top-interview-150
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+        return Math.max(maxDepth(root.right), maxDepth(root.left)) + 1;
+    }
+
+
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if (p == null || q == null) {
+            if (p == null && q == null) return true;
+            return false;
+        }
+        if (p.val != q.val) return false;
+        boolean l = isSameTree(p.left, q.left);
+        boolean r = isSameTree(p.right, q.right);
+        return l & r;
+    }
 
 
     public static void main(String[] args) {
