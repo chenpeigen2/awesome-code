@@ -69,3 +69,5 @@ include("vertx:vertx-web")
 findProject(":vertx:vertx-web")?.name = "vertx-web"
 include("explore:jsqlparser")
 findProject(":explore:jsqlparser")?.name = "jsqlparser"
+include("explore:snappy")
+findProject(":explore:snappy")?.name = "snappy"
