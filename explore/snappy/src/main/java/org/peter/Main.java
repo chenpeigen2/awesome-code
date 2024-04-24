@@ -1,5 +1,9 @@
 package org.peter;
 
+import org.xerial.snappy.BitShuffle;
+import org.xerial.snappy.Snappy;
+
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class Main {
@@ -12,6 +16,22 @@ public class Main {
 
         System.out.println(compressed.length);
         System.out.println(uncompressed.length);
+        System.out.println(result);
+
+        try {
+            bitShuffle();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    static void bitShuffle() throws IOException {
+
+        int[] data = new int[]{1, 3, 34, 43, 34};
+        byte[] shuffledByteArray = BitShuffle.shuffle(data);
+        byte[] compressed = Snappy.compress(shuffledByteArray);
+        byte[] uncompressed = Snappy.uncompress(compressed);
+        int[] result = BitShuffle.unshuffleIntArray(uncompressed);
         System.out.println(result);
     }
 }
