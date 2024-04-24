@@ -509,9 +509,7 @@ public class Solution {
         while (i < n) {
             int low = i;
             i++;
-            while (i < n && nums[i] == nums[i - 1] + 1) {
-                i++;
-            }
+            while (i < n && nums[i] == nums[i - 1] + 1) i++;
             int high = i - 1;
             StringBuilder temp = new StringBuilder(Integer.toString(nums[low]));
             if (low < high) {
