@@ -501,6 +501,28 @@ public class Solution {
         return dfsIsSymmetric(left.left, right.right) && dfsIsSymmetric(left.right, right.left);
     }
 
+    //    https://leetcode.cn/problems/summary-ranges/?envType=study-plan-v2&envId=top-interview-150
+    public List<String> summaryRanges(int[] nums) {
+        List<String> ret = new ArrayList<>();
+        int i = 0;
+        int n = nums.length;
+        while (i < n) {
+            int low = i;
+            i++;
+            while (i < n && nums[i] == nums[i - 1] + 1) {
+                i++;
+            }
+            int high = i - 1;
+            StringBuilder temp = new StringBuilder(Integer.toString(nums[low]));
+            if (low < high) {
+                temp.append("->");
+                temp.append(Integer.toString(nums[high]));
+            }
+            ret.add(temp.toString());
+        }
+        return ret;
+    }
+
 
     public static void main(String[] args) {
         var app = new Solution();
