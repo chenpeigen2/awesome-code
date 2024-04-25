@@ -71,3 +71,5 @@ include("explore:jsqlparser")
 findProject(":explore:jsqlparser")?.name = "jsqlparser"
 include("explore:snappy")
 findProject(":explore:snappy")?.name = "snappy"
+include("explore:Kryo")
+findProject(":explore:Kryo")?.name = "Kryo"
