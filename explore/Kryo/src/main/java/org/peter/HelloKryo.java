@@ -9,6 +9,17 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 public class HelloKryo {
+
+
+    static private final ThreadLocal<Kryo> kryos = new ThreadLocal<>(){
+        @Override
+        protected Kryo initialValue() {
+            Kryo kryo = new Kryo();
+            return kryo;
+        }
+    };
+
+
     public static void main(String[] args) throws FileNotFoundException {
         Kryo kryo = new Kryo();
         kryo.register(SomeClass.class);
