@@ -73,3 +73,5 @@ include("explore:snappy")
 findProject(":explore:snappy")?.name = "snappy"
 include("explore:Kryo")
 findProject(":explore:Kryo")?.name = "Kryo"
+include("explore:calcite-tutorial")
+findProject(":explore:calcite-tutorial")?.name = "calcite-tutorial"
