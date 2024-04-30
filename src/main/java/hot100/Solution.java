@@ -521,6 +521,30 @@ public class Solution {
         return ret;
     }
 
+    //    https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/?envType=study-plan-v2&envId=top-interview-150
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int preLen = preorder.length;
+        int inLen = inorder.length;
+        if (preLen != inLen) throw new RuntimeException("Incorrect input data");
+        return buildTree(preorder, 0, preLen - 1, inorder, 0, inLen - 1);
+    }
+
+    private TreeNode buildTree(int[] preorder, int preLeft, int preRight,
+                               int[] inorder, int inLeft, int inRight) {
+        if (preLeft > preRight || inLeft > inRight) return null;
+        int pivot = preorder[preLeft];
+        TreeNode root = new TreeNode(pivot);
+
+        int pivotIndex = inLeft;
+        while (inorder[pivotIndex] != pivot) pivotIndex++;
+
+        root.left = buildTree(preorder, preLeft + 1, pivotIndex - inLeft + preLeft, inorder, inLeft, pivotIndex - 1);
+        root.right = buildTree(preorder, pivotIndex - inLeft + preLeft + 1, preRight, inorder, pivotIndex + 1, inRight);
+
+        return root;
+
+    }
+
 
     public static void main(String[] args) {
         var app = new Solution();
