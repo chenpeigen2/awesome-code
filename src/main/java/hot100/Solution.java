@@ -567,6 +567,21 @@ public class Solution {
         return node;
     }
 
+//    https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/description/?envType=study-plan-v2&envId=top-interview-150
+    public void flatten(TreeNode root) {
+        while (root != null) {
+            if (root.left == null) root = root.right;
+            else {
+                TreeNode pre = root.left;
+                while (pre.right != null) pre = pre.right;
+                pre.right = root.right;
+
+                root.right = root.left;
+                root.left = null;
+                root = root.right;
+            }
+        }
+    }
 
     public static void main(String[] args) {
         var app = new Solution();
