@@ -583,6 +583,26 @@ public class Solution {
         }
     }
 
+//    https://leetcode.cn/problems/average-of-levels-in-binary-tree/description/?envType=study-plan-v2&envId=top-interview-150
+    public List<Double> averageOfLevels(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        List<Double> ret = new ArrayList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int sz = queue.size();
+            double avg = 0;
+            for (int i = 0;i < sz;i++) {
+                TreeNode node =  queue.poll();
+                avg += node.val;
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+            avg /= sz;
+            ret.add(avg);
+        }
+        return ret;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
