@@ -567,7 +567,7 @@ public class Solution {
         return node;
     }
 
-//    https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/description/?envType=study-plan-v2&envId=top-interview-150
+    //    https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/description/?envType=study-plan-v2&envId=top-interview-150
     public void flatten(TreeNode root) {
         while (root != null) {
             if (root.left == null) root = root.right;
@@ -583,7 +583,7 @@ public class Solution {
         }
     }
 
-//    https://leetcode.cn/problems/average-of-levels-in-binary-tree/description/?envType=study-plan-v2&envId=top-interview-150
+    //    https://leetcode.cn/problems/average-of-levels-in-binary-tree/description/?envType=study-plan-v2&envId=top-interview-150
     public List<Double> averageOfLevels(TreeNode root) {
         Queue<TreeNode> queue = new ArrayDeque<>();
         List<Double> ret = new ArrayList<>();
@@ -591,8 +591,8 @@ public class Solution {
         while (!queue.isEmpty()) {
             int sz = queue.size();
             double avg = 0;
-            for (int i = 0;i < sz;i++) {
-                TreeNode node =  queue.poll();
+            for (int i = 0; i < sz; i++) {
+                TreeNode node = queue.poll();
                 avg += node.val;
                 if (node.left != null) queue.offer(node.left);
                 if (node.right != null) queue.offer(node.right);
@@ -603,7 +603,7 @@ public class Solution {
         return ret;
     }
 
-//    https://leetcode.cn/problems/binary-tree-right-side-view/?envType=study-plan-v2&envId=top-interview-150
+    //    https://leetcode.cn/problems/binary-tree-right-side-view/?envType=study-plan-v2&envId=top-interview-150
     public List<Integer> rightSideView(TreeNode root) {
         Queue<TreeNode> queue = new ArrayDeque<>();
         List<Integer> ret = new ArrayList<>();
@@ -612,10 +612,9 @@ public class Solution {
         while (!queue.isEmpty()) {
             int sz = queue.size();
             double avg = 0;
-            for (int i = 0;i < sz;i++) {
-
-                TreeNode node =  queue.poll();
-                if (i == sz -1) {
+            for (int i = 0; i < sz; i++) {
+                TreeNode node = queue.poll();
+                if (i == sz - 1) {
                     ret.add(node.val);
                 }
                 if (node.left != null) queue.offer(node.left);
@@ -625,7 +624,7 @@ public class Solution {
         return ret;
     }
 
-//    https://leetcode.cn/problems/binary-tree-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
+    //    https://leetcode.cn/problems/binary-tree-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
     public List<List<Integer>> levelOrder(TreeNode root) {
         Queue<TreeNode> queue = new ArrayDeque<>();
         List<List<Integer>> ans = new ArrayList<>();
@@ -649,7 +648,7 @@ public class Solution {
         return ans;
     }
 
-//    https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
+    //    https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
         Queue<TreeNode> queue = new ArrayDeque<>();
         List<List<Integer>> ans = new ArrayList<>();
@@ -681,6 +680,28 @@ public class Solution {
             ans.add(l);
         }
         return ans;
+    }
+
+    //    https://leetcode.cn/problems/minimum-absolute-difference-in-bst/?envType=study-plan-v2&envId=top-interview-150
+
+    int pre;
+    int ans;
+
+    public int getMinimumDifference(TreeNode root) {
+        ans = Integer.MAX_VALUE;
+        pre = -1;
+        dfsGetMinimumDifference(root);
+        return ans;
+    }
+
+    private void dfsGetMinimumDifference(TreeNode root) {
+        if (root == null) return;
+        dfsGetMinimumDifference(root.left);
+        if (pre != -1) {
+            ans = Math.min(ans, root.val - pre);
+        }
+        pre = root.val;
+        dfsGetMinimumDifference(root.right);
     }
 
     public static void main(String[] args) {
