@@ -603,6 +603,28 @@ public class Solution {
         return ret;
     }
 
+//    https://leetcode.cn/problems/binary-tree-right-side-view/?envType=study-plan-v2&envId=top-interview-150
+    public List<Integer> rightSideView(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        List<Integer> ret = new ArrayList<>();
+        if (root == null) return ret;
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int sz = queue.size();
+            double avg = 0;
+            for (int i = 0;i < sz;i++) {
+
+                TreeNode node =  queue.poll();
+                if (i == sz -1) {
+                    ret.add(node.val);
+                }
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+        }
+        return ret;
+    }
+
 //    https://leetcode.cn/problems/binary-tree-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
     public List<List<Integer>> levelOrder(TreeNode root) {
         Queue<TreeNode> queue = new ArrayDeque<>();
