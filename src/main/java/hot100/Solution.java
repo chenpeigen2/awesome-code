@@ -705,6 +705,28 @@ public class Solution {
         dfsGetMinimumDifference(root.right);
     }
 
+    //    https://leetcode.cn/problems/kth-smallest-element-in-a-bst/?envType=study-plan-v2&envId=top-interview-150
+    int k;
+    int result;
+
+    public int kthSmallest(TreeNode root, int k) {
+        this.k = k;
+        middleOrder(root);
+        return result;
+    }
+
+    void middleOrder(TreeNode n) {
+        if (n == null) return;
+        middleOrder(n.left);
+        // get the root
+        k--;
+        if (k == 0) {
+            result = n.val;
+            return;
+        }
+        middleOrder(n.right);
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
