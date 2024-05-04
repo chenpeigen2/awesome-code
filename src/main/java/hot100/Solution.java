@@ -649,6 +649,40 @@ public class Solution {
         return ans;
     }
 
+//    https://leetcode.cn/problems/binary-tree-zigzag-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) return ans;
+        queue.offer(root);
+        Deque<Integer> stack = new ArrayDeque<>();
+        boolean asc = true;
+        while (!queue.isEmpty()) {
+            int len = queue.size();
+            List<Integer> l = new ArrayList<>();
+            for (int i = 0; i < len; i++) {
+                TreeNode node = queue.poll();
+                if (asc) {
+                    l.add(node.val);
+                } else {
+                    stack.push(node.val);
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            asc = !asc;
+            while (!stack.isEmpty()) {
+                l.add(stack.pop());
+            }
+            ans.add(l);
+        }
+        return ans;
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
