@@ -694,6 +694,7 @@ public class Solution {
         return ans;
     }
 
+    // 中序遍历肯定是保持递增有序的
     private void dfsGetMinimumDifference(TreeNode root) {
         if (root == null) return;
         dfsGetMinimumDifference(root.left);
