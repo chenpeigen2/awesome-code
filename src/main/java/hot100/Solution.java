@@ -739,6 +739,16 @@ public class Solution {
         return left && flag && right;
     }
 
+    //    https://leetcode.cn/problems/climbing-stairs/?envType=study-plan-v2&envId=top-interview-150
+    public int climbStairs(int n) {
+        int[] f = new int[n + 1];
+        f[0] = f[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            f[i] = f[i - 1] + f[i - 2];
+        }
+        return f[n];
+    }
+
     public static void main(String[] args) {
         var app = new Solution();
         app.removeDuplicates1(new int[]{2, 2, 2, 3});
