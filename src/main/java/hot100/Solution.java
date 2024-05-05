@@ -684,7 +684,7 @@ public class Solution {
 
     //    https://leetcode.cn/problems/minimum-absolute-difference-in-bst/?envType=study-plan-v2&envId=top-interview-150
 
-    int pre;
+    int pre = -1;
     int ans;
 
     public int getMinimumDifference(TreeNode root) {
@@ -725,6 +725,18 @@ public class Solution {
             return;
         }
         middleOrder(n.right);
+    }
+
+    //    https://leetcode.cn/problems/validate-binary-search-tree/?envType=study-plan-v2&envId=top-interview-150/
+    long preA = Long.MIN_VALUE;
+
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) return true;
+        boolean left = isValidBST(root.left);
+        boolean flag = root.val > preA;
+        preA = root.val;
+        boolean right = isValidBST(root.right);
+        return left && flag && right;
     }
 
     public static void main(String[] args) {
