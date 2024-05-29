@@ -27,4 +27,9 @@ public class 回溯 {
             Collections.swap(arr, first, i);
         }
     }
+
+    //    https://leetcode.cn/problems/subsets/?envType=study-plan-v2&envId=top-100-liked
+    public List<List<Integer>> subsets(int[] nums) {
+        return null;
+    }
 }
