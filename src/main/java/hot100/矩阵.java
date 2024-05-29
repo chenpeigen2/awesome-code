@@ -31,4 +31,9 @@ public class 矩阵 {
 
         return ans;
     }
+
+    //    https://leetcode.cn/problems/set-matrix-zeroes/?envType=study-plan-v2&envId=top-100-liked
+    public void setZeroes(int[][] matrix) {
+
+    }
 }
