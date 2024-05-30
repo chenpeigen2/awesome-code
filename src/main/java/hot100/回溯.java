@@ -32,4 +32,34 @@ public class 回溯 {
     public List<List<Integer>> subsets(int[] nums) {
         return null;
     }
+
+    //    https://leetcode.cn/problems/generate-parentheses/description/?envType=study-plan-v2&envId=top-100-liked
+    public List<String> generateParenthesis(int n) {
+        List<String> ans = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        backtract(ans, n, sb, 0, 0);
+        return ans;
+    }
+
+    void backtract(List<String> ans, int n, StringBuilder sb, int left, int right) {
+        if (sb.length() == n * 2) {
+            ans.add(sb.toString());
+            System.out.println(sb.toString());
+            return;
+        }
+        if (left < n) {
+            sb.append("(");
+            backtract(ans, n, sb, left + 1, right);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        if (right < left) { // 需要确保括号是有序的
+            sb.append(")");
+            backtract(ans, n, sb, left, right + 1);
+            sb.deleteCharAt(sb.length() - 1);
+        }
+    }
+
+
+
+
 }
