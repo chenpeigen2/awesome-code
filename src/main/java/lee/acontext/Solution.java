@@ -1,6 +1,19 @@
 package lee.acontext;
 
 public class Solution {
+
+    public int numberOfPairs(int[] nums1, int[] nums2, int k) {
+        int pair = 0;
+        for (int i = 0; i < nums1.length; i++) {
+            for (int j = 0; j < nums2.length; j++) {
+                if (nums1[i] % (nums2[j] * k) == 0) {
+                    pair++;
+                }
+            }
+        }
+        return pair;
+    }
+
     public String compressedString(String word) {
         StringBuilder sb = new StringBuilder();
         int len = word.length();
@@ -28,7 +41,7 @@ public class Solution {
 
     public static void main(String[] args) {
         var app = new Solution();
-        var ans = app.compressedString("abcde");
+        var ans = app.compressedString("aaaaaaaaaaaaaabb");
         System.out.println(ans);
     }
 }
