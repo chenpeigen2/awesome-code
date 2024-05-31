@@ -26,11 +26,6 @@ public class 回溯 {
         }
     }
 
-    //    https://leetcode.cn/problems/subsets/?envType=study-plan-v2&envId=top-100-liked
-    public List<List<Integer>> subsets(int[] nums) {
-        return null;
-    }
-
     //    https://leetcode.cn/problems/generate-parentheses/description/?envType=study-plan-v2&envId=top-100-liked
     public List<String> generateParenthesis(int n) {
         List<String> ans = new ArrayList<>();
@@ -78,6 +73,27 @@ public class 回溯 {
             path.push(candidates[i]);
             dfs(candidates, i, len, target - candidates[i], path, res);
             path.pop();
+        }
+    }
+
+    public List<List<Integer>> subsets(int[] nums) {
+        int len = nums.length;
+        List<List<Integer>> ans = new ArrayList<>();
+        if (len == 0) return ans;
+        Deque<Integer> stack = new ArrayDeque<>();
+        backTrack02(0, len, stack, 0, ans, nums);
+        return ans;
+    }
+
+    private void backTrack02(int start, int len, Deque<Integer> stack, int cnt, List<List<Integer>> ans, int[] nums) {
+        ans.add(new ArrayList<>(stack));
+        if (cnt == len) {
+            return;
+        }
+        for (int i = start; i < len; i++) {
+            stack.push(nums[i]);
+            backTrack02(i + 1, len, stack, cnt++, ans, nums);
+            stack.pop();
         }
     }
 
