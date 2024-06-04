@@ -30,4 +30,18 @@ public class 链表 {
         }
         return null;
     }
+
+    //    https://leetcode.cn/problems/reverse-linked-list/?envType=study-plan-v2&envId=top-100-liked
+    public ListNode reverseList(ListNode head) {
+        ListNode prefix = new ListNode(-1);
+        ListNode node = head;
+        while (node != null) {
+            ListNode next = node.next;
+            node.next = prefix.next;
+            prefix.next = node;
+            node = next;
+        }
+        return prefix.next;
+    }
+
 }
