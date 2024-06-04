@@ -146,4 +146,32 @@ public class 链表 {
         }
     }
 
+    //    https://leetcode.cn/problems/add-two-numbers/?envType=study-plan-v2&envId=top-100-liked
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode head = new ListNode(-1);
+        ListNode cur = head;
+
+        int left = 0;
+        while (l1 != null || l2 != null || left != 0) {
+            int v1 = 0;
+            if (l1 != null) {
+                v1 = l1.val;
+                l1 = l1.next;
+            }
+            int v2 = 0;
+            if (l2 != null) {
+                v2 = l2.val;
+                l2 = l2.next;
+            }
+            int value = v1 + v2 + left;
+            int c = value % 10;
+            left = value / 10;
+            ListNode tmp = new ListNode(c);
+            cur.next = tmp;
+            cur = cur.next;
+        }
+
+        return head.next;
+    }
+
 }
