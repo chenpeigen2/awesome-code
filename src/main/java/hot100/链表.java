@@ -93,4 +93,18 @@ public class 链表 {
         return null;
     }
 
+    public ListNode detectCycle(ListNode head, int pa) {
+        ListNode pos = head;
+        Set<ListNode> visited = new HashSet<ListNode>();
+        while (pos != null) {
+            if (visited.contains(pos)) {
+                return pos;
+            } else {
+                visited.add(pos);
+            }
+            pos = pos.next;
+        }
+        return null;
+    }
+
 }
