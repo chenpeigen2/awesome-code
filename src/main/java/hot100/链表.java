@@ -1,0 +1,33 @@
+package hot100;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class 链表 {
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+            next = null;
+        }
+    }
+
+    //    https://leetcode.cn/problems/intersection-of-two-linked-lists/description/?envType=study-plan-v2&envId=top-100-liked
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        ListNode node = headA;
+        Set<ListNode> set = new HashSet<>();
+        while (node != null) {
+            set.add(node);
+            node = node.next;
+        }
+        node = headB;
+        while (node != null) {
+            if (set.contains(node)) return node;
+            node = node.next;
+        }
+        return null;
+    }
+}
