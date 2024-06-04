@@ -44,4 +44,15 @@ public class 链表 {
         return prefix.next;
     }
 
+    //    https://leetcode.cn/problems/palindrome-linked-list/?envType=study-plan-v2&envId=top-100-liked
+    public boolean isPalindrome(ListNode head) {
+        StringBuilder sb = new StringBuilder();
+        ListNode node = head;
+        while (node != null) {
+            sb.append(node.val);
+            node = node.next;
+        }
+        return sb.toString().contentEquals(sb.reverse());
+    }
+
 }
