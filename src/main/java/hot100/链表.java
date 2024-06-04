@@ -55,4 +55,18 @@ public class 链表 {
         return sb.toString().contentEquals(sb.reverse());
     }
 
+    //    https://leetcode.cn/problems/linked-list-cycle/?envType=study-plan-v2&envId=top-100-liked
+    public boolean hasCycle(ListNode head) {
+        if (head == null) return false;
+        ListNode slow = head,
+                fast = head.next;
+        while (fast != null) {
+            if (slow == fast) return true;
+            fast = fast.next;
+            if (fast != null) fast = fast.next;
+            slow = slow.next;
+        }
+        return false;
+    }
+
 }
