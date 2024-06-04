@@ -13,6 +13,11 @@ public class 链表 {
             val = x;
             next = null;
         }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 
     //    https://leetcode.cn/problems/intersection-of-two-linked-lists/description/?envType=study-plan-v2&envId=top-100-liked
@@ -172,6 +177,23 @@ public class 链表 {
         }
 
         return head.next;
+    }
+
+    //    https://leetcode.cn/problems/remove-nth-node-from-end-of-list/?envType=study-plan-v2&envId=top-100-liked
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        // 这个还是需要创建一个 dummy 的application
+        ListNode dummpy = new ListNode(0, head);
+        ListNode slow = dummpy;
+        ListNode fast = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        while (fast != null) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        slow.next = slow.next.next;
+        return dummpy.next;
     }
 
 }
