@@ -107,4 +107,43 @@ public class 链表 {
         return null;
     }
 
+    //    https://leetcode.cn/problems/merge-two-sorted-lists/description/?envType=study-plan-v2&envId=top-100-liked
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode a = list1;
+        ListNode b = list2;
+        ListNode head = new ListNode(-1);
+        ListNode cur = head;
+        while (a != null || b != null) {
+            if (a == null) {
+                cur.next = b;
+                break;
+            }
+            if (b == null) {
+                cur.next = a;
+                break;
+            }
+            if (a.val < b.val) {
+                cur.next = a;
+                a = a.next;
+            } else {
+                cur.next = b;
+                b = b.next;
+            }
+            cur = cur.next;
+        }
+        return head.next;
+    }
+
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2, int place) {
+        if (list1 == null) return list2;
+        else if (list2 == null) return list1;
+        else if (list1.val < list2.val) {
+            list1.next = mergeTwoLists(list1.next, list2);
+            return list1;
+        } else {
+            list2.next = mergeTwoLists(list1, list2.next, place);
+            return list2;
+        }
+    }
+
 }
