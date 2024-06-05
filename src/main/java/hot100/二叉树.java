@@ -128,4 +128,15 @@ public class 二叉树 {
         return node;
     }
 
+    //    https://leetcode.cn/problems/validate-binary-search-tree/description/?envType=study-plan-v2&envId=top-100-liked
+    long pre = Long.MIN_VALUE;
+
+    public boolean isValidBST(TreeNode root) {
+        if (root == null) return true;
+        boolean left = isValidBST(root.left);
+        boolean flag = root.val > pre;
+        pre = root.val;
+        boolean right = isValidBST(root.right);
+        return left && flag && right;
+    }
 }
