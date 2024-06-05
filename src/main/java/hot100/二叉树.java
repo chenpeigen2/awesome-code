@@ -114,4 +114,18 @@ public class 二叉树 {
         return ans;
     }
 
+    //    https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/?envType=study-plan-v2&envId=top-100-liked
+    public TreeNode sortedArrayToBST(int[] nums) {
+        return buildTree(0, nums.length - 1, nums);
+    }
+
+    TreeNode buildTree(int l, int r, int[] nums) {
+        if (l > r) return null;
+        int mid = (l + r) / 2;
+        TreeNode node = new TreeNode(nums[mid]);
+        node.left = buildTree(l, mid - 1, nums);
+        node.right = buildTree(mid + 1, r, nums);
+        return node;
+    }
+
 }
