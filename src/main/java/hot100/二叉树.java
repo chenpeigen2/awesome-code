@@ -1,7 +1,9 @@
 package hot100;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 public class 二叉树 {
 
@@ -86,6 +88,30 @@ public class 二叉树 {
         int r = dfs(root.right); // 右儿子为根的子树的深度
         ans = Math.max(ans, l + r + 1);
         return Math.max(l, r) + 1; // 返回该节点为根的子树的深度
+    }
+
+    //    https://leetcode.cn/problems/binary-tree-level-order-traversal/?envType=study-plan-v2&envId=top-100-liked
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        if (root == null) return ans;
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            int len = queue.size();
+            List<Integer> l = new ArrayList<>();
+            for (int i = 0; i < len; i++) {
+                TreeNode node = queue.poll();
+                l.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+            ans.add(l);
+        }
+        return ans;
     }
 
 }
