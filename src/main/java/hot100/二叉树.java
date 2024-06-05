@@ -70,4 +70,22 @@ public class 二叉树 {
         return dfsIsSymmetric(left.right, right.left) && dfsIsSymmetric(left.left, right.right);
     }
 
+    //    https://leetcode.cn/problems/diameter-of-binary-tree/?envType=study-plan-v2&envId=top-100-liked
+
+    int ans = 1;
+
+    public int diameterOfBinaryTree(TreeNode root) {
+        if (root == null) return 0;
+        dfs(root);
+        return ans - 1;
+    }
+
+    public int dfs(TreeNode root) {
+        if (root == null) return 0; // 访问到空节点了，返回0
+        int l = dfs(root.left); // 左儿子为根的子树的深度
+        int r = dfs(root.right); // 右儿子为根的子树的深度
+        ans = Math.max(ans, l + r + 1);
+        return Math.max(l, r) + 1; // 返回该节点为根的子树的深度
+    }
+
 }
