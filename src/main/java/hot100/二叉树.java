@@ -57,4 +57,17 @@ public class 二叉树 {
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
     }
 
+    //    https://leetcode.cn/problems/symmetric-tree/description/?envType=study-plan-v2&envId=top-100-liked
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        return dfsIsSymmetric(root.left, root.right);
+    }
+
+    private boolean dfsIsSymmetric(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        if (left.val != right.val) return false;
+        return dfsIsSymmetric(left.right, right.left) && dfsIsSymmetric(left.left, right.right);
+    }
+
 }
