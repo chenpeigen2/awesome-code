@@ -139,4 +139,26 @@ public class 二叉树 {
         boolean right = isValidBST(root.right);
         return left && flag && right;
     }
+
+    int k;
+    int result;
+
+    //    https://leetcode.cn/problems/kth-smallest-element-in-a-bst/?envType=study-plan-v2&envId=top-100-liked
+    public int kthSmallest(TreeNode root, int k) {
+        this.k = k;
+        middleOrder(root);
+        return result;
+    }
+
+    void middleOrder(TreeNode n) {
+        if (n == null) return;
+        middleOrder(n.left);
+        // get the root
+        k--;
+        if (k == 0) {
+            result = n.val;
+            return;
+        }
+        middleOrder(n.right);
+    }
 }
