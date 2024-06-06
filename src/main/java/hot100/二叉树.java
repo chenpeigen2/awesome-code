@@ -214,4 +214,31 @@ public class 二叉树 {
         }
         return root;
     }
+
+    //    https://leetcode.cn/problems/path-sum-iii/?envType=study-plan-v2&envId=top-100-liked
+    int ret = 0;
+
+    // 需要使用双递归的方式实现
+    public int pathSum(TreeNode root, int targetSum) {
+        if (root == null) {
+            return 0;
+        }
+        ret += rootSum(root, targetSum);
+        ret += rootSum(root.left, targetSum);
+        ret += rootSum(root.right, targetSum);
+        return ret;
+    }
+
+    private int rootSum(TreeNode root, int targetSum) {
+        int ret = 0;
+        if (root == null) return 0;
+        if (targetSum < 0) return 0;
+        int val = root.val;
+        if (val == targetSum) {
+            ret++;
+        }
+        ret += rootSum(root.left, targetSum - root.val);
+        ret += rootSum(root.right, targetSum - root.val);
+        return ret;
+    }
 }
