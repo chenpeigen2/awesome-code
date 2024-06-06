@@ -183,4 +183,21 @@ public class 二叉树 {
         }
         return ret;
     }
+
+    //    https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-100-liked
+    public void flatten(TreeNode root) {
+        while (root != null) {
+            if (root.left == null) root = root.right;
+            else {
+                TreeNode pre = root.left;
+                while (pre.right != null) pre = pre.right;
+                pre.right = root.right; // 把右子树 cp过来
+
+                root.right = root.left; // 把之前左子树赋值到右子树
+                root.left = null; // 左子树置为null
+                root = root.right; // 查找下一个右子树
+            }
+
+        }
+    }
 }
