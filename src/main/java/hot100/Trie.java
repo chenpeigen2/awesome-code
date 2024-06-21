@@ -1,6 +1,6 @@
 package hot100;
 
-//https://leetcode.cn/problems/implement-trie-prefix-tree/submissions/529311022/?envType=study-plan-v2&envId=top-interview-150
+//https://leetcode.cn/problems/implement-trie-prefix-tree/?envType=study-plan-v2&envId=top-100-liked
 public class Trie {
 
     Trie[] nodes;
@@ -15,8 +15,8 @@ public class Trie {
 
     public void insert(String word) {
         Trie node = this;
-        for (int i = 0; i < word.length(); i++) {
-            int idx = word.charAt(i) - 'a';
+        for (char ch : word.toCharArray()) {
+            int idx = ch - 'a';
             if (node.nodes[idx] == null) node.nodes[idx] = new Trie();
             node = node.nodes[idx];
         }
@@ -25,8 +25,8 @@ public class Trie {
 
     public boolean search(String word) {
         Trie node = this;
-        for (int i = 0; i < word.length(); i++) {
-            int idx = word.charAt(i) - 'a';
+        for (char ch : word.toCharArray()) {
+            int idx = ch - 'a';
             if (node.nodes[idx] == null) return false;
             node = node.nodes[idx];
         }
@@ -35,8 +35,8 @@ public class Trie {
 
     public boolean startsWith(String prefix) {
         Trie node = this;
-        for (int i = 0; i < prefix.length(); i++) {
-            int idx = prefix.charAt(i) - 'a';
+        for (char ch : prefix.toCharArray()) {
+            int idx = ch - 'a';
             if (node.nodes[idx] == null) return false;
             node = node.nodes[idx];
         }
