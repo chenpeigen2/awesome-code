@@ -39,15 +39,16 @@ public class 图论 {
     public int orangesRotting(int[][] grid) {
         int M = grid.length;
         int N = grid[0].length;
+
         Queue<int[]> queue = new ArrayDeque<>();
 
         int count = 0;
-        for (int r = 0; r < M; r++) {
-            for (int c = 0; c < N; c++) {
-                if (grid[r][c] == 1) {
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                if (grid[i][j] == 1) {
                     count++;
-                } else if (grid[r][c] == 2) {
-                    queue.offer(new int[]{r, c});
+                } else if (grid[i][j] == 2) {
+                    queue.offer(new int[]{i, j});
                 }
             }
         }
@@ -55,37 +56,40 @@ public class 图论 {
         int round = 0;
         while (count > 0 && !queue.isEmpty()) {
             round++;
-            int n = queue.size();
+            int sz = queue.size();
+            for (int i = 0; i < sz; i++) {
+                int[] position = queue.poll();
+                int x = position[0];
+                int y = position[1];
 
-            for (int i = 0; i < n; i++) {
-                int[] orange = queue.poll();
-                int r = orange[0];
-                int c = orange[1];
-
-                if (r - 1 >= 0 && grid[r - 1][c] == 1) {
-                    grid[r - 1][c] = 2;
+                if (x - 1 >= 0 && grid[x - 1][y] == 1) {
+                    grid[x - 1][y] = 2;
                     count--;
-                    queue.offer(new int[]{r - 1, c});
+                    queue.offer(new int[]{x - 1, y});
                 }
 
-                if (r + 1 < M && grid[r + 1][c] == 1) {
-                    grid[r + 1][c] = 2;
+                if (x + 1 < M && grid[x + 1][y] == 1) {
+                    grid[x + 1][y] = 2;
                     count--;
-                    queue.add(new int[]{r + 1, c});
+                    queue.offer(new int[]{x + 1, y});
                 }
-                if (c - 1 >= 0 && grid[r][c - 1] == 1) {
-                    grid[r][c - 1] = 2;
+
+                if (y - 1 >= 0 && grid[x][y - 1] == 1) {
+                    grid[x][y - 1] = 2;
                     count--;
-                    queue.add(new int[]{r, c - 1});
+                    queue.offer(new int[]{x, y - 1});
                 }
-                if (c + 1 < N && grid[r][c + 1] == 1) {
-                    grid[r][c + 1] = 2;
+
+                if (y + 1 < N && grid[x][y + 1] == 1) {
+                    grid[x][y + 1] = 2;
                     count--;
-                    queue.add(new int[]{r, c + 1});
+                    queue.offer(new int[]{x, y + 1});
                 }
             }
         }
+
         if (count > 0) return -1;
         return round;
+
     }
 }
