@@ -63,16 +63,15 @@ public class 栈 {
             if (ch == '[') {
                 stack_multi.push(multi);
                 stack_res.push(res.toString());
-                multi = 0;
                 res = new StringBuilder();
+                multi = 0;
             } else if (ch == ']') {
-                StringBuilder tmp = new StringBuilder();
                 int m = stack_multi.pop();
-                String a = stack_res.pop();
+                StringBuilder tmp = new StringBuilder();
                 for (int i = 0; i < m; i++) {
                     tmp.append(res);
                 }
-                res = new StringBuilder(a + tmp);
+                res = new StringBuilder(stack_res.pop() + tmp);
             } else if (ch >= '0' && ch <= '9') {
                 multi = multi * 10 + Integer.parseInt(ch + "");
             } else {
