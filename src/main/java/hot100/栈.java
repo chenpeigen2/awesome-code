@@ -27,26 +27,21 @@ public class 栈 {
     class MinStack {
 
         Deque<Integer> stack = new ArrayDeque<>();
-        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        Deque<Integer> minStack = new ArrayDeque<>();
 
-        Deque<Integer> minStack;
 
         public MinStack() {
-            minStack = new LinkedList<Integer>();
             minStack.push(Integer.MAX_VALUE);
         }
 
         public void push(int val) {
             stack.push(val);
-            queue.offer(val);
-            // 维护一个单调最小的数值
-            minStack.push(Math.min(minStack.peek(), val));
+            minStack.push(Math.min(val, minStack.peek()));
         }
 
         public void pop() {
-            int value = stack.pop();
-            queue.remove(value);
             minStack.pop();
+            stack.pop();
         }
 
         public int top() {
@@ -54,8 +49,7 @@ public class 栈 {
         }
 
         public int getMin() {
-//            return minStack.peek()
-            return queue.peek();
+            return minStack.peek();
         }
     }
 
