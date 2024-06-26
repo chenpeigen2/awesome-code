@@ -1,5 +1,8 @@
 package hot100;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class 贪心 {
     //    https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/submissions/518165430/?envType=study-plan-v2&envId=top-100-liked
     public int maxProfit(int[] prices) {
@@ -42,5 +45,31 @@ public class 贪心 {
         }
 
         return steps;
+    }
+
+    //    https://leetcode.cn/problems/partition-labels/?envType=study-plan-v2&envId=top-100-liked
+    // 由于同一个字母只能出现在同一个片段，显然同一个字母的第一次出现的下标位置和最后一次出现的下标位置必须出现在同一个片段。因此需要遍历字符串，得到每个字母最后一次出现的下标位置。
+    public List<Integer> partitionLabels(String s) {
+        int[] last = new int[26];
+        int length = s.length();
+
+        // 遍历之后，每个元素显示的都是最后出现的位置，因为后面覆盖前面的了
+        for (int i = 0; i < length; i++) {
+            last[s.charAt(i) - 'a'] = i;
+        }
+
+        List<Integer> partition = new ArrayList<>();
+        int start = 0, end = 0;  // start和end标记一个区间范围
+        for (int i = 0; i < length; i++) {
+            end = Math.max(end, last[s.charAt(i) - 'a']);
+            // 如果i等于end，说明这个区间走到末尾了，那么就可以将这段长度添加到列表中，并且移动到新的区间了
+            if (i == end) {
+                partition.add(end - start + 1);
+                start = end + 1;
+            }
+
+        }
+        return partition;
+
     }
 }
