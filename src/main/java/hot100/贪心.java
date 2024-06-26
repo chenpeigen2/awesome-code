@@ -24,4 +24,23 @@ public class 贪心 {
         }
         return true;
     }
+
+    //    https://leetcode.cn/problems/jump-game-ii/?envType=study-plan-v2&envId=top-100-liked
+    public int jump(int[] nums) {
+        int steps = 0;         // 记录所用步数
+        int maxPosition = 0;         // 记录在边界范围内，能跳跃的最远位置的下标
+        int end = 0;         // 记录当前能跳跃到的位置的边界下标
+        for (int i = 0; i < nums.length - 1; i++) {
+            // 继续往下遍历，统计边界范围内，哪一格能跳得更远，每走一步就更新一次能跳跃的最远位置下标
+            // 其实就是在统计下一步的最优情况
+            maxPosition = Math.max(maxPosition, i + nums[i]);
+            // 如果到达了边界，那么一定要跳了，下一跳的边界下标就是之前统计的最优情况maxPosition，并且步数加1
+            if (i == end) {
+                end = maxPosition;
+                steps++;
+            }
+        }
+
+        return steps;
+    }
 }
