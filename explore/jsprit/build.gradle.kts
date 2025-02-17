@@ -12,6 +12,8 @@ repositories {
 dependencies {
 // https://mvnrepository.com/artifact/com.graphhopper/jsprit-core
     implementation("com.graphhopper:jsprit-core:1.9.0-beta.12")
+    implementation("com.graphhopper:jsprit-analysis:1.9.0-beta.12")
+    implementation("com.graphhopper:jsprit-io:1.9.0-beta.12")
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
