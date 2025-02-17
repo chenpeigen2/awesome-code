@@ -1,5 +1,6 @@
 package org.peter;
 
+import com.graphhopper.jsprit.analysis.toolbox.Plotter;
 import com.graphhopper.jsprit.core.algorithm.VehicleRoutingAlgorithm;
 import com.graphhopper.jsprit.core.algorithm.box.Jsprit;
 import com.graphhopper.jsprit.core.problem.Location;
@@ -12,6 +13,7 @@ import com.graphhopper.jsprit.core.problem.vehicle.VehicleTypeImpl;
 import com.graphhopper.jsprit.core.reporting.SolutionPrinter;
 import com.graphhopper.jsprit.core.util.Solutions;
 
+import java.io.File;
 import java.util.Collection;
 
 public class SampleExample {
@@ -21,7 +23,7 @@ public class SampleExample {
          * you are free to add an arbitrary number of capacity dimensions with .addCapacityDimension(dimensionIndex,dimensionValue)
          */
         final int WEIGHT_INDEX = 0;
-        VehicleTypeImpl.Builder vehicleTypeBuilder = VehicleTypeImpl.Builder.newInstance("vehicleType").addCapacityDimension(WEIGHT_INDEX,2);
+        VehicleTypeImpl.Builder vehicleTypeBuilder = VehicleTypeImpl.Builder.newInstance("vehicleType").addCapacityDimension(WEIGHT_INDEX, 2);
         VehicleType vehicleType = vehicleTypeBuilder.build();
 
         /*
@@ -36,17 +38,18 @@ public class SampleExample {
          * build services with id 1...4 at the required locations, each with a capacity-demand of 1.
          * Note, that the builder allows chaining which makes building quite handy
          */
-        Service service1 = Service.Builder.newInstance("1").addSizeDimension(WEIGHT_INDEX,1).setLocation(Location.newInstance(5, 7)).build();
-        Service service2 = Service.Builder.newInstance("2").addSizeDimension(WEIGHT_INDEX,1).setLocation(Location.newInstance(5, 13)).build();
-        Service service3 = Service.Builder.newInstance("3").addSizeDimension(WEIGHT_INDEX,1).setLocation(Location.newInstance(15, 7)).build();
-        Service service4 = Service.Builder.newInstance("4").addSizeDimension(WEIGHT_INDEX,1).setLocation(Location.newInstance(15, 13)).build();
+        Service service1 = Service.Builder.newInstance("1").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(5, 7)).build();
+        Service service2 = Service.Builder.newInstance("2").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(5, 13)).build();
+        Service service3 = Service.Builder.newInstance("3").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(15, 7)).build();
+        Service service4 = Service.Builder.newInstance("4").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(15, 13)).build();
+        Service service5 = Service.Builder.newInstance("5").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(1, 13)).build();
 
         /*
          * again define a builder to build the VehicleRoutingProblem
          */
         VehicleRoutingProblem.Builder vrpBuilder = VehicleRoutingProblem.Builder.newInstance();
         vrpBuilder.addVehicle(vehicle);
-        vrpBuilder.addJob(service1).addJob(service2).addJob(service3).addJob(service4);
+        vrpBuilder.addJob(service1).addJob(service2).addJob(service3).addJob(service4).addJob(service5);
         /*
          * build the problem
          * by default, the problem is specified such that FleetSize is INFINITE, i.e. an infinite number of
@@ -70,11 +73,11 @@ public class SampleExample {
          */
         VehicleRoutingProblemSolution bestSolution = Solutions.bestOf(solutions);
 
-//        SolutionPrinter.print(problem, bestSolution, SolutionPrinter.Print.CONCISE);
+        SolutionPrinter.print(problem, bestSolution, SolutionPrinter.Print.CONCISE);
 
         SolutionPrinter.print(problem, bestSolution, SolutionPrinter.Print.VERBOSE);
 
-        new Plotter(problem,bestSolution).plot("output/solution.png", "solution");
+        new Plotter(problem, bestSolution).plot("outputs/solution.png", "solution");
 
 
     }
