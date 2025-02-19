@@ -42,7 +42,7 @@ public class SampleExample {
         Service service2 = Service.Builder.newInstance("2").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(5, 13)).build();
         Service service3 = Service.Builder.newInstance("3").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(15, 7)).build();
         Service service4 = Service.Builder.newInstance("4").addSizeDimension(WEIGHT_INDEX, 1).setLocation(Location.newInstance(15, 13)).build();
-        Service service5 = Service.Builder.newInstance("5").addSizeDimension(WEIGHT_INDEX, 2).setLocation(Location.newInstance(1, 13)).build();
+        Service service5 = Service.Builder.newInstance("5").addSizeDimension(WEIGHT_INDEX, 2).setLocation(Location.newInstance(10, 20)).build();
 
         /*
          * again define a builder to build the VehicleRoutingProblem
