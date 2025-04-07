@@ -11,9 +11,9 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core
-    implementation("org.apache.velocity:velocity-engine-core:2.3")
+    implementation("org.apache.velocity:velocity-engine-core:2.4.1")
     // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-examples
-    implementation("org.apache.velocity:velocity-engine-examples:2.3")
+    implementation("org.apache.velocity:velocity-engine-examples:2.4.1")
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
     implementation("org.slf4j:slf4j-simple:2.0.9")
 

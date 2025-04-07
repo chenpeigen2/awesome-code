@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
-    implementation("io.projectreactor:reactor-core:3.6.0")
+    implementation("io.projectreactor:reactor-core:3.7.4")
     // https://mvnrepository.com/artifact/org.reactivestreams/reactive-streams
     implementation("org.reactivestreams:reactive-streams:1.0.4")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))

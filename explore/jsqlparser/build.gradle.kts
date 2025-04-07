@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/com.github.jsqlparser/jsqlparser
-    implementation("com.github.jsqlparser:jsqlparser:4.7")
+    implementation("com.github.jsqlparser:jsqlparser:5.1")
     implementation(platform("org.junit:junit-bom:5.9.1"))
     implementation("org.junit.jupiter:junit-jupiter")
 }

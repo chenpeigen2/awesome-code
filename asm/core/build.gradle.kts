@@ -13,13 +13,13 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/org.ow2.asm/asm
-    implementation("org.ow2.asm:asm:9.5")
+    implementation("org.ow2.asm:asm:9.8")
 // https://mvnrepository.com/artifact/org.ow2.asm/asm-commons
-    implementation("org.ow2.asm:asm-commons:9.5")
+    implementation("org.ow2.asm:asm-commons:9.8")
 // https://mvnrepository.com/artifact/org.ow2.asm/asm-util
-    implementation("org.ow2.asm:asm-util:9.5")
+    implementation("org.ow2.asm:asm-util:9.8")
 // https://mvnrepository.com/artifact/org.ow2.asm/asm-tree
-    implementation("org.ow2.asm:asm-tree:9.5")
+    implementation("org.ow2.asm:asm-tree:9.8")
     // https://mvnrepository.com/artifact/com.google.guava/guava
     implementation("com.google.guava:guava:31.1-jre")
     // https://mvnrepository.com/artifact/org.projectlombok/lombok

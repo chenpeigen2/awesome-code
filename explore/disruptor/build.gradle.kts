@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/com.lmax/disruptor
-    implementation("com.lmax:disruptor:3.4.4")
+    implementation("com.lmax:disruptor:4.0.0")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
