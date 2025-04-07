@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/io.vertx/vertx-web
-    implementation("io.vertx:vertx-web:4.5.0")
+    implementation("io.vertx:vertx-web:4.5.14")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
