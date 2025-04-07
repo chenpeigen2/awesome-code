@@ -1,9 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "2.1.10"
-    kotlin("kapt") version "2.1.10"
+    kotlin("jvm") version "2.1.20"
+    kotlin("kapt") version "2.1.20"
 }
 
 group = "org.peter"
@@ -39,7 +40,7 @@ allprojects {
     }
 
     tasks.withType<KotlinCompile> {
-        kotlinOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
-        kotlinOptions.jvmTarget = "17"
+        compilerOptions.freeCompilerArgs.set(listOf("-Xjsr305=strict"))
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_17)
     }
 }
