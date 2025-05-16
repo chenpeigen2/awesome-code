@@ -78,3 +78,5 @@ findProject(":explore:calcite-tutorial")?.name = "calcite-tutorial"
 include("_goodcode")
 include("explore:jsprit")
 findProject(":explore:jsprit")?.name = "jsprit"
+
+include("explore:javassist")
