@@ -2,7 +2,7 @@ import com.google.protobuf.gradle.id
 
 plugins {
     id("java")
-    id("com.google.protobuf") version "0.9.2"
+    id("com.google.protobuf") version "0.9.4"
 }
 
 group = "org.peter"
@@ -12,12 +12,12 @@ repositories {
     mavenCentral()
 }
 
-val grpcVersion = "1.54.0" // CURRENT_GRPC_VERSION
-val protobufVersion = "3.22.2"
+val grpcVersion = "1.70.0" // CURRENT_GRPC_VERSION
+val protobufVersion = "4.29.2"
 val protocVersion = protobufVersion
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/io.grpc/grpc-protobuf
     implementation("io.grpc:grpc-protobuf:${grpcVersion}")
@@ -28,7 +28,7 @@ dependencies {
     runtimeOnly("io.grpc:grpc-netty-shaded:${grpcVersion}")
 
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
-    testImplementation("org.mockito:mockito-core:3.4.0")
+    testImplementation("org.mockito:mockito-core:5.14.2")
 }
 
 protobuf {

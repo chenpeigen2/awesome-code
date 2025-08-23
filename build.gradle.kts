@@ -18,13 +18,13 @@ dependencies {
     // https://mvnrepository.com/artifact/org.openjdk.nashorn/nashorn-core
     implementation("org.openjdk.nashorn:nashorn-core:15.4")
 // https://mvnrepository.com/artifact/commons-codec/commons-codec
-    implementation("commons-codec:commons-codec:1.15")
+    implementation("commons-codec:commons-codec:1.17.1")
 // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
-    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    implementation("org.bouncycastle:bcprov-jdk15on:1.78.1")
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/com.google.guava/guava
-    implementation("com.google.guava:guava:33.0.0-jre")
+    implementation("com.google.guava:guava:33.3.1-jre")
 }
 
 tasks.test {

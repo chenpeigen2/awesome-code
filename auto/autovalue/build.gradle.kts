@@ -10,13 +10,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/com.google.auto.value/auto-value
-    implementation("com.google.auto.value:auto-value:1.10.1")
+    implementation("com.google.auto.value:auto-value:1.11.0")
 // https://mvnrepository.com/artifact/com.google.auto.value/auto-value-annotations
-    implementation("com.google.auto.value:auto-value-annotations:1.10.1")
-    annotationProcessor("com.google.auto.value:auto-value-annotations:1.10.1")
+    implementation("com.google.auto.value:auto-value-annotations:1.11.0")
+    annotationProcessor("com.google.auto.value:auto-value-annotations:1.11.0")
 }
 
 tasks.test {

@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm")
-    id("org.springframework.boot") version "3.0.5"
-    id("io.spring.dependency-management") version "1.0.12.RELEASE"
-    kotlin("plugin.spring") version "1.7.10"
+    id("org.springframework.boot") version "3.4.1"
+    id("io.spring.dependency-management") version "1.1.7"
+    kotlin("plugin.spring") version "2.1.21"
 }
 
 group = "org.peter"

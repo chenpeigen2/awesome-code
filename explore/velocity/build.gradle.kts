@@ -15,9 +15,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-examples
     implementation("org.apache.velocity:velocity-engine-examples:2.4.1")
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-    implementation("org.slf4j:slf4j-simple:2.0.9")
+    implementation("org.slf4j:slf4j-simple:2.0.16")
 
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

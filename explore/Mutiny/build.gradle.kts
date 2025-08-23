@@ -10,8 +10,8 @@ repositories {
 }
 
 dependencies {
-    implementation("io.smallrye.reactive:mutiny:2.3.1")
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    implementation("io.smallrye.reactive:mutiny:2.7.0")
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

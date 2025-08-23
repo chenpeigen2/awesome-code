@@ -1,7 +1,7 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.0.6"
-    id("io.spring.dependency-management") version "1.1.0"
+    id("org.springframework.boot") version "3.4.1"
+    id("io.spring.dependency-management") version "1.1.7"
 }
 
 group = "org.peter"
@@ -17,14 +17,14 @@ repositories {
     mavenCentral()
 }
 
-extra["springShellVersion"] = "3.0.3"
+extra["springShellVersion"] = "3.4.0"
 
 dependencies {
     implementation("org.springframework.shell:spring-shell-starter")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

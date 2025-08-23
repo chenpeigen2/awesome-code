@@ -10,13 +10,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/com.squareup.okio/okio
-    implementation("com.squareup.okio:okio:3.10.2")
+    implementation("com.squareup.okio:okio:3.9.1")
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    implementation("org.projectlombok:lombok:1.18.38")
-    annotationProcessor("org.projectlombok:lombok:1.18.38")
+    implementation("org.projectlombok:lombok:1.18.36")
+    annotationProcessor("org.projectlombok:lombok:1.18.36")
 }
 
 tasks.test {

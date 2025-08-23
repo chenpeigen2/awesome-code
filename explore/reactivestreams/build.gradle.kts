@@ -11,10 +11,10 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
-    implementation("io.projectreactor:reactor-core:3.7.4")
+    implementation("io.projectreactor:reactor-core:3.7.1")
     // https://mvnrepository.com/artifact/org.reactivestreams/reactive-streams
     implementation("org.reactivestreams:reactive-streams:1.0.4")
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

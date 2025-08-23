@@ -10,10 +10,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/com.github.javaparser/javaparser-core
-    implementation("com.github.javaparser:javaparser-core:3.26.4")
+    implementation("com.github.javaparser:javaparser-core:3.26.2")
 }
 
 tasks.test {
