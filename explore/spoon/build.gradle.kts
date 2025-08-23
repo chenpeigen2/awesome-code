@@ -10,9 +10,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.11.4"))
+    implementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("fr.inria.gforge.spoon:spoon-core:11.1.1")
+    implementation("fr.inria.gforge.spoon:spoon-core:11.2.1")
 }
 
 tasks.test {
