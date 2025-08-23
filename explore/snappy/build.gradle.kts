@@ -11,7 +11,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/org.xerial.snappy/snappy-java
-    implementation("org.xerial.snappy:snappy-java:1.1.10.7")
+    implementation("org.xerial.snappy:snappy-java:1.1.10.8")
     testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
