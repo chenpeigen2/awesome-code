@@ -75,7 +75,7 @@ include("explore:Kryo")
 findProject(":explore:Kryo")?.name = "Kryo"
 include("explore:calcite-tutorial")
 findProject(":explore:calcite-tutorial")?.name = "calcite-tutorial"
-include("_goodcode")
+include("goodcode")
 include("explore:jsprit")
 findProject(":explore:jsprit")?.name = "jsprit"
 
