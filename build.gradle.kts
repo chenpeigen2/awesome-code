@@ -11,7 +11,23 @@ group = "org.peter"
 version = "1.0-SNAPSHOT"
 
 repositories {
+    // 阿里云镜像
+    maven {
+        url = uri("https://maven.aliyun.com/repository/public")
+    }
+    maven {
+        url = uri("https://maven.aliyun.com/repository/central")
+    }
+    maven {
+        url = uri("https://maven.aliyun.com/repository/gradle-plugin")
+    }
+    // 腾讯云镜像
+    maven {
+        url = uri("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/")
+    }
+    // 官方仓库作为备用
     mavenCentral()
+    gradlePluginPortal()
 }
 
 dependencies {
@@ -32,6 +48,26 @@ tasks.test {
 }
 
 allprojects {
+    repositories {
+        // 阿里云镜像
+        maven {
+            url = uri("https://maven.aliyun.com/repository/public")
+        }
+        maven {
+            url = uri("https://maven.aliyun.com/repository/central")
+        }
+        maven {
+            url = uri("https://maven.aliyun.com/repository/gradle-plugin")
+        }
+        // 腾讯云镜像
+        maven {
+            url = uri("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/")
+        }
+        // 官方仓库作为备用
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    
     tasks.withType<JavaCompile> {
         options.release.set(17)
         options.isIncremental = true

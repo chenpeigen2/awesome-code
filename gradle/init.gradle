@@ -1,0 +1,82 @@
+// Gradle 全局镜像配置
+allprojects {
+    repositories {
+        // 移除所有默认仓库
+        all { ArtifactRepository repo ->
+            if (repo instanceof MavenArtifactRepository) {
+                def url = repo.url.toString()
+                if (url.startsWith('https://repo1.maven.org/maven2') ||
+                    url.startsWith('https://jcenter.bintray.com/') ||
+                    url.startsWith('https://repo.maven.apache.org/maven2') ||
+                    url.startsWith('https://plugins.gradle.org/m2/')) {
+                    remove repo
+                }
+            }
+        }
+        
+        // 添加国内镜像源
+        maven {
+            name '阿里云公共仓库'
+            url 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            name '阿里云中央仓库'  
+            url 'https://maven.aliyun.com/repository/central'
+        }
+        maven {
+            name '阿里云插件仓库'
+            url 'https://maven.aliyun.com/repository/gradle-plugin'
+        }
+        maven {
+            name '腾讯云仓库'
+            url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/'
+        }
+        
+        // 备用官方仓库
+        mavenCentral()
+        gradlePluginPortal()
+    }
+    
+    // 配置插件仓库
+    buildscript {
+        repositories {
+            maven {
+                name '阿里云插件仓库'
+                url 'https://maven.aliyun.com/repository/gradle-plugin'
+            }
+            maven {
+                name '阿里云公共仓库'
+                url 'https://maven.aliyun.com/repository/public'
+            }
+            gradlePluginPortal()
+            mavenCentral()
+        }
+    }
+}
+
+// 为所有项目配置仓库
+gradle.projectsLoaded {
+    gradle.rootProject.allprojects {
+        repositories.clear()
+        repositories {
+            maven {
+                name '阿里云公共仓库'
+                url 'https://maven.aliyun.com/repository/public'
+            }
+            maven {
+                name '阿里云中央仓库'
+                url 'https://maven.aliyun.com/repository/central'
+            }
+            maven {
+                name '阿里云插件仓库'
+                url 'https://maven.aliyun.com/repository/gradle-plugin'
+            }
+            maven {
+                name '腾讯云仓库'
+                url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/'
+            }
+            mavenCentral()
+            gradlePluginPortal()
+        }
+    }
+}
