@@ -52,7 +52,6 @@ public class WeakHashMapDemo {
         System.out.println(w);
         //通知垃圾回收机制来进行回收
         System.gc();
-        System.runFinalization();
         //再次输出w
         System.out.println("第二次输出:" + w);
     }
