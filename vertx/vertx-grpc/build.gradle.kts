@@ -8,8 +8,8 @@ plugins {
 group = "org.peter"
 version = "1.0-SNAPSHOT"
 
-val grpcVersion = "1.70.0" // CURRENT_GRPC_VERSION
-val protobufVersion = "4.29.2"
+val grpcVersion = "1.73.0" // CURRENT_GRPC_VERSION
+val protobufVersion = "4.29.5"
 val protocVersion = protobufVersion
 
 repositories {
@@ -31,8 +31,8 @@ dependencies {
     testImplementation("org.mockito:mockito-core:5.14.2")
 
 // https://mvnrepository.com/artifact/io.vertx/vertx-grpc-server
-    implementation("io.vertx:vertx-grpc-server:4.5.11")
-    implementation("io.vertx:vertx-grpc-client:4.5.11")
+    implementation("io.vertx:vertx-grpc-server:4.5.11")  // Vert.x 5.0.0目前只有候选版本
+    implementation("io.vertx:vertx-grpc-client:4.5.11")  // 保持当前稳定版本
 }
 
 protobuf {
