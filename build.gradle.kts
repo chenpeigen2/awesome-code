@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "2.2.10"
-    kotlin("kapt") version "2.2.10"
+    kotlin("jvm") version "2.2.20"
+    kotlin("kapt") version "2.2.20"
 }
 
 group = "org.peter"
