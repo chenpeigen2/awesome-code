@@ -14,7 +14,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.11.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/org.apache.groovy/groovy-all
-    implementation("org.apache.groovy:groovy-all:4.0.23")
+    implementation("org.apache.groovy:groovy-all:5.0.2")
 }
 
 tasks.test {

@@ -12,8 +12,8 @@ repositories {
     mavenCentral()
 }
 
-val grpcVersion = "1.70.0" // CURRENT_GRPC_VERSION
-val protobufVersion = "4.29.2"
+val grpcVersion = "1.76.0" // CURRENT_GRPC_VERSION
+val protobufVersion = "4.33.0"
 val protocVersion = protobufVersion
 
 dependencies {
