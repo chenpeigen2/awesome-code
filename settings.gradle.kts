@@ -80,3 +80,4 @@ include("explore:jsprit")
 findProject(":explore:jsprit")?.name = "jsprit"
 
 include("explore:javassist")
+include("zip")
