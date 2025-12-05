@@ -16,26 +16,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <com.peter.androidx.RedGlowCircleView-->
-<!--        android:layout_width="20dp"-->
-<!--        android:layout_height="20dp" />-->
-
-
-
-<!--    <com.peter.androidx.RedGlowCircleView-->
-<!--        android:layout_width="13dp"-->
-<!--        android:layout_height="13dp"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        tools:layout_editor_absoluteX="106dp"-->
-<!--        tools:layout_editor_absoluteY="0dp" />-->
-
-
-<!--    <View-->
-<!--        android:background="@drawable/color_shadow"-->
-<!--        android:layout_width="13dp"-->
-<!--        android:layout_height="13dp"/>-->
-
 </androidx.constraintlayout.widget.ConstraintLayout>
