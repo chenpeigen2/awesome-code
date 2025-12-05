@@ -7,11 +7,16 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
+import android.view.SurfaceControl
+import android.view.SurfaceControlViewHost
+import android.view.SurfaceHolder
+import android.view.SurfaceView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.appdisplayapp.IMyAidlInterface
+import com.example.appdisplayapp.ISurfacePackageReceiver
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,6 +48,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private var renderer: ISurfacePackageReceiver? = null
+
+    private val conn = object : ServiceConnection {
+        override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+            renderer = ISurfacePackageReceiver.Stub.asInterface(service)
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            renderer = null
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -52,9 +69,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        bindMyService()
     }
-
     private fun bindMyService() {
         val intent = Intent()
         // 设置 Action，与服务端 Manifest 中定义的保持一致

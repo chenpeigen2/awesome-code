@@ -18,11 +18,21 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".MyService"
+        <service
+            android:name=".MyService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.example.appdisplayapp.IMyAidlInterface" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".RendererService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.appdisplayapp.IRendererAidlInterface" />
             </intent-filter>
         </service>
     </application>
