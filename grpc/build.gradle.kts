@@ -12,12 +12,12 @@ repositories {
     mavenCentral()
 }
 
-val grpcVersion = "1.76.0" // CURRENT_GRPC_VERSION
-val protobufVersion = "4.33.0"
+val grpcVersion = "1.78.0" // CURRENT_GRPC_VERSION
+val protobufVersion = "4.33.4"
 val protocVersion = protobufVersion
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.11.4"))
+    testImplementation(platform("org.junit:junit-bom:5.14.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/io.grpc/grpc-protobuf
     implementation("io.grpc:grpc-protobuf:${grpcVersion}")

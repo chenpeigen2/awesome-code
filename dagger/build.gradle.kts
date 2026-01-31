@@ -12,10 +12,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.11.4"))
+    testImplementation(platform("org.junit:junit-bom:5.14.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("com.google.dagger:dagger:2.52")
-    annotationProcessor("com.google.dagger:dagger-compiler:2.52")
+    implementation("com.google.dagger:dagger:2.59")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.59")
 }
 
 tasks.test {

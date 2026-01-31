@@ -57,12 +57,12 @@ public class 普通数组 {
         String[] strArray1 = list.toArray(new String[100]);  // 空数组方式
         String[] strArray2 = list.toArray(new String[list.size()]);  // 精确大小
 
-        list.stream().toArray(new IntFunction<? extends Object[]>() {
-            @Override
-            public Object[] apply(int value) {
-                return new Object[0];
-            }
-        });
+//        list.stream().toArray(new IntFunction<? extends Object[]>() {
+//            @Override
+//            public Object[] apply(int value) {
+//                return new Object[0];
+//            }
+//        });
 
 
 // Lambda 表达式
@@ -73,10 +73,10 @@ public class 普通数组 {
 
         System.out.println();
 
-        // Lambda 表达式
-        (args) -> Class.method(args)
-
-// 等价的方法引用
-        Class::method
+//        // Lambda 表达式
+//        (args) -> Class.method(args)
+//
+//// 等价的方法引用
+//        Class::method
     }
 }

@@ -11,7 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.junit:junit-bom:5.11.4"))
+    implementation(platform("org.junit:junit-bom:5.14.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     // https://mvnrepository.com/artifact/com.google.code.gson/gson
     implementation("com.google.code.gson:gson:2.13.2")
