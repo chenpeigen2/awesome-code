@@ -1,6 +1,98 @@
+# Gradle
 /.gradle/
 /build/
+**/build/
+**/bin/
+.gradle-wrapper.jar
+
+# IntelliJ IDEA
 /.idea/
+*.iml
+*.iws
+*.ipr
+/out/
+.idea_modules/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# VS Code
+.vscode/
+
+# Java
+*.class
+*.jar
+!gradle-wrapper.jar
+*.war
+*.ear
+*.log
+
+# Kotlin
+*.kt.class
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+*.egg-info/
+dist/
+build/
+
+# Go
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+go.work
+
+# Node/Bun
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# C/C++
+*.o
+*.out
+*.obj
+*.exe
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+*~
+.*.sw?
+
+# Logs
+*.log
+logs/
+
+# Specific project paths (from old .gitignore)
 /c++/cpp_reference/.idea/
 /c++/cpp_reference/cmake-build-debug
 /c++/c_reference/.idea/
