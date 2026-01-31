@@ -12,11 +12,11 @@ public class ArrayListJson {
         list.add("a");
         list.add("b");
 
-        JSONObject
+//        JSONObject
 
         JSONObject obj = new JSONObject();
 
-        ArrayList
+//        ArrayList
         obj.put("a",list);
         System.out.println(obj.toString());
 

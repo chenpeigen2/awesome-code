@@ -32,6 +32,6 @@ class RedGlowCircleView @JvmOverloads constructor(
         canvas.drawCircle(cx, cy, radius, glowPaint)
 
         // 再画实心圆
-        canvas.drawCircle(cx, cy, radius * 0.9f, innerPaint)
+        canvas.drawCircle(cx, cy, radius * 0.75f, innerPaint)
     }
 }
