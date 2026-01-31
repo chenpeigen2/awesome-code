@@ -47,6 +47,8 @@ include("grpc")
 include("dagger")
 include("kotlin:basic-kotlin")
 findProject(":kotlin:basic-kotlin")?.name = "basic-kotlin"
+include("kotlin:coroutines-examples")
+findProject(":kotlin:coroutines-examples")?.name = "coroutines-examples"
 include("explore:spring-shell")
 findProject(":explore:spring-shell")?.name = "spring-shell"
 include("vertx:vertx-grpc")
