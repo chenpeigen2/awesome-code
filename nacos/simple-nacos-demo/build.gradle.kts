@@ -15,7 +15,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client
     implementation("com.alibaba.nacos:nacos-client:2.4.3")
 // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-    implementation("org.slf4j:slf4j-simple:2.0.16")
+    implementation("org.slf4j:slf4j-simple:2.0.17")
 }
 
 tasks.test {

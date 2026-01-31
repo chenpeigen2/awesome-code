@@ -13,7 +13,7 @@ repositories {
 }
 
 val grpcVersion = "1.78.0" // CURRENT_GRPC_VERSION
-val protobufVersion = "4.33.4"
+val protobufVersion = "4.33.5"
 val protocVersion = protobufVersion
 
 dependencies {
@@ -28,7 +28,7 @@ dependencies {
     runtimeOnly("io.grpc:grpc-netty-shaded:${grpcVersion}")
 
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
-    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation("org.mockito:mockito-core:5.21.0")
 }
 
 protobuf {

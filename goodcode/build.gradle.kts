@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     // 基础 Kotlin 依赖已由根项目提供
-    testImplementation(platform("org.junit:junit-bom:5.11.4"))
+    testImplementation(platform("org.junit:junit-bom:5.14.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

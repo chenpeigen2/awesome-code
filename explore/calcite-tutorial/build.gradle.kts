@@ -18,7 +18,7 @@ dependencies {
     implementation("org.apache.calcite:calcite-linq4j:1.40.0")
     // https://mvnrepository.com/artifact/org.apache.calcite/calcite-core
     implementation("org.apache.calcite:calcite-core:1.40.0")
-    testImplementation(platform("org.junit:junit-bom:5.11.4"))
+    testImplementation(platform("org.junit:junit-bom:5.14.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
 

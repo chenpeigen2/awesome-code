@@ -10,7 +10,7 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.junit:junit-bom:5.11.4"))
+    implementation(platform("org.junit:junit-bom:5.14.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("fr.inria.gforge.spoon:spoon-core:11.2.1")
 }
