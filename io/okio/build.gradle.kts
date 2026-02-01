@@ -15,8 +15,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.squareup.okio/okio
     implementation("com.squareup.okio:okio:3.9.1")
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    implementation("org.projectlombok:lombok:1.18.36")
-    annotationProcessor("org.projectlombok:lombok:1.18.36")
+    implementation("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
 }
 
 tasks.test {

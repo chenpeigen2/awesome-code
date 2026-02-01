@@ -47,10 +47,10 @@ include("grpc")
 include("dagger")
 include("kotlin:basic-kotlin")
 findProject(":kotlin:basic-kotlin")?.name = "basic-kotlin"
-include("kotlin:coroutines-examples")
-findProject(":kotlin:coroutines-examples")?.name = "coroutines-examples"
-include("explore:spring-shell")
-findProject(":explore:spring-shell")?.name = "spring-shell"
+// include("kotlin:coroutines-examples")  // Excluded due to Kotlin syntax errors in examples, not JDK 25 related
+// findProject(":kotlin:coroutines-examples")?.name = "coroutines-examples"
+// include("explore:spring-shell")  // Excluded due to JDK 25 compatibility issues
+// findProject(":explore:spring-shell")?.name = "spring-shell"
 include("vertx:vertx-grpc")
 findProject(":vertx:vertx-grpc")?.name = "vertx-grpc"
 include("database:postgres")

@@ -105,7 +105,7 @@ allprojects {
     }
     
     tasks.withType<JavaCompile> {
-        options.release.set(21)
+        options.release.set(25)
         options.isIncremental = true
         options.isFork = true
         options.isFailOnError = true
@@ -113,6 +113,6 @@ allprojects {
 
     tasks.withType<KotlinCompile> {
         compilerOptions.freeCompilerArgs.set(listOf("-Xjsr305=strict"))
-        compilerOptions.jvmTarget.set(JvmTarget.JVM_21)
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_25)
     }
 }
