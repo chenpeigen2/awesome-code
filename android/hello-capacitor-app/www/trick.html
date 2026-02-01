@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Trick 界面</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 90%;
+            padding: 20px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        .trick-text {
+            font-size: 1.5rem;
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 15px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        
+        #magicButton {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+            color: white;
+        }
+        
+        #backButton {
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            color: white;
+        }
+        
+        .hint {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.8);
+            padding: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes rainbow {
+            0% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+            14% { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); }
+            28% { background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%); }
+            42% { background: linear-gradient(135deg, #45b7d1 0%, #96ceb4 100%); }
+            57% { background: linear-gradient(135deg, #feca57 0%, #ff9ff3 100%); }
+            71% { background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%); }
+            85% { background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%); }
+            100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        }
+        
+        .rainbow-mode {
+            animation: rainbow 3s infinite;
+        }
+        
+        .special-effect {
+            animation: specialEffect 0.5s infinite;
+        }
+        
+        @keyframes specialEffect {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.1); }
+            50% { transform: rotate(0deg) scale(1); }
+            75% { transform: rotate(-5deg) scale(1.1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+    </style>
+</head>
+<body id="trickBody">
+    <div class="container">
+        <h1>🎭 Trick 界面</h1>
+        
+        <div class="trick-text" id="trickText">
+            ✨ 点击魔法按钮开始惊喜之旅！
+        </div>
+        
+        <div class="buttons">
+            <button id="magicButton" onclick="performMagicTrick()">🪄 魔法按钮</button>
+            <button id="backButton" onclick="goBack()">🔙 返回</button>
+        </div>
+        
+        <div class="hint">
+            💡 提示：多点击几次魔法按钮会有惊喜哦！
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/@capacitor/core@5.0.0/dist/capacitor.js"></script>
+    <script>
+        let clickCount = 0;
+        const tricks = [
+            "🎉 恭喜你发现了彩蛋！",
+            "✨ 魔法正在生效...",
+            "🎪 让我们来点有趣的！",
+            "🌟 你是个有眼光的探索者！",
+            "🎊 惊喜不断，继续点击！",
+            "🎭 这里有很多秘密等你发现",
+            "💫 你的坚持值得奖励！",
+            "🎆 这就是传说中的隐藏功能！"
+        ];
+        
+        const colors = [
+            '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', 
+            '#FECA57', '#FF9FF3', '#A29BFE', '#FD79A8'
+        ];
+        
+        function performMagicTrick() {
+            clickCount++;
+            const trickText = document.getElementById('trickText');
+            const body = document.getElementById('trickBody');
+            
+            // 移除之前的特效类
+            body.classList.remove('rainbow-mode', 'special-effect');
+            
+            // 根据点击次数显示不同效果
+            if (clickCount <= 8) {
+                trickText.textContent = tricks[clickCount - 1];
+                body.style.background = `linear-gradient(135deg, ${colors[clickCount - 1]} 0%, ${colors[(clickCount - 1 + 3) % colors.length]} 100%)`;
+            } else {
+                // 循环显示
+                const index = (clickCount - 1) % tricks.length;
+                trickText.textContent = tricks[index];
+                const randomColor1 = colors[Math.floor(Math.random() * colors.length)];
+                const randomColor2 = colors[Math.floor(Math.random() * colors.length)];
+                body.style.background = `linear-gradient(135deg, ${randomColor1} 0%, ${randomColor2} 100%)`;
+            }
+            
+            // 特殊效果
+            if (clickCount === 5) {
+                body.classList.add('rainbow-mode');
+                showSpecialToast('🌈 彩虹模式激活！');
+            } else if (clickCount === 6) {
+                body.classList.add('special-effect');
+                showSpecialToast('🎊 超级特效启动！');
+            } else if (clickCount > 15) {
+                showFinalSurprise();
+            }
+            
+            // 添加点击动画
+            trickText.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                trickText.style.transform = 'scale(1)';
+            }, 300);
+        }
+        
+        function showSpecialToast(message) {
+            if (Capacitor.isNativePlatform()) {
+                import('https://unpkg.com/@capacitor/toast@5.0.0/dist/plugin.js')
+                    .then(({ Toast }) => {
+                        Toast.show({
+                            text: message,
+                            duration: 'long'
+                        });
+                    })
+                    .catch(() => {
+                        alert(message);
+                    });
+            } else {
+                alert(message);
+            }
+        }
+        
+        function showFinalSurprise() {
+            const trickText = document.getElementById('trickText');
+            const body = document.getElementById('trickBody');
+            
+            trickText.innerHTML = `🎉 恭喜！你解锁了终极彩蛋！<br>
+                                 这说明你是一个耐心的探索者！<br>
+                                 开发者向你致敬！🌟`;
+            
+            body.style.background = 'linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000)';
+            body.style.backgroundSize = '400% 400%';
+            body.style.animation = 'rainbow 3s ease infinite';
+            
+            showSpecialToast('🏆 彩蛋大师成就解锁！');
+        }
+        
+        function goBack() {
+            if (Capacitor.isNativePlatform()) {
+                // 使用 Capacitor 返回上一页
+                window.history.back();
+            } else {
+                // Web 环境下返回主页
+                window.location.href = 'index.html';
+            }
+        }
+        
+        // 页面加载完成后的初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Trick 界面加载完成');
+            
+            // 添加一些初始动画
+            const title = document.querySelector('h1');
+            title.style.opacity = '0';
+            title.style.transform = 'translateY(-20px)';
+            
+            setTimeout(() => {
+                title.style.transition = 'all 1s ease';
+                title.style.opacity = '1';
+                title.style.transform = 'translateY(0)';
+            }, 300);
+        });
+    </script>
+</body>
+</html>

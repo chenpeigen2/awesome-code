@@ -1,0 +1,29 @@
+# Node.js dependencies
+node_modules/
+
+# Build outputs
+android/app/build/
+android/build/
+*.apk
+*.aab
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# Gradle
+.gradle/
+**/build/
+
+# Backup files
+backup/
+
+# Log files
+*.log
+
+# OS generated files
+Thumbs.db
+.DS_Store

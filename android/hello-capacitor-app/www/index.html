@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Capacitor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .device-info {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            backdrop-filter: blur(10px);
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .platform {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+        }
+        #trickButton {
+            background: #9C27B0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Hello Capacitor!</h1>
+        <p>欢迎使用 Capacitor 框架</p>
+        
+        <div class="platform">
+            平台: <span id="platform">检测中...</span>
+        </div>
+        
+        <div class="device-info">
+            <h3>设备信息</h3>
+            <p>设备型号: <span id="deviceModel">-</span></p>
+            <p>操作系统: <span id="osVersion">-</span></p>
+            <p>UUID: <span id="deviceId">-</span></p>
+        </div>
+
+        <button onclick="showAlert()">显示弹窗</button>
+        <button onclick="getBatteryInfo()">获取电池信息</button>
+        <button onclick="vibrate()">震动设备</button>
+        <button id="trickButton" onclick="openTrickPage()">✨ 跳转到 Trick 界面</button>
+    </div>
+
+    <script src="https://unpkg.com/@capacitor/core@5.0.0/dist/capacitor.js"></script>
+    <script>
+        // 初始化 Capacitor
+        document.addEventListener('deviceready', onDeviceReady, false);
+        
+        async function onDeviceReady() {
+            console.log('Device is ready!');
+            
+            // 显示平台信息
+            document.getElementById('platform').textContent = Capacitor.getPlatform();
+            
+            try {
+                // 获取设备信息
+                const { Device } = await import('https://unpkg.com/@capacitor/device@5.0.0/dist/plugin.js');
+                const deviceInfo = await Device.getInfo();
+                
+                document.getElementById('deviceModel').textContent = deviceInfo.model || '未知';
+                document.getElementById('osVersion').textContent = deviceInfo.osVersion || '未知';
+                
+                const deviceId = await Device.getId();
+                document.getElementById('deviceId').textContent = deviceId.uuid || '不可用';
+                
+            } catch (error) {
+                console.log('Device plugin not available:', error);
+                document.getElementById('deviceModel').textContent = 'Web';
+                document.getElementById('osVersion').textContent = navigator.userAgent;
+                document.getElementById('deviceId').textContent = '浏览器环境';
+            }
+        }
+
+        function showAlert() {
+            if (Capacitor.isNativePlatform()) {
+                // 使用 Capacitor 弹窗
+                import('https://unpkg.com/@capacitor/dialog@5.0.0/dist/plugin.js')
+                    .then(({ Dialog }) => {
+                        Dialog.alert({
+                            title: 'Hello',
+                            message: '这是 Capacitor 原生弹窗!'
+                        });
+                    })
+                    .catch(() => {
+                        alert('Hello World! 这是浏览器弹窗');
+                    });
+            } else {
+                alert('Hello World! 这是浏览器弹窗');
+            }
+        }
+
+        function getBatteryInfo() {
+            if ('getBattery' in navigator) {
+                navigator.getBattery().then(battery => {
+                    alert(`电池状态: ${Math.round(battery.level * 100)}%\n充电状态: ${battery.charging ? '正在充电' : '未充电'}`);
+                });
+            } else {
+                alert('当前环境不支持电池状态API');
+            }
+        }
+
+        function vibrate() {
+            if ('vibrate' in navigator) {
+                navigator.vibrate(500);
+                alert('设备已震动 500ms!');
+            } else if (Capacitor.isNativePlatform()) {
+                import('https://unpkg.com/@capacitor/haptics@5.0.0/dist/plugin.js')
+                    .then(({ Haptics }) => {
+                        Haptics.impact();
+                    });
+            } else {
+                alert('当前环境不支持震动');
+            }
+        }
+
+        function openTrickPage() {
+            // 跳转到 Trick 界面
+            window.location.href = 'trick.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HelloCapacitor</string>
+    <string name="title_activity_main">HelloCapacitor</string>
+    <string name="package_name">com.example.hello</string>
+    <string name="custom_url_scheme">com.example.hello</string>
+</resources>
