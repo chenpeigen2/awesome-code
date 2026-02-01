@@ -100,3 +100,4 @@ logs/
 /database/postgres/build/
 /explore/velocity/build/
 /explore/reactivestreams/build/
+/android/hello-capacitor-app/node_modules/
