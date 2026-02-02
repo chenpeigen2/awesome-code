@@ -102,3 +102,6 @@ logs/
 /explore/reactivestreams/build/
 /android/hello-capacitor-app/node_modules/
 /android/hello-capacitor-app/android/
+/android/MyRNApp/node_modules/
+/android/MyRNApp/android/app/build/
+/android/MyRNApp/android/.gradle/
