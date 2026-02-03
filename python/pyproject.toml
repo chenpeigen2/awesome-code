@@ -5,8 +5,12 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "flask>=3.1.2",
-    "matplotlib>=3.10.7",
-    "numpy>=2.3.3",
-    "pandas>=2.3.3",
+    "iflow-cli-sdk>=0.2.1",
+    "pandas>=3.0.0",
+    "numpy>=2.0.0",
+    "matplotlib>=3.9.0",
+    "torch>=2.5.0",
+    "torchvision>=0.20.0",
+    "Pillow>=11.0.0",
+    "typer>=0.15.0",
 ]
