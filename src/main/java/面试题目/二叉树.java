@@ -288,5 +288,30 @@ public class 二叉树 {
     }
 
 
+    long pre = Long.MIN_VALUE;
+
+
+    /**
+     * 验证二叉树是否为有效的二叉搜索树(BST)
+     * 使用中序遍历的思想，对于有效的BST，中序遍历序列应该是严格递增的
+     *
+     * @param root 二叉树的根节点
+     * @return 如果是有效的二叉搜索树返回true，否则返回false
+     */
+    // https://leetcode.cn/problems/validate-binary-search-tree/?envType=study-plan-v2&envId=top-100-liked
+    public boolean isValidBST(TreeNode root) {
+        // 如果当前节点为空，则为有效BST
+        if (root == null) return true;
+        // 递归验证左子树是否为有效BST
+        boolean left = isValidBST(root.left);
+        // 检查当前节点值是否大于前一个访问的节点值，以确保中序遍历序列递增
+        boolean isValid = root.val > pre;
+        // 更新前一个访问的节点值
+        pre = root.val;
+        // 递归验证右子树是否为有效BST
+        boolean right = isValidBST(root.right);
+        // 只有当左子树、当前节点和右子树都满足条件时，才是有效的BST
+        return left && isValid && right;
+    }
 
 }
