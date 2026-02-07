@@ -278,7 +278,7 @@ public class 二叉树 {
         return buildTree(0, nums.length - 1, nums);
     }
 
-    TreeNode buildTree(int l,int r, int[] nums) {
+    TreeNode buildTree(int l, int r, int[] nums) {
         if (l > r) return null;
         int mid = (l + r) / 2;
         TreeNode node = new TreeNode(nums[mid]);
@@ -312,6 +312,268 @@ public class 二叉树 {
         boolean right = isValidBST(root.right);
         // 只有当左子树、当前节点和右子树都满足条件时，才是有效的BST
         return left && isValid && right;
+    }
+
+    // 用于记录要找的第k小元素的索引
+    int k;
+
+    // 用于存储找到的第k小元素的值
+    int result;
+
+    /**
+     * 找到二叉搜索树中第k小的元素
+     * 利用二叉搜索树的中序遍历特性（左子树 < 根节点 < 右子树），
+     * 中序遍历的结果是有序的，因此可以通过中序遍历来找到第k小的元素
+     *
+     * @param root 二叉搜索树的根节点
+     * @param k    要查找的第k小元素（从1开始计数）
+     * @return 第k小的元素值
+     */
+    public int kthSmallest(TreeNode root, int k) {
+        this.k = k;
+        middleOrder(root);
+        return result;
+    }
+
+    /**
+     * 中序遍历二叉搜索树，找到第k小的元素
+     * 在中序遍历过程中，每访问一个节点就将k减1，
+     * 当k减到0时，当前节点就是第k小的元素
+     *
+     * @param node 当前遍历的节点
+     */
+    void middleOrder(TreeNode node) {
+        if (node == null) return;
+        // 先遍历左子树
+        middleOrder(node.left);
+        // 访问当前节点，k减1
+        k--;
+        // 如果k等于0，说明找到了第k小的元素
+        if (k == 0) {
+            result = node.val;
+            return;
+        }
+        // 继续遍历右子树
+        middleOrder(node.right);
+    }
+
+    /**
+     * 获取二叉树的右视图
+     * 使用层序遍历的方式，每层只取最右边的节点值
+     *
+     * @param root 二叉树的根节点
+     * @return 包含右视图节点值的列表，从上到下排列
+     */
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        if (root == null) return ans;
+        queue.offer(root);
+
+        // 层序遍历二叉树
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            // 遍历当前层的所有节点
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+                // 如果是当前层的最后一个节点，则加入结果列表
+                if (i == size - 1) {
+                    ans.add(node.val);
+                }
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+
+        return ans;
+    }
+
+
+    /**
+     * 将二叉树原地展开为单链表
+     * 展开后的链表遵循先序遍历的顺序，每个节点的左子指针为null，右子指针指向下一个节点
+     *
+     * @param root 二叉树的根节点
+     */
+    @Important("Important")
+    // https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-100-liked
+    public void flatten(TreeNode root) {
+        // 迭代处理每个节点，将其展开为右链表
+        while (root != null) {
+            // 如果当前节点没有左子树，直接移动到右子树
+            if (root.left == null) {
+                root = root.right;
+            } else {
+                // 找到左子树中最右边的节点
+                TreeNode target = root.left;
+                while (target.right != null) {
+                    target = target.right;
+                }
+                // 将当前节点的右子树连接到左子树的最右节点
+                target.right = root.right;
+                // 将左子树移动到右子树的位置
+                root.right = root.left;
+                // 将左子树置为空
+                root.left = null;
+                // 移动到下一个节点
+                root = root.right;
+            }
+        }
+    }
+
+    /**
+     * 根据前序遍历和中序遍历构建二叉树
+     *
+     * @param preorder 前序遍历数组
+     * @param inorder  中序遍历数组
+     * @return 构建好的二叉树根节点
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        // 获取前序遍历数组长度
+        int preLen = preorder.length;
+        // 获取中序遍历数组长度
+        int inLen = inorder.length;
+        // 检查两个数组长度是否相等，不相等则抛出异常
+        if (preLen != inLen) throw new RuntimeException("Incorrect input data");
+        // 调用递归方法构建二叉树，传入完整的数组范围
+        return buildTree(preorder, 0, preLen - 1, inorder, 0, inLen - 1);
+    }
+
+    /**
+     * 递归构建二叉树的核心方法
+     *
+     * @param preorder 前序遍历数组
+     * @param preStart 前序遍历当前处理的起始索引
+     * @param preEnd   前序遍历当前处理的结束索引
+     * @param inorder  中序遍历数组
+     * @param inStart  中序遍历当前处理的起始索引
+     * @param inEnd    中序遍历当前处理的结束索引
+     * @return 当前子树的根节点
+     */
+    TreeNode buildTree(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd) {
+        // 递归终止条件：当前处理范围无效时返回null
+        if (preStart > preEnd || inStart > inEnd) return null;
+
+        // 前序遍历的第一个元素就是当前子树的根节点值
+        int rootVal = preorder[preStart];
+        // 创建根节点
+        TreeNode node = new TreeNode(rootVal);
+
+        // 在中序遍历中找到根节点的位置
+        int pivot = inStart;
+        while (inorder[pivot] != rootVal) pivot++;
+
+        // instart = 2
+        // 2 3 4
+        // 4-2  = 2
+        // left child has 2
+        // 计算左子树的节点数量
+        int leftNum = pivot - inStart;
+
+        // 递归构建左子树
+        // 前序遍历中左子树范围：preStart+1 到 preStart+leftNum
+        // 中序遍历中左子树范围：inStart 到 pivot-1
+        node.left = buildTree(preorder, preStart + 1, preStart + leftNum, inorder, inStart, pivot - 1);
+
+        // 递归构建右子树
+        // 前序遍历中右子树范围：preStart+leftNum+1 到 preEnd
+        // 中序遍历中右子树范围：pivot+1 到 inEnd
+        node.right = buildTree(preorder, preStart + leftNum + 1, preEnd, inorder, pivot + 1, inEnd);
+
+        // 返回当前子树的根节点
+        return node;
+    }
+
+
+    /**
+     * 计算二叉树中路径和等于目标值的路径总数
+     * 路径不需要从根节点开始，也不需要在叶子节点结束，但必须是向下的路径
+     *
+     * @param root      二叉树的根节点
+     * @param targetSum 目标路径和
+     * @return 路径和等于目标值的路径总数
+     */
+    // https://leetcode.cn/problems/path-sum-iii/submissions/697091192/?envType=study-plan-v2&envId=top-100-liked
+    public int pathSum(TreeNode root, int targetSum) {
+        // 如果当前节点为空，返回0条路径
+        if (root == null) {
+            return 0;
+        }
+        
+        // 递归计算：
+        // 1. 以当前节点为起点的路径数量
+        // 2. 以左子树任意节点为起点的路径数量
+        // 3. 以右子树任意节点为起点的路径数量
+        return rootSum(root, targetSum)
+                + pathSum(root.left, targetSum)
+                + pathSum(root.right, targetSum);
+    }
+
+    /**
+     * 计算以指定节点为起点，向下延伸的路径中和等于目标值的路径数量
+     *
+     * @param root      当前节点
+     * @param targetSum 剩余需要达到的目标和
+     * @return 从当前节点开始向下延伸的符合条件的路径数量
+     */
+    public int rootSum(TreeNode root, int targetSum) {
+        int ret = 0;
+
+        // 如果当前节点为空，返回0条路径
+        if (root == null) {
+            return ret;
+        }
+        
+        // 如果当前节点值等于剩余目标和，说明找到一条有效路径
+        if (targetSum == root.val) {
+            ret++;
+        }
+        
+        // 递归检查左右子树，目标和减去当前节点值
+        ret += rootSum(root.left, targetSum - root.val);
+        ret += rootSum(root.right, targetSum - root.val);
+        
+        return ret;
+    }
+
+    /**
+     * 寻找二叉树中两个指定节点的最近公共祖先
+     * 最近公共祖先的定义：对于有根树 T 的两个节点 p、q，
+     * 最近公共祖先表示为一个节点 x，满足 x 是 p、q 的祖先且 x 的深度尽可能大
+     *
+     * @param root 二叉树的根节点
+     * @param p    目标节点p
+     * @param q    目标节点q
+     * @return p和q的最近公共祖先节点
+     */
+
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        // 递归终止条件：
+        // 1. 当前节点为空时返回null
+        // 2. 当前节点就是p或q时，直接返回当前节点（找到了目标节点之一）
+        if (root == null || root == p || root == q) return root;
+        
+        // 递归搜索左子树，寻找p和q
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        // 递归搜索右子树，寻找p和q
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        
+        // 处理递归结果：
+        // 如果左子树没有找到p或q，说明都在右子树中，返回右子树的结果
+        if (left == null) {
+            return right;
+        }
+        // 如果右子树没有找到p或q，说明都在左子树中，返回左子树的结果
+        if (right == null) {
+            return left;
+        }
+        // 如果左右子树都找到了p或q，说明当前节点就是最近公共祖先
+        return root;
     }
 
 }
