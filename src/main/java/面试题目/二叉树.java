@@ -504,7 +504,7 @@ public class 二叉树 {
         if (root == null) {
             return 0;
         }
-        
+
         // 递归计算：
         // 1. 以当前节点为起点的路径数量
         // 2. 以左子树任意节点为起点的路径数量
@@ -528,16 +528,16 @@ public class 二叉树 {
         if (root == null) {
             return ret;
         }
-        
+
         // 如果当前节点值等于剩余目标和，说明找到一条有效路径
         if (targetSum == root.val) {
             ret++;
         }
-        
+
         // 递归检查左右子树，目标和减去当前节点值
         ret += rootSum(root.left, targetSum - root.val);
         ret += rootSum(root.right, targetSum - root.val);
-        
+
         return ret;
     }
 
@@ -551,18 +551,18 @@ public class 二叉树 {
      * @param q    目标节点q
      * @return p和q的最近公共祖先节点
      */
-
+    // https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/?envType=study-plan-v2&envId=top-100-liked
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // 递归终止条件：
         // 1. 当前节点为空时返回null
         // 2. 当前节点就是p或q时，直接返回当前节点（找到了目标节点之一）
         if (root == null || root == p || root == q) return root;
-        
+
         // 递归搜索左子树，寻找p和q
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         // 递归搜索右子树，寻找p和q
         TreeNode right = lowestCommonAncestor(root.right, p, q);
-        
+
         // 处理递归结果：
         // 如果左子树没有找到p或q，说明都在右子树中，返回右子树的结果
         if (left == null) {
@@ -574,6 +574,54 @@ public class 二叉树 {
         }
         // 如果左右子树都找到了p或q，说明当前节点就是最近公共祖先
         return root;
+    }
+
+
+    // 用于记录二叉树中的最大路径和
+    int maxSum = Integer.MIN_VALUE;
+
+    /**
+     * 计算二叉树中的最大路径和
+     * 路径被定义为一条节点序列，序列中每对相邻节点之间都存在一条边。
+     * 同一个节点在一条路径序列中至多出现一次。
+     * 该路径至少包含一个节点，且不一定经过根节点。
+     *
+     * @param root 二叉树的根节点
+     * @return 二叉树中的最大路径和
+     */
+    public int maxPathSum(TreeNode root) {
+        // 调用辅助函数计算每个节点的最大贡献值，并更新全局最大路径和
+        maxGain(root);
+        // 返回计算得到的最大路径和
+        return maxSum;
+    }
+
+    /**
+     * 计算以当前节点为起点的最大路径和（贡献值）
+     * 这个函数递归地计算每个节点能为父节点提供的最大贡献值
+     *
+     * @param node 当前处理的节点
+     * @return 当前节点能为父节点提供的最大贡献值
+     */
+    public int maxGain(TreeNode node) {
+        // 递归终止条件：如果当前节点为空，贡献值为0
+        if (node == null) {
+            return 0;
+        }
+
+        // 递归计算左子树的最大贡献值，如果为负数则取0（不选择该路径）
+        int leftGain = Math.max(maxGain(node.left), 0);
+        // 递归计算右子树的最大贡献值，如果为负数则取0（不选择该路径）
+        int rightGain = Math.max(maxGain(node.right), 0);
+
+        // 计算以当前节点为最高点的新路径和（可以同时包含左右子树）
+        int priceNewPath = node.val + leftGain + rightGain;
+
+        // 更新全局最大路径和
+        maxSum = Math.max(maxSum, priceNewPath);
+
+        // 返回当前节点能为父节点提供的最大贡献值（只能选择左右子树中的一条路径）
+        return node.val + Math.max(leftGain, rightGain);
     }
 
 }
