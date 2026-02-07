@@ -1,45 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#F5F5F5">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-<!--    <com.peter.androidx.RedGlowCircleView-->
-<!--        android:layout_width="20dp"-->
-<!--        android:layout_height="20dp" />-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DynamicAnimationLib Demo"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp" />
 
+        <!-- 按压动画示例 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="按压动画示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
 
+        <Button
+            android:id="@+id/btnSimplePress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="简单按压动画"
+            android:layout_marginBottom="8dp" />
 
-<!--    <com.peter.androidx.RedGlowCircleView-->
-<!--        android:layout_width="13dp"-->
-<!--        android:layout_height="13dp"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        tools:layout_editor_absoluteX="106dp"-->
-<!--        tools:layout_editor_absoluteY="0dp" />-->
+        <Button
+            android:id="@+id/btnBouncePress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="弹跳按压动画"
+            android:layout_marginBottom="8dp" />
 
+        <Button
+            android:id="@+id/btnElasticPress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="弹性按压动画"
+            android:layout_marginBottom="24dp" />
 
-<!--    <View-->
-<!--        android:background="@drawable/color_shadow"-->
-<!--        android:layout_width="13dp"-->
-<!--        android:layout_height="13dp"/>-->
+        <!-- 缩放动画示例 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="缩放动画示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
 
-    <com.peter.androidx.CircleSurfaceView
-        android:layout_width="40dp"
-        android:layout_height="40dp"/>
+        <Button
+            android:id="@+id/btnScaleUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="放大"
+            android:layout_marginBottom="8dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnScaleDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="缩小"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnScalePulse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="脉冲效果"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 旋转动画示例 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="旋转动画示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnRotate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="旋转360度"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnShake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="摇晃效果"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 平移动画示例 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="平移动画示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnMoveLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="向左移动"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnMoveRight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="向右移动"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnMoveUp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="向上移动"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 透明度动画示例 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="透明度动画示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnFadeOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="淡出"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnFadeIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="淡入"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 组合动画示例 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="组合动画示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnCombo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="组合动画"
+            android:layout_marginBottom="24dp" />
+
+        <!-- 插值器展示 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="插值器选择器"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <Spinner
+            android:id="@+id/spinnerInterpolators"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <Button
+            android:id="@+id/btnTestInterpolator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="测试选中的插值器"
+            android:layout_marginBottom="24dp" />
+
+    </LinearLayout>
+</ScrollView>

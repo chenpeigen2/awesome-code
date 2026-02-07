@@ -301,4 +301,75 @@ class MedianFinder {
             return queMin.peek();
         }
     }
+
+    static void main(String[] args) {
+        堆栈 solution = new 堆栈();
+
+        // 测试 isValid 方法
+        System.out.println("=== 测试 isValid 方法 ===");
+        System.out.println(solution.isValid("()"));       // true
+        System.out.println(solution.isValid("()[]{}"));   // true
+        System.out.println(solution.isValid("(]"));       // false
+        System.out.println(solution.isValid("([)]"));     // false
+        System.out.println(solution.isValid("{[]}"));     // true
+
+        // 测试 decodeString 方法
+        System.out.println("\n=== 测试 decodeString 方法 ===");
+        System.out.println(solution.decodeString("3[a]2[bc]"));     // "aaabcbc"
+        System.out.println(solution.decodeString("3[a2[c]]"));      // "accaccacc"
+        System.out.println(solution.decodeString("2[abc]3[cd]ef")); // "abcabccdcdcdef"
+        System.out.println(solution.decodeString("abc3[cd]xyz"));   // "abccdcdcdxyz"
+
+        // 测试 dailyTemperatures 方法
+        System.out.println("\n=== 测试 dailyTemperatures 方法 ===");
+        int[] temps1 = {73,74,75,71,69,72,76,73};
+        int[] result1 = solution.dailyTemperatures(temps1);
+        System.out.println(Arrays.toString(result1)); // [1, 1, 4, 2, 1, 1, 0, 0]
+
+        int[] temps2 = {30,40,50,60};
+        int[] result2 = solution.dailyTemperatures(temps2);
+        System.out.println(Arrays.toString(result2)); // [1, 1, 1, 0]
+
+        int[] temps3 = {30,60,90};
+        int[] result3 = solution.dailyTemperatures(temps3);
+        System.out.println(Arrays.toString(result3)); // [1, 1, 0]
+
+        // 测试 findKthLargest 方法
+        System.out.println("\n=== 测试 findKthLargest 方法 ===");
+        int[] nums1 = {3,2,1,5,6,4};
+        System.out.println(solution.findKthLargest(nums1, 2)); // 5
+
+        int[] nums2 = {3,2,3,1,2,4,5,5,6};
+        System.out.println(solution.findKthLargest(nums2, 4)); // 4
+
+        // 测试 topKFrequent 方法
+        System.out.println("\n=== 测试 topKFrequent 方法 ===");
+        int[] nums3 = {1,1,1,2,2,3};
+        int[] result4 = solution.topKFrequent(nums3, 2);
+        System.out.println(Arrays.toString(result4)); // [1, 2]
+
+        int[] nums4 = {1};
+        int[] result5 = solution.topKFrequent(nums4, 1);
+        System.out.println(Arrays.toString(result5)); // [1]
+
+        // 测试 MinStack 类
+        System.out.println("\n=== 测试 MinStack 类 ===");
+        MinStack minStack = new MinStack();
+        minStack.push(-2);
+        minStack.push(0);
+        minStack.push(-3);
+        System.out.println(minStack.getMin()); // -3
+        minStack.pop();
+        System.out.println(minStack.top());    // 0
+        System.out.println(minStack.getMin()); // -2
+
+        // 测试 MedianFinder 类
+        System.out.println("\n=== 测试 MedianFinder 类 ===");
+        MedianFinder medianFinder = new MedianFinder();
+        medianFinder.addNum(1);
+        medianFinder.addNum(2);
+        System.out.println(medianFinder.findMedian()); // 1.5
+        medianFinder.addNum(3);
+        System.out.println(medianFinder.findMedian()); // 2.0
+    }
 }
