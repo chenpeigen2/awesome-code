@@ -59,8 +59,26 @@ object DynamicAnimationLib {
      * @param view 目标 View
      * @param block 配置块
      */
-    fun enablePressAnimation(view: View, block: AnimationConfig.Builder.() -> Unit) {
-        val config = AnimationConfig.Builder().apply(block).build()
-        PressAnimation.create(view, config).attachToView()
-    }
+/**
+ * 创建自定义按压动画并自动附加到 View
+ * @param view 目标 View
+ * @param scale 缩放比例，默认为 1.0f
+ * @param alpha 透明度，默认为 1.0f
+ * @param duration 动画持续时间（毫秒），默认为 200
+ * @param interpolator 插值器，默认为 AccelerateDecelerateInterpolator
+ * 
+ * 使用示例：
+ * ```kotlin
+DynamicAnimationLib.enablePressAnimation(button) {
+    scale = 1.2f
+    alpha = 0.8f
+    duration = 300
+    interpolator = AccelerateDecelerateInterpolator()
+}
+ * ```
+ */
+fun enablePressAnimation(view: View, block: AnimationConfig.Builder.() -> Unit) {
+    val config = AnimationConfig.Builder().apply(block).build()
+    PressAnimation.create(view, config).attachToView()
+}
 }

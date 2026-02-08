@@ -1,5 +1,6 @@
 package com.peter.dynamicanimation.interpolator
 
+import android.animation.TimeInterpolator
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.AnticipateInterpolator
@@ -19,7 +20,7 @@ object InterpolatorFactory {
     /**
      * 根据类型创建插值器
      */
-    fun create(type: InterpolatorType): Interpolator = when (type) {
+    fun create(type: InterpolatorType): TimeInterpolator = when (type) {
         InterpolatorType.LINEAR -> LinearInterpolator()
         InterpolatorType.ACCELERATE -> AccelerateInterpolator()
         InterpolatorType.DECELERATE -> DecelerateInterpolator()

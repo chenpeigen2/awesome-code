@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.animation.TimeInterpolator
 import android.view.View
 import android.view.animation.Interpolator
 import com.peter.dynamicanimation.interpolator.InterpolatorFactory
@@ -17,7 +18,7 @@ class AnimationBuilder private constructor(private val view: View) {
 
     private val animators = mutableListOf<Animator>()
     private var duration: Long = 300L
-    private var interpolator: Interpolator = InterpolatorFactory.create(InterpolatorType.FAST_OUT_SLOW_IN)
+    private var interpolator: TimeInterpolator = InterpolatorFactory.create(InterpolatorType.FAST_OUT_SLOW_IN)
     private var startDelay: Long = 0L
     private var onAnimationEnd: (() -> Unit)? = null
     private var onAnimationStart: (() -> Unit)? = null

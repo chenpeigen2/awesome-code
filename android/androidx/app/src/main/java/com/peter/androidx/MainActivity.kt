@@ -113,7 +113,7 @@ class MainActivity : AppCompatActivity() {
                             .scale(1f)
                             .duration(150)
                             .onAnimationEnd {
-                                view.postDelayed(pulse, 200)
+                                view.postDelayed({  }, 200)
                             }
                             .start()
                     }

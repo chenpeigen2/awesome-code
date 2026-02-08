@@ -14,171 +14,171 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
             android:text="DynamicAnimationLib Demo"
             android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
+            android:textStyle="bold" />
 
         <!-- 按压动画示例 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="按压动画示例"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnSimplePress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="简单按压动画"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="简单按压动画" />
 
         <Button
             android:id="@+id/btnBouncePress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="弹跳按压动画"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="弹跳按压动画" />
 
         <Button
             android:id="@+id/btnElasticPress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="弹性按压动画"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:text="弹性按压动画" />
 
         <!-- 缩放动画示例 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="缩放动画示例"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnScaleUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="放大"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="放大" />
 
         <Button
             android:id="@+id/btnScaleDown"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="缩小"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="缩小" />
 
         <Button
             android:id="@+id/btnScalePulse"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="脉冲效果"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:text="脉冲效果" />
 
         <!-- 旋转动画示例 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="旋转动画示例"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnRotate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="旋转360度"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="旋转360度" />
 
         <Button
             android:id="@+id/btnShake"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="摇晃效果"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:text="摇晃效果" />
 
         <!-- 平移动画示例 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="平移动画示例"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnMoveLeft"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="向左移动"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="向左移动" />
 
         <Button
             android:id="@+id/btnMoveRight"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="向右移动"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="向右移动" />
 
         <Button
             android:id="@+id/btnMoveUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="向上移动"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:text="向上移动" />
 
         <!-- 透明度动画示例 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="透明度动画示例"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnFadeOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="淡出"
-            android:layout_marginBottom="8dp" />
+            android:layout_marginBottom="8dp"
+            android:text="淡出" />
 
         <Button
             android:id="@+id/btnFadeIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="淡入"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:text="淡入" />
 
         <!-- 组合动画示例 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="组合动画示例"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnCombo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="组合动画"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:text="组合动画" />
 
         <!-- 插值器展示 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:text="插值器选择器"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp" />
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/spinnerInterpolators"
@@ -190,8 +190,22 @@
             android:id="@+id/btnTestInterpolator"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="测试选中的插值器"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="24dp"
+            android:text="测试选中的插值器" />
+
+        <com.peter.androidx.RedGlowCircleView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp" />
+
+
+        <com.peter.androidx.GlowingCircleView
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp" />
 
     </LinearLayout>
+
 </ScrollView>
