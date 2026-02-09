@@ -64,4 +64,125 @@ public class 二分 {
         return false;
     }
 
+    // https://leetcode.cn/problems/find-first-and-last-position-of-element-in-sorted-array/?envType=study-plan-v2&envId=top-100-liked
+    @NeedDeepLearn
+    public int[] searchRange(int[] nums, int target) {
+        int left = findFirst(nums, target);
+        int right = findLast(nums, target);
+        return new int[]{left, right};
+    }
+
+    private int findFirst(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] == target) {
+                right = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        if (nums[left] != target) {
+            return -1;
+        }
+        return left;
+    }
+
+    private int findLast(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (nums[mid] < target) {
+                left = mid + 1;
+            } else if (nums[mid] == target) {
+                left = mid;
+            } else {
+                right = mid - 1;
+            }
+        }
+        if (nums[left] != target) {
+            return -1;
+        }
+        return left;
+    }
+
+
+    @NeedDeepLearn
+    /**
+     * 在旋转排序数组中搜索目标值。
+     * 数组原本是升序排列的，但在某个未知点进行了旋转（例如 [4,5,6,7,0,1,2]）。
+     * 使用改进的二分查找算法，在 O(log n) 时间内定位目标值。
+     *
+     * @param nums   旋转后的排序数组
+     * @param target 要查找的目标值
+     * @return 目标值在数组中的索引，如果不存在则返回 -1
+     */
+    public int search(int[] nums, int target) {
+        int n = nums.length;
+        int left = 0, right = n - 1;
+        // 二分查找主循环
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            // 找到目标值，直接返回索引
+            if (nums[mid] == target) {
+                return mid;
+            }
+            // 判断 mid 所在的区间是左半段还是右半段
+            if (nums[0] <= nums[mid]) {
+                // mid 在左半段（较大的数值区间）
+                // 检查 target 是否在左半段的范围内
+                if (nums[0] <= target && target < nums[mid]) {
+                    // target 在左半段范围内，缩小搜索范围到左半部分
+                    right = mid - 1;
+                } else {
+                    // target 不在左半段范围内，搜索右半部分
+                    left = mid + 1;
+                }
+            } else {
+                // mid 在右半段（较小的数值区间）
+                // 检查 target 是否在右半段的范围内
+                if (nums[mid] < target && target <= nums[n - 1]) {
+                    // target 在右半段范围内，缩小搜索范围到右半部分
+                    left = mid + 1;
+                } else {
+                    // target 不在右半段范围内，搜索左半部分
+                    right = mid - 1;
+                }
+            }
+        }
+        // 未找到目标值，返回 -1
+        return -1;
+    }
+
+    // 将[l, r]从中间分开，一定一边有序，一边可能有序可能无序，只考虑有序的一边，考虑完排除这部分区间
+
+    /**
+     * 在旋转排序数组中查找最小值。
+     * 数组原本是升序排列的，但在某个未知点进行了旋转（例如 [4,5,6,7,0,1,2]）。
+     * 使用二分查找的思想，利用旋转数组的特性快速定位最小值。
+     *
+     * @param nums 旋转后的排序数组
+     * @return 数组中的最小值
+     */
+    // https://assets.leetcode.cn/solution-static/153/1.png
+    public int findMin(int[] nums) {
+        int ans = Integer.MAX_VALUE; // 初始化答案为最大整数值
+        int l = 0, r = nums.length - 1; // 设置左右边界
+        while (l <= r) { // 二分查找主循环
+            int mid = (l + r) / 2; // 计算中间位置
+            // 如果左边区间有序
+            if (nums[l] <= nums[mid]) {
+                ans = Math.min(ans, nums[l]); // 更新最小值
+                l = mid + 1; // 排除左半部分，搜索右半部分
+            } else {
+                // 如果右边区间有序
+                ans = Math.min(ans, nums[mid]); // 更新最小值
+                r = mid - 1; // 排除右半部分，搜索左半部分
+            }
+        }
+        return ans; // 返回找到的最小值
+    }
+
 }
