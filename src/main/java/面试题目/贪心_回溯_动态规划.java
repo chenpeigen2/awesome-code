@@ -128,9 +128,6 @@ public class 贪心_回溯_动态规划 {
         return result;
     }
 
-    // 动态规划
-
-
     // 回溯
     // https://assets.leetcode.cn/solution-static/46/fig14.PNG
 
@@ -267,13 +264,13 @@ public class 贪心_回溯_动态规划 {
 
         // 如果候选数组为空，直接返回空结果
         if (len == 0) return res;
-        
+
         // 创建双端队列作为路径栈，用于存储当前正在构建的组合
         Deque<Integer> path = new ArrayDeque<>();
-        
+
         // 调用深度优先搜索函数开始寻找组合
         dfs(candidates, 0, len, target, path, res);
-        
+
         // 返回所有满足条件的组合
         return res;
     }
@@ -296,7 +293,7 @@ public class 贪心_回溯_动态规划 {
                      Deque<Integer> path, List<List<Integer>> res) {
         // 如果剩余目标值小于0，说明当前路径不满足条件，直接返回
         if (target < 0) return;
-        
+
         // 如果剩余目标值等于0，说明找到了一个满足条件的组合
         if (target == 0) {
             // 将当前路径的一个副本添加到结果列表中
@@ -308,15 +305,102 @@ public class 贪心_回溯_动态规划 {
         for (int i = depth; i < len; i++) {
             // 将当前候选数字加入路径
             path.push(candidates[i]);
-            
+
             // 递归搜索，注意起始位置仍为i（允许重复使用同一元素）
             // 目标值减去当前选择的数字
             dfs(candidates, i, len, target - candidates[i], path, res);
-            
+
             // 回溯：移除刚才添加的数字，恢复路径状态
             // 以便在同一层级尝试其他候选数字
             path.pop();
         }
+    }
+
+    // 动态规划
+
+    // https://leetcode.cn/problems/climbing-stairs/description/?envType=study-plan-v2&envId=top-100-liked
+
+    /**
+     * 使用动态规划计算爬楼梯的不同方法数
+     * <p>
+     * 问题描述：每次可以爬1或2个台阶，求爬到第n阶楼梯共有多少种不同的方法
+     * 解题思路：这是一个经典的斐波那契数列问题
+     * - 爬到第n阶的方法数 = 爬到第(n-1)阶的方法数 + 爬到第(n-2)阶的方法数
+     * - 因为可以从第(n-1)阶爬1步到达，或从第(n-2)阶爬2步到达
+     *
+     * @param n 楼梯的总阶数
+     * @return 爬到第n阶的不同方法数
+     */
+    public int climbStairs(int n) {
+        // 创建dp数组，dp[i]表示爬到第i阶楼梯的方法数
+        int[] dp = new int[n + 1];
+
+        // 初始条件：
+        // 爬到第0阶有1种方法（不爬）
+        dp[0] = 1;
+        // 爬到第1阶有1种方法（爬1步）
+        dp[1] = 1;
+
+        // 状态转移方程：dp[i] = dp[i-1] + dp[i-2]
+        // 从第2阶开始计算每一阶的方法数
+        for (int i = 2; i <= n; i++) {
+            // 当前阶数的方法数 = 前一阶的方法数 + 前两阶的方法数
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+
+        // 返回爬到第n阶楼梯的方法数
+        return dp[n];
+    }
+
+    // https://leetcode.cn/problems/pascals-triangle/submissions/628154915/?envType=study-plan-v2&envId=top-100-liked
+    /**
+     * 生成杨辉三角的前numRows行
+     * 
+     * 杨辉三角的特点：
+     * 1. 每一行的第一个和最后一个元素都是1
+     * 2. 中间的元素等于上一行相邻两个元素的和
+     * 3. 第n行有n个元素
+     * 
+     * 算法思路：
+     * 1. 外层循环控制行数，从第0行到第(numRows-1)行
+     * 2. 内层循环控制每行的列数，第i行有(i+1)个元素
+     * 3. 对于每行的元素：
+     *    - 首尾元素直接设为1
+     *    - 中间元素通过上一行的相邻元素相加得到
+     * 
+     * 时间复杂度：O(n²)，其中n是行数
+     * 空间复杂度：O(n²)，需要存储整个三角形
+     * 
+     * @param numRows 需要生成的行数（非负整数）
+     * @return 包含杨辉三角前numRows行的二维列表
+     */
+    public List<List<Integer>> generate(int numRows) {
+        // 创建结果列表，用于存储杨辉三角的所有行
+        List<List<Integer>> ret = new ArrayList<>();
+        
+        // 外层循环：逐行生成杨辉三角
+        for (int i = 0; i < numRows; i++) {
+            // 创建当前行的列表
+            List<Integer> row = new ArrayList<>();
+            
+            // 内层循环：生成当前行的所有元素
+            for (int j = 0; j <= i; j++) {
+                // 判断是否为首尾元素
+                if (j == 0 || j == i) {
+                    // 首尾元素都为1
+                    row.add(1);
+                } else {
+                    // 中间元素等于上一行相邻两个元素的和
+                    // 即：当前行第j个元素 = 上一行第(j-1)个元素 + 上一行第j个元素
+                    row.add(ret.get(i - 1).get(j - 1) + ret.get(i - 1).get(j));
+                }
+            }
+            // 将生成的行添加到结果列表中
+            ret.add(row);
+        }
+        
+        // 返回完整的杨辉三角
+        return ret;
     }
 
 }
