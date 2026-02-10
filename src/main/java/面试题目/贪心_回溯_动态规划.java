@@ -1,7 +1,6 @@
 package 面试题目;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class 贪心_回溯_动态规划 {
 
@@ -127,6 +126,130 @@ public class 贪心_回溯_动态规划 {
 
         // 返回包含所有片段长度的列表
         return result;
+    }
+
+    // 动态规划
+
+
+    // 回溯
+    // https://assets.leetcode.cn/solution-static/46/fig14.PNG
+
+    /**
+     * 生成数组的所有全排列
+     *
+     * @param nums 输入的整数数组
+     * @return 包含所有全排列的二维列表
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        // 创建结果列表，用于存储所有的排列组合
+        List<List<Integer>> res = new ArrayList<>();
+        // 创建路径列表，用于存储当前正在构建的排列
+        List<Integer> path = new ArrayList<>();
+
+        // 将输入数组的所有元素添加到路径列表中
+        for (int num : nums) {
+            path.add(num);
+        }
+
+        // 调用回溯函数开始生成全排列
+        backTrack(path, res, 0, nums.length);
+
+        // 返回所有排列的结果
+        return res;
+    }
+
+    /**
+     * 回溯函数，用于递归生成全排列
+     *
+     * @param path 当前正在构建的排列路径
+     * @param res  存储所有排列结果的列表
+     * @param step 当前处理的位置（起始索引）
+     * @param n    数组的长度
+     */
+    private void backTrack(List<Integer> path, List<List<Integer>> res, int step, int n) {
+        // 如果已经处理完所有位置，说明找到一个完整的排列
+        if (step == n) {
+            // 将当前路径的一个副本添加到结果列表中
+            res.add(new ArrayList<>(path));
+            return; // 结束当前递归分支
+        }
+
+        // 从当前位置开始，尝试每一个可能的元素
+        for (int i = step; i < n; i++) {
+            // 交换当前元素和第first个元素，固定当前元素在first位置
+            Collections.swap(path, step, i);
+
+            // 递归处理下一个位置
+            backTrack(path, res, step + 1, n);
+
+            // 回溯：撤销之前的交换，恢复原始状态，以便尝试其他可能性
+            Collections.swap(path, step, i);
+        }
+    }
+
+    /**
+     * 生成数组的所有子集（幂集）
+     *
+     * @param nums 输入的整数数组
+     * @return 包含所有子集的二维列表
+     */
+    public List<List<Integer>> subsets(int[] nums) {
+        // 获取数组长度
+        int len = nums.length;
+        // 创建结果列表，用于存储所有的子集
+        List<List<Integer>> ans = new ArrayList<>();
+
+        // 如果数组为空，直接返回空结果
+        if (len == 0) return ans;
+        
+        // 使用双端队列作为栈来存储当前正在构建的子集
+        Deque<Integer> stack = new ArrayDeque<>();
+        // 调用回溯函数开始生成所有子集
+        backTrack02(0, len, stack, 0, ans, nums);
+
+        // 返回所有子集的结果
+        return ans;
+    }
+
+    /**
+     * 回溯函数，用于递归生成所有子集
+     *
+     * @param start 当前考虑的起始位置（避免重复选择）
+     * @param len   数组的总长度
+     * @param stack 用于存储当前子集的栈结构
+     * @param depth 当前子集已选择的元素个数
+     * @param ans   存储所有子集结果的列表
+     * @param nums  输入的整数数组
+     */
+    // step ， 深度n
+    // 结果res ， 变化的东西如 nums 或者 List<Integer> path
+
+    // 新添加的参数：
+    // start ， 搜索的起始位置，  一个堆栈
+    private void backTrack02(int start, int len, Deque<Integer> stack,
+                             int depth, List<List<Integer>> ans, int[] nums) {
+        // 将当前栈中的元素作为一个子集添加到结果中
+        // 每次递归调用都会执行这一步，确保所有可能的子集都被收集
+        ans.add(new ArrayList<>(stack));
+        
+        // 如果已经达到最大深度（选择了所有元素），结束当前递归分支
+        // 这是一个剪枝条件，避免不必要的递归
+        if (depth == len) {
+            return;
+        }
+        
+        // 从起始位置开始，尝试添加每一个可能的元素
+        // 通过控制start参数避免重复选择，确保生成的是子集而非排列
+        for (int i = start; i < len; i++) {
+            // 将当前元素压入栈中，加入当前子集
+            stack.push(nums[i]);
+            // 递归处理下一个位置，深度加1
+            // i+1确保不会重复选择同一个元素
+            backTrack02(i + 1, len, stack, depth + 1, ans, nums);
+            // 回溯：弹出刚才添加的元素，恢复栈的状态
+            // 这样可以在同一层级尝试其他元素的选择
+            stack.pop();
+        }
     }
 
 }
