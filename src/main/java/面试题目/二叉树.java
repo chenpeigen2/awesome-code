@@ -521,7 +521,7 @@ public class 二叉树 {
      * @param targetSum 剩余需要达到的目标和
      * @return 从当前节点开始向下延伸的符合条件的路径数量
      */
-    public int rootSum(TreeNode root, int targetSum) {
+    public int rootSum(TreeNode root, long targetSum) {
         int ret = 0;
 
         // 如果当前节点为空，返回0条路径
