@@ -201,7 +201,7 @@ public class 贪心_回溯_动态规划 {
 
         // 如果数组为空，直接返回空结果
         if (len == 0) return ans;
-        
+
         // 使用双端队列作为栈来存储当前正在构建的子集
         Deque<Integer> stack = new ArrayDeque<>();
         // 调用回溯函数开始生成所有子集
@@ -231,13 +231,13 @@ public class 贪心_回溯_动态规划 {
         // 将当前栈中的元素作为一个子集添加到结果中
         // 每次递归调用都会执行这一步，确保所有可能的子集都被收集
         ans.add(new ArrayList<>(stack));
-        
+
         // 如果已经达到最大深度（选择了所有元素），结束当前递归分支
         // 这是一个剪枝条件，避免不必要的递归
         if (depth == len) {
             return;
         }
-        
+
         // 从起始位置开始，尝试添加每一个可能的元素
         // 通过控制start参数避免重复选择，确保生成的是子集而非排列
         for (int i = start; i < len; i++) {
@@ -249,6 +249,73 @@ public class 贪心_回溯_动态规划 {
             // 回溯：弹出刚才添加的元素，恢复栈的状态
             // 这样可以在同一层级尝试其他元素的选择
             stack.pop();
+        }
+    }
+
+    /**
+     * 寻找所有组合使得它们的和等于目标值target
+     *
+     * @param candidates 候选数字数组（无重复元素）
+     * @param target     目标和
+     * @return 所有满足条件的组合列表
+     */
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        // 获取候选数组的长度
+        int len = candidates.length;
+        // 创建结果列表，用于存储所有满足条件的组合
+        List<List<Integer>> res = new ArrayList<>();
+
+        // 如果候选数组为空，直接返回空结果
+        if (len == 0) return res;
+        
+        // 创建双端队列作为路径栈，用于存储当前正在构建的组合
+        Deque<Integer> path = new ArrayDeque<>();
+        
+        // 调用深度优先搜索函数开始寻找组合
+        dfs(candidates, 0, len, target, path, res);
+        
+        // 返回所有满足条件的组合
+        return res;
+    }
+
+    /**
+     * 深度优先搜索函数，用于递归寻找所有满足条件的组合
+     *
+     * @param candidates 候选数字数组
+     * @param depth      当前搜索的起始位置（避免重复组合）
+     * @param len        候选数组的总长度
+     * @param target     剩余需要达到的目标值
+     * @param path       当前正在构建的组合路径
+     * @param res        存储所有满足条件组合的结果列表
+     */
+    // candidate target 需要转换的东西
+    // len 总长度
+    // depth 当前深度
+    // res 结果的hold
+    private void dfs(int[] candidates, int depth, int len, int target,
+                     Deque<Integer> path, List<List<Integer>> res) {
+        // 如果剩余目标值小于0，说明当前路径不满足条件，直接返回
+        if (target < 0) return;
+        
+        // 如果剩余目标值等于0，说明找到了一个满足条件的组合
+        if (target == 0) {
+            // 将当前路径的一个副本添加到结果列表中
+            res.add(new ArrayList<>(path));
+            return; // 结束当前递归分支
+        }
+
+        // 从当前起始位置开始，尝试每一个候选数字
+        for (int i = depth; i < len; i++) {
+            // 将当前候选数字加入路径
+            path.push(candidates[i]);
+            
+            // 递归搜索，注意起始位置仍为i（允许重复使用同一元素）
+            // 目标值减去当前选择的数字
+            dfs(candidates, i, len, target - candidates[i], path, res);
+            
+            // 回溯：移除刚才添加的数字，恢复路径状态
+            // 以便在同一层级尝试其他候选数字
+            path.pop();
         }
     }
 
