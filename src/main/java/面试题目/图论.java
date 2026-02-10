@@ -1,7 +1,6 @@
 package 面试题目;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.*;
 
 public class 图论 {
 
@@ -71,6 +70,7 @@ public class 图论 {
 
 
     // https://leetcode.cn/problems/rotting-oranges/description/?envType=study-plan-v2&envId=top-100-liked
+
     /**
      * 计算腐烂橘子使所有新鲜橘子腐烂所需的最短时间
      * 使用多源BFS模拟腐烂过程
@@ -83,36 +83,36 @@ public class 图论 {
         int N = grid[0].length;
         Queue<int[]> queue = new ArrayDeque<>();
         int freshCount = 0;
-        
+
         // 初始化：统计新鲜橘子数量并将初始腐烂橘子加入队列
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < N; j++) {
-             if (grid[i][j] == 1) {
+                if (grid[i][j] == 1) {
                     freshCount++;
                 } else if (grid[i][j] == 2) {
                     queue.offer(new int[]{i, j});
                 }
             }
         }
-        
+
         // 如果没有新鲜橘子，直接返回0
         if (freshCount == 0) {
             return 0;
         }
-        
+
         int minutes = 0;
-        
+
         // BFS遍历，模拟腐烂过程
         while (freshCount > 0 && !queue.isEmpty()) {
             minutes++;
             int currentSize = queue.size();
-            
+
             // 处理当前轮次的所有腐烂橘子
             for (int i = 0; i < currentSize; i++) {
                 int[] current = queue.poll();
                 int x = current[0];
                 int y = current[1];
-                
+
                 // 检查四个方向的相邻格子
                 // 上方
                 if (x - 1 >= 0 && grid[x - 1][y] == 1) {
@@ -140,9 +140,68 @@ public class 图论 {
                 }
             }
         }
-        
+
         // 如果还有新鲜橘子剩余，说明无法全部腐烂
         return freshCount > 0 ? -1 : minutes;
-    }   
+    }
+
+    /**
+     * 判断是否可以完成所有课程的学习
+     * 使用拓扑排序算法检测有向图中是否存在环
+     *
+     * @param numCourses    课程总数
+     * @param prerequisites 先修课程关系数组，每个元素 [a,b] 表示学习课程 a 前必须先完成课程 b
+     * @return 如果可以完成所有课程返回 true，否则返回 false
+     */
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+
+        List<List<Integer>> edges; // 邻接表
+        int[] indeg; // 入度数组
+
+        // 初始化邻接表，存储每门课程的后续课程
+        edges = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            edges.add(new ArrayList<>());
+        }
+
+        // 初始化入度数组，记录每门课程的先修课程数量
+        indeg = new int[numCourses];
+
+        // 构建图结构：对于每个先修关系 [a,b]，添加从 b 到 a 的边，并增加 a 的入度
+        // b ---> a
+        for (int[] info : prerequisites) {
+            edges.get(info[1]).add(info[0]);  // 课程 info[1] 是 info[0] 的先修课程
+            indeg[info[0]]++;                 // 课程 info[0] 的入度加1
+        }
+
+        // 初始化队列，将所有入度为0的课程加入队列（这些课程没有先修要求）
+        Queue<Integer> queue = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indeg[i] == 0) {
+                queue.offer(i);
+            }
+        }
+
+        // 记录已访问（已完成）的课程数量
+        int visited = 0;
+
+        // 拓扑排序过程
+        while (!queue.isEmpty()) {
+            visited++;           // 完成一门课程
+            int u = queue.poll(); // 取出当前可学习的课程
+
+            // 遍历当前课程的所有后续课程
+            for (int v : edges.get(u)) {
+                indeg[v]--;      // 减少后续课程的入度（相当于完成了一门前置课程）
+                if (indeg[v] == 0) {  // 如果某课程入度变为0，说明可以学习了
+                    queue.offer(v);
+                }
+            }
+        }
+
+        // 如果所有课程都能完成，则visited等于课程总数
+        return visited == numCourses;
+    }
+
 
 }
