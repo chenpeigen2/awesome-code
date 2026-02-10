@@ -205,3 +205,83 @@ public class 图论 {
 
 
 }
+
+
+/**
+ * 实现前缀树(Trie)数据结构
+ * 用于高效存储和检索字符串集合中的键
+ */
+class Trie {
+    // 子节点数组，每个索引对应一个字母(a-z)
+    Trie[] children;
+    // 标记当前节点是否为某个单词的结尾
+    boolean isEnd;
+
+    /**
+     * 构造函数：初始化Trie节点
+     * 创建26个子节点的数组(对应26个小写字母)
+     * 并将isEnd标记为false
+     */
+    public Trie() {
+        children = new Trie[26];
+        isEnd = false;
+    }
+
+    /**
+     * 向Trie中插入一个单词
+     * @param word 需要插入的字符串
+     */
+    public void insert(String word) {
+        Trie node = this;
+        // 遍历单词中的每个字符
+        for (char ch : word.toCharArray()) {
+            int idx = ch - 'a';  // 计算字符相对于'a'的偏移量
+            // 如果当前字符对应的子节点不存在，则创建新节点
+            if (node.children[idx] == null) node.children[idx] = new Trie();
+            // 移动到下一个节点
+            node = node.children[idx];
+        }
+        // 标记单词结尾
+        node.isEnd = true;
+    }
+
+    /**
+     * 在Trie中搜索一个完整的单词
+     * @param word 需要搜索的字符串
+     * @return 如果单词存在返回true，否则返回false
+     */
+    public boolean search(String word) {
+        Trie node = this;
+        // 遍历单词中的每个字符
+        for (char ch : word.toCharArray()) {
+            int idx = ch - 'a';
+            // 如果路径中断(字符不存在)，返回false
+            if (node.children[idx] == null) return false;
+            // 继续向下搜索
+            node = node.children[idx];
+        }
+        // 只有到达单词结尾且该节点标记为结束才算找到完整单词
+        return node.isEnd;
+    }
+
+    /**
+     * 检查Trie中是否存在以指定前缀开头的单词
+     * 注意：原代码有逻辑错误，这里修正为正确的startsWith实现
+     * @param prefix 需要检查的前缀
+     * @return 如果存在以该前缀开头的单词返回true，否则返回false
+     */
+    public boolean startsWith(String prefix) {
+        Trie node = this;
+        // 遍历前缀中的每个字符
+        for (char ch : prefix.toCharArray()) {
+            int idx = ch - 'a';
+            // 如果路径中断，返回false
+            if (node.children[idx] == null) return false;
+            // 继续向下搜索
+            node = node.children[idx];
+        }
+        // 能够遍历完整个前缀就说明存在以此为前缀的单词
+        // 原代码错误地返回了node.isEnd，应该返回true
+        return true;
+    }
+}
