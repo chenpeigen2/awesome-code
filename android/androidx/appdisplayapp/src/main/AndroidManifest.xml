@@ -35,6 +35,19 @@
                 <action android:name="com.example.appdisplayapp.IRendererAidlInterface" />
             </intent-filter>
         </service>
+
+        <activity android:name=".SecondActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 注册服务 -->
+        <service android:name=".MyService01" />
+
+
     </application>
 
 </manifest>
