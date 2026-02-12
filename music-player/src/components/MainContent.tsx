@@ -131,7 +131,20 @@ export default function MainContent() {
     try {
       const files = await window.electronAPI.openFiles()
       if (files && files.length > 0) {
-        const newTracks: Track[] = files.map((filePath, index) => {
+        // 获取已存在的文件路径集合
+        const existingPaths = new Set(
+          Array.from(tracks.values()).map(t => t.path)
+        )
+        
+        // 过滤掉已存在的文件
+        const newFiles = files.filter(filePath => !existingPaths.has(filePath))
+        
+        if (newFiles.length === 0) {
+          showStatus('所选文件已全部存在于音乐库中')
+          return
+        }
+        
+        const newTracks: Track[] = newFiles.map((filePath, index) => {
           const fileName = filePath.split(/[/\\]/).pop()?.replace(/\.[^/.]+$/, '') || 'Unknown'
           return {
             id: `local-${Date.now()}-${index}-${Math.random().toString(36).substr(2, 9)}`,
@@ -146,7 +159,13 @@ export default function MainContent() {
         const existingTracks = Array.from(tracks.values())
         const allTracks = [...existingTracks, ...newTracks]
         setTracks(allTracks)
-        showStatus(`已添加 ${files.length} 个文件`)
+        
+        const skippedCount = files.length - newFiles.length
+        if (skippedCount > 0) {
+          showStatus(`已添加 ${newFiles.length} 个文件，跳过 ${skippedCount} 个重复文件`)
+        } else {
+          showStatus(`已添加 ${newFiles.length} 个文件`)
+        }
       }
     } catch (error) {
       console.error('Error adding files:', error)
