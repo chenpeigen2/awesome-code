@@ -9,10 +9,12 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Messenger;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -103,6 +105,40 @@ public class SecondActivity extends AppCompatActivity {
                 }
             }
         });
+
+//        Messenger
+
+        Messenger
+
+        Toast.makeText(this, "onCreate: " + (getFilesDir() + "  " + getCacheDir()), Toast.LENGTH_SHORT).show();
+
+    }
+
+    // 情况 A：匿名内部类
+    public Runnable r1 = new Runnable() {
+        @Override
+        public void run() {
+            System.out.println(this); // this 指向 Runnable 实例
+        }
+    };
+
+    // 情况 B：Lambda（如果强行转换）
+    public Runnable r2 = () -> System.out.println(this); // this 指向 LambdaScope 实例！
+
+
+    public void doWork() {
+        // 情况 A：匿名内部类
+        Runnable r1 = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(this); // this 指向 Runnable 实例
+            }
+        };
+
+        // 情况 B：Lambda（如果强行转换）
+        Runnable r2 = () -> System.out.println(this); // this 指向 LambdaScope 实例！
+
+
     }
 
     private void initViews() {

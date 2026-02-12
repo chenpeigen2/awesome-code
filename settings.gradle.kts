@@ -83,3 +83,4 @@ findProject(":explore:jsprit")?.name = "jsprit"
 
 include("explore:javassist")
 include("zip")
+include("explore:ai")
