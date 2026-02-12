@@ -1,4 +1,9 @@
 rootProject.name = "awesome-code"
+
+// 依赖版本目录 (Version Catalog)
+// Gradle 默认自动从 gradle/libs.versions.toml 加载名为 "libs" 的版本目录
+// 子项目可通过 libs 访问器使用统一的依赖版本
+// 例如: implementation(libs.guava) 或 alias(libs.plugins.kotlin.jvm)
 include("auto:autovalue")
 findProject(":auto:autovalue")?.name = "autovalue"
 include("time:chrono")

@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("java")
-    kotlin("jvm") version "2.3.0"
-    kotlin("kapt") version "2.3.0"
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 group = "org.peter"
@@ -45,19 +45,14 @@ allprojects {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.openjdk.nashorn/nashorn-core
-    implementation("org.openjdk.nashorn:nashorn-core:15.4")
-    // https://mvnrepository.com/artifact/commons-codec/commons-codec
-    implementation("commons-codec:commons-codec:1.20.0")
-    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
-    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
-    // https://mvnrepository.com/artifact/com.google.guava/guava
-    implementation("com.google.guava:guava:33.5.0-jre")
-    // Source: https://mvnrepository.com/artifact/cn.iflow/iflow-cli-sdk
-    implementation("cn.iflow:iflow-cli-sdk:1.0.4")
+    implementation(libs.nashorn)
+    implementation(libs.commons.codec)
+    implementation(libs.bouncycastle)
+    implementation(libs.guava)
+    implementation(libs.iflow.cli.sdk)
 
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
 }
 
 tasks.test {
