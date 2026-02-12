@@ -19,6 +19,12 @@ async function fetchHtml(url: string): Promise<string> {
     if (response.error) {
       throw new Error(response.error)
     }
+    if (response.status && response.status >= 400) {
+      throw new Error(`服务器返回错误: HTTP ${response.status}`)
+    }
+    if (!response.data) {
+      throw new Error('服务器返回空数据')
+    }
     return response.data
   } else {
     const controller = new AbortController()
@@ -37,12 +43,19 @@ async function fetchHtml(url: string): Promise<string> {
       clearTimeout(timeoutId)
       
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`)
+        throw new Error(`服务器返回错误: HTTP ${response.status}`)
       }
       
-      return await response.text()
+      const text = await response.text()
+      if (!text) {
+        throw new Error('服务器返回空数据')
+      }
+      return text
     } catch (error: any) {
       clearTimeout(timeoutId)
+      if (error.name === 'AbortError') {
+        throw new Error('请求超时，请检查网络连接')
+      }
       throw error
     }
   }

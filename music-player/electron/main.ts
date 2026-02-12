@@ -250,54 +250,67 @@ ipcMain.handle('http:fetch', async (_event, url: string, options: any = {}) => {
 })
 
 ipcMain.handle('http:download', async (_event, url: string, savePath: string) => {
-  return new Promise((resolve, reject) => {
-    const urlObj = new URL(url)
-    const isHttps = urlObj.protocol === 'https:'
-    const httpModule = isHttps ? https : http
+  return new Promise((resolve) => {
+    try {
+      const urlObj = new URL(url)
+      const isHttps = urlObj.protocol === 'https:'
+      const httpModule = isHttps ? https : http
 
-    const file = fs.createWriteStream(savePath)
+      const file = fs.createWriteStream(savePath)
 
-    const req = httpModule.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': '*/*',
-      },
-    }, (res) => {
-      if (res.statusCode !== 200) {
-        fs.unlinkSync(savePath)
-        reject({ error: `HTTP ${res.statusCode}` })
-        return
-      }
+      const req = httpModule.get(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+          'Accept': '*/*',
+        },
+      }, (res) => {
+        if (res.statusCode !== 200) {
+          fs.unlinkSync(savePath)
+          resolve({ success: false, error: `HTTP错误: ${res.statusCode}` })
+          return
+        }
 
-      const totalSize = parseInt(res.headers['content-length'] || '0', 10)
-      let downloadedSize = 0
+        const totalSize = parseInt(res.headers['content-length'] || '0', 10)
+        let downloadedSize = 0
 
-      res.on('data', (chunk) => {
-        downloadedSize += chunk.length
-        mainWindow?.webContents.send('download:progress', {
-          url,
-          downloaded: downloadedSize,
-          total: totalSize,
+        res.on('data', (chunk) => {
+          downloadedSize += chunk.length
+          mainWindow?.webContents.send('download:progress', {
+            url,
+            downloaded: downloadedSize,
+            total: totalSize,
+          })
+        })
+
+        res.pipe(file)
+
+        file.on('finish', () => {
+          file.close()
+          resolve({ success: true, path: savePath, size: downloadedSize })
+        })
+
+        file.on('error', (error) => {
+          fs.unlinkSync(savePath)
+          resolve({ success: false, error: `文件写入失败: ${error.message}` })
         })
       })
 
-      res.pipe(file)
-
-      file.on('finish', () => {
-        file.close()
-        resolve({ success: true, path: savePath, size: downloadedSize })
+      req.on('error', (error) => {
+        try {
+          fs.unlinkSync(savePath)
+        } catch {}
+        resolve({ success: false, error: `下载失败: ${error.message}` })
       })
-    })
 
-    req.on('error', (error) => {
-      fs.unlinkSync(savePath)
-      reject({ error: error.message })
-    })
-
-    req.setTimeout(60000, () => {
-      req.destroy()
-      fs.unlinkSync(savePath)
-      reject({ error: 'Download timeout' })
-    })
+      req.setTimeout(60000, () => {
+        req.destroy()
+        try {
+          fs.unlinkSync(savePath)
+        } catch {}
+        resolve({ success: false, error: '下载超时，请检查网络连接' })
+      })
+    } catch (error: any) {
+      resolve({ success: false, error: `下载配置失败: ${error.message}` })
+    }
   })
 })
