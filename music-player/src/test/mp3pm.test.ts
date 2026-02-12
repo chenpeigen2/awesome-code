@@ -24,6 +24,7 @@ describe('mp3pm utils', () => {
     it('should handle invalid duration', () => {
       expect(formatDuration('')).toBe(0)
       expect(formatDuration('invalid')).toBe(0)
+      expect(formatDuration('3')).toBe(0)
     })
   })
 
@@ -131,6 +132,52 @@ describe('mp3pm utils', () => {
 
       await expect(searchTracks('test')).rejects.toThrow('搜索失败')
     })
+
+    it('should parse tracks from HTML response', async () => {
+      const htmlWithTracks = `
+        <li class="cplayer-sound-item" data-sound-id="123" data-sound-url="https://example.com/song1.mp3">
+          <b>Song Title 1</b>
+          <i>Artist 1</i>
+          <em>3:45</em>
+        </li>
+        <li class="cplayer-sound-item" data-sound-id="456" data-sound-url="https://example.com/song2.mp3">
+          <b>Song Title 2</b>
+          <i>Artist 2</i>
+          <em>4:30</em>
+        </li>
+      `
+      const mockFetch = vi.fn().mockResolvedValue({
+        status: 200,
+        headers: {},
+        data: htmlWithTracks,
+      })
+      window.electronAPI.httpFetch = mockFetch
+
+      const results = await searchTracks('test')
+      expect(results.length).toBeGreaterThan(0)
+    })
+
+    it('should handle HTTP error status', async () => {
+      const mockFetch = vi.fn().mockResolvedValue({
+        status: 404,
+        headers: {},
+        data: 'Not Found',
+      })
+      window.electronAPI.httpFetch = mockFetch
+
+      await expect(searchTracks('test')).rejects.toThrow()
+    })
+
+    it('should handle empty data response', async () => {
+      const mockFetch = vi.fn().mockResolvedValue({
+        status: 200,
+        headers: {},
+        data: '',
+      })
+      window.electronAPI.httpFetch = mockFetch
+
+      await expect(searchTracks('test')).rejects.toThrow()
+    })
   })
 
   describe('getPopularTracks', () => {
@@ -159,6 +206,44 @@ describe('mp3pm utils', () => {
       window.electronAPI.httpFetch = mockFetch
 
       await expect(getPopularTracks()).rejects.toThrow('获取热门歌曲失败')
+    })
+
+    it('should parse popular tracks from HTML', async () => {
+      const htmlWithTracks = `
+        <li class="cplayer-sound-item" data-sound-id="pop1" data-sound-url="https://example.com/popular.mp3">
+          <b>Popular Song</b>
+          <i>Popular Artist</i>
+          <em>3:00</em>
+        </li>
+      `
+      const mockFetch = vi.fn().mockResolvedValue({
+        status: 200,
+        headers: {},
+        data: htmlWithTracks,
+      })
+      window.electronAPI.httpFetch = mockFetch
+
+      const results = await getPopularTracks()
+      expect(results.length).toBeGreaterThan(0)
+    })
+  })
+
+  describe('fetchHtml fallback (browser environment)', () => {
+    it('should handle fetch when electronAPI.httpFetch is not available', async () => {
+      const originalHttpFetch = window.electronAPI.httpFetch
+      window.electronAPI.httpFetch = undefined as any
+
+      const mockFetch = vi.fn().mockResolvedValue({
+        ok: true,
+        text: () => Promise.resolve('<html>test</html>'),
+      })
+      vi.stubGlobal('fetch', mockFetch)
+
+      const results = await searchTracks('test')
+      expect(results).toEqual([])
+
+      vi.unstubAllGlobals()
+      window.electronAPI.httpFetch = originalHttpFetch
     })
   })
 })

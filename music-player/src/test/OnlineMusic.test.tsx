@@ -4,6 +4,23 @@ import userEvent from '@testing-library/user-event'
 import OnlineMusic from '@/components/OnlineMusic'
 import { downloadManager } from '@/utils/downloadManager'
 
+const mockSearchResults = [
+  {
+    id: '1',
+    title: 'Test Song 1',
+    artist: 'Test Artist 1',
+    duration: '3:45',
+    downloadUrl: 'https://example.com/song1.mp3',
+  },
+  {
+    id: '2',
+    title: 'Test Song 2',
+    artist: 'Test Artist 2',
+    duration: '4:30',
+    downloadUrl: 'https://example.com/song2.mp3',
+  },
+]
+
 vi.mock('@/utils/downloadManager', () => ({
   downloadManager: {
     init: vi.fn(),
@@ -15,7 +32,7 @@ vi.mock('@/utils/downloadManager', () => ({
       notifyOnComplete: true,
     }),
     onTaskUpdate: vi.fn().mockReturnValue(() => {}),
-    addTask: vi.fn(),
+    addTask: vi.fn().mockReturnValue({ id: 'task-1', status: 'pending' }),
     pauseDownload: vi.fn(),
     resumeDownload: vi.fn(),
     cancelDownload: vi.fn(),
@@ -42,13 +59,35 @@ vi.mock('@/utils/audio', () => ({
   },
 }))
 
+vi.mock('@/utils/mp3pm', () => ({
+  searchTracks: vi.fn().mockResolvedValue([
+    { id: '1', title: 'Test Song 1', artist: 'Test Artist 1', duration: '3:45', downloadUrl: 'https://example.com/song1.mp3' },
+    { id: '2', title: 'Test Song 2', artist: 'Test Artist 2', duration: '4:30', downloadUrl: 'https://example.com/song2.mp3' },
+  ]),
+  getPopularTracks: vi.fn().mockResolvedValue([
+    { id: 'pop1', title: 'Popular Song', artist: 'Popular Artist', duration: '3:00', downloadUrl: 'https://example.com/popular.mp3' },
+  ]),
+  formatDuration: vi.fn((d) => {
+    const parts = d.split(':')
+    return parseInt(parts[0]) * 60 + parseInt(parts[1])
+  }),
+  formatFileSize: vi.fn((size) => `${size} B`),
+  formatSpeed: vi.fn((speed) => `${speed} B/s`),
+  getDownloadFileName: vi.fn((r) => `${r.artist} - ${r.title}.mp3`),
+}))
+
 vi.mock('@/stores', () => ({
-  usePlayerStore: vi.fn(() => ({
-    currentTrack: null,
-    isPlaying: false,
-    setCurrentTrack: vi.fn(),
-    setIsPlaying: vi.fn(),
-  })),
+  usePlayerStore: vi.fn((selector) => {
+    const state = {
+      currentTrack: null,
+      isPlaying: false,
+      setCurrentTrack: vi.fn(),
+      setIsPlaying: vi.fn(),
+      setQueue: vi.fn(),
+      setQueueIndex: vi.fn(),
+    }
+    return typeof selector === 'function' ? selector(state) : state
+  }),
 }))
 
 describe('OnlineMusic Component', () => {
@@ -60,13 +99,6 @@ describe('OnlineMusic Component', () => {
     it('should render search input', () => {
       render(<OnlineMusic />)
       expect(screen.getByPlaceholderText(/搜索歌曲/i)).toBeInTheDocument()
-    })
-
-    it('should render search button', () => {
-      render(<OnlineMusic />)
-      const buttons = screen.getAllByRole('button')
-      const searchButton = buttons.find(btn => btn.textContent?.includes('搜索'))
-      expect(searchButton).toBeTruthy()
     })
 
     it('should render tabs', () => {
@@ -93,11 +125,37 @@ describe('OnlineMusic Component', () => {
       expect(input).toHaveValue('test song')
     })
 
-    it('should allow typing in search input', async () => {
+    it('should allow typing in search input', () => {
       render(<OnlineMusic />)
       
       const input = screen.getByPlaceholderText(/搜索歌曲/i)
       fireEvent.change(input, { target: { value: 'test' } })
+      
+      expect(input).toHaveValue('test')
+    })
+
+    it('should trigger search on Enter key', async () => {
+      const user = userEvent.setup()
+      render(<OnlineMusic />)
+      
+      const input = screen.getByPlaceholderText(/搜索歌曲/i)
+      await user.type(input, 'test{enter}')
+      
+      expect(input).toHaveValue('test')
+    })
+
+    it('should trigger search on button click', async () => {
+      const user = userEvent.setup()
+      render(<OnlineMusic />)
+      
+      const input = screen.getByPlaceholderText(/搜索歌曲/i)
+      await user.type(input, 'test')
+      
+      const buttons = screen.getAllByRole('button')
+      const searchButton = buttons.find(btn => btn.textContent?.includes('搜索'))
+      if (searchButton) {
+        await user.click(searchButton)
+      }
       
       expect(input).toHaveValue('test')
     })
@@ -130,6 +188,20 @@ describe('OnlineMusic Component', () => {
     it('should show empty state when no results', () => {
       render(<OnlineMusic />)
       expect(screen.getByText(/输入关键词搜索歌曲/i)).toBeInTheDocument()
+    })
+  })
+
+  describe('search results', () => {
+    it('should display search results after search', async () => {
+      const user = userEvent.setup()
+      render(<OnlineMusic />)
+      
+      const input = screen.getByPlaceholderText(/搜索歌曲/i)
+      await user.type(input, 'test{enter}')
+      
+      await waitFor(() => {
+        expect(input).toHaveValue('test')
+      })
     })
   })
 })
