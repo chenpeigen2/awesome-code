@@ -180,6 +180,8 @@ ipcMain.handle('http:fetch', async (_event, url: string, options: any = {}) => {
   return new Promise((resolve) => {
     let timeoutId: NodeJS.Timeout | null = null
     let resolved = false
+    let redirectCount = 0
+    const maxRedirects = options.maxRedirects || 5
     
     const cleanup = () => {
       if (timeoutId) {
@@ -195,89 +197,113 @@ ipcMain.handle('http:fetch', async (_event, url: string, options: any = {}) => {
       resolve(result)
     }
     
-    try {
-      console.log('[http:fetch] Starting request to:', url)
-      const urlObj = new URL(url)
-      const isHttps = urlObj.protocol === 'https:'
-      const httpModule = isHttps ? https : http
-      const timeout = options.timeout || 30000
-      
-      const requestOptions = {
-        hostname: urlObj.hostname,
-        port: urlObj.port || (isHttps ? 443 : 80),
-        path: urlObj.pathname + urlObj.search,
-        method: options.method || 'GET',
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-          'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-          'Accept-Encoding': 'identity',
-          'Connection': 'keep-alive',
-          ...options.headers,
-        },
-      }
-
-      const req = httpModule.request(requestOptions, (res) => {
-        console.log('[http:fetch] Response status:', res.statusCode, 'for', url)
-        let data = ''
-        res.setEncoding('utf8')
-        res.on('data', (chunk) => {
-          data += chunk
+    const makeRequest = (currentUrl: string) => {
+      if (redirectCount >= maxRedirects) {
+        doResolve({
+          status: 0,
+          headers: {},
+          data: '',
+          error: `重定向次数过多 (${maxRedirects})`,
         })
-        res.on('end', () => {
-          console.log('[http:fetch] Response complete, data length:', data.length)
-          doResolve({
-            status: res.statusCode,
-            headers: res.headers,
-            data: data,
+        return
+      }
+      
+      try {
+        console.log('[http:fetch] Starting request to:', currentUrl)
+        const urlObj = new URL(currentUrl)
+        const isHttps = urlObj.protocol === 'https:'
+        const httpModule = isHttps ? https : http
+        const timeout = options.timeout || 30000
+        
+        const requestOptions = {
+          hostname: urlObj.hostname,
+          port: urlObj.port || (isHttps ? 443 : 80),
+          path: urlObj.pathname + urlObj.search,
+          method: options.method || 'GET',
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+            'Accept-Encoding': 'identity',
+            'Connection': 'keep-alive',
+            'Host': urlObj.hostname,
+            ...options.headers,
+          },
+        }
+
+        const req = httpModule.request(requestOptions, (res) => {
+          console.log('[http:fetch] Response status:', res.statusCode, 'for', currentUrl)
+          
+          if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+            redirectCount++
+            console.log('[http:fetch] Redirecting to:', res.headers.location)
+            res.resume()
+            makeRequest(res.headers.location)
+            return
+          }
+          
+          let data = ''
+          res.setEncoding('utf8')
+          res.on('data', (chunk) => {
+            data += chunk
+          })
+          res.on('end', () => {
+            console.log('[http:fetch] Response complete, data length:', data.length)
+            doResolve({
+              status: res.statusCode,
+              headers: res.headers,
+              data: data,
+            })
+          })
+          res.on('error', (error) => {
+            console.error('[http:fetch] Response error:', error)
+            doResolve({
+              status: 0,
+              headers: {},
+              data: '',
+              error: `响应错误: ${error.message}`,
+            })
           })
         })
-        res.on('error', (error) => {
-          console.error('[http:fetch] Response error:', error)
+
+        req.on('error', (error) => {
+          console.error('[http:fetch] Request error:', error.message)
           doResolve({
             status: 0,
             headers: {},
             data: '',
-            error: `响应错误: ${error.message}`,
+            error: error.message || '网络请求失败',
           })
         })
-      })
 
-      req.on('error', (error) => {
-        console.error('[http:fetch] Request error:', error.message)
+        timeoutId = setTimeout(() => {
+          console.log('[http:fetch] Request timeout after', timeout, 'ms for', currentUrl)
+          req.destroy()
+          doResolve({
+            status: 0,
+            headers: {},
+            data: '',
+            error: `请求超时 (${timeout / 1000}秒)，请检查网络连接`,
+          })
+        }, timeout)
+
+        if (options.body) {
+          req.write(options.body)
+        }
+
+        req.end()
+      } catch (error: any) {
+        console.error('[http:fetch] Setup error:', error)
         doResolve({
           status: 0,
           headers: {},
           data: '',
-          error: error.message || '网络请求失败',
+          error: error.message || '请求配置失败',
         })
-      })
-
-      timeoutId = setTimeout(() => {
-        console.log('[http:fetch] Request timeout after', timeout, 'ms for', url)
-        req.destroy()
-        doResolve({
-          status: 0,
-          headers: {},
-          data: '',
-          error: `请求超时 (${timeout / 1000}秒)，请检查网络连接`,
-        })
-      }, timeout)
-
-      if (options.body) {
-        req.write(options.body)
       }
-
-      req.end()
-    } catch (error: any) {
-      console.error('[http:fetch] Setup error:', error)
-      doResolve({
-        status: 0,
-        headers: {},
-        data: '',
-        error: error.message || '请求配置失败',
-      })
     }
+    
+    makeRequest(url)
   })
 })
 

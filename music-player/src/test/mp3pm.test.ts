@@ -116,8 +116,8 @@ describe('mp3pm utils', () => {
 
       await searchTracks('test query')
       expect(mockFetch).toHaveBeenCalledWith(
-        'https://mp3.pm/search/test%20query/',
-        expect.objectContaining({ timeout: 30000 })
+        'https://mp3.pm/?a=redirect&q=test%20query',
+        expect.objectContaining({ timeout: 30000, followRedirects: true })
       )
     })
 

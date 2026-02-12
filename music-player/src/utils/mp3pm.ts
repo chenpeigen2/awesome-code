@@ -15,6 +15,7 @@ async function fetchHtml(url: string): Promise<string> {
   if (window.electronAPI && window.electronAPI.httpFetch) {
     const response = await window.electronAPI.httpFetch(url, {
       timeout: SEARCH_TIMEOUT,
+      followRedirects: true,
     })
     if (response.error) {
       throw new Error(response.error)
@@ -34,6 +35,7 @@ async function fetchHtml(url: string): Promise<string> {
       const response = await fetch(url, {
         method: 'GET',
         signal: controller.signal,
+        redirect: 'follow',
         headers: {
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
@@ -64,39 +66,48 @@ async function fetchHtml(url: string): Promise<string> {
 function parseHtmlTracks(html: string): ParsedTrack[] {
   const tracks: ParsedTrack[] = []
   
-  const patterns = [
-    /<li[^>]*class="[^"]*cplayer-sound-item[^"]*"[^>]*data-sound-id="([^"]*)"[^>]*data-sound-url="([^"]*)"[^>]*>([\s\S]*?)<\/li>/gi,
-    /<li[^>]*data-sound-id="([^"]*)"[^>]*data-sound-url="([^"]*)"[^>]*class="[^"]*cplayer-sound-item[^"]*"[^>]*>([\s\S]*?)<\/li>/gi,
-    /<li[^>]*data-sound-url="([^"]*)"[^>]*data-sound-id="([^"]*)"[^>]*>([\s\S]*?)<\/li>/gi,
-    /<li[^>]*data-url="([^"]*)"[^>]*data-id="([^"]*)"[^>]*>([\s\S]*?)<\/li>/gi,
-  ]
+  const trackRegex = /<li[^>]*class="[^"]*cplayer-sound-item[^"]*"[^>]*data-sound-id="([^"]*)"[^>]*data-sound-url="([^"]*)"[^>]*>([\s\S]*?)<\/li>/gi
   
-  for (const trackRegex of patterns) {
-    let match
-    while ((match = trackRegex.exec(html)) !== null) {
-      let id = match[1]
-      let downloadUrl = match[2]
+  let match
+  while ((match = trackRegex.exec(html)) !== null) {
+    const id = match[1]
+    const downloadUrl = match[2]
+    const content = match[3]
+    
+    if (!downloadUrl) {
+      continue
+    }
+    
+    const titleMatch = content.match(/<b[^>]*>([^<]*)<\/b>/i)
+    const artistMatch = content.match(/<i[^>]*>([^<]*)<\/i>/i)
+    const durationMatch = content.match(/<em[^>]*>([^<]*)<\/em>/i)
+    
+    try {
+      const decodedUrl = decodeURIComponent(downloadUrl)
+      tracks.push({
+        id: id || `track-${Date.now()}-${Math.random()}`,
+        title: titleMatch ? titleMatch[1].trim() : 'Unknown Title',
+        artist: artistMatch ? artistMatch[1].trim() : 'Unknown Artist',
+        duration: durationMatch ? durationMatch[1].trim() : '0:00',
+        downloadUrl: decodedUrl,
+      })
+    } catch {
+      console.warn('Failed to parse track:', downloadUrl)
+    }
+  }
+  
+  if (tracks.length === 0) {
+    const divRegex = /<div[^>]*class="[^"]*cplayer-sound-item[^"]*"[^>]*data-sound-id="([^"]*)"[^>]*data-sound-url="([^"]*)"[^>]*>([\s\S]*?)<\/div>/gi
+    while ((match = divRegex.exec(html)) !== null) {
+      const id = match[1]
+      const downloadUrl = match[2]
       const content = match[3]
       
-      if (downloadUrl && downloadUrl.includes('data-sound-id')) {
-        const temp = id
-        id = downloadUrl
-        downloadUrl = temp
-      }
+      if (!downloadUrl) continue
       
-      if (!downloadUrl || downloadUrl.includes('data-')) {
-        continue
-      }
-      
-      const titleMatch = content.match(/<b[^>]*>([^<]*)<\/b>/i) || 
-                         content.match(/class="[^"]*title[^"]*"[^>]*>([^<]*)</i)
-      const artistMatch = content.match(/<i[^>]*>([^<]*)<\/i>/i) ||
-                          content.match(/class="[^"]*artist[^"]*"[^>]*>([^<]*)</i) ||
-                          content.match(/class="[^"]*author[^"]*"[^>]*>([^<]*)</i)
-      const durationMatch = content.match(/<em[^>]*>([^<]*)<\/em>/i) ||
-                            content.match(/class="[^"]*duration[^"]*"[^>]*>([^<]*)</i) ||
-                            content.match(/class="[^"]*time[^"]*"[^>]*>([^<]*)</i) ||
-                            content.match(/(\d+:\d+)/)
+      const titleMatch = content.match(/<b[^>]*>([^<]*)<\/b>/i)
+      const artistMatch = content.match(/<i[^>]*>([^<]*)<\/i>/i)
+      const durationMatch = content.match(/<em[^>]*>([^<]*)<\/em>/i)
       
       try {
         const decodedUrl = decodeURIComponent(downloadUrl)
@@ -111,41 +122,6 @@ function parseHtmlTracks(html: string): ParsedTrack[] {
         console.warn('Failed to parse track:', downloadUrl)
       }
     }
-    if (tracks.length > 0) break
-  }
-  
-  const jsonMatch = html.match(/window\.__INITIAL_STATE__\s*=\s*({[\s\S]*?});/)
-  if (jsonMatch && tracks.length === 0) {
-    try {
-      const data = JSON.parse(jsonMatch[1])
-      if (data.tracks && Array.isArray(data.tracks)) {
-        return data.tracks.map((t: any) => ({
-          id: t.id || t.soundId || `track-${Date.now()}`,
-          title: t.title || t.name || 'Unknown Title',
-          artist: t.artist || t.author || 'Unknown Artist',
-          duration: t.duration ? formatSeconds(t.duration) : '0:00',
-          downloadUrl: t.url || t.downloadUrl || t.streamUrl || '',
-        }))
-      }
-    } catch {
-      console.warn('Failed to parse JSON data')
-    }
-  }
-  
-  const urlPattern = /https?:\/\/[^\s"'<>]+\.mp3[^\s"'<>]*/gi
-  const mp3Urls = html.match(urlPattern) || []
-  
-  if (tracks.length === 0 && mp3Urls.length > 0) {
-    mp3Urls.forEach((url, index) => {
-      const cleanUrl = url.split('"')[0].split("'")[0]
-      tracks.push({
-        id: `mp3-${Date.now()}-${index}`,
-        title: `Track ${index + 1}`,
-        artist: 'Unknown Artist',
-        duration: '0:00',
-        downloadUrl: cleanUrl,
-      })
-    })
   }
   
   return tracks
@@ -163,7 +139,7 @@ export async function searchTracks(query: string): Promise<SearchResult[]> {
   }
 
   try {
-    const searchUrl = `${BASE_URL}/search/${encodeURIComponent(query)}/`
+    const searchUrl = `${BASE_URL}/?a=redirect&q=${encodeURIComponent(query)}`
     
     const html = await fetchHtml(searchUrl)
     const tracks = parseHtmlTracks(html)
