@@ -86,7 +86,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
 interface LibraryStore {
   tracks: Map<string, Track>
   playlists: Playlist[]
-  currentView: 'all' | 'artists' | 'albums' | 'genres' | 'folders' | 'favorites'
+  currentView: 'all' | 'artists' | 'albums' | 'genres' | 'folders' | 'favorites' | 'online'
   searchQuery: string
   likedTrackIds: Set<string>
   
@@ -97,7 +97,7 @@ interface LibraryStore {
   addPlaylist: (playlist: Playlist) => void
   removePlaylist: (playlistId: string) => void
   updatePlaylist: (playlistId: string, updates: Partial<Playlist>) => void
-  setCurrentView: (view: 'all' | 'artists' | 'albums' | 'genres' | 'folders' | 'favorites') => void
+  setCurrentView: (view: 'all' | 'artists' | 'albums' | 'genres' | 'folders' | 'favorites' | 'online') => void
   setSearchQuery: (query: string) => void
   toggleLike: (trackId: string) => void
   isLiked: (trackId: string) => boolean
@@ -178,9 +178,9 @@ export const useLibraryStore = create<LibraryStore>()(
     }),
     {
       name: 'music-library',
-      serialize: (state) => {
-        const tracksArray = Array.from(state.tracks.entries())
-        const likedArray = Array.from(state.likedTrackIds)
+      serialize: (state: any) => {
+        const tracksArray = Array.from(state.tracks?.entries() || [])
+        const likedArray = Array.from(state.likedTrackIds || [])
         return JSON.stringify({ ...state, tracks: tracksArray, likedTrackIds: likedArray })
       },
       deserialize: (str) => {

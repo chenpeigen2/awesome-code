@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 import { useLibraryStore, usePlayerStore } from '@/stores'
 import { Track } from '@/types'
+import OnlineMusic from './OnlineMusic'
 import './MainContent.css'
 
 function formatDuration(seconds: number): string {
@@ -141,6 +142,8 @@ export default function MainContent() {
         return '专辑'
       case 'genres':
         return '流派'
+      case 'online':
+        return '在线音乐'
       default:
         return '全部音乐'
     }
@@ -226,7 +229,7 @@ export default function MainContent() {
     </div>
   )
 
-  const renderGroupedView = (groups: Record<string, Track[]>, icon: React.ReactNode, type: string) => (
+  const renderGroupedView = (groups: Record<string, Track[]>, icon: React.ReactNode, _type: string) => (
     <div className="grouped-view">
       {Object.entries(groups).map(([name, groupTracks]) => (
         <div key={name} className="group-section">
@@ -315,7 +318,9 @@ export default function MainContent() {
       </header>
 
       <div className="content-body">
-        {tracks.size === 0 && currentView !== 'favorites' ? (
+        {currentView === 'online' ? (
+          <OnlineMusic />
+        ) : tracks.size === 0 && currentView !== 'favorites' ? (
           <div className="empty-state">
             <Music size={64} strokeWidth={1} />
             <h2>开始添加音乐</h2>

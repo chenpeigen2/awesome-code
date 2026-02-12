@@ -5,23 +5,23 @@ import {
   Mic2, 
   Settings, 
   Plus,
-  Home,
   Heart,
   Disc,
-  Radio
+  Radio,
+  Download
 } from 'lucide-react'
 import { useLibraryStore, usePlayerStore } from '@/stores'
 import './Sidebar.css'
 
 export default function Sidebar() {
-  const { playlists, currentView, setCurrentView, addPlaylist, tracks, likedTrackIds } = useLibraryStore()
+  const { playlists, setCurrentView, addPlaylist, tracks, likedTrackIds } = useLibraryStore()
   const { setCurrentTrack, setIsPlaying, setQueue } = usePlayerStore()
   const [activeItem, setActiveItem] = useState('all')
 
   const handleMenuClick = (id: string) => {
     setActiveItem(id)
-    if (['all', 'artists', 'albums', 'genres', 'favorites'].includes(id)) {
-      setCurrentView(id as 'all' | 'artists' | 'albums' | 'genres' | 'favorites')
+    if (['all', 'artists', 'albums', 'genres', 'favorites', 'online'].includes(id)) {
+      setCurrentView(id as 'all' | 'artists' | 'albums' | 'genres' | 'favorites' | 'online')
     }
   }
 
@@ -93,6 +93,15 @@ export default function Sidebar() {
               >
                 <Radio size={18} />
                 <span>流派</span>
+              </button>
+            </li>
+            <li>
+              <button
+                className={`nav-item ${activeItem === 'online' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('online')}
+              >
+                <Download size={18} />
+                <span>在线音乐</span>
               </button>
             </li>
           </ul>

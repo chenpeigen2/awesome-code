@@ -147,6 +147,21 @@ ipcMain.handle('file:readMetadata', async (_event, filePath: string) => {
   }
 })
 
+ipcMain.handle('file:save', async (_event, filePath: string, buffer: ArrayBuffer) => {
+  try {
+    const dir = path.dirname(filePath)
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true })
+    }
+    const nodeBuffer = Buffer.from(buffer)
+    fs.writeFileSync(filePath, nodeBuffer)
+    return { success: true, path: filePath }
+  } catch (error: any) {
+    console.error('File save error:', error)
+    return { success: false, error: error.message }
+  }
+})
+
 ipcMain.handle('lyrics:show', () => {
   createLyricsWindow()
 })

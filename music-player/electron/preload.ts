@@ -8,6 +8,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openFiles: () => ipcRenderer.invoke('dialog:openFiles'),
   openFolder: () => ipcRenderer.invoke('dialog:openFolder'),
   readMetadata: (filePath: string) => ipcRenderer.invoke('file:readMetadata', filePath),
+  saveFile: (filePath: string, buffer: ArrayBuffer) => ipcRenderer.invoke('file:save', filePath, buffer),
   
   showLyrics: () => ipcRenderer.invoke('lyrics:show'),
   hideLyrics: () => ipcRenderer.invoke('lyrics:hide'),

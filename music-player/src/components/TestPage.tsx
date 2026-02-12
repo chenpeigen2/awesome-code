@@ -20,7 +20,7 @@ export default function TestPage() {
     audioManager.onPause(() => addLog('⏸️ Audio paused'))
     audioManager.onEnd(() => addLog('⏹️ Audio ended'))
     audioManager.onLoad((duration) => addLog(`✅ Audio loaded, duration: ${duration.toFixed(2)}s`))
-    audioManager.onLoadError((error) => addLog(`❌ Load error: ${JSON.stringify(error)}`))
+    audioManager.onError((error) => addLog(`❌ Error: ${error}`))
   }, [])
 
   const testFileDialog = async () => {
@@ -87,7 +87,7 @@ export default function TestPage() {
       addLog(`✅ Audio element loaded, duration: ${audio.duration.toFixed(2)}s`)
     }
     
-    audio.onerror = (e) => {
+    audio.onerror = () => {
       addLog(`❌ Audio element error code: ${audio.error?.code}, message: ${audio.error?.message}`)
     }
     

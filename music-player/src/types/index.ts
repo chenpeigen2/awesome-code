@@ -5,6 +5,7 @@ export interface ElectronAPI {
   openFiles: () => Promise<string[]>
   openFolder: () => Promise<string>
   readMetadata: (filePath: string) => Promise<FileMetadata | null>
+  saveFile: (filePath: string, buffer: ArrayBuffer) => Promise<{ success: boolean; path?: string; error?: string }>
   showLyrics: () => Promise<void>
   hideLyrics: () => Promise<void>
   updateLyrics: (lyrics: string, currentTime: number) => Promise<void>

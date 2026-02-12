@@ -1,5 +1,7 @@
 import { LyricsLine } from '@/types'
 
+export type { LyricsLine } from '@/types'
+
 export function parseLrc(lrcContent: string): LyricsLine[] {
   const lines = lrcContent.split('\n')
   const result: LyricsLine[] = []
