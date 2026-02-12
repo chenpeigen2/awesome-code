@@ -10,10 +10,9 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/com.github.jsqlparser/jsqlparser
-    implementation("com.github.jsqlparser:jsqlparser:5.3")
-    implementation(platform("org.junit:junit-bom:5.14.2"))
-    implementation("org.junit.jupiter:junit-jupiter")
+    implementation(libs.jsqlparser)
+    implementation(platform(libs.junit.bom))
+    implementation(libs.junit.jupiter)
 }
 
 tasks.test {

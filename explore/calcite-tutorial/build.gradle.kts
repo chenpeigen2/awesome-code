@@ -10,16 +10,12 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.apache.calcite/calcite-example-csv
-    implementation("org.apache.calcite:calcite-example-csv:1.21.0")
-// https://mvnrepository.com/artifact/org.apache.calcite/calcite-elasticsearch
-    implementation("org.apache.calcite:calcite-elasticsearch:1.40.0")
-    // https://mvnrepository.com/artifact/org.apache.calcite/calcite-linq4j
-    implementation("org.apache.calcite:calcite-linq4j:1.40.0")
-    // https://mvnrepository.com/artifact/org.apache.calcite/calcite-core
-    implementation("org.apache.calcite:calcite-core:1.40.0")
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation(libs.calcite.example.csv)
+    implementation(libs.calcite.elasticsearch)
+    implementation(libs.calcite.linq4j)
+    implementation(libs.calcite.core)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
 }
 
 tasks.test {

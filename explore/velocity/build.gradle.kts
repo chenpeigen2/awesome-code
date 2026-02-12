@@ -10,15 +10,11 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-core
-    implementation("org.apache.velocity:velocity-engine-core:2.4.1")
-    // https://mvnrepository.com/artifact/org.apache.velocity/velocity-engine-examples
-    implementation("org.apache.velocity:velocity-engine-examples:2.4.1")
-    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-    implementation("org.slf4j:slf4j-simple:2.0.16")
-
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation(libs.velocity.engine.core)
+    implementation(libs.velocity.engine.examples)
+    implementation(libs.slf4j.simple)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
 }
 
 tasks.test {

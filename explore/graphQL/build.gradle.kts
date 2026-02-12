@@ -10,11 +10,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    // https://mvnrepository.com/artifact/com.graphql-java/graphql-java
-    implementation("com.graphql-java:graphql-java:22.3")
-
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    implementation(libs.graphql.java)
 }
 
 tasks.test {

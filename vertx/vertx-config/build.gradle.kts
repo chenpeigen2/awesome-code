@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    kotlin("jvm")
+    alias(libs.plugins.kotlin.jvm)
 }
 
 group = "org.peter"
@@ -11,12 +11,10 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/io.vertx/vertx-config
-    implementation("io.vertx:vertx-config:4.5.24")
-    // https://mvnrepository.com/artifact/io.vertx/vertx-config-yaml
-    implementation("io.vertx:vertx-config-yaml:4.5.24")
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation(libs.vertx.config)
+    implementation(libs.vertx.config.yaml)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
 }
 
 tasks.test {

@@ -10,12 +10,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    // https://mvnrepository.com/artifact/com.alibaba.nacos/nacos-client
-    implementation("com.alibaba.nacos:nacos-client:2.4.3")
-// https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-    implementation("org.slf4j:slf4j-simple:2.0.17")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    implementation(libs.nacos.client)
+    implementation(libs.slf4j.simple)
 }
 
 tasks.test {

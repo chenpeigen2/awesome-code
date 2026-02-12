@@ -2,7 +2,7 @@ import com.google.protobuf.gradle.id
 
 plugins {
     id("java")
-    id("com.google.protobuf") version "0.9.4"
+    alias(libs.plugins.protobuf)
 }
 
 group = "org.peter"
@@ -12,28 +12,21 @@ repositories {
     mavenCentral()
 }
 
-val grpcVersion = "1.78.0" // CURRENT_GRPC_VERSION
-val protobufVersion = "4.33.5"
-val protocVersion = protobufVersion
-
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    // https://mvnrepository.com/artifact/io.grpc/grpc-protobuf
-    implementation("io.grpc:grpc-protobuf:${grpcVersion}")
-    implementation("io.grpc:grpc-stub:${grpcVersion}")
-    compileOnly("org.apache.tomcat:annotations-api:6.0.53")
-    implementation("com.google.protobuf:protobuf-java-util:${protobufVersion}")
-
-    runtimeOnly("io.grpc:grpc-netty-shaded:${grpcVersion}")
-
-    testImplementation("io.grpc:grpc-testing:${grpcVersion}")
-    testImplementation("org.mockito:mockito-core:5.21.0")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    implementation(libs.grpc.protobuf)
+    implementation(libs.grpc.stub)
+    compileOnly(libs.tomcat.annotations)
+    implementation(libs.protobuf.java.util)
+    runtimeOnly(libs.grpc.netty.shaded)
+    testImplementation(libs.grpc.testing)
+    testImplementation(libs.mockito.core)
 }
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:${protocVersion}"
+        artifact = libs.protobuf.protoc.get().toString()
     }
 
     generateProtoTasks {
@@ -46,7 +39,7 @@ protobuf {
 
     plugins {
         id("grpc") {
-            artifact = "io.grpc:protoc-gen-grpc-java:${grpcVersion}"
+            artifact = libs.grpc.protoc.gen.get().toString()
         }
     }
 }
@@ -59,8 +52,6 @@ sourceSets {
         }
     }
 }
-
-
 
 tasks.test {
     useJUnitPlatform()

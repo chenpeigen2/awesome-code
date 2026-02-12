@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    kotlin("jvm")
+    alias(libs.plugins.kotlin.jvm)
 }
 
 group = "org.peter"
@@ -11,14 +11,11 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation("com.google.code.gson:gson:2.13.2")
-    // https://mvnrepository.com/artifact/org.json/json
-    implementation("org.json:json:20250517")
-    // https://mvnrepository.com/artifact/com.google.errorprone/error_prone_core
-    implementation("com.google.errorprone:error_prone_core:2.43.0")
+    implementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    implementation(libs.gson)
+    implementation(libs.json.org)
+    implementation(libs.error.prone.core)
 }
 
 tasks.test {

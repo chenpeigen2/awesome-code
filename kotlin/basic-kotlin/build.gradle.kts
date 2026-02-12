@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    kotlin("jvm")
+    alias(libs.plugins.kotlin.jvm)
 }
 
 group = "org.peter"
@@ -11,20 +11,14 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
-    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-datetime-jvm
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime-jvm:0.7.1")
-    // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-metadata-jvm
-    implementation("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0")
-    // https://mvnrepository.com/artifact/com.google.code.gson/gson
-    implementation("com.google.code.gson:gson:2.13.2")
-    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    implementation("com.squareup.okhttp3:okhttp:5.3.0")
-    // https://mvnrepository.com/artifact/com.squareup.okio/okio
-    implementation("com.squareup.okio:okio:3.16.4")
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.datetime)
+    implementation(libs.kotlinx.metadata)
+    implementation(libs.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okio)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
 }
 
 tasks.test {

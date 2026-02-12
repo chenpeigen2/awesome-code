@@ -10,21 +10,15 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    // https://mvnrepository.com/artifact/org.ow2.asm/asm
-    implementation("org.ow2.asm:asm:9.9")
-// https://mvnrepository.com/artifact/org.ow2.asm/asm-commons
-    implementation("org.ow2.asm:asm-commons:9.9")
-// https://mvnrepository.com/artifact/org.ow2.asm/asm-util
-    implementation("org.ow2.asm:asm-util:9.9")
-// https://mvnrepository.com/artifact/org.ow2.asm/asm-tree
-    implementation("org.ow2.asm:asm-tree:9.9")
-    // https://mvnrepository.com/artifact/com.google.guava/guava
-    implementation("com.google.guava:guava:33.5.0-jre")
-    // https://mvnrepository.com/artifact/org.projectlombok/lombok
-    implementation("org.projectlombok:lombok:1.18.42")
-    annotationProcessor("org.projectlombok:lombok:1.18.42")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    implementation(libs.asm)
+    implementation(libs.asm.commons)
+    implementation(libs.asm.util)
+    implementation(libs.asm.tree)
+    implementation(libs.guava)
+    implementation(libs.lombok)
+    annotationProcessor(libs.lombok)
 }
 
 tasks.test {

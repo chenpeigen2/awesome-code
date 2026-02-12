@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    kotlin("jvm")
-    kotlin("kapt")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 group = "org.peter"
@@ -12,10 +12,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    implementation("com.google.dagger:dagger:2.59")
-    annotationProcessor("com.google.dagger:dagger-compiler:2.59")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    implementation(libs.dagger)
+    annotationProcessor(libs.dagger.compiler)
 }
 
 tasks.test {

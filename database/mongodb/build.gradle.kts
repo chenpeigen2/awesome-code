@@ -10,10 +10,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync
-    implementation("org.mongodb:mongodb-driver-sync:5.2.1")
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
+    implementation(libs.mongodb.driver.sync)
 }
 
 tasks.test {
