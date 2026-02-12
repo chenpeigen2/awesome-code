@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useRef } from 'react'
 import { 
   Play, 
   Pause, 
@@ -13,7 +13,7 @@ import {
   Heart,
   Music
 } from 'lucide-react'
-import { usePlayerStore, useSettingsStore } from '@/stores'
+import { usePlayerStore, useSettingsStore, useLibraryStore } from '@/stores'
 import { audioManager } from '@/utils/audio'
 import './PlayerBar.css'
 
@@ -41,9 +41,9 @@ export default function PlayerBar() {
   } = usePlayerStore()
   
   const { settings, updateSettings } = useSettingsStore()
-  const [isMuted, setIsMuted] = useState(false)
-  const [previousVolume, setPreviousVolume] = useState(volume)
-  const [isLiked, setIsLiked] = useState(false)
+  const { toggleLike, isLiked } = useLibraryStore()
+  
+  const isMuted = volume === 0
   const progressRef = useRef<HTMLDivElement>(null)
   const isDragging = useRef(false)
 
@@ -82,17 +82,13 @@ export default function PlayerBar() {
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(e.target.value)
     setVolume(newVolume)
-    setIsMuted(newVolume === 0)
   }
 
   const toggleMute = () => {
     if (isMuted) {
-      setVolume(previousVolume || 0.5)
-      setIsMuted(false)
+      setVolume(0.5)
     } else {
-      setPreviousVolume(volume)
       setVolume(0)
-      setIsMuted(true)
     }
   }
 
@@ -118,7 +114,14 @@ export default function PlayerBar() {
     }
   }
 
+  const handleToggleLike = () => {
+    if (currentTrack) {
+      toggleLike(currentTrack.id)
+    }
+  }
+
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0
+  const trackIsLiked = currentTrack ? isLiked(currentTrack.id) : false
 
   return (
     <footer className="player-bar">
@@ -137,10 +140,11 @@ export default function PlayerBar() {
               <span className="track-artist">{currentTrack.artist}</span>
             </div>
             <button 
-              className={`like-btn ${isLiked ? 'liked' : ''}`}
-              onClick={() => setIsLiked(!isLiked)}
+              className={`like-btn ${trackIsLiked ? 'liked' : ''}`}
+              onClick={handleToggleLike}
+              title={trackIsLiked ? '取消喜欢' : '添加到我喜欢'}
             >
-              <Heart size={16} fill={isLiked ? 'currentColor' : 'none'} />
+              <Heart size={16} fill={trackIsLiked ? 'currentColor' : 'none'} />
             </button>
           </>
         ) : (
@@ -207,19 +211,20 @@ export default function PlayerBar() {
         <button 
           className={`control-btn ${settings.showLyricsWindow ? 'active' : ''}`}
           onClick={toggleLyricsWindow}
+          title="桌面歌词"
         >
           <Mic2 size={18} />
         </button>
         <div className="volume-control">
           <button className="control-btn" onClick={toggleMute}>
-            {isMuted || volume === 0 ? <VolumeX size={18} /> : <Volume2 size={18} />}
+            {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
           </button>
           <input
             type="range"
             min="0"
             max="1"
             step="0.01"
-            value={isMuted ? 0 : volume}
+            value={volume}
             onChange={handleVolumeChange}
             className="volume-slider"
           />

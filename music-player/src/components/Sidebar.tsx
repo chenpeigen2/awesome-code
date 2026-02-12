@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { 
   Music, 
-  Library, 
   ListMusic, 
   Mic2, 
   Settings, 
@@ -14,23 +13,15 @@ import {
 import { useLibraryStore, usePlayerStore } from '@/stores'
 import './Sidebar.css'
 
-const menuItems = [
-  { id: 'home', icon: Home, label: '推荐' },
-  { id: 'all', icon: Music, label: '全部音乐' },
-  { id: 'artists', icon: Mic2, label: '艺术家' },
-  { id: 'albums', icon: Disc, label: '专辑' },
-  { id: 'genres', icon: Radio, label: '流派' },
-]
-
 export default function Sidebar() {
-  const { playlists, currentView, setCurrentView, addPlaylist, tracks } = useLibraryStore()
+  const { playlists, currentView, setCurrentView, addPlaylist, tracks, likedTrackIds } = useLibraryStore()
   const { setCurrentTrack, setIsPlaying, setQueue } = usePlayerStore()
   const [activeItem, setActiveItem] = useState('all')
 
   const handleMenuClick = (id: string) => {
     setActiveItem(id)
-    if (['all', 'artists', 'albums', 'genres'].includes(id)) {
-      setCurrentView(id as 'all' | 'artists' | 'albums' | 'genres')
+    if (['all', 'artists', 'albums', 'genres', 'favorites'].includes(id)) {
+      setCurrentView(id as 'all' | 'artists' | 'albums' | 'genres' | 'favorites')
     }
   }
 
@@ -54,6 +45,8 @@ export default function Sidebar() {
     }
   }
 
+  const likedCount = likedTrackIds.size
+
   return (
     <aside className="sidebar">
       <div className="sidebar-header draggable">
@@ -66,17 +59,42 @@ export default function Sidebar() {
       <nav className="sidebar-nav">
         <div className="nav-section">
           <ul className="nav-list">
-            {menuItems.map((item) => (
-              <li key={item.id}>
-                <button
-                  className={`nav-item ${activeItem === item.id ? 'active' : ''}`}
-                  onClick={() => handleMenuClick(item.id)}
-                >
-                  <item.icon size={18} />
-                  <span>{item.label}</span>
-                </button>
-              </li>
-            ))}
+            <li>
+              <button
+                className={`nav-item ${activeItem === 'all' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('all')}
+              >
+                <Music size={18} />
+                <span>全部音乐</span>
+              </button>
+            </li>
+            <li>
+              <button
+                className={`nav-item ${activeItem === 'artists' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('artists')}
+              >
+                <Mic2 size={18} />
+                <span>艺术家</span>
+              </button>
+            </li>
+            <li>
+              <button
+                className={`nav-item ${activeItem === 'albums' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('albums')}
+              >
+                <Disc size={18} />
+                <span>专辑</span>
+              </button>
+            </li>
+            <li>
+              <button
+                className={`nav-item ${activeItem === 'genres' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('genres')}
+              >
+                <Radio size={18} />
+                <span>流派</span>
+              </button>
+            </li>
           </ul>
         </div>
 
@@ -87,14 +105,12 @@ export default function Sidebar() {
           <ul className="nav-list">
             <li>
               <button 
-                className="nav-item"
-                onClick={() => {
-                  setActiveItem('favorites')
-                  setCurrentView('all')
-                }}
+                className={`nav-item ${activeItem === 'favorites' ? 'active' : ''}`}
+                onClick={() => handleMenuClick('favorites')}
               >
                 <Heart size={16} />
                 <span>我喜欢</span>
+                {likedCount > 0 && <span className="badge">{likedCount}</span>}
               </button>
             </li>
             <li>

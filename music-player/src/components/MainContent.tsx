@@ -9,7 +9,8 @@ import {
   Search,
   Mic2,
   Disc,
-  Radio
+  Radio,
+  Heart
 } from 'lucide-react'
 import { useLibraryStore, usePlayerStore } from '@/stores'
 import { Track } from '@/types'
@@ -23,12 +24,19 @@ function formatDuration(seconds: number): string {
 }
 
 export default function MainContent() {
-  const { tracks, currentView, searchQuery, setSearchQuery, setTracks } = useLibraryStore()
+  const { tracks, currentView, searchQuery, setSearchQuery, setTracks, toggleLike, isLiked, getLikedTracks, likedTrackIds } = useLibraryStore()
   const { currentTrack, isPlaying, setCurrentTrack, setIsPlaying, setQueue, setQueueIndex } = usePlayerStore()
   const [tracksArray, setTracksArray] = useState<Track[]>([])
 
   useEffect(() => {
-    const arr = Array.from(tracks.values())
+    let arr: Track[]
+    
+    if (currentView === 'favorites') {
+      arr = getLikedTracks()
+    } else {
+      arr = Array.from(tracks.values())
+    }
+    
     if (searchQuery) {
       const filtered = arr.filter(track => 
         track.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -39,7 +47,7 @@ export default function MainContent() {
     } else {
       setTracksArray(arr)
     }
-  }, [tracks, searchQuery])
+  }, [tracks, searchQuery, currentView, likedTrackIds])
 
   const groupedByArtist = useMemo(() => {
     const groups: Record<string, Track[]> = {}
@@ -118,6 +126,26 @@ export default function MainContent() {
     }
   }
 
+  const handleToggleLike = (e: React.MouseEvent, trackId: string) => {
+    e.stopPropagation()
+    toggleLike(trackId)
+  }
+
+  const getViewTitle = () => {
+    switch (currentView) {
+      case 'favorites':
+        return '我喜欢'
+      case 'artists':
+        return '艺术家'
+      case 'albums':
+        return '专辑'
+      case 'genres':
+        return '流派'
+      default:
+        return '全部音乐'
+    }
+  }
+
   const renderTrackList = () => (
     <div className="track-list">
       <div className="track-list-header">
@@ -130,49 +158,70 @@ export default function MainContent() {
         <div className="col-actions"></div>
       </div>
       <div className="track-list-body">
-        {tracksArray.map((track, index) => (
-          <div 
-            key={track.id} 
-            className={`track-item ${currentTrack?.id === track.id ? 'active' : ''}`}
-            onDoubleClick={() => handlePlayTrack(track, index)}
-          >
-            <div className="col-index">
-              <span className="index-number">{index + 1}</span>
-              <button 
-                className="play-btn"
-                onClick={() => handlePlayTrack(track, index)}
-              >
-                {currentTrack?.id === track.id && isPlaying ? (
-                  <Pause size={14} />
-                ) : (
-                  <Play size={14} />
-                )}
-              </button>
-            </div>
-            <div className="col-title">
-              <div className="track-cover">
-                {track.cover ? (
-                  <img src={track.cover} alt={track.title} />
-                ) : (
-                  <Music size={16} />
-                )}
-              </div>
-              <div className="track-info">
-                <span className="track-name">{track.title}</span>
-                <span className="track-artist">{track.artist}</span>
-              </div>
-            </div>
-            <div className="col-album">{track.album}</div>
-            <div className="col-duration">
-              {formatDuration(track.duration)}
-            </div>
-            <div className="col-actions">
-              <button className="more-btn">
-                <MoreHorizontal size={16} />
-              </button>
-            </div>
+        {tracksArray.length === 0 ? (
+          <div className="empty-list">
+            {currentView === 'favorites' ? (
+              <>
+                <Heart size={48} strokeWidth={1} />
+                <p>还没有喜欢的歌曲</p>
+                <p className="hint">点击歌曲旁的心形图标添加到我喜欢</p>
+              </>
+            ) : (
+              <p>暂无歌曲</p>
+            )}
           </div>
-        ))}
+        ) : (
+          tracksArray.map((track, index) => (
+            <div 
+              key={track.id} 
+              className={`track-item ${currentTrack?.id === track.id ? 'active' : ''}`}
+              onDoubleClick={() => handlePlayTrack(track, index)}
+            >
+              <div className="col-index">
+                <span className="index-number">{index + 1}</span>
+                <button 
+                  className="play-btn"
+                  onClick={() => handlePlayTrack(track, index)}
+                >
+                  {currentTrack?.id === track.id && isPlaying ? (
+                    <Pause size={14} />
+                  ) : (
+                    <Play size={14} />
+                  )}
+                </button>
+              </div>
+              <div className="col-title">
+                <div className="track-cover">
+                  {track.cover ? (
+                    <img src={track.cover} alt={track.title} />
+                  ) : (
+                    <Music size={16} />
+                  )}
+                </div>
+                <div className="track-info">
+                  <span className="track-name">{track.title}</span>
+                  <span className="track-artist">{track.artist}</span>
+                </div>
+              </div>
+              <div className="col-album">{track.album}</div>
+              <div className="col-duration">
+                {formatDuration(track.duration)}
+              </div>
+              <div className="col-actions">
+                <button 
+                  className={`like-track-btn ${isLiked(track.id) ? 'liked' : ''}`}
+                  onClick={(e) => handleToggleLike(e, track.id)}
+                  title={isLiked(track.id) ? '取消喜欢' : '添加到我喜欢'}
+                >
+                  <Heart size={14} fill={isLiked(track.id) ? 'currentColor' : 'none'} />
+                </button>
+                <button className="more-btn">
+                  <MoreHorizontal size={16} />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   )
@@ -210,6 +259,12 @@ export default function MainContent() {
                 <span className="track-num">{idx + 1}</span>
                 <span className="track-name">{track.title}</span>
                 <span className="track-duration">{formatDuration(track.duration)}</span>
+                <button 
+                  className={`like-track-btn small ${isLiked(track.id) ? 'liked' : ''}`}
+                  onClick={(e) => handleToggleLike(e, track.id)}
+                >
+                  <Heart size={12} fill={isLiked(track.id) ? 'currentColor' : 'none'} />
+                </button>
               </div>
             ))}
             {groupTracks.length > 5 && (
@@ -260,7 +315,7 @@ export default function MainContent() {
       </header>
 
       <div className="content-body">
-        {tracksArray.length === 0 ? (
+        {tracks.size === 0 && currentView !== 'favorites' ? (
           <div className="empty-state">
             <Music size={64} strokeWidth={1} />
             <h2>开始添加音乐</h2>
@@ -279,14 +334,21 @@ export default function MainContent() {
         ) : (
           <>
             <div className="content-toolbar">
-              <button className="action-btn primary" onClick={handlePlayAll}>
-                <Play size={16} />
-                播放全部
-              </button>
-              <button className="action-btn" onClick={handleAddFiles}>
-                <FolderOpen size={16} />
-                添加音乐
-              </button>
+              <h2 className="view-title">{getViewTitle()}</h2>
+              <div className="toolbar-actions">
+                {tracksArray.length > 0 && (
+                  <button className="action-btn primary" onClick={handlePlayAll}>
+                    <Play size={16} />
+                    播放全部
+                  </button>
+                )}
+                {currentView !== 'favorites' && (
+                  <button className="action-btn" onClick={handleAddFiles}>
+                    <FolderOpen size={16} />
+                    添加音乐
+                  </button>
+                )}
+              </div>
             </div>
 
             {renderContent()}

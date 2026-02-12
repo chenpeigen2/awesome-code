@@ -126,8 +126,20 @@
 
 .content-toolbar {
   display: flex;
-  gap: 12px;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 24px;
+}
+
+.view-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 12px;
 }
 
 .track-list {
@@ -138,7 +150,7 @@
 
 .track-list-header {
   display: grid;
-  grid-template-columns: 50px 1fr 200px 60px 40px;
+  grid-template-columns: 50px 1fr 200px 60px 60px;
   gap: 12px;
   padding: 12px 16px;
   font-size: 12px;
@@ -161,7 +173,7 @@
 
 .track-item {
   display: grid;
-  grid-template-columns: 50px 1fr 200px 60px 40px;
+  grid-template-columns: 50px 1fr 200px 60px 60px;
   gap: 12px;
   padding: 12px 16px;
   align-items: center;
@@ -273,7 +285,46 @@
 
 .col-actions {
   display: flex;
+  align-items: center;
   justify-content: center;
+  gap: 4px;
+}
+
+.like-track-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: all 0.2s;
+}
+
+.track-item:hover .like-track-btn {
+  opacity: 1;
+}
+
+.like-track-btn:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--error-color);
+}
+
+.like-track-btn.liked {
+  opacity: 1;
+  color: var(--error-color);
+}
+
+.like-track-btn.small {
+  width: 24px;
+  height: 24px;
+  opacity: 0.5;
+}
+
+.like-track-btn.small:hover,
+.like-track-btn.small.liked {
+  opacity: 1;
 }
 
 .more-btn {
@@ -295,6 +346,26 @@
 .more-btn:hover {
   background-color: var(--background-color);
   color: var(--text-primary);
+}
+
+.empty-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.empty-list p {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.empty-list .hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
 }
 
 .grouped-view {
@@ -398,6 +469,7 @@
 .group-track-item .track-duration {
   font-size: 12px;
   color: var(--text-muted);
+  margin-right: 8px;
 }
 
 .more-tracks {
