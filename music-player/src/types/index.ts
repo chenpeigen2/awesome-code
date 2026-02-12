@@ -10,6 +10,9 @@ export interface ElectronAPI {
   hideLyrics: () => Promise<void>
   updateLyrics: (lyrics: string, currentTime: number) => Promise<void>
   onLyricsUpdate: (callback: (lyrics: string, currentTime: number) => void) => void
+  httpFetch: (url: string, options?: { timeout?: number; headers?: Record<string, string>; method?: string; body?: string }) => Promise<{ status: number; headers: Record<string, string>; data: string; error?: string }>
+  httpDownload: (url: string, savePath: string) => Promise<{ success: boolean; path?: string; size?: number; error?: string }>
+  onDownloadProgress: (callback: (progress: { url: string; downloaded: number; total: number }) => void) => void
 }
 
 declare global {

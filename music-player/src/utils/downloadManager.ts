@@ -10,7 +10,6 @@ class DownloadManager {
   private activeDownloads: Set<string> = new Set()
   private settings: DownloadSettings
   private callbacks: Set<DownloadCallback> = new Set()
-  private abortControllers: Map<string, AbortController> = new Map()
   private initialized: boolean = false
 
   constructor() {
@@ -156,105 +155,122 @@ class DownloadManager {
     this.activeDownloads.add(id)
     this.notifyCallbacks(task)
 
-    const controller = new AbortController()
-    this.abortControllers.set(id, controller)
+    const fileName = this.getSafeFileName(task.searchResult)
+    const filePath = `${task.savePath}\\${fileName}`
 
-    try {
-      const response = await fetch(task.searchResult.downloadUrl, {
-        signal: controller.signal,
-        mode: 'cors',
-        headers: {
-          'Accept': 'audio/mpeg,audio/*,*/*',
-        },
-      })
-
-      if (!response.ok) {
-        throw new Error(`HTTP错误: ${response.status}`)
-      }
-
-      const contentLength = response.headers.get('content-length')
-      task.totalBytes = contentLength ? parseInt(contentLength, 10) : 0
-
-      const reader = response.body?.getReader()
-      if (!reader) {
-        throw new Error('无法读取响应数据')
-      }
-
-      const chunks: ArrayBuffer[] = []
-      let lastTime = Date.now()
-      let lastBytes = 0
-
-      while (true) {
-        const { done, value } = await reader.read()
-        
-        if (done) break
-
-        chunks.push(value.buffer)
-        task.downloadedBytes += value.length
-
-        const now = Date.now()
-        const timeDiff = (now - lastTime) / 1000
-        
-        if (timeDiff >= 0.5) {
-          task.speed = (task.downloadedBytes - lastBytes) / timeDiff
-          lastTime = now
-          lastBytes = task.downloadedBytes
-        }
-
-        if (task.totalBytes > 0) {
-          task.progress = (task.downloadedBytes / task.totalBytes) * 100
-        } else {
-          task.progress = Math.min(99, task.downloadedBytes / 100000)
-        }
-
-        this.notifyCallbacks(task)
-      }
-
-      const blob = new Blob(chunks, { type: 'audio/mpeg' })
-      const arrayBuffer = await blob.arrayBuffer()
-
-      const fileName = this.getSafeFileName(task.searchResult)
-      
-      if (window.electronAPI && window.electronAPI.saveFile) {
-        const filePath = `${task.savePath}\\${fileName}`
-        const result = await window.electronAPI.saveFile(filePath, arrayBuffer)
+    if (window.electronAPI && window.electronAPI.httpDownload) {
+      try {
+        const result = await window.electronAPI.httpDownload(task.searchResult.downloadUrl, filePath)
         
         if (result.success) {
+          task.status = 'completed'
+          task.progress = 100
+          task.downloadedBytes = result.size || 0
+          task.totalBytes = result.size || 0
+          task.endTime = new Date()
           task.savePath = result.path || filePath
+          task.speed = 0
         } else {
-          throw new Error(result.error || '保存文件失败')
+          throw new Error(result.error || '下载失败')
         }
-      } else {
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = fileName
-        document.body.appendChild(a)
-        a.click()
-        document.body.removeChild(a)
-        URL.revokeObjectURL(url)
+      } catch (error: any) {
+        console.error('Download error:', error)
+        task.status = 'error'
+        task.error = error.message || error.error || '下载失败'
+      } finally {
+        this.activeDownloads.delete(id)
+        this.saveTasks()
+        this.notifyCallbacks(task)
+        this.processQueue()
       }
+    } else {
+      try {
+        const response = await fetch(task.searchResult.downloadUrl, {
+          mode: 'cors',
+          headers: {
+            'Accept': 'audio/mpeg,audio/*,*/*',
+          },
+        })
 
-      task.status = 'completed'
-      task.progress = 100
-      task.endTime = new Date()
-      task.speed = 0
+        if (!response.ok) {
+          throw new Error(`HTTP错误: ${response.status}`)
+        }
 
-    } catch (error: any) {
-      console.error('Download error:', error)
-      if (error.name === 'AbortError') {
-        task.status = 'paused'
-      } else {
+        const contentLength = response.headers.get('content-length')
+        task.totalBytes = contentLength ? parseInt(contentLength, 10) : 0
+
+        const reader = response.body?.getReader()
+        if (!reader) {
+          throw new Error('无法读取响应数据')
+        }
+
+        const chunks: ArrayBuffer[] = []
+        let lastTime = Date.now()
+        let lastBytes = 0
+
+        while (true) {
+          const { done, value } = await reader.read()
+          
+          if (done) break
+
+          chunks.push(value.buffer)
+          task.downloadedBytes += value.length
+
+          const now = Date.now()
+          const timeDiff = (now - lastTime) / 1000
+          
+          if (timeDiff >= 0.5) {
+            task.speed = (task.downloadedBytes - lastBytes) / timeDiff
+            lastTime = now
+            lastBytes = task.downloadedBytes
+          }
+
+          if (task.totalBytes > 0) {
+            task.progress = (task.downloadedBytes / task.totalBytes) * 100
+          } else {
+            task.progress = Math.min(99, task.downloadedBytes / 100000)
+          }
+
+          this.notifyCallbacks(task)
+        }
+
+        const blob = new Blob(chunks, { type: 'audio/mpeg' })
+        const arrayBuffer = await blob.arrayBuffer()
+        
+        if (window.electronAPI && window.electronAPI.saveFile) {
+          const saveResult = await window.electronAPI.saveFile(filePath, arrayBuffer)
+          
+          if (saveResult.success) {
+            task.savePath = saveResult.path || filePath
+          } else {
+            throw new Error(saveResult.error || '保存文件失败')
+          }
+        } else {
+          const url = URL.createObjectURL(blob)
+          const a = document.createElement('a')
+          a.href = url
+          a.download = fileName
+          document.body.appendChild(a)
+          a.click()
+          document.body.removeChild(a)
+          URL.revokeObjectURL(url)
+        }
+
+        task.status = 'completed'
+        task.progress = 100
+        task.endTime = new Date()
+        task.speed = 0
+
+      } catch (error: any) {
+        console.error('Download error:', error)
         task.status = 'error'
         task.error = error.message || '下载失败'
+      } finally {
+        this.activeDownloads.delete(id)
+        this.saveTasks()
+        this.notifyCallbacks(task)
+        this.processQueue()
       }
-    } finally {
-      this.activeDownloads.delete(id)
-      this.abortControllers.delete(id)
-      this.saveTasks()
-      this.notifyCallbacks(task)
-      
-      this.processQueue()
     }
   }
 
@@ -266,18 +282,17 @@ class DownloadManager {
   pauseDownload(id: string): void {
     const task = this.tasks.get(id)
     if (task && task.status === 'downloading') {
-      const controller = this.abortControllers.get(id)
-      if (controller) {
-        controller.abort()
-      }
+      task.status = 'paused'
+      task.speed = 0
+      this.activeDownloads.delete(id)
+      this.saveTasks()
+      this.notifyCallbacks(task)
     }
   }
 
   resumeDownload(id: string): void {
     const task = this.tasks.get(id)
     if (task && task.status === 'paused') {
-      task.downloadedBytes = 0
-      task.progress = 0
       this.startDownload(id)
     }
   }
@@ -285,12 +300,7 @@ class DownloadManager {
   cancelDownload(id: string): void {
     const task = this.tasks.get(id)
     if (task) {
-      if (task.status === 'downloading') {
-        const controller = this.abortControllers.get(id)
-        if (controller) {
-          controller.abort()
-        }
-      }
+      this.activeDownloads.delete(id)
       this.tasks.delete(id)
       this.saveTasks()
       this.notifyAllCallbacks()
@@ -323,14 +333,6 @@ class DownloadManager {
   }
 
   clearAll(): void {
-    this.tasks.forEach((task, id) => {
-      if (task.status === 'downloading') {
-        const controller = this.abortControllers.get(id)
-        if (controller) {
-          controller.abort()
-        }
-      }
-    })
     this.tasks.clear()
     this.saveTasks()
     this.notifyAllCallbacks()

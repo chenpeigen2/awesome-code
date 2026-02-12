@@ -11,6 +11,43 @@ interface ParsedTrack {
   downloadUrl: string
 }
 
+async function fetchHtml(url: string): Promise<string> {
+  if (window.electronAPI && window.electronAPI.httpFetch) {
+    const response = await window.electronAPI.httpFetch(url, {
+      timeout: SEARCH_TIMEOUT,
+    })
+    if (response.error) {
+      throw new Error(response.error)
+    }
+    return response.data
+  } else {
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), SEARCH_TIMEOUT)
+    
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        signal: controller.signal,
+        headers: {
+          'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+          'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        },
+      })
+      clearTimeout(timeoutId)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+      
+      return await response.text()
+    } catch (error: any) {
+      clearTimeout(timeoutId)
+      throw error
+    }
+  }
+}
+
 function parseHtmlTracks(html: string): ParsedTrack[] {
   const tracks: ParsedTrack[] = []
   
@@ -18,6 +55,7 @@ function parseHtmlTracks(html: string): ParsedTrack[] {
     /<li[^>]*class="[^"]*cplayer-sound-item[^"]*"[^>]*data-sound-id="([^"]*)"[^>]*data-sound-url="([^"]*)"[^>]*>([\s\S]*?)<\/li>/gi,
     /<li[^>]*data-sound-id="([^"]*)"[^>]*data-sound-url="([^"]*)"[^>]*class="[^"]*cplayer-sound-item[^"]*"[^>]*>([\s\S]*?)<\/li>/gi,
     /<li[^>]*data-sound-url="([^"]*)"[^>]*data-sound-id="([^"]*)"[^>]*>([\s\S]*?)<\/li>/gi,
+    /<li[^>]*data-url="([^"]*)"[^>]*data-id="([^"]*)"[^>]*>([\s\S]*?)<\/li>/gi,
   ]
   
   for (const trackRegex of patterns) {
@@ -27,32 +65,37 @@ function parseHtmlTracks(html: string): ParsedTrack[] {
       let downloadUrl = match[2]
       const content = match[3]
       
-      if (downloadUrl.includes('data-sound-id')) {
+      if (downloadUrl && downloadUrl.includes('data-sound-id')) {
         const temp = id
         id = downloadUrl
         downloadUrl = temp
       }
       
+      if (!downloadUrl || downloadUrl.includes('data-')) {
+        continue
+      }
+      
       const titleMatch = content.match(/<b[^>]*>([^<]*)<\/b>/i) || 
                          content.match(/class="[^"]*title[^"]*"[^>]*>([^<]*)</i)
       const artistMatch = content.match(/<i[^>]*>([^<]*)<\/i>/i) ||
-                          content.match(/class="[^"]*artist[^"]*"[^>]*>([^<]*)</i)
+                          content.match(/class="[^"]*artist[^"]*"[^>]*>([^<]*)</i) ||
+                          content.match(/class="[^"]*author[^"]*"[^>]*>([^<]*)</i)
       const durationMatch = content.match(/<em[^>]*>([^<]*)<\/em>/i) ||
                             content.match(/class="[^"]*duration[^"]*"[^>]*>([^<]*)</i) ||
+                            content.match(/class="[^"]*time[^"]*"[^>]*>([^<]*)</i) ||
                             content.match(/(\d+:\d+)/)
       
-      if (titleMatch && artistMatch && downloadUrl) {
-        try {
-          tracks.push({
-            id: id || `track-${Date.now()}-${Math.random()}`,
-            title: titleMatch[1].trim() || 'Unknown Title',
-            artist: artistMatch[1].trim() || 'Unknown Artist',
-            duration: durationMatch ? durationMatch[1].trim() : '0:00',
-            downloadUrl: decodeURIComponent(downloadUrl),
-          })
-        } catch {
-          console.warn('Failed to parse track:', downloadUrl)
-        }
+      try {
+        const decodedUrl = decodeURIComponent(downloadUrl)
+        tracks.push({
+          id: id || `track-${Date.now()}-${Math.random()}`,
+          title: titleMatch ? titleMatch[1].trim() : 'Unknown Title',
+          artist: artistMatch ? artistMatch[1].trim() : 'Unknown Artist',
+          duration: durationMatch ? durationMatch[1].trim() : '0:00',
+          downloadUrl: decodedUrl,
+        })
+      } catch {
+        console.warn('Failed to parse track:', downloadUrl)
       }
     }
     if (tracks.length > 0) break
@@ -76,6 +119,22 @@ function parseHtmlTracks(html: string): ParsedTrack[] {
     }
   }
   
+  const urlPattern = /https?:\/\/[^\s"'<>]+\.mp3[^\s"'<>]*/gi
+  const mp3Urls = html.match(urlPattern) || []
+  
+  if (tracks.length === 0 && mp3Urls.length > 0) {
+    mp3Urls.forEach((url, index) => {
+      const cleanUrl = url.split('"')[0].split("'")[0]
+      tracks.push({
+        id: `mp3-${Date.now()}-${index}`,
+        title: `Track ${index + 1}`,
+        artist: 'Unknown Artist',
+        duration: '0:00',
+        downloadUrl: cleanUrl,
+      })
+    })
+  }
+  
   return tracks
 }
 
@@ -83,28 +142,6 @@ function formatSeconds(seconds: number): string {
   const mins = Math.floor(seconds / 60)
   const secs = Math.floor(seconds % 60)
   return `${mins}:${secs.toString().padStart(2, '0')}`
-}
-
-async function fetchWithTimeout(url: string, timeout: number = SEARCH_TIMEOUT): Promise<Response> {
-  const controller = new AbortController()
-  const timeoutId = setTimeout(() => controller.abort(), timeout)
-  
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      signal: controller.signal,
-      headers: {
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      },
-    })
-    clearTimeout(timeoutId)
-    return response
-  } catch (error) {
-    clearTimeout(timeoutId)
-    throw error
-  }
 }
 
 export async function searchTracks(query: string): Promise<SearchResult[]> {
@@ -115,13 +152,7 @@ export async function searchTracks(query: string): Promise<SearchResult[]> {
   try {
     const searchUrl = `${BASE_URL}/search/${encodeURIComponent(query)}/`
     
-    const response = await fetchWithTimeout(searchUrl)
-
-    if (!response.ok) {
-      throw new Error(`搜索失败: HTTP ${response.status}`)
-    }
-
-    const html = await response.text()
+    const html = await fetchHtml(searchUrl)
     const tracks = parseHtmlTracks(html)
     
     if (tracks.length === 0) {
@@ -136,23 +167,14 @@ export async function searchTracks(query: string): Promise<SearchResult[]> {
       downloadUrl: track.downloadUrl,
     }))
   } catch (error: any) {
-    if (error.name === 'AbortError') {
-      throw new Error('搜索超时，请检查网络连接')
-    }
     console.error('Search error:', error)
-    throw new Error(`搜索失败: ${error.message}`)
+    throw new Error(`搜索失败: ${error.message || '网络错误'}`)
   }
 }
 
 export async function getPopularTracks(): Promise<SearchResult[]> {
   try {
-    const response = await fetchWithTimeout(BASE_URL)
-
-    if (!response.ok) {
-      throw new Error(`获取热门歌曲失败: HTTP ${response.status}`)
-    }
-
-    const html = await response.text()
+    const html = await fetchHtml(BASE_URL)
     const tracks = parseHtmlTracks(html)
     
     return tracks.map(track => ({
@@ -163,11 +185,8 @@ export async function getPopularTracks(): Promise<SearchResult[]> {
       downloadUrl: track.downloadUrl,
     }))
   } catch (error: any) {
-    if (error.name === 'AbortError') {
-      throw new Error('加载超时，请检查网络连接')
-    }
     console.error('Get popular tracks error:', error)
-    throw new Error(`获取热门歌曲失败: ${error.message}`)
+    throw new Error(`获取热门歌曲失败: ${error.message || '网络错误'}`)
   }
 }
 

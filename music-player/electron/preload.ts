@@ -18,4 +18,11 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onLyricsUpdate: (callback: (lyrics: string, currentTime: number) => void) => {
     ipcRenderer.on('lyrics:update', (_event, lyrics, currentTime) => callback(lyrics, currentTime))
   },
+
+  httpFetch: (url: string, options?: any) => ipcRenderer.invoke('http:fetch', url, options),
+  httpDownload: (url: string, savePath: string) => ipcRenderer.invoke('http:download', url, savePath),
+  
+  onDownloadProgress: (callback: (progress: any) => void) => {
+    ipcRenderer.on('download:progress', (_event, progress) => callback(progress))
+  },
 })
