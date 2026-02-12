@@ -362,32 +362,36 @@
 .result-actions {
   display: flex;
   gap: 8px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.result-item:hover .result-actions {
-  opacity: 1;
 }
 
 .action-btn {
-  width: 36px;
-  height: 36px;
-  border: none;
-  border-radius: 50%;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 20px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 13px;
   transition: all 0.2s ease;
+}
+
+.action-btn .btn-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.action-btn.with-label {
+  padding: 8px 16px;
 }
 
 .action-btn:hover {
   background: var(--accent-color);
   color: white;
-  transform: scale(1.1);
+  transform: translateY(-1px);
 }
 
 .action-btn.active {
@@ -406,6 +410,8 @@
 .action-btn.small {
   width: 28px;
   height: 28px;
+  padding: 0;
+  border-radius: 50%;
 }
 
 .action-btn.cancel:hover {

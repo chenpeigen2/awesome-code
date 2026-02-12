@@ -5,12 +5,14 @@ import {
   MoreHorizontal, 
   Clock, 
   Music,
-  FolderOpen,
   Search,
   Mic2,
   Disc,
   Radio,
-  Heart
+  Heart,
+  FilePlus,
+  FolderPlus,
+  Loader2
 } from 'lucide-react'
 import { useLibraryStore, usePlayerStore } from '@/stores'
 import { Track } from '@/types'
@@ -28,6 +30,8 @@ export default function MainContent() {
   const { tracks, currentView, searchQuery, setSearchQuery, setTracks, toggleLike, isLiked, getLikedTracks, likedTrackIds } = useLibraryStore()
   const { currentTrack, isPlaying, setCurrentTrack, setIsPlaying, setQueue, setQueueIndex } = usePlayerStore()
   const [tracksArray, setTracksArray] = useState<Track[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [statusMessage, setStatusMessage] = useState<string | null>(null)
 
   useEffect(() => {
     let arr: Track[]
@@ -91,30 +95,64 @@ export default function MainContent() {
     }
   }
 
+  const showStatus = (message: string) => {
+    setStatusMessage(message)
+    setTimeout(() => setStatusMessage(null), 3000)
+  }
+
   const handleAddFolder = async () => {
-    if (window.electronAPI) {
+    if (!window.electronAPI) {
+      showStatus('此功能仅在桌面应用中可用')
+      return
+    }
+    
+    setIsLoading(true)
+    try {
       const folder = await window.electronAPI.openFolder()
       if (folder) {
+        showStatus(`已选择文件夹: ${folder}`)
         console.log('Selected folder:', folder)
       }
+    } catch (error) {
+      console.error('Error selecting folder:', error)
+      showStatus('选择文件夹失败')
+    } finally {
+      setIsLoading(false)
     }
   }
 
   const handleAddFiles = async () => {
-    if (window.electronAPI) {
+    if (!window.electronAPI) {
+      showStatus('此功能仅在桌面应用中可用')
+      return
+    }
+    
+    setIsLoading(true)
+    try {
       const files = await window.electronAPI.openFiles()
-      if (files.length > 0) {
-        const newTracks: Track[] = files.map((filePath, index) => ({
-          id: `${Date.now()}-${index}`,
-          path: filePath,
-          title: filePath.split(/[/\\]/).pop()?.replace(/\.[^/.]+$/, '') || 'Unknown',
-          artist: 'Unknown Artist',
-          album: 'Unknown Album',
-          duration: 0,
-        }))
+      if (files && files.length > 0) {
+        const newTracks: Track[] = files.map((filePath, index) => {
+          const fileName = filePath.split(/[/\\]/).pop()?.replace(/\.[^/.]+$/, '') || 'Unknown'
+          return {
+            id: `local-${Date.now()}-${index}-${Math.random().toString(36).substr(2, 9)}`,
+            path: filePath,
+            title: fileName,
+            artist: 'Unknown Artist',
+            album: 'Unknown Album',
+            duration: 0,
+          }
+        })
+        
         const existingTracks = Array.from(tracks.values())
-        setTracks([...existingTracks, ...newTracks])
+        const allTracks = [...existingTracks, ...newTracks]
+        setTracks(allTracks)
+        showStatus(`已添加 ${files.length} 个文件`)
       }
+    } catch (error) {
+      console.error('Error adding files:', error)
+      showStatus('添加文件失败')
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -317,6 +355,12 @@ export default function MainContent() {
         </div>
       </header>
 
+      {statusMessage && (
+        <div className="status-message">
+          {statusMessage}
+        </div>
+      )}
+
       <div className="content-body">
         {currentView === 'online' ? (
           <OnlineMusic />
@@ -326,12 +370,20 @@ export default function MainContent() {
             <h2>开始添加音乐</h2>
             <p>添加本地音乐文件或文件夹来开始播放</p>
             <div className="empty-actions">
-              <button className="action-btn primary" onClick={handleAddFiles}>
-                <FolderOpen size={18} />
+              <button 
+                className="action-btn primary" 
+                onClick={handleAddFiles}
+                disabled={isLoading}
+              >
+                {isLoading ? <Loader2 size={18} className="spinning" /> : <FilePlus size={18} />}
                 添加文件
               </button>
-              <button className="action-btn" onClick={handleAddFolder}>
-                <FolderOpen size={18} />
+              <button 
+                className="action-btn" 
+                onClick={handleAddFolder}
+                disabled={isLoading}
+              >
+                {isLoading ? <Loader2 size={18} className="spinning" /> : <FolderPlus size={18} />}
                 添加文件夹
               </button>
             </div>
@@ -348,8 +400,12 @@ export default function MainContent() {
                   </button>
                 )}
                 {currentView !== 'favorites' && (
-                  <button className="action-btn" onClick={handleAddFiles}>
-                    <FolderOpen size={16} />
+                  <button 
+                    className="action-btn" 
+                    onClick={handleAddFiles}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? <Loader2 size={16} className="spinning" /> : <FilePlus size={16} />}
                     添加音乐
                   </button>
                 )}

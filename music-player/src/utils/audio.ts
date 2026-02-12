@@ -17,6 +17,7 @@ class AudioManager {
 
   constructor() {
     this.audio = new Audio()
+    this.audio.crossOrigin = 'anonymous'
     this.setupAudioEvents()
   }
 
@@ -59,23 +60,23 @@ class AudioManager {
       this.onTimeUpdateCallback?.(this.audio!.currentTime)
     })
 
-    this.audio.addEventListener('error', (e) => {
-      console.error('Audio error:', e)
+    this.audio.addEventListener('error', () => {
+      console.error('Audio error')
       const error = this.audio!.error
       let errorMsg = 'Unknown error'
       if (error) {
         switch (error.code) {
           case MediaError.MEDIA_ERR_ABORTED:
-            errorMsg = 'Playback aborted'
+            errorMsg = '播放被中止'
             break
           case MediaError.MEDIA_ERR_NETWORK:
-            errorMsg = 'Network error'
+            errorMsg = '网络错误，无法加载音频'
             break
           case MediaError.MEDIA_ERR_DECODE:
-            errorMsg = 'Decode error'
+            errorMsg = '音频解码错误'
             break
           case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            errorMsg = 'Source not supported'
+            errorMsg = '不支持的音频格式'
             break
         }
       }
@@ -85,7 +86,14 @@ class AudioManager {
     })
   }
 
+  private isOnlineUrl(path: string): boolean {
+    return path.startsWith('http://') || path.startsWith('https://')
+  }
+
   private formatFilePath(filePath: string): string {
+    if (this.isOnlineUrl(filePath)) {
+      return filePath
+    }
     if (filePath.startsWith('local://') || filePath.startsWith('file://')) {
       return filePath
     }
@@ -106,6 +114,12 @@ class AudioManager {
 
       const audioSrc = this.formatFilePath(track.path)
       console.log('Loading audio:', audioSrc)
+
+      if (this.isOnlineUrl(audioSrc)) {
+        this.audio.crossOrigin = 'anonymous'
+      } else {
+        this.audio.crossOrigin = ''
+      }
 
       this.audio.src = audioSrc
       

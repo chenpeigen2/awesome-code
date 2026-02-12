@@ -19,6 +19,7 @@ import { downloadManager } from '@/utils/downloadManager'
 import { SearchResult, DownloadTask, DownloadStatus } from '@/types/download'
 import { usePlayerStore } from '@/stores'
 import { Track } from '@/types'
+import { audioManager } from '@/utils/audio'
 import './OnlineMusic.css'
 
 export default function OnlineMusic() {
@@ -46,7 +47,14 @@ export default function OnlineMusic() {
     
     const unsubscribe = downloadManager.onTaskUpdate(updateTasks)
     
-    loadPopularTracks()
+    audioManager.onPlay(() => {
+      console.log('Audio started playing')
+    })
+    
+    audioManager.onError((err) => {
+      console.error('Audio error:', err)
+      setError(`播放失败: ${err}`)
+    })
     
     return () => {
       unsubscribe()
@@ -103,23 +111,40 @@ export default function OnlineMusic() {
     setActiveTab('downloads')
   }
 
-  const handlePlayPreview = (result: SearchResult) => {
-    const isCurrentTrack = currentTrack?.id === `online-${result.id}`
+  const handlePlayPreview = async (result: SearchResult) => {
+    const trackId = `online-${result.id}`
+    const isCurrentTrack = currentTrack?.id === trackId
     
     if (isCurrentTrack) {
-      setIsPlaying(!isPlaying)
-    } else {
-      const track: Track = {
-        id: `online-${result.id}`,
-        path: result.downloadUrl,
-        title: result.title,
-        artist: result.artist,
-        album: '在线音乐',
-        duration: 0,
+      if (isPlaying) {
+        audioManager.pause()
+        setIsPlaying(false)
+      } else {
+        audioManager.play()
+        setIsPlaying(true)
       }
-      
-      setCurrentTrack(track)
-      setIsPlaying(true)
+    } else {
+      try {
+        const track: Track = {
+          id: trackId,
+          path: result.downloadUrl,
+          title: result.title,
+          artist: result.artist,
+          album: '在线音乐',
+          duration: 0,
+        }
+        
+        setCurrentTrack(track)
+        
+        await audioManager.load(track)
+        audioManager.setVolume(0.8)
+        audioManager.play()
+        setIsPlaying(true)
+      } catch (err: any) {
+        console.error('Failed to play:', err)
+        setError(`播放失败: ${err.message || '无法加载音频'}`)
+        setIsPlaying(false)
+      }
     }
   }
 
@@ -191,6 +216,10 @@ export default function OnlineMusic() {
 
   const pendingCount = downloadTasks.filter(t => t.status !== 'completed').length
   const completedCount = downloadTasks.filter(t => t.status === 'completed').length
+
+  const isTrackPlaying = (resultId: string) => {
+    return currentTrack?.id === `online-${resultId}` && isPlaying
+  }
 
   return (
     <div className="online-music">
@@ -274,8 +303,8 @@ export default function OnlineMusic() {
             <div className="error-message">
               <AlertCircle size={16} />
               <span>{error}</span>
-              <button onClick={() => searchQuery ? handleSearch({ preventDefault: () => {} } as any) : loadPopularTracks()}>
-                <RefreshCw size={14} />
+              <button onClick={() => setError(null)}>
+                <X size={14} />
               </button>
             </div>
           )}
@@ -302,22 +331,24 @@ export default function OnlineMusic() {
                     </div>
                     <div className="result-actions">
                       <button 
-                        className={`action-btn preview ${currentTrack?.id === `online-${result.id}` ? 'active' : ''}`}
+                        className={`action-btn with-label preview ${isTrackPlaying(result.id) ? 'active' : ''}`}
                         onClick={() => handlePlayPreview(result)}
-                        title={currentTrack?.id === `online-${result.id}` && isPlaying ? '暂停' : '试听'}
+                        title={isTrackPlaying(result.id) ? '暂停播放' : '播放试听'}
                       >
-                        {currentTrack?.id === `online-${result.id}` && isPlaying ? (
+                        {isTrackPlaying(result.id) ? (
                           <Pause size={16} />
                         ) : (
                           <Play size={16} />
                         )}
+                        <span className="btn-label">{isTrackPlaying(result.id) ? '暂停' : '播放'}</span>
                       </button>
                       <button 
-                        className="action-btn download"
+                        className="action-btn with-label download"
                         onClick={() => handleDownload(result)}
-                        title="下载"
+                        title="下载到本地"
                       >
                         <Download size={16} />
+                        <span className="btn-label">下载</span>
                       </button>
                     </div>
                   </div>
@@ -388,7 +419,7 @@ export default function OnlineMusic() {
                       <button 
                         className="action-btn small"
                         onClick={() => handlePauseResume(task.id, task.status)}
-                        title="暂停"
+                        title="暂停下载"
                       >
                         <Pause size={14} />
                       </button>
@@ -397,7 +428,7 @@ export default function OnlineMusic() {
                       <button 
                         className="action-btn small"
                         onClick={() => handlePauseResume(task.id, task.status)}
-                        title="继续"
+                        title="继续下载"
                       >
                         <Play size={14} />
                       </button>
@@ -406,7 +437,7 @@ export default function OnlineMusic() {
                       <button 
                         className="action-btn small"
                         onClick={() => handleRetryDownload(task.id)}
-                        title="重试"
+                        title="重新下载"
                       >
                         <RefreshCw size={14} />
                       </button>
@@ -415,7 +446,7 @@ export default function OnlineMusic() {
                       <button 
                         className="action-btn small cancel"
                         onClick={() => handleCancelDownload(task.id)}
-                        title="取消"
+                        title="取消下载"
                       >
                         <X size={14} />
                       </button>
