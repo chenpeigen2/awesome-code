@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程中心 - 区块链学习平台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 课程中心页面特有样式 */
+        .courses-header {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .courses-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .courses-header p {
+            font-size: 18px;
+            color: var(--gray-color);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .course-filters {
+            padding: 40px 0;
+            background-color: white;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            padding: 8px 16px;
+            border: 1px solid var(--light-gray);
+            border-radius: 20px;
+            font-size: 14px;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .filter-option:hover,
+        .filter-option.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .search-container {
+            flex: 2;
+            min-width: 300px;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 16px 12px 48px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-color);
+        }
+        
+        .clear-filters {
+            margin-top: 30px;
+            text-align: right;
+        }
+        
+        .clear-filters button {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .clear-filters button:hover {
+            text-decoration: underline;
+        }
+        
+        .courses-content {
+            padding: 60px 0;
+        }
+        
+        .courses-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .courses-count {
+            font-size: 16px;
+            color: var(--gray-color);
+        }
+        
+        .sort-options {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .sort-options label {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .sort-select {
+            padding: 8px 12px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            color: var(--dark-color);
+            background-color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .sort-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .course-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .course-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .course-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .course-card:hover .course-image img {
+            transform: scale(1.05);
+        }
+        
+        .course-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .course-badge.beginner {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .course-badge.intermediate {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .course-badge.advanced {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .course-content {
+            padding: 20px;
+        }
+        
+        .course-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .course-card p {
+            font-size: 14px;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .course-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .course-instructor {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .instructor-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .course-stats {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .course-stat {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .course-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .price.free {
+            color: var(--success-color);
+        }
+        
+        .course-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+        
+        .pagination button {
+            padding: 10px 16px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            background-color: white;
+            color: var(--gray-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .pagination button:hover,
+        .pagination button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .pagination button:disabled:hover {
+            background-color: white;
+            color: var(--gray-color);
+            border-color: var(--light-gray);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .courses-header h2 {
+                font-size: 28px;
+            }
+            
+            .filters-container {
+                flex-direction: column;
+            }
+            
+            .filter-group {
+                width: 100%;
+            }
+            
+            .courses-header-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>BlockLearn</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="courses.html" class="active">课程中心</a></li>
+                <li><a href="resources.html">资源中心</a></li>
+                <li><a href="community.html">社区互动</a></li>
+                <li><a href="profile.html">个人中心</a></li>
+            </ul>
+            <div class="navbar-auth">
+                <a href="#" class="btn btn-outline">登录</a>
+                <a href="#" class="btn btn-primary">注册</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 课程中心头部 -->
+    <section class="courses-header">
+        <div class="container">
+            <h2>课程中心</h2>
+            <p>探索我们精心设计的区块链课程，从基础概念到高级应用，满足不同层次学习者的需求</p>
+        </div>
+    </section>
+
+    <!-- 课程筛选 -->
+    <section class="course-filters">
+        <div class="container">
+            <div class="filters-container">
+                <!-- 难度筛选 -->
+                <div class="filter-group">
+                    <h4>难度</h4>
+                    <div class="filter-options">
+                        <span class="filter-option active" data-filter="all">全部</span>
+                        <span class="filter-option" data-filter="beginner">入门</span>
+                        <span class="filter-option" data-filter="intermediate">进阶</span>
+                        <span class="filter-option" data-filter="advanced">高级</span>
+                    </div>
+                </div>
+                
+                <!-- 主题筛选 -->
+                <div class="filter-group">
+                    <h4>主题</h4>
+                    <div class="filter-options">
+                        <span class="filter-option active" data-filter="all">全部</span>
+                        <span class="filter-option" data-filter="basics">基础概念</span>
+                        <span class="filter-option" data-filter="cryptography">密码学</span>
+                        <span class="filter-option" data-filter="smart-contracts">智能合约</span>
+                        <span class="filter-option" data-filter="defi">DeFi</span>
+                        <span class="filter-option" data-filter="nft">NFT</span>
+                    </div>
+                </div>
+                
+                <!-- 时长筛选 -->
+                <div class="filter-group">
+                    <h4>时长</h4>
+                    <div class="filter-options">
+                        <span class="filter-option active" data-filter="all">全部</span>
+                        <span class="filter-option" data-filter="short">少于1小时</span>
+                        <span class="filter-option" data-filter="medium">1-5小时</span>
+                        <span class="filter-option" data-filter="long">5小时以上</span>
+                    </div>
+                </div>
+                
+                <!-- 搜索框 -->
+                <div class="search-container">
+                    <h4>搜索课程</h4>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="输入课程名称或关键词...">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="clear-filters">
+                <button>重置筛选条件</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程内容 -->
+    <section class="courses-content">
+        <div class="container">
+            <div class="courses-header-bar">
+                <div class="courses-count">
+                    共 <strong>24</strong> 门课程
+                </div>
+                <div class="sort-options">
+                    <label for="sort">排序方式：</label>
+                    <select id="sort" class="sort-select">
+                        <option value="popular">最受欢迎</option>
+                        <option value="newest">最新上线</option>
+                        <option value="price-low">价格从低到高</option>
+                        <option value="price-high">价格从高到低</option>
+                        <option value="rating">评分最高</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="courses-grid">
+                <!-- 课程卡片 1 -->
+                <div class="course-card" data-level="beginner" data-topic="basics" data-duration="medium">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=blockchain%20basics%20course%20cover%20with%20digital%20blocks%20and%20cryptocurrency%20symbols%2C%20professional%20educational%20design&image_size=square" alt="区块链基础原理">
+                        <span class="course-badge beginner">入门</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>区块链基础原理</h3>
+                        <p>从分布式账本到共识机制，全面了解区块链的核心原理和工作机制</p>
+                        <div class="course-meta">
+                            <div class="course-instructor">
+                                <div class="instructor-avatar">张</div>
+                                <span>张教授</span>
+                            </div>
+                            <div class="course-stats">
+                                <div class="course-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>1,245</span>
+                                </div>
+                                <div class="course-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price free">免费</span>
+                            <div class="course-actions">
+                                <a href="#" class="btn btn-primary btn-sm">开始学习</a>
+                                <a href="#" class="btn btn-outline btn-sm">收藏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 课程卡片 2 -->
+                <div class="course-card" data-level="intermediate" data-topic="smart-contracts" data-duration="long">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=ethereum%20smart%20contract%20course%20cover%20with%20code%20and%20blockchain%20visualization%2C%20professional%20educational%20design&image_size=square" alt="以太坊智能合约开发">
+                        <span class="course-badge intermediate">进阶</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>以太坊智能合约开发</h3>
+                        <p>使用Solidity语言开发智能合约，部署到以太坊网络，实现去中心化应用</p>
+                        <div class="course-meta">
+                            <div class="course-instructor">
+                                <div class="instructor-avatar">李</div>
+                                <span>李工程师</span>
+                            </div>
+                            <div class="course-stats">
+                                <div class="course-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>876</span>
+                                </div>
+                                <div class="course-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price">¥299</span>
+                            <div class="course-actions">
+                                <a href="#" class="btn btn-primary btn-sm">立即购买</a>
+                                <a href="#" class="btn btn-outline btn-sm">收藏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 课程卡片 3 -->
+                <div class="course-card" data-level="advanced" data-topic="defi" data-duration="long">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=defi%20decentralized%20finance%20course%20cover%20with%20financial%20graphics%20and%20blockchain%20elements%2C%20professional%20educational%20design&image_size=square" alt="DeFi去中心化金融">
+                        <span class="course-badge advanced">高级</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>DeFi去中心化金融</h3>
+                        <p>深入了解DeFi协议的工作原理，学习流动性挖矿、借贷平台开发等高级内容</p>
+                        <div class="course-meta">
+                            <div class="course-instructor">
+                                <div class="instructor-avatar">王</div>
+                                <span>王专家</span>
+                            </div>
+                            <div class="course-stats">
+                                <div class="course-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>532</span>
+                                </div>
+                                <div class="course-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price">¥399</span>
+                            <div class="course-actions">
+                                <a href="#" class="btn btn-primary btn-sm">立即购买</a>
+                                <a href="#" class="btn btn-outline btn-sm">收藏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 课程卡片 4 -->
+                <div class="course-card" data-level="beginner" data-topic="cryptography" data-duration="short">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=cryptography%20basics%20course%20cover%20with%20encryption%20symbols%20and%20digital%20security%20elements%2C%20professional%20educational%20design&image_size=square" alt="密码学基础">
+                        <span class="course-badge beginner">入门</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>密码学基础</h3>
+                        <p>学习哈希函数、数字签名、非对称加密等区块链背后的密码学原理</p>
+                        <div class="course-meta">
+                            <div class="course-instructor">
+                                <div class="instructor-avatar">刘</div>
+                                <span>刘教授</span>
+                            </div>
+                            <div class="course-stats">
+                                <div class="course-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>987</span>
+                                </div>
+                                <div class="course-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.6</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price free">免费</span>
+                            <div class="course-actions">
+                                <a href="#" class="btn btn-primary btn-sm">开始学习</a>
+                                <a href="#" class="btn btn-outline btn-sm">收藏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 课程卡片 5 -->
+                <div class="course-card" data-level="intermediate" data-topic="nft" data-duration="medium">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=NFT%20non-fungible%20token%20course%20cover%20with%20digital%20art%20and%20blockchain%20elements%2C%20professional%20educational%20design&image_size=square" alt="NFT开发与应用">
+                        <span class="course-badge intermediate">进阶</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>NFT开发与应用</h3>
+                        <p>学习NFT的创建、铸造和交易，以及在数字艺术、游戏等领域的应用</p>
+                        <div class="course-meta">
+                            <div class="course-instructor">
+                                <div class="instructor-avatar">陈</div>
+                                <span>陈设计师</span>
+                            </div>
+                            <div class="course-stats">
+                                <div class="course-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>654</span>
+                                </div>
+                                <div class="course-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.5</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price">¥199</span>
+                            <div class="course-actions">
+                                <a href="#" class="btn btn-primary btn-sm">立即购买</a>
+                                <a href="#" class="btn btn-outline btn-sm">收藏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 课程卡片 6 -->
+                <div class="course-card" data-level="advanced" data-topic="smart-contracts" data-duration="long">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=blockchain%20security%20course%20cover%20with%20hacking%20prevention%20and%20smart%20contract%20audit%20elements%2C%20professional%20educational%20design&image_size=square" alt="智能合约安全审计">
+                        <span class="course-badge advanced">高级</span>
+                    </div>
+                    <div class="course-content">
+                        <h3>智能合约安全审计</h3>
+                        <p>学习智能合约的常见漏洞和安全审计方法，成为区块链安全专家</p>
+                        <div class="course-meta">
+                            <div class="course-instructor">
+                                <div class="instructor-avatar">赵</div>
+                                <span>赵安全专家</span>
+                            </div>
+                            <div class="course-stats">
+                                <div class="course-stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>321</span>
+                                </div>
+                                <div class="course-stat">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-price">
+                            <span class="price">¥499</span>
+                            <div class="course-actions">
+                                <a href="#" class="btn btn-primary btn-sm">立即购买</a>
+                                <a href="#" class="btn btn-outline btn-sm">收藏</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 分页 -->
+            <div class="pagination">
+                <button disabled>&lt;</button>
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+                <button>5</button>
+                <button>&gt;</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>BlockLearn</h4>
+                    <p>专业的区块链学习平台，致力于为学习者提供高质量的区块链教育资源</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="courses.html">课程中心</a></li>
+                        <li><a href="resources.html">资源中心</a></li>
+                        <li><a href="community.html">社区互动</a></li>
+                        <li><a href="profile.html">个人中心</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>联系我们</h4>
+                    <ul>
+                        <li>邮箱：contact@blocklearn.com</li>
+                        <li>电话：400-123-4567</li>
+                        <li>地址：北京市海淀区中关村大街1号</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>订阅更新</h4>
+                    <p>订阅我们的 newsletters，获取最新的课程和行业动态</p>
+                    <form class="footer-subscribe">
+                        <input type="email" placeholder="输入您的邮箱">
+                        <button type="submit" class="btn btn-primary">订阅</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 BlockLearn. 保留所有权利</p>
+                <ul class="footer-links">
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                    <li><a href="#">Cookie政策</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // 课程筛选功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterOptions = document.querySelectorAll('.filter-option');
+            const courseCards = document.querySelectorAll('.course-card');
+            const clearFiltersBtn = document.querySelector('.clear-filters button');
+            const searchInput = document.querySelector('.search-box input');
+            
+            // 筛选选项点击事件
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const parent = this.parentElement;
+                    const siblings = parent.querySelectorAll('.filter-option');
+                    siblings.forEach(sibling => sibling.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    filterCourses();
+                });
+            });
+            
+            // 搜索框输入事件
+            searchInput.addEventListener('input', filterCourses);
+            
+            // 重置筛选条件
+            clearFiltersBtn.addEventListener('click', function() {
+                const allOptions = document.querySelectorAll('.filter-option');
+                allOptions.forEach(option => {
+                    if (option.dataset.filter === 'all') {
+                        option.classList.add('active');
+                    } else {
+                        option.classList.remove('active');
+                    }
+                });
+                
+                searchInput.value = '';
+                filterCourses();
+            });
+            
+            // 筛选课程函数
+            function filterCourses() {
+                const levelFilter = document.querySelector('.filter-group:nth-child(1) .filter-option.active').dataset.filter;
+                const topicFilter = document.querySelector('.filter-group:nth-child(2) .filter-option.active').dataset.filter;
+                const durationFilter = document.querySelector('.filter-group:nth-child(3) .filter-option.active').dataset.filter;
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                let visibleCount = 0;
+                
+                courseCards.forEach(card => {
+                    const level = card.dataset.level;
+                    const topic = card.dataset.topic;
+                    const duration = card.dataset.duration;
+                    const title = card.querySelector('h3').textContent.toLowerCase();
+                    const description = card.querySelector('p').textContent.toLowerCase();
+                    
+                    const levelMatch = levelFilter === 'all' || level === levelFilter;
+                    const topicMatch = topicFilter === 'all' || topic === topicFilter;
+                    const durationMatch = durationFilter === 'all' || duration === durationFilter;
+                    const searchMatch = searchTerm === '' || title.includes(searchTerm) || description.includes(searchTerm);
+                    
+                    if (levelMatch && topicMatch && durationMatch && searchMatch) {
+                        card.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // 更新课程数量
+                const coursesCount = document.querySelector('.courses-count strong');
+                coursesCount.textContent = visibleCount;
+            }
+            
+            // 分页功能
+            const paginationButtons = document.querySelectorAll('.pagination button');
+            paginationButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    
+                    const siblings = this.parentElement.querySelectorAll('button');
+                    siblings.forEach(sibling => sibling.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 这里可以添加分页逻辑
+                });
+            });
+            
+            // 排序功能
+            const sortSelect = document.getElementById('sort');
+            sortSelect.addEventListener('change', function() {
+                const sortValue = this.value;
+                // 这里可以添加排序逻辑
+            });
+        });
+    </script>
+</body>
+</html>

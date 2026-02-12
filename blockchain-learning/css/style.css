@@ -1,0 +1,676 @@
+:root {
+    --primary-color: #3b82f6;
+    --secondary-color: #8b5cf6;
+    --dark-color: #1e293b;
+    --light-color: #f8fafc;
+    --gray-color: #64748b;
+    --light-gray: #e2e8f0;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    background-color: var(--light-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* 按钮样式 */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+    border: none;
+    font-size: 16px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow);
+}
+
+.btn-large {
+    padding: 14px 28px;
+    font-size: 18px;
+}
+
+/* 导航栏样式 */
+.navbar {
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.navbar-brand h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 30px;
+}
+
+.navbar-menu li a {
+    text-decoration: none;
+    color: var(--dark-color);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.navbar-menu li a:hover,
+.navbar-menu li a.active {
+    color: var(--primary-color);
+}
+
+.navbar-auth {
+    display: flex;
+    gap: 10px;
+}
+
+/* Hero区域样式 */
+.hero {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    padding: 100px 0;
+}
+
+.hero .container {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-content h2 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    color: var(--dark-color);
+}
+
+.hero-content p {
+    font-size: 18px;
+    color: var(--gray-color);
+    margin-bottom: 30px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.hero-visual {
+    flex: 1;
+}
+
+.hero-visual img {
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+/* 课程分类样式 */
+.course-categories {
+    padding: 100px 0;
+}
+
+.course-categories h3 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--dark-color);
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.category-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    text-align: center;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    text-decoration: none;
+    color: var(--dark-color);
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.category-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.category-card h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.category-card p {
+    color: var(--gray-color);
+    font-size: 14px;
+}
+
+/* 热门课程样式 */
+.popular-courses {
+    padding: 100px 0;
+    background-color: #f8fafc;
+}
+
+.popular-courses h3 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--dark-color);
+}
+
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.course-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.course-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.course-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.course-card:hover .course-image img {
+    transform: scale(1.05);
+}
+
+.course-content {
+    padding: 20px;
+}
+
+.course-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.course-badge:nth-of-type(1) {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.course-badge:nth-of-type(2) {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.course-badge:nth-of-type(3) {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.course-card h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.course-card p {
+    color: var(--gray-color);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.course-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--gray-color);
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* 最新动态样式 */
+.latest-news {
+    padding: 100px 0;
+}
+
+.latest-news h3 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--dark-color);
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.news-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    padding: 30px;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.news-date {
+    font-size: 14px;
+    color: var(--gray-color);
+    margin-bottom: 10px;
+}
+
+.news-card h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.news-card p {
+    color: var(--gray-color);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.news-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.news-link:hover {
+    text-decoration: underline;
+}
+
+/* 学习路径样式 */
+.learning-path {
+    padding: 100px 0;
+    background-color: #f8fafc;
+}
+
+.learning-path h3 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+    color: var(--dark-color);
+}
+
+.path-steps {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 50px;
+}
+
+.path-connector {
+    flex: 1;
+    height: 2px;
+    background-color: var(--light-gray);
+    position: relative;
+}
+
+.path-connector::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+}
+
+.path-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 auto 20px;
+    box-shadow: var(--box-shadow);
+}
+
+.path-step h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.path-step p {
+    color: var(--gray-color);
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.step-link {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.step-link:hover {
+    text-decoration: underline;
+}
+
+/* 页脚样式 */
+.footer {
+    background-color: var(--dark-color);
+    color: white;
+    padding: 100px 0 50px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 50px;
+    margin-bottom: 50px;
+}
+
+.footer-column h4 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.footer-column p {
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.footer-social a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-social a:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    text-decoration: none;
+    color: #94a3b8;
+    transition: var(--transition);
+}
+
+.footer-column ul li a:hover {
+    color: white;
+}
+
+.footer-subscribe {
+    display: flex;
+    gap: 10px;
+}
+
+.footer-subscribe input {
+    flex: 1;
+    padding: 10px 15px;
+    border-radius: var(--border-radius);
+    border: none;
+    font-size: 14px;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-bottom p {
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+.footer-links li a {
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.footer-links li a:hover {
+    color: white;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .hero .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .hero-content h2 {
+        font-size: 36px;
+    }
+    
+    .path-steps {
+        flex-direction: column;
+        gap: 40px;
+        padding: 0;
+    }
+    
+    .path-connector {
+        width: 2px;
+        height: 50px;
+    }
+    
+    .path-connector::before {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar .container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px;
+    }
+    
+    .navbar-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    .hero {
+        padding: 60px 0;
+    }
+    
+    .hero-content h2 {
+        font-size: 28px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .course-categories,
+    .popular-courses,
+    .latest-news,
+    .learning-path,
+    .footer {
+        padding: 60px 0;
+    }
+    
+    .course-categories h3,
+    .popular-courses h3,
+    .latest-news h3,
+    .learning-path h3 {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .footer-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .categories-grid,
+    .courses-grid,
+    .news-grid,
+    .footer-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .hero-content h2 {
+        font-size: 24px;
+    }
+    
+    .btn-large {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+    
+    .footer-subscribe {
+        flex-direction: column;
+    }
+}

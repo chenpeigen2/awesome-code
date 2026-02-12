@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>区块链学习平台 - 开启区块链技术之旅</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>BlockLearn</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="courses.html">课程中心</a></li>
+                <li><a href="resources.html">资源中心</a></li>
+                <li><a href="community.html">社区互动</a></li>
+                <li><a href="profile.html">个人中心</a></li>
+            </ul>
+            <div class="navbar-auth">
+                <a href="#" class="btn btn-outline">登录</a>
+                <a href="#" class="btn btn-primary">注册</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero区域 -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h2>开启区块链学习之旅</h2>
+                <p>从基础概念到高级应用，系统化学习区块链技术，成为区块链领域的专业人才</p>
+                <div class="hero-buttons">
+                    <a href="courses.html" class="btn btn-primary btn-large">开始学习</a>
+                    <a href="#learning-path" class="btn btn-outline btn-large">查看学习路径</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=blockchain%20technology%20visualization%20with%20connected%20blocks%20and%20cryptocurrency%20symbols%2C%20modern%20digital%20art%2C%20blue%20and%20purple%20color%20scheme&image_size=landscape_16_9" alt="区块链技术可视化">
+            </div>
+        </div>
+    </section>
+
+    <!-- 课程分类导航 -->
+    <section class="course-categories">
+        <div class="container">
+            <h3>课程分类</h3>
+            <div class="categories-grid">
+                <a href="#" class="category-card">
+                    <div class="category-icon">📚</div>
+                    <h4>基础概念</h4>
+                    <p>了解区块链的基本原理和核心概念</p>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">🔐</div>
+                    <h4>密码学</h4>
+                    <p>学习区块链背后的密码学原理</p>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">📝</div>
+                    <h4>智能合约</h4>
+                    <p>掌握智能合约的开发和部署</p>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">💱</div>
+                    <h4>DeFi</h4>
+                    <p>探索去中心化金融的应用和机制</p>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">🎨</div>
+                    <h4>NFT</h4>
+                    <p>了解非同质化代币的创建和交易</p>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">🔗</div>
+                    <h4>跨链技术</h4>
+                    <p>学习不同区块链之间的互操作性</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 热门课程 -->
+    <section class="popular-courses">
+        <div class="container">
+            <h3>热门课程</h3>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=blockchain%20basics%20course%20cover%20with%20digital%20blocks%20and%20cryptocurrency%20symbols%2C%20professional%20educational%20design&image_size=square" alt="区块链基础课程">
+                    </div>
+                    <div class="course-content">
+                        <div class="course-badge">入门</div>
+                        <h4>区块链基础原理</h4>
+                        <p>从分布式账本到共识机制，全面了解区块链的核心原理</p>
+                        <div class="course-meta">
+                            <span class="course-students">👥 1,245 人学习</span>
+                            <span class="course-rating">⭐ 4.9</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=ethereum%20smart%20contract%20course%20cover%20with%20code%20and%20blockchain%20visualization%2C%20professional%20educational%20design&image_size=square" alt="以太坊智能合约开发">
+                    </div>
+                    <div class="course-content">
+                        <div class="course-badge">进阶</div>
+                        <h4>以太坊智能合约开发</h4>
+                        <p>使用Solidity语言开发智能合约，部署到以太坊网络</p>
+                        <div class="course-meta">
+                            <span class="course-students">👥 876 人学习</span>
+                            <span class="course-rating">⭐ 4.8</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=defi%20decentralized%20finance%20course%20cover%20with%20financial%20graphics%20and%20blockchain%20elements%2C%20professional%20educational%20design&image_size=square" alt="DeFi去中心化金融">
+                    </div>
+                    <div class="course-content">
+                        <div class="course-badge">高级</div>
+                        <h4>DeFi去中心化金融</h4>
+                        <p>深入了解DeFi协议的工作原理和开发方法</p>
+                        <div class="course-meta">
+                            <span class="course-students">👥 532 人学习</span>
+                            <span class="course-rating">⭐ 4.7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center">
+                <a href="courses.html" class="btn btn-outline">查看全部课程</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 最新动态 -->
+    <section class="latest-news">
+        <div class="container">
+            <h3>最新动态</h3>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-date">2026-02-01</div>
+                    <h4>以太坊2.0升级完成，质押量突破4000万ETH</h4>
+                    <p>以太坊网络成功完成Sharding升级，网络性能大幅提升，质押量创历史新高</p>
+                    <a href="#" class="news-link">阅读更多 →</a>
+                </div>
+                <div class="news-card">
+                    <div class="news-date">2026-01-28</div>
+                    <h4>比特币价格突破10万美元，机构投资持续增加</h4>
+                    <p>比特币价格在机构资金流入的推动下，首次突破10万美元大关</p>
+                    <a href="#" class="news-link">阅读更多 →</a>
+                </div>
+                <div class="news-card">
+                    <div class="news-date">2026-01-25</div>
+                    <h4>Web3开发者大会将于3月在上海举办</h4>
+                    <p>2026年Web3开发者大会将在上海举行，汇聚全球区块链技术专家</p>
+                    <a href="#" class="news-link">阅读更多 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习路径 -->
+    <section class="learning-path" id="learning-path">
+        <div class="container">
+            <h3>学习路径</h3>
+            <div class="path-steps">
+                <div class="path-step">
+                    <div class="step-number">1</div>
+                    <h4>区块链基础</h4>
+                    <p>了解区块链的基本概念、工作原理和核心特性</p>
+                    <a href="#" class="step-link">开始学习 →</a>
+                </div>
+                <div class="path-connector"></div>
+                <div class="path-step">
+                    <div class="step-number">2</div>
+                    <h4>密码学基础</h4>
+                    <p>学习哈希函数、数字签名、非对称加密等密码学知识</p>
+                    <a href="#" class="step-link">开始学习 →</a>
+                </div>
+                <div class="path-connector"></div>
+                <div class="path-step">
+                    <div class="step-number">3</div>
+                    <h4>智能合约开发</h4>
+                    <p>掌握Solidity语言和智能合约的开发部署</p>
+                    <a href="#" class="step-link">开始学习 →</a>
+                </div>
+                <div class="path-connector"></div>
+                <div class="path-step">
+                    <div class="step-number">4</div>
+                    <h4>区块链应用开发</h4>
+                    <p>学习DApp开发、DeFi应用和NFT项目构建</p>
+                    <a href="#" class="step-link">开始学习 →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>BlockLearn</h4>
+                    <p>专业的区块链学习平台，致力于为学习者提供高质量的区块链教育资源</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="courses.html">课程中心</a></li>
+                        <li><a href="resources.html">资源中心</a></li>
+                        <li><a href="community.html">社区互动</a></li>
+                        <li><a href="profile.html">个人中心</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>联系我们</h4>
+                    <ul>
+                        <li>邮箱：contact@blocklearn.com</li>
+                        <li>电话：400-123-4567</li>
+                        <li>地址：北京市海淀区中关村大街1号</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>订阅更新</h4>
+                    <p>订阅我们的 newsletters，获取最新的课程和行业动态</p>
+                    <form class="footer-subscribe">
+                        <input type="email" placeholder="输入您的邮箱">
+                        <button type="submit" class="btn btn-primary">订阅</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 BlockLearn. 保留所有权利</p>
+                <ul class="footer-links">
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                    <li><a href="#">Cookie政策</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

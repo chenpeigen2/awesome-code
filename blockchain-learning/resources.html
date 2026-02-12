@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>资源中心 - 区块链学习平台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 资源中心页面特有样式 */
+        .resources-header {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .resources-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .resources-header p {
+            font-size: 18px;
+            color: var(--gray-color);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .resources-nav {
+            padding: 30px 0;
+            background-color: white;
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky;
+            top: 80px;
+            z-index: 900;
+        }
+        
+        .resources-nav .container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .resources-nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .resources-nav li a {
+            text-decoration: none;
+            color: var(--gray-color);
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .resources-nav li a:hover,
+        .resources-nav li a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .resources-section {
+            padding: 60px 0;
+        }
+        
+        .resources-section:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-header h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .section-header p {
+            font-size: 16px;
+            color: var(--gray-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .resource-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .resource-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .resource-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .resource-header h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .resource-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .resource-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .resource-size {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .resource-content {
+            padding: 20px;
+        }
+        
+        .resource-content p {
+            font-size: 14px;
+            color: var(--gray-color);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .resource-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .tool-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .tool-icon {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .tool-header h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .tool-version {
+            font-size: 14px;
+            color: var(--gray-color);
+            background-color: var(--light-gray);
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
+        }
+        
+        .tool-content {
+            padding: 20px;
+            flex: 1;
+        }
+        
+        .tool-content p {
+            font-size: 14px;
+            color: var(--gray-color);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .tool-platforms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .platform-tag {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            background-color: var(--light-gray);
+            color: var(--gray-color);
+        }
+        
+        .tool-actions {
+            display: flex;
+            gap: 10px;
+            padding: 20px;
+            border-top: 1px solid var(--light-gray);
+            background-color: #f8fafc;
+        }
+        
+        .material-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .material-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .material-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        
+        .material-card:hover .material-image img {
+            transform: scale(1.05);
+        }
+        
+        .material-content {
+            padding: 20px;
+        }
+        
+        .material-content h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .material-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .material-category {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            background-color: var(--light-gray);
+            color: var(--gray-color);
+        }
+        
+        .material-content p {
+            font-size: 14px;
+            color: var(--gray-color);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .material-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .resources-header h2 {
+                font-size: 28px;
+            }
+            
+            .resources-nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .resources-nav li a {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .section-header h3 {
+                font-size: 24px;
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>BlockLearn</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="courses.html">课程中心</a></li>
+                <li><a href="resources.html" class="active">资源中心</a></li>
+                <li><a href="community.html">社区互动</a></li>
+                <li><a href="profile.html">个人中心</a></li>
+            </ul>
+            <div class="navbar-auth">
+                <a href="#" class="btn btn-outline">登录</a>
+                <a href="#" class="btn btn-primary">注册</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 资源中心头部 -->
+    <section class="resources-header">
+        <div class="container">
+            <h2>资源中心</h2>
+            <p>探索丰富的区块链技术文档、开发工具和学习资料，助力您的区块链学习之旅</p>
+        </div>
+    </section>
+
+    <!-- 资源导航 -->
+    <nav class="resources-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#documentation" class="active">技术文档</a></li>
+                <li><a href="#tools">开发工具</a></li>
+                <li><a href="#materials">学习资料</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 技术文档 -->
+    <section class="resources-section" id="documentation">
+        <div class="container">
+            <div class="section-header">
+                <h3>技术文档</h3>
+                <p>浏览区块链相关的白皮书、技术规范和开发文档，深入了解区块链技术的底层原理和实现细节</p>
+            </div>
+            
+            <div class="resources-grid">
+                <!-- 文档卡片 1 -->
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">📄</div>
+                        <h4>比特币白皮书</h4>
+                        <div class="resource-meta">
+                            <div class="resource-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2008-10-31</span>
+                            </div>
+                            <div class="resource-size">
+                                <i class="far fa-file-pdf"></i>
+                                <span>953 KB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resource-content">
+                        <p>中本聪发表的比特币白皮书，详细阐述了比特币的设计原理和实现方案，是区块链技术的奠基之作。</p>
+                        <div class="resource-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载 PDF</a>
+                            <a href="#" class="btn btn-outline btn-sm">在线阅读</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 文档卡片 2 -->
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">📄</div>
+                        <h4>以太坊黄皮书</h4>
+                        <div class="resource-meta">
+                            <div class="resource-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2014-11-12</span>
+                            </div>
+                            <div class="resource-size">
+                                <i class="far fa-file-pdf"></i>
+                                <span>1.2 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resource-content">
+                        <p>以太坊的技术规范文档，详细描述了以太坊虚拟机（EVM）的工作原理和智能合约的执行机制。</p>
+                        <div class="resource-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载 PDF</a>
+                            <a href="#" class="btn btn-outline btn-sm">在线阅读</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 文档卡片 3 -->
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">📄</div>
+                        <h4>Solana技术白皮书</h4>
+                        <div class="resource-meta">
+                            <div class="resource-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2020-03-16</span>
+                            </div>
+                            <div class="resource-size">
+                                <i class="far fa-file-pdf"></i>
+                                <span>876 KB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resource-content">
+                        <p>Solana的技术白皮书，介绍了Solana的高吞吐量设计和Proof of History共识机制。</p>
+                        <div class="resource-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载 PDF</a>
+                            <a href="#" class="btn btn-outline btn-sm">在线阅读</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 文档卡片 4 -->
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">📄</div>
+                        <h4>Polkadot技术文档</h4>
+                        <div class="resource-meta">
+                            <div class="resource-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2021-05-26</span>
+                            </div>
+                            <div class="resource-size">
+                                <i class="far fa-file-pdf"></i>
+                                <span>1.5 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resource-content">
+                        <p>Polkadot的技术文档，详细介绍了Polkadot的跨链架构和平行链设计。</p>
+                        <div class="resource-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载 PDF</a>
+                            <a href="#" class="btn btn-outline btn-sm">在线阅读</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 文档卡片 5 -->
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">📄</div>
+                        <h4>Web3.0技术指南</h4>
+                        <div class="resource-meta">
+                            <div class="resource-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2022-09-15</span>
+                            </div>
+                            <div class="resource-size">
+                                <i class="far fa-file-pdf"></i>
+                                <span>2.1 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resource-content">
+                        <p>全面介绍Web3.0技术栈的指南，包括区块链、智能合约、去中心化存储等核心技术。</p>
+                        <div class="resource-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载 PDF</a>
+                            <a href="#" class="btn btn-outline btn-sm">在线阅读</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 文档卡片 6 -->
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <div class="resource-icon">📄</div>
+                        <h4>DeFi协议安全审计指南</h4>
+                        <div class="resource-meta">
+                            <div class="resource-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2023-03-10</span>
+                            </div>
+                            <div class="resource-size">
+                                <i class="far fa-file-pdf"></i>
+                                <span>1.8 MB</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="resource-content">
+                        <p>详细介绍DeFi协议安全审计的方法和工具，帮助开发者识别和修复智能合约中的安全漏洞。</p>
+                        <div class="resource-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载 PDF</a>
+                            <a href="#" class="btn btn-outline btn-sm">在线阅读</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 开发工具 -->
+    <section class="resources-section" id="tools">
+        <div class="container">
+            <div class="section-header">
+                <h3>开发工具</h3>
+                <p>下载区块链开发所需的工具和软件，包括钱包应用、开发框架和测试网络工具</p>
+            </div>
+            
+            <div class="resources-grid">
+                <!-- 工具卡片 1 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔧</div>
+                        <h4>MetaMask</h4>
+                        <span class="tool-version">v10.28.1</span>
+                    </div>
+                    <div class="tool-content">
+                        <p>最流行的以太坊钱包浏览器扩展，支持以太坊主网和测试网络，可用于管理数字资产和与DApp交互。</p>
+                        <div class="tool-platforms">
+                            <span class="platform-tag">Chrome</span>
+                            <span class="platform-tag">Firefox</span>
+                            <span class="platform-tag">Safari</span>
+                            <span class="platform-tag">Edge</span>
+                        </div>
+                    </div>
+                    <div class="tool-actions">
+                        <a href="#" class="btn btn-primary btn-sm">下载</a>
+                        <a href="#" class="btn btn-outline btn-sm">文档</a>
+                    </div>
+                </div>
+                
+                <!-- 工具卡片 2 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔧</div>
+                        <h4>Hardhat</h4>
+                        <span class="tool-version">v2.17.0</span>
+                    </div>
+                    <div class="tool-content">
+                        <p>以太坊开发环境和测试框架，提供智能合约编译、部署和测试功能，支持TypeScript和插件系统。</p>
+                        <div class="tool-platforms">
+                            <span class="platform-tag">Windows</span>
+                            <span class="platform-tag">macOS</span>
+                            <span class="platform-tag">Linux</span>
+                        </div>
+                    </div>
+                    <div class="tool-actions">
+                        <a href="#" class="btn btn-primary btn-sm">安装</a>
+                        <a href="#" class="btn btn-outline btn-sm">文档</a>
+                    </div>
+                </div>
+                
+                <!-- 工具卡片 3 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔧</div>
+                        <h4>Truffle</h4>
+                        <span class="tool-version">v5.11.0</span>
+                    </div>
+                    <div class="tool-content">
+                        <p>以太坊开发框架，提供智能合约编译、部署和测试功能，支持迁移管理和交互式控制台。</p>
+                        <div class="tool-platforms">
+                            <span class="platform-tag">Windows</span>
+                            <span class="platform-tag">macOS</span>
+                            <span class="platform-tag">Linux</span>
+                        </div>
+                    </div>
+                    <div class="tool-actions">
+                        <a href="#" class="btn btn-primary btn-sm">安装</a>
+                        <a href="#" class="btn btn-outline btn-sm">文档</a>
+                    </div>
+                </div>
+                
+                <!-- 工具卡片 4 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔧</div>
+                        <h4>Remix IDE</h4>
+                        <span class="tool-version">v0.28.0</span>
+                    </div>
+                    <div class="tool-content">
+                        <p>基于浏览器的Solidity智能合约开发环境，提供代码编辑、编译、部署和测试功能，适合快速原型开发。</p>
+                        <div class="tool-platforms">
+                            <span class="platform-tag">Web</span>
+                        </div>
+                    </div>
+                    <div class="tool-actions">
+                        <a href="#" class="btn btn-primary btn-sm">访问</a>
+                        <a href="#" class="btn btn-outline btn-sm">文档</a>
+                    </div>
+                </div>
+                
+                <!-- 工具卡片 5 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔧</div>
+                        <h4>Ganache</h4>
+                        <span class="tool-version">v2.7.1</span>
+                    </div>
+                    <div class="tool-content">
+                        <p>本地以太坊区块链模拟器，用于开发和测试智能合约，提供快速的交易确认和账户管理功能。</p>
+                        <div class="tool-platforms">
+                            <span class="platform-tag">Windows</span>
+                            <span class="platform-tag">macOS</span>
+                            <span class="platform-tag">Linux</span>
+                        </div>
+                    </div>
+                    <div class="tool-actions">
+                        <a href="#" class="btn btn-primary btn-sm">下载</a>
+                        <a href="#" class="btn btn-outline btn-sm">文档</a>
+                    </div>
+                </div>
+                
+                <!-- 工具卡片 6 -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">🔧</div>
+                        <h4>Substrate</h4>
+                        <span class="tool-version">v3.0.0</span>
+                    </div>
+                    <div class="tool-content">
+                        <p>基于Rust的区块链开发框架，由Parity Technologies开发，用于构建自定义区块链和Polkadot平行链。</p>
+                        <div class="tool-platforms">
+                            <span class="platform-tag">Windows</span>
+                            <span class="platform-tag">macOS</span>
+                            <span class="platform-tag">Linux</span>
+                        </div>
+                    </div>
+                    <div class="tool-actions">
+                        <a href="#" class="btn btn-primary btn-sm">安装</a>
+                        <a href="#" class="btn btn-outline btn-sm">文档</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 学习资料 -->
+    <section class="resources-section" id="materials">
+        <div class="container">
+            <div class="section-header">
+                <h3>学习资料</h3>
+                <p>浏览区块链相关的电子书、幻灯片、代码示例和习题集，辅助您的区块链学习之旅</p>
+            </div>
+            
+            <div class="resources-grid">
+                <!-- 资料卡片 1 -->
+                <div class="material-card">
+                    <div class="material-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=blockchain%20ebook%20cover%20with%20digital%20blocks%20and%20cryptocurrency%20concepts%2C%20professional%20educational%20design%2C%20blue%20and%20purple%20color%20scheme&image_size=square" alt="区块链技术入门">
+                    </div>
+                    <div class="material-content">
+                        <h4>区块链技术入门</h4>
+                        <div class="material-meta">
+                            <span class="material-category">电子书</span>
+                            <span>2023-06-15</span>
+                        </div>
+                        <p>全面介绍区块链技术的基础知识，包括分布式账本、共识机制、密码学原理等核心概念，适合区块链初学者阅读。</p>
+                        <div class="material-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载</a>
+                            <a href="#" class="btn btn-outline btn-sm">预览</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 资料卡片 2 -->
+                <div class="material-card">
+                    <div class="material-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=smart%20contract%20development%20slides%20cover%20with%20code%20and%20blockchain%20visualization%2C%20professional%20educational%20design&image_size=square" alt="智能合约开发实战">
+                    </div>
+                    <div class="material-content">
+                        <h4>智能合约开发实战</h4>
+                        <div class="material-meta">
+                            <span class="material-category">幻灯片</span>
+                            <span>2023-08-22</span>
+                        </div>
+                        <p>详细介绍Solidity智能合约开发的实战技巧，包括合约编写、测试、部署和安全审计等内容，附带完整的代码示例。</p>
+                        <div class="material-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载</a>
+                            <a href="#" class="btn btn-outline btn-sm">预览</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 资料卡片 3 -->
+                <div class="material-card">
+                    <div class="material-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=defi%20decentralized%20finance%20study%20guide%20cover%20with%20financial%20graphics%20and%20blockchain%20elements%2C%20professional%20educational%20design&image_size=square" alt="DeFi开发指南">
+                    </div>
+                    <div class="material-content">
+                        <h4>DeFi开发指南</h4>
+                        <div class="material-meta">
+                            <span class="material-category">电子书</span>
+                            <span>2023-10-05</span>
+                        </div>
+                        <p>全面介绍去中心化金融（DeFi）的开发技术，包括借贷协议、DEX、流动性挖矿等核心DeFi应用的实现原理。</p>
+                        <div class="material-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载</a>
+                            <a href="#" class="btn btn-outline btn-sm">预览</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 资料卡片 4 -->
+                <div class="material-card">
+                    <div class="material-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=blockchain%20security%20exercise%20book%20cover%20with%20hacking%20prevention%20and%20smart%20contract%20audit%20elements%2C%20professional%20educational%20design&image_size=square" alt="区块链安全习题集">
+                    </div>
+                    <div class="material-content">
+                        <h4>区块链安全习题集</h4>
+                        <div class="material-meta">
+                            <span class="material-category">习题集</span>
+                            <span>2023-11-18</span>
+                        </div>
+                        <p>收集了大量区块链安全相关的习题和案例分析，包括智能合约漏洞、私钥管理、共识攻击等安全问题的解决方案。</p>
+                        <div class="material-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载</a>
+                            <a href="#" class="btn btn-outline btn-sm">预览</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 资料卡片 5 -->
+                <div class="material-card">
+                    <div class="material-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=NFT%20non-fungible%20token%20development%20guide%20cover%20with%20digital%20art%20and%20blockchain%20elements%2C%20professional%20educational%20design&image_size=square" alt="NFT开发实战">
+                    </div>
+                    <div class="material-content">
+                        <h4>NFT开发实战</h4>
+                        <div class="material-meta">
+                            <span class="material-category">电子书</span>
+                            <span>2024-01-03</span>
+                        </div>
+                        <p>详细介绍NFT的创建、铸造和交易技术，包括ERC-721和ERC-1155标准的实现，以及NFT市场的开发和部署。</p>
+                        <div class="material-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载</a>
+                            <a href="#" class="btn btn-outline btn-sm">预览</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 资料卡片 6 -->
+                <div class="material-card">
+                    <div class="material-image">
+                        <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=blockchain%20code%20examples%20book%20cover%20with%20programming%20code%20and%20blockchain%20visualization%2C%20professional%20educational%20design&image_size=square" alt="区块链代码示例集">
+                    </div>
+                    <div class="material-content">
+                        <h4>区块链代码示例集</h4>
+                        <div class="material-meta">
+                            <span class="material-category">代码示例</span>
+                            <span>2024-02-15</span>
+                        </div>
+                        <p>收集了大量区块链开发的实用代码示例，包括智能合约、DApp前端、后端API等，涵盖以太坊、Solana、Polkadot等主流区块链平台。</p>
+                        <div class="material-actions">
+                            <a href="#" class="btn btn-primary btn-sm">下载</a>
+                            <a href="#" class="btn btn-outline btn-sm">预览</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>BlockLearn</h4>
+                    <p>专业的区块链学习平台，致力于为学习者提供高质量的区块链教育资源</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="courses.html">课程中心</a></li>
+                        <li><a href="resources.html">资源中心</a></li>
+                        <li><a href="community.html">社区互动</a></li>
+                        <li><a href="profile.html">个人中心</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>联系我们</h4>
+                    <ul>
+                        <li>邮箱：contact@blocklearn.com</li>
+                        <li>电话：400-123-4567</li>
+                        <li>地址：北京市海淀区中关村大街1号</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>订阅更新</h4>
+                    <p>订阅我们的 newsletters，获取最新的课程和行业动态</p>
+                    <form class="footer-subscribe">
+                        <input type="email" placeholder="输入您的邮箱">
+                        <button type="submit" class="btn btn-primary">订阅</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 BlockLearn. 保留所有权利</p>
+                <ul class="footer-links">
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                    <li><a href="#">Cookie政策</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // 资源导航切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.resources-nav li a');
+            const sections = document.querySelectorAll('.resources-section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 更新导航链接状态
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 滚动到对应 section
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 120,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 滚动监听，更新导航状态
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY + 150;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        const sectionId = section.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

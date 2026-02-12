@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>社区互动 - 区块链学习平台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 社区互动页面特有样式 */
+        .community-header {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .community-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .community-header p {
+            font-size: 18px;
+            color: var(--gray-color);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .community-nav {
+            padding: 30px 0;
+            background-color: white;
+            border-bottom: 1px solid var(--light-gray);
+            position: sticky;
+            top: 80px;
+            z-index: 900;
+        }
+        
+        .community-nav .container {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .community-nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .community-nav li a {
+            text-decoration: none;
+            color: var(--gray-color);
+            font-weight: 500;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .community-nav li a:hover,
+        .community-nav li a.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .community-section {
+            padding: 60px 0;
+        }
+        
+        .community-section:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-header h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .section-header p {
+            font-size: 16px;
+            color: var(--gray-color);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .forum-container {
+            display: flex;
+            gap: 40px;
+        }
+        
+        .forum-main {
+            flex: 3;
+        }
+        
+        .forum-sidebar {
+            flex: 1;
+        }
+        
+        .forum-posts {
+            margin-bottom: 40px;
+        }
+        
+        .posts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .posts-header h4 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .post-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .post-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .post-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        
+        .post-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .author-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--light-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .post-content {
+            font-size: 14px;
+            color: var(--gray-color);
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .post-stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .post-tags {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .post-tag {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            background-color: var(--light-gray);
+            color: var(--gray-color);
+        }
+        
+        .sidebar-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .sidebar-card h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .sidebar-card ul {
+            list-style: none;
+        }
+        
+        .sidebar-card li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .sidebar-card li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .sidebar-card li a {
+            text-decoration: none;
+            color: var(--gray-color);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .sidebar-card li a:hover {
+            color: var(--primary-color);
+        }
+        
+        .sidebar-card li .count {
+            font-size: 12px;
+            color: var(--gray-color);
+            background-color: var(--light-gray);
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 5px;
+        }
+        
+        .ask-question {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .ask-question h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .ask-question p {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .question-card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+        
+        .question-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .question-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 10px;
+        }
+        
+        .question-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 14px;
+            color: var(--gray-color);
+            margin-bottom: 15px;
+        }
+        
+        .question-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+        
+        .question-stats .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        .event-calendar {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-header h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-nav button {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--light-gray);
+            border-radius: var(--border-radius);
+            background-color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-nav button:hover {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .calendar-day:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .calendar-day.today {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .calendar-day.event {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .event-list {
+            margin-top: 20px;
+        }
+        
+        .event-item {
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .event-date {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .event-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 5px;
+        }
+        
+        .event-location {
+            font-size: 14px;
+            color: var(--gray-color);
+        }
+        
+        /* 响应式调整 */
+        @media (max-width: 768px) {
+            .community-header h2 {
+                font-size: 28px;
+            }
+            
+            .community-nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+            
+            .community-nav li a {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .section-header h3 {
+                font-size: 24px;
+            }
+            
+            .forum-container {
+                flex-direction: column;
+            }
+            
+            .forum-sidebar {
+                order: -1;
+            }
+            
+            .questions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-grid {
+                gap: 5px;
+            }
+            
+            .calendar-day {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>BlockLearn</h1>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="courses.html">课程中心</a></li>
+                <li><a href="resources.html">资源中心</a></li>
+                <li><a href="community.html" class="active">社区互动</a></li>
+                <li><a href="profile.html">个人中心</a></li>
+            </ul>
+            <div class="navbar-auth">
+                <a href="#" class="btn btn-outline">登录</a>
+                <a href="#" class="btn btn-primary">注册</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 社区互动头部 -->
+    <section class="community-header">
+        <div class="container">
+            <h2>社区互动</h2>
+            <p>加入我们的区块链社区，与其他学习者交流经验，分享知识，共同成长</p>
+        </div>
+    </section>
+
+    <!-- 社区导航 -->
+    <nav class="community-nav">
+        <div class="container">
+            <ul>
+                <li><a href="#forum" class="active">论坛</a></li>
+                <li><a href="#questions">问答板块</a></li>
+                <li><a href="#events">活动日历</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 论坛 -->
+    <section class="community-section" id="forum">
+        <div class="container">
+            <div class="section-header">
+                <h3>论坛</h3>
+                <p>参与区块链相关的讨论，分享你的见解和经验，与社区成员交流学习心得</p>
+            </div>
+            
+            <div class="forum-container">
+                <div class="forum-main">
+                    <div class="forum-posts">
+                        <div class="posts-header">
+                            <h4>热门帖子</h4>
+                            <a href="#" class="btn btn-primary btn-sm">发布新帖</a>
+                        </div>
+                        
+                        <!-- 帖子卡片 1 -->
+                        <div class="post-card">
+                            <div class="post-header">
+                                <div>
+                                    <h5 class="post-title">如何安全地存储和管理比特币私钥？</h5>
+                                    <div class="post-meta">
+                                        <div class="post-author">
+                                            <div class="author-avatar">王</div>
+                                            <span>王小明</span>
+                                        </div>
+                                        <span>2026-01-30</span>
+                                        <span>2小时前</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>最近购买了一些比特币，但是对于如何安全地存储和管理私钥感到困惑。听说过硬件钱包、纸钱包等多种方式，想请教一下社区里的专家，哪种方式最安全可靠？另外，有没有什么最佳实践可以分享？</p>
+                            </div>
+                            <div class="post-footer">
+                                <div class="post-stats">
+                                    <div class="post-stat">
+                                        <i class="far fa-eye"></i>
+                                        <span>1,245</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-comment"></i>
+                                        <span>32</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-thumbs-up"></i>
+                                        <span>89</span>
+                                    </div>
+                                </div>
+                                <div class="post-tags">
+                                    <span class="post-tag">比特币</span>
+                                    <span class="post-tag">安全</span>
+                                    <span class="post-tag">私钥管理</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 帖子卡片 2 -->
+                        <div class="post-card">
+                            <div class="post-header">
+                                <div>
+                                    <h5 class="post-title">以太坊2.0升级后，验证者的收益如何计算？</h5>
+                                    <div class="post-meta">
+                                        <div class="post-author">
+                                            <div class="author-avatar">李</div>
+                                            <span>李华</span>
+                                        </div>
+                                        <span>2026-01-29</span>
+                                        <span>昨天</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>以太坊2.0升级已经完成，我想成为一名验证者，但是对于收益计算方式不是很清楚。请问验证者的收益由哪些部分组成？年化收益率大概是多少？有什么风险需要注意？</p>
+                            </div>
+                            <div class="post-footer">
+                                <div class="post-stats">
+                                    <div class="post-stat">
+                                        <i class="far fa-eye"></i>
+                                        <span>987</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-comment"></i>
+                                        <span>24</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-thumbs-up"></i>
+                                        <span>67</span>
+                                    </div>
+                                </div>
+                                <div class="post-tags">
+                                    <span class="post-tag">以太坊2.0</span>
+                                    <span class="post-tag">验证者</span>
+                                    <span class="post-tag">收益计算</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 帖子卡片 3 -->
+                        <div class="post-card">
+                            <div class="post-header">
+                                <div>
+                                    <h5 class="post-title">Solana与以太坊的性能对比分析</h5>
+                                    <div class="post-meta">
+                                        <div class="post-author">
+                                            <div class="author-avatar">张</div>
+                                            <span>张三</span>
+                                        </div>
+                                        <span>2026-01-28</span>
+                                        <span>2天前</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>最近在研究不同公链的性能差异，特别是Solana和以太坊。Solana的TPS确实很高，但是稳定性如何？以太坊的Layer 2解决方案又能带来多少性能提升？从开发者和用户的角度来看，哪个公链更有优势？</p>
+                            </div>
+                            <div class="post-footer">
+                                <div class="post-stats">
+                                    <div class="post-stat">
+                                        <i class="far fa-eye"></i>
+                                        <span>1,567</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-comment"></i>
+                                        <span>45</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-thumbs-up"></i>
+                                        <span>123</span>
+                                    </div>
+                                </div>
+                                <div class="post-tags">
+                                    <span class="post-tag">Solana</span>
+                                    <span class="post-tag">以太坊</span>
+                                    <span class="post-tag">性能对比</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="forum-posts">
+                        <div class="posts-header">
+                            <h4>最新帖子</h4>
+                        </div>
+                        
+                        <!-- 帖子卡片 4 -->
+                        <div class="post-card">
+                            <div class="post-header">
+                                <div>
+                                    <h5 class="post-title">DeFi协议的风险评估方法</h5>
+                                    <div class="post-meta">
+                                        <div class="post-author">
+                                            <div class="author-avatar">赵</div>
+                                            <span>赵六</span>
+                                        </div>
+                                        <span>2026-02-01</span>
+                                        <span>今天</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>随着DeFi的发展，各种协议层出不穷，但是风险也随之增加。如何评估一个DeFi协议的安全性和可靠性？有哪些指标和工具可以使用？希望社区里的专家能分享一些实用的风险评估方法。</p>
+                            </div>
+                            <div class="post-footer">
+                                <div class="post-stats">
+                                    <div class="post-stat">
+                                        <i class="far fa-eye"></i>
+                                        <span>456</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-comment"></i>
+                                        <span>12</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-thumbs-up"></i>
+                                        <span>34</span>
+                                    </div>
+                                </div>
+                                <div class="post-tags">
+                                    <span class="post-tag">DeFi</span>
+                                    <span class="post-tag">风险评估</span>
+                                    <span class="post-tag">安全</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 帖子卡片 5 -->
+                        <div class="post-card">
+                            <div class="post-header">
+                                <div>
+                                    <h5 class="post-title">NFT市场的现状与未来发展趋势</h5>
+                                    <div class="post-meta">
+                                        <div class="post-author">
+                                            <div class="author-avatar">孙</div>
+                                            <span>孙七</span>
+                                        </div>
+                                        <span>2026-02-01</span>
+                                        <span>今天</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post-content">
+                                <p>NFT市场经历了2021年的爆发和随后的调整，现在的市场状况如何？哪些领域的NFT应用最有前景？未来NFT技术会有哪些创新和发展？想听听大家的看法。</p>
+                            </div>
+                            <div class="post-footer">
+                                <div class="post-stats">
+                                    <div class="post-stat">
+                                        <i class="far fa-eye"></i>
+                                        <span>389</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-comment"></i>
+                                        <span>9</span>
+                                    </div>
+                                    <div class="post-stat">
+                                        <i class="far fa-thumbs-up"></i>
+                                        <span>27</span>
+                                    </div>
+                                </div>
+                                <div class="post-tags">
+                                    <span class="post-tag">NFT</span>
+                                    <span class="post-tag">市场分析</span>
+                                    <span class="post-tag">未来趋势</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="forum-sidebar">
+                    <div class="sidebar-card">
+                        <h4>论坛分类</h4>
+                        <ul>
+                            <li><a href="#">区块链技术 <span class="count">1,245</span></a></li>
+                            <li><a href="#">加密货币 <span class="count">987</span></a></li>
+                            <li><a href="#">DeFi <span class="count">765</span></a></li>
+                            <li><a href="#">NFT <span class="count">543</span></a></li>
+                            <li><a href="#">智能合约 <span class="count">432</span></a></li>
+                            <li><a href="#">挖矿与质押 <span class="count">321</span></a></li>
+                            <li><a href="#">行业动态 <span class="count">654</span></a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-card">
+                        <h4>活跃用户</h4>
+                        <ul>
+                            <li><a href="#">张教授 <span class="count">1,245</span></a></li>
+                            <li><a href="#">李工程师 <span class="count">987</span></a></li>
+                            <li><a href="#">王专家 <span class="count">765</span></a></li>
+                            <li><a href="#">刘教授 <span class="count">543</span></a></li>
+                            <li><a href="#">陈设计师 <span class="count">432</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 问答板块 -->
+    <section class="community-section" id="questions">
+        <div class="container">
+            <div class="section-header">
+                <h3>问答板块</h3>
+                <p>提出你的区块链相关问题，获取社区专家的解答，同时也可以帮助他人解决问题</p>
+            </div>
+            
+            <div class="ask-question">
+                <h4>有问题？随时提问</h4>
+                <p>我们的社区专家和热心成员会及时为你解答区块链相关的疑问</p>
+                <a href="#" class="btn btn-primary">提出问题</a>
+            </div>
+            
+            <div class="questions-grid">
+                <!-- 问题卡片 1 -->
+                <div class="question-card">
+                    <h5 class="question-title">以太坊智能合约中如何防止重入攻击？</h5>
+                    <div class="question-meta">
+                        <span>2026-01-30</span>
+                        <span>李小明</span>
+                    </div>
+                    <div class="question-stats">
+                        <div class="stat">
+                            <i class="far fa-eye"></i>
+                            <span>245</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-comment"></i>
+                            <span>5</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>12</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 问题卡片 2 -->
+                <div class="question-card">
+                    <h5 class="question-title">如何使用Hardhat部署智能合约到Polygon网络？</h5>
+                    <div class="question-meta">
+                        <span>2026-01-29</span>
+                        <span>张三</span>
+                    </div>
+                    <div class="question-stats">
+                        <div class="stat">
+                            <i class="far fa-eye"></i>
+                            <i class="far fa-eye"></i>
+                            <span>189</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-comment"></i>
+                            <span>3</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>8</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 问题卡片 3 -->
+                <div class="question-card">
+                    <h5 class="question-title">比特币的区块奖励什么时候会减半？</h5>
+                    <div class="question-meta">
+                        <span>2026-01-28</span>
+                        <span>王小红</span>
+                    </div>
+                    <div class="question-stats">
+                        <div class="stat">
+                            <i class="far fa-eye"></i>
+                            <span>345</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-comment"></i>
+                            <span>7</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>15</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 问题卡片 4 -->
+                <div class="question-card">
+                    <h5 class="question-title">Solana的Proof of History共识机制是如何工作的？</h5>
+                    <div class="question-meta">
+                        <span>2026-01-27</span>
+                        <span>李四</span>
+                    </div>
+                    <div class="question-stats">
+                        <div class="stat">
+                            <i class="far fa-eye"></i>
+                            <span>289</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-comment"></i>
+                            <span>4</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>10</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 问题卡片 5 -->
+                <div class="question-card">
+                    <h5 class="question-title">如何创建一个ERC-721标准的NFT？</h5>
+                    <div class="question-meta">
+                        <span>2026-01-26</span>
+                        <span>王五</span>
+                    </div>
+                    <div class="question-stats">
+                        <div class="stat">
+                            <i class="far fa-eye"></i>
+                            <span>312</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-comment"></i>
+                            <span>6</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>13</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 问题卡片 6 -->
+                <div class="question-card">
+                    <h5 class="question-title">Polkadot的平行链插槽拍卖是如何进行的？</h5>
+                    <div class="question-meta">
+                        <span>2026-01-25</span>
+                        <span>赵六</span>
+                    </div>
+                    <div class="question-stats">
+                        <div class="stat">
+                            <i class="far fa-eye"></i>
+                            <span>245</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-comment"></i>
+                            <span>3</span>
+                        </div>
+                        <div class="stat">
+                            <i class="far fa-thumbs-up"></i>
+                            <span>7</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 活动日历 -->
+    <section class="community-section" id="events">
+        <div class="container">
+            <div class="section-header">
+                <h3>活动日历</h3>
+                <p>了解即将举行的区块链相关活动，包括线上研讨会、线下会议和黑客松等</p>
+            </div>
+            
+            <div class="event-calendar">
+                <div class="calendar-header">
+                    <h4>2026年2月</h4>
+                    <div class="calendar-nav">
+                        <button>&lt;</button>
+                        <button>&gt;</button>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid">
+                    <div class="calendar-day">日</div>
+                    <div class="calendar-day">一</div>
+                    <div class="calendar-day">二</div>
+                    <div class="calendar-day">三</div>
+                    <div class="calendar-day">四</div>
+                    <div class="calendar-day">五</div>
+                    <div class="calendar-day">六</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day">31</div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day today">3</div>
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day event">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day">9</div>
+                    <div class="calendar-day">10</div>
+                    <div class="calendar-day">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day event">13</div>
+                    <div class="calendar-day">14</div>
+                    <div class="calendar-day">15</div>
+                    <div class="calendar-day">16</div>
+                    <div class="calendar-day">17</div>
+                    <div class="calendar-day">18</div>
+                    <div class="calendar-day">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day event">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                </div>
+                
+                <div class="event-list">
+                    <h4>本月活动</h4>
+                    <div class="event-item">
+                        <div class="event-date">2026-02-06</div>
+                        <div class="event-title">Web3开发者大会</div>
+                        <div class="event-location">上海国际会议中心</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date">2026-02-13</div>
+                        <div class="event-title">区块链安全研讨会</div>
+                        <div class="event-location">线上</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date">2026-02-21</div>
+                        <div class="event-title">DeFi创新黑客松</div>
+                        <div class="event-location">北京中关村</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>BlockLearn</h4>
+                    <p>专业的区块链学习平台，致力于为学习者提供高质量的区块链教育资源</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>快速链接</h4>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="courses.html">课程中心</a></li>
+                        <li><a href="resources.html">资源中心</a></li>
+                        <li><a href="community.html">社区互动</a></li>
+                        <li><a href="profile.html">个人中心</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>联系我们</h4>
+                    <ul>
+                        <li>邮箱：contact@blocklearn.com</li>
+                        <li>电话：400-123-4567</li>
+                        <li>地址：北京市海淀区中关村大街1号</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>订阅更新</h4>
+                    <p>订阅我们的 newsletters，获取最新的课程和行业动态</p>
+                    <form class="footer-subscribe">
+                        <input type="email" placeholder="输入您的邮箱">
+                        <button type="submit" class="btn btn-primary">订阅</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 BlockLearn. 保留所有权利</p>
+                <ul class="footer-links">
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">服务条款</a></li>
+                    <li><a href="#">Cookie政策</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // 社区导航切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.community-nav li a');
+            const sections = document.querySelectorAll('.community-section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 更新导航链接状态
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 滚动到对应 section
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 120,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // 滚动监听，更新导航状态
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY + 150;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        const sectionId = section.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
