@@ -39,9 +39,14 @@ if errorlevel 1 (
     echo 启动 Vite 开发服务器...
     start "Vite Dev Server" cmd /c "npm run dev"
     
-    REM 等待 Vite 服务器启动
+    REM 使用 wait-on 等待 Vite 服务器就绪
     echo 等待 Vite 服务器启动...
-    timeout /t 5 /nobreak >nul
+    call npx wait-on http://localhost:5173 -t 30000
+    if errorlevel 1 (
+        echo Vite 服务器启动超时！
+        pause
+        exit /b 1
+    )
 ) else (
     echo 端口 5173 已被占用，尝试使用现有服务...
 )
@@ -52,4 +57,7 @@ call npx electron .
 
 echo.
 echo 应用已关闭
+
+REM 提示用户关闭 Vite 服务器
+echo 请手动关闭 Vite Dev Server 窗口（如果已打开）
 pause

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Music Player Electron 启动脚本 (Linux/macOS)
+# Music Player Electron 启动脚本
 
 # 获取脚本所在目录
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -10,7 +10,7 @@ cd "$SCRIPT_DIR"
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
 echo -e "${GREEN}======================================${NC}"
 echo -e "${GREEN}    Music Player - Electron App${NC}"
@@ -34,8 +34,25 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-# 检查是否已有 Vite 服务运行
-if lsof -i :5173 > /dev/null 2>&1; then
+# 检查端口 5173 是否被占用
+check_port() {
+    if command -v lsof &> /dev/null; then
+        lsof -i :5173 > /dev/null 2>&1
+        return $?
+    elif command -v ss &> /dev/null; then
+        ss -tuln | grep -q ":5173 "
+        return $?
+    elif command -v netstat &> /dev/null; then
+        netstat -tuln | grep -q ":5173 "
+        return $?
+    else
+        return 1
+    fi
+}
+
+VITE_PID=""
+
+if check_port; then
     echo -e "${YELLOW}端口 5173 已被占用，尝试使用现有服务...${NC}"
 else
     # 启动 Vite 开发服务器（后台运行）
@@ -43,13 +60,14 @@ else
     npm run dev &
     VITE_PID=$!
     
-    # 等待 Vite 服务器启动
+    # 使用 wait-on 等待 Vite 服务器就绪
     echo -e "${YELLOW}等待 Vite 服务器启动...${NC}"
-    sleep 3
-    
-    # 检查 Vite 是否启动成功
-    if ! kill -0 $VITE_PID 2>/dev/null; then
-        echo -e "${RED}Vite 服务器启动失败！${NC}"
+    npx wait-on http://localhost:5173 -t 30000
+    if [ $? -ne 0 ]; then
+        echo -e "${RED}Vite 服务器启动超时！${NC}"
+        if [ ! -z "$VITE_PID" ]; then
+            kill $VITE_PID 2>/dev/null
+        fi
         exit 1
     fi
 fi
