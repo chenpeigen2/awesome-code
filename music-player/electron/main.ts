@@ -178,10 +178,29 @@ ipcMain.handle('lyrics:update', (_event, lyrics: string, currentTime: number) =>
 
 ipcMain.handle('http:fetch', async (_event, url: string, options: any = {}) => {
   return new Promise((resolve) => {
+    let timeoutId: NodeJS.Timeout | null = null
+    let resolved = false
+    
+    const cleanup = () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = null
+      }
+    }
+    
+    const doResolve = (result: any) => {
+      if (resolved) return
+      resolved = true
+      cleanup()
+      resolve(result)
+    }
+    
     try {
+      console.log('[http:fetch] Starting request to:', url)
       const urlObj = new URL(url)
       const isHttps = urlObj.protocol === 'https:'
       const httpModule = isHttps ? https : http
+      const timeout = options.timeout || 30000
       
       const requestOptions = {
         hostname: urlObj.hostname,
@@ -192,29 +211,41 @@ ipcMain.handle('http:fetch', async (_event, url: string, options: any = {}) => {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
           'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
           'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+          'Accept-Encoding': 'identity',
+          'Connection': 'keep-alive',
           ...options.headers,
         },
-        timeout: options.timeout || 15000,
       }
 
       const req = httpModule.request(requestOptions, (res) => {
+        console.log('[http:fetch] Response status:', res.statusCode, 'for', url)
         let data = ''
         res.setEncoding('utf8')
         res.on('data', (chunk) => {
           data += chunk
         })
         res.on('end', () => {
-          resolve({
+          console.log('[http:fetch] Response complete, data length:', data.length)
+          doResolve({
             status: res.statusCode,
             headers: res.headers,
             data: data,
           })
         })
+        res.on('error', (error) => {
+          console.error('[http:fetch] Response error:', error)
+          doResolve({
+            status: 0,
+            headers: {},
+            data: '',
+            error: `响应错误: ${error.message}`,
+          })
+        })
       })
 
       req.on('error', (error) => {
-        console.error('HTTP fetch error:', error)
-        resolve({
+        console.error('[http:fetch] Request error:', error.message)
+        doResolve({
           status: 0,
           headers: {},
           data: '',
@@ -222,15 +253,16 @@ ipcMain.handle('http:fetch', async (_event, url: string, options: any = {}) => {
         })
       })
 
-      req.on('timeout', () => {
+      timeoutId = setTimeout(() => {
+        console.log('[http:fetch] Request timeout after', timeout, 'ms for', url)
         req.destroy()
-        resolve({
+        doResolve({
           status: 0,
           headers: {},
           data: '',
-          error: '请求超时，请检查网络连接',
+          error: `请求超时 (${timeout / 1000}秒)，请检查网络连接`,
         })
-      })
+      }, timeout)
 
       if (options.body) {
         req.write(options.body)
@@ -238,8 +270,8 @@ ipcMain.handle('http:fetch', async (_event, url: string, options: any = {}) => {
 
       req.end()
     } catch (error: any) {
-      console.error('HTTP fetch setup error:', error)
-      resolve({
+      console.error('[http:fetch] Setup error:', error)
+      doResolve({
         status: 0,
         headers: {},
         data: '',

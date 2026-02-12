@@ -1,7 +1,7 @@
 import { SearchResult } from '@/types/download'
 
 const BASE_URL = 'https://mp3.pm'
-const SEARCH_TIMEOUT = 15000
+const SEARCH_TIMEOUT = 30000
 
 interface ParsedTrack {
   id: string
