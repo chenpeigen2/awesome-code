@@ -1,6 +1,7 @@
 package com.example.server;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -18,28 +19,25 @@ import com.example.common.WindowConfig;
 public class RenderService extends Service {
     private static final String TAG = "RenderService";
 
-    private static HostActivity sHostActivity;
-
-    public static void setHostActivity(HostActivity activity) {
-        sHostActivity = activity;
-    }
+    private HostManager mHostManager;
 
     @Override
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "onCreate: PID=" + android.os.Process.myPid());
+        mHostManager = HostManager.getInstance(this);
     }
 
     private final IRenderService.Stub mBinder = new IRenderService.Stub() {
         @Override
         public IBinder getHostToken() throws RemoteException {
             Log.d(TAG, "getHostToken");
-            return sHostActivity != null ? sHostActivity.getHostToken() : null;
+            return mHostManager.getHostToken();
         }
 
         @Override
         public int getDisplayId() throws RemoteException {
-            return sHostActivity != null ? sHostActivity.getDisplayId() : 0;
+            return mHostManager.getDisplayId();
         }
 
         @Override
@@ -47,33 +45,27 @@ public class RenderService extends Service {
                               SurfacePackageWrapper surfacePackageWrapper) 
                 throws RemoteException {
             Log.d(TAG, "showWindow: " + windowId);
-            if (sHostActivity != null && surfacePackageWrapper != null) {
-                sHostActivity.showWindow(windowId, config, surfacePackageWrapper.getSurfacePackage());
+            if (surfacePackageWrapper != null) {
+                mHostManager.showWindow(windowId, config, surfacePackageWrapper.getSurfacePackage());
             }
         }
 
         @Override
         public void hideWindow(String windowId) throws RemoteException {
             Log.d(TAG, "hideWindow: " + windowId);
-            if (sHostActivity != null) {
-                sHostActivity.hideWindow(windowId);
-            }
+            mHostManager.hideWindow(windowId);
         }
 
         @Override
         public void updateWindowPosition(String windowId, int x, int y) throws RemoteException {
             Log.d(TAG, "updateWindowPosition: " + windowId);
-            if (sHostActivity != null) {
-                sHostActivity.updateWindowPosition(windowId, x, y);
-            }
+            mHostManager.updateWindowPosition(windowId, x, y);
         }
 
         @Override
         public void updateWindowSize(String windowId, int width, int height) throws RemoteException {
             Log.d(TAG, "updateWindowSize: " + windowId);
-            if (sHostActivity != null) {
-                sHostActivity.updateWindowSize(windowId, width, height);
-            }
+            mHostManager.updateWindowSize(windowId, width, height);
         }
     };
 

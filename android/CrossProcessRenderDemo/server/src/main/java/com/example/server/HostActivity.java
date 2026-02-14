@@ -1,16 +1,10 @@
 package com.example.server;
 
 import android.graphics.Color;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.SurfaceControlViewHost;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -18,29 +12,19 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.common.WindowConfig;
-
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * 服务端宿主Activity
  * 
  * 职责：
- * 1. 提供宿主容器 FrameLayout
- * 2. 管理SurfacePackage的显示
- * 3. 支持自定义渲染位置
+ * 1. 提供UI界面
+ * 2. 提供容器给HostManager
  */
 public class HostActivity extends AppCompatActivity {
     private static final String TAG = "HostActivity";
 
     private FrameLayout mHostContainer;
     private TextView mStatusText;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-    
-    private final Map<String, SurfaceView> mWindows = new HashMap<>();
-    private IBinder mHostToken;
-    private SurfaceView mTokenSurfaceView;
+    private HostManager mHostManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +32,7 @@ public class HostActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: PID=" + android.os.Process.myPid());
 
         setupUI();
+        setupHostManager();
     }
 
     private void setupUI() {
@@ -73,7 +58,7 @@ public class HostActivity extends AppCompatActivity {
         rootLayout.addView(processText);
 
         mStatusText = new TextView(this);
-        mStatusText.setText("状态: 等待客户端连接...");
+        mStatusText.setText("状态: 初始化中...");
         mStatusText.setTextColor(Color.parseColor("#AAAAAA"));
         mStatusText.setTextSize(14);
         mStatusText.setPadding(0, 0, 0, 16);
@@ -83,7 +68,11 @@ public class HostActivity extends AppCompatActivity {
         clearButton.setText("清除所有窗口");
         clearButton.setBackgroundColor(Color.parseColor("#666666"));
         clearButton.setTextColor(Color.WHITE);
-        clearButton.setOnClickListener(v -> clearAllWindows());
+        clearButton.setOnClickListener(v -> {
+            if (mHostManager != null) {
+                mHostManager.clearAllWindows();
+            }
+        });
         rootLayout.addView(clearButton);
 
         mHostContainer = new FrameLayout(this);
@@ -92,29 +81,6 @@ public class HostActivity extends AppCompatActivity {
                 FrameLayout.LayoutParams.MATCH_PARENT, 500);
         mHostContainer.setLayoutParams(hostParams);
         rootLayout.addView(mHostContainer);
-
-        mTokenSurfaceView = new SurfaceView(this);
-        mTokenSurfaceView.setZOrderOnTop(true);
-        mTokenSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-        mTokenSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
-            @Override
-            public void surfaceCreated(SurfaceHolder holder) {
-                mHostToken = mTokenSurfaceView.getHostToken();
-                Log.d(TAG, "HostToken from SurfaceView: " + mHostToken);
-                RenderService.setHostActivity(HostActivity.this);
-                updateStatus("就绪 - Token已获取");
-            }
-
-            @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
-
-            @Override
-            public void surfaceDestroyed(SurfaceHolder holder) {
-                Log.d(TAG, "token surfaceDestroyed");
-            }
-        });
-        FrameLayout.LayoutParams tokenParams = new FrameLayout.LayoutParams(1, 1);
-        mHostContainer.addView(mTokenSurfaceView, tokenParams);
 
         TextView hint = new TextView(this);
         hint.setText("↑ 宿主容器：客户端渲染内容将显示在此");
@@ -127,134 +93,31 @@ public class HostActivity extends AppCompatActivity {
         setContentView(rootLayout);
     }
 
-    /**
-     * 获取HostToken
-     */
-    public IBinder getHostToken() {
-        return mHostToken;
-    }
-
-    /**
-     * 获取DisplayId
-     */
-    public int getDisplayId() {
-        if (mHostContainer == null) {
-            return getWindowManager() != null ? 
-                   getWindowManager().getDefaultDisplay().getDisplayId() : 0;
-        }
-        return mHostContainer.getDisplay() != null ? 
-               mHostContainer.getDisplay().getDisplayId() : 0;
-    }
-
-    /**
-     * 显示窗口
-     */
-    public void showWindow(String windowId, WindowConfig config, 
-                          SurfaceControlViewHost.SurfacePackage surfacePackage) {
-        mHandler.post(() -> {
-            if (mWindows.containsKey(windowId)) {
-                hideWindow(windowId);
+    private void setupHostManager() {
+        mHostManager = HostManager.getInstance(this);
+        mHostManager.setCallback(new HostManager.HostCallback() {
+            @Override
+            public void onTokenReady(IBinder token) {
+                updateStatus("就绪 - Token已获取");
             }
 
-            SurfaceView surfaceView = new SurfaceView(this);
-            surfaceView.setZOrderOnTop(true);
-            surfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
-
-            surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
-                @Override
-                public void surfaceCreated(SurfaceHolder holder) {
-                    if (surfacePackage != null) {
-                        surfaceView.setChildSurfacePackage(surfacePackage);
-                        Log.d(TAG, "surfaceCreated: SurfacePackage attached");
-                    }
-                }
-
-                @Override
-                public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
-
-                @Override
-                public void surfaceDestroyed(SurfaceHolder holder) {
-                    Log.d(TAG, "surfaceDestroyed");
-                }
-            });
-
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                    config.width, config.height, config.gravity);
-            lp.leftMargin = config.x;
-            lp.topMargin = config.y;
-
-            mHostContainer.addView(surfaceView, lp);
-            mWindows.put(windowId, surfaceView);
-
-            Log.d(TAG, "showWindow: " + windowId + ", total=" + mWindows.size());
-            updateStatus("窗口数: " + mWindows.size());
-        });
-    }
-
-    /**
-     * 隐藏窗口
-     */
-    public void hideWindow(String windowId) {
-        mHandler.post(() -> {
-            SurfaceView surfaceView = mWindows.remove(windowId);
-            if (surfaceView != null && surfaceView.getParent() == mHostContainer) {
-                mHostContainer.removeView(surfaceView);
-            }
-            updateStatus("窗口数: " + mWindows.size());
-        });
-    }
-
-    /**
-     * 更新窗口位置
-     */
-    public void updateWindowPosition(String windowId, int x, int y) {
-        mHandler.post(() -> {
-            SurfaceView surfaceView = mWindows.get(windowId);
-            if (surfaceView != null) {
-                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) surfaceView.getLayoutParams();
-                lp.leftMargin = x;
-                lp.topMargin = y;
-                surfaceView.setLayoutParams(lp);
+            @Override
+            public void onWindowCountChanged(int count) {
+                updateStatus("窗口数: " + count);
             }
         });
-    }
-
-    /**
-     * 更新窗口尺寸
-     */
-    public void updateWindowSize(String windowId, int width, int height) {
-        mHandler.post(() -> {
-            SurfaceView surfaceView = mWindows.get(windowId);
-            if (surfaceView != null) {
-                FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) surfaceView.getLayoutParams();
-                lp.width = width;
-                lp.height = height;
-                surfaceView.setLayoutParams(lp);
-            }
-        });
-    }
-
-    private void clearAllWindows() {
-        mHandler.post(() -> {
-            for (SurfaceView surfaceView : mWindows.values()) {
-                if (surfaceView.getParent() == mHostContainer) {
-                    mHostContainer.removeView(surfaceView);
-                }
-            }
-            mWindows.clear();
-            updateStatus("已清除所有窗口");
-        });
+        mHostManager.setContainer(mHostContainer);
     }
 
     private void updateStatus(String status) {
-        mHandler.post(() -> mStatusText.setText("状态: " + status));
+        runOnUiThread(() -> mStatusText.setText("状态: " + status));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        if (mHostToken != null) {
+        if (mHostManager != null && mHostManager.getHostToken() != null) {
             updateStatus("就绪 - Token已获取");
         }
     }
@@ -270,7 +133,8 @@ public class HostActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        RenderService.setHostActivity(null);
-        mWindows.clear();
+        if (mHostManager != null) {
+            mHostManager.release();
+        }
     }
 }
