@@ -26,15 +26,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.common.IRenderService;
 import com.example.common.WindowConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 客户端Activity
- * 
- * 职责：
- * 1. 连接服务端RenderService
- * 2. 创建SurfacePackage并发送给服务端
- * 3. 支持自定义渲染位置和尺寸
  */
 public class ClientActivity extends AppCompatActivity {
     private static final String TAG = "ClientActivity";
@@ -47,7 +43,8 @@ public class ClientActivity extends AppCompatActivity {
     private EditText mHeightEdit;
     private Handler mHandler = new Handler(Looper.getMainLooper());
     private boolean mServiceConnected = false;
-    private int mWindowCount = 0;
+    
+    private final List<String> mWindowIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,12 +162,25 @@ public class ClientActivity extends AppCompatActivity {
         showButton.setOnClickListener(v -> showWindow());
         rootLayout.addView(showButton);
 
-        Button hideButton = new Button(this);
-        hideButton.setText("隐藏窗口");
-        hideButton.setBackgroundColor(Color.parseColor("#666666"));
-        hideButton.setTextColor(Color.WHITE);
-        hideButton.setOnClickListener(v -> hideWindow());
-        rootLayout.addView(hideButton);
+        LinearLayout buttonLayout = new LinearLayout(this);
+        buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
+        buttonLayout.setPadding(0, 8, 0, 0);
+
+        Button hideLastButton = new Button(this);
+        hideLastButton.setText("隐藏最后窗口");
+        hideLastButton.setBackgroundColor(Color.parseColor("#666666"));
+        hideLastButton.setTextColor(Color.WHITE);
+        hideLastButton.setOnClickListener(v -> hideLastWindow());
+        buttonLayout.addView(hideLastButton, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+
+        Button hideAllButton = new Button(this);
+        hideAllButton.setText("隐藏所有窗口");
+        hideAllButton.setBackgroundColor(Color.parseColor("#FF6B6B"));
+        hideAllButton.setTextColor(Color.WHITE);
+        hideAllButton.setOnClickListener(v -> hideAllWindows());
+        buttonLayout.addView(hideAllButton, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
+
+        rootLayout.addView(buttonLayout);
 
         TextView infoText = new TextView(this);
         infoText.setText("\n说明:\n" +
@@ -220,8 +230,8 @@ public class ClientActivity extends AppCompatActivity {
         PackageManager pm = getPackageManager();
         List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
         
-        if (resolveInfo == null || resolveInfo.size() != 1) {
-            Log.w(TAG, "Found " + (resolveInfo != null ? resolveInfo.size() : 0) + " services");
+        if (resolveInfo == null || resolveInfo.isEmpty()) {
+            Log.w(TAG, "No services found");
             return null;
         }
         
@@ -258,7 +268,7 @@ public class ClientActivity extends AppCompatActivity {
                     this, getWindowManager().getDefaultDisplay(), hostToken);
 
             DemoRenderView demoView = new DemoRenderView(this);
-            demoView.setLabel("窗口 #" + (mWindowCount + 1));
+            demoView.setLabel("窗口 #" + (mWindowIds.size() + 1));
             scvh.setView(demoView, width, height);
 
             SurfaceControlViewHost.SurfacePackage surfacePackage = scvh.getSurfacePackage();
@@ -267,9 +277,9 @@ public class ClientActivity extends AppCompatActivity {
             WindowConfig config = new WindowConfig(width, height, x, y, Gravity.TOP | Gravity.LEFT);
 
             mRenderService.showWindow(windowId, config, surfacePackage);
+            mWindowIds.add(windowId);
 
-            mWindowCount++;
-            updateStatus("已发送窗口 #" + mWindowCount);
+            updateStatus("已发送窗口 #" + mWindowIds.size());
             Toast.makeText(this, "SurfacePackage已发送", Toast.LENGTH_SHORT).show();
 
         } catch (RemoteException e) {
@@ -280,15 +290,35 @@ public class ClientActivity extends AppCompatActivity {
         }
     }
 
-    private void hideWindow() {
+    private void hideLastWindow() {
+        if (!mServiceConnected || mRenderService == null) {
+            return;
+        }
+        if (mWindowIds.isEmpty()) {
+            updateStatus("没有窗口可隐藏");
+            return;
+        }
+        try {
+            String lastId = mWindowIds.remove(mWindowIds.size() - 1);
+            mRenderService.hideWindow(lastId);
+            updateStatus("已隐藏窗口，剩余: " + mWindowIds.size());
+        } catch (RemoteException e) {
+            Log.e(TAG, "hideLastWindow: RemoteException", e);
+        }
+    }
+
+    private void hideAllWindows() {
         if (!mServiceConnected || mRenderService == null) {
             return;
         }
         try {
-            mRenderService.hideWindow("window_" + System.currentTimeMillis());
-            updateStatus("窗口已隐藏");
+            for (String windowId : mWindowIds) {
+                mRenderService.hideWindow(windowId);
+            }
+            mWindowIds.clear();
+            updateStatus("已隐藏所有窗口");
         } catch (RemoteException e) {
-            Log.e(TAG, "hideWindow: RemoteException", e);
+            Log.e(TAG, "hideAllWindows: RemoteException", e);
         }
     }
 
