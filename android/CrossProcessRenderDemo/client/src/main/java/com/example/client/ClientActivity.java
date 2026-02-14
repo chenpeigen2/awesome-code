@@ -1,20 +1,9 @@
 package com.example.client;
 
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.IBinder;
-import android.os.Looper;
-import android.os.RemoteException;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.SurfaceControlViewHost;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -23,29 +12,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.common.IRenderService;
-import com.example.common.SurfacePackageWrapper;
-import com.example.common.WindowConfig;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 客户端Activity
  */
 public class ClientActivity extends AppCompatActivity {
     private static final String TAG = "ClientActivity";
 
-    private IRenderService mRenderService;
+    private ClientManager mClientManager;
     private TextView mStatusText;
     private EditText mPosXEdit;
     private EditText mPosYEdit;
     private EditText mWidthEdit;
     private EditText mHeightEdit;
-    private Handler mHandler = new Handler(Looper.getMainLooper());
-    private boolean mServiceConnected = false;
-    
-    private final List<String> mWindowIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +31,7 @@ public class ClientActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: PID=" + android.os.Process.myPid());
 
         setupUI();
-        bindRenderService();
+        setupClientManager();
     }
 
     private void setupUI() {
@@ -195,145 +173,80 @@ public class ClientActivity extends AppCompatActivity {
         setContentView(rootLayout);
     }
 
-    private void bindRenderService() {
-        Intent intent = new Intent("com.example.server.RENDER_SERVICE");
-        intent.setPackage("com.example.server");
-        
-        Intent explicitIntent = createExplicitIntent(intent);
-        if (explicitIntent == null) {
-            updateStatus("错误: 找不到服务端应用");
-            return;
-        }
-
-        ServiceConnection connection = new ServiceConnection() {
+    private void setupClientManager() {
+        mClientManager = ClientManager.getInstance(this);
+        mClientManager.setWindowOffset(5);
+        mClientManager.setCallback(new ClientManager.ClientCallback() {
             @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                Log.d(TAG, "onServiceConnected: " + name);
-                mRenderService = IRenderService.Stub.asInterface(service);
-                mServiceConnected = true;
+            public void onServiceConnected() {
                 updateStatus("已连接服务端，可以渲染");
             }
 
             @Override
-            public void onServiceDisconnected(ComponentName name) {
-                Log.d(TAG, "onServiceDisconnected");
-                mRenderService = null;
-                mServiceConnected = false;
+            public void onServiceDisconnected() {
                 updateStatus("服务端已断开");
             }
-        };
 
-        boolean result = bindService(explicitIntent, connection, Context.BIND_AUTO_CREATE);
-        Log.d(TAG, "bindService result: " + result);
-    }
+            @Override
+            public void onWindowCreated(String windowId, int windowCount) {
+                updateStatus("已发送窗口 #" + windowCount);
+                Toast.makeText(ClientActivity.this, "SurfacePackage已发送", Toast.LENGTH_SHORT).show();
+            }
 
-    private Intent createExplicitIntent(Intent implicitIntent) {
-        PackageManager pm = getPackageManager();
-        List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
-        
-        if (resolveInfo == null || resolveInfo.isEmpty()) {
-            Log.w(TAG, "No services found");
-            return null;
-        }
-        
-        ResolveInfo serviceInfo = resolveInfo.get(0);
-        String packageName = serviceInfo.serviceInfo.packageName;
-        String className = serviceInfo.serviceInfo.name;
-        
-        ComponentName component = new ComponentName(packageName, className);
-        Intent explicitIntent = new Intent(implicitIntent);
-        explicitIntent.setComponent(component);
-        
-        return explicitIntent;
+            @Override
+            public void onWindowRemoved(String windowId, int windowCount) {
+                updateStatus("窗口数: " + windowCount);
+            }
+
+            @Override
+            public void onError(String error) {
+                updateStatus("错误: " + error);
+            }
+        });
+        mClientManager.connectService();
     }
 
     private void showWindow() {
-        if (!mServiceConnected || mRenderService == null) {
+        if (!mClientManager.isServiceConnected()) {
             updateStatus("服务未连接");
             return;
         }
 
         try {
-            IBinder hostToken = mRenderService.getHostToken();
-            if (hostToken == null) {
-                updateStatus("错误: HostToken为空");
-                return;
-            }
-
             int x = Integer.parseInt(mPosXEdit.getText().toString());
             int y = Integer.parseInt(mPosYEdit.getText().toString());
             int width = Integer.parseInt(mWidthEdit.getText().toString());
             int height = Integer.parseInt(mHeightEdit.getText().toString());
 
-            int offset = mWindowIds.size() * 25;
-            y += offset;
-            x += offset;
-
-            SurfaceControlViewHost scvh = new SurfaceControlViewHost(
-                    this, getWindowManager().getDefaultDisplay(), hostToken);
-
             DemoRenderView demoView = new DemoRenderView(this);
-            demoView.setLabel("窗口 #" + (mWindowIds.size() + 1));
-            scvh.setView(demoView, width, height);
+            demoView.setLabel("窗口 #" + (mClientManager.getWindowCount() + 1));
 
-            SurfaceControlViewHost.SurfacePackage surfacePackage = scvh.getSurfacePackage();
+            mClientManager.showWindow(demoView, width, height, x, y);
 
-            String windowId = "window_" + System.currentTimeMillis();
-            WindowConfig config = new WindowConfig(width, height, x, y, Gravity.TOP | Gravity.LEFT);
-
-            mRenderService.showWindow(windowId, config, new SurfacePackageWrapper(surfacePackage));
-            mWindowIds.add(windowId);
-
-            updateStatus("已发送窗口 #" + mWindowIds.size());
-            Toast.makeText(this, "SurfacePackage已发送", Toast.LENGTH_SHORT).show();
-
-        } catch (RemoteException e) {
-            Log.e(TAG, "showWindow: RemoteException", e);
-            updateStatus("错误: " + e.getMessage());
         } catch (NumberFormatException e) {
             updateStatus("错误: 请输入有效数字");
         }
     }
 
     private void hideLastWindow() {
-        if (!mServiceConnected || mRenderService == null) {
-            return;
-        }
-        if (mWindowIds.isEmpty()) {
+        if (!mClientManager.hideLastWindow()) {
             updateStatus("没有窗口可隐藏");
-            return;
-        }
-        try {
-            String lastId = mWindowIds.remove(mWindowIds.size() - 1);
-            mRenderService.hideWindow(lastId);
-            updateStatus("已隐藏窗口，剩余: " + mWindowIds.size());
-        } catch (RemoteException e) {
-            Log.e(TAG, "hideLastWindow: RemoteException", e);
         }
     }
 
     private void hideAllWindows() {
-        if (!mServiceConnected || mRenderService == null) {
-            return;
-        }
-        try {
-            for (String windowId : mWindowIds) {
-                mRenderService.hideWindow(windowId);
-            }
-            mWindowIds.clear();
-            updateStatus("已隐藏所有窗口");
-        } catch (RemoteException e) {
-            Log.e(TAG, "hideAllWindows: RemoteException", e);
-        }
+        mClientManager.hideAllWindows();
+        updateStatus("已隐藏所有窗口");
     }
 
     private void updateStatus(String status) {
-        mHandler.post(() -> mStatusText.setText("状态: " + status));
+        runOnUiThread(() -> mStatusText.setText("状态: " + status));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
+        mClientManager.disconnectService();
     }
 }
