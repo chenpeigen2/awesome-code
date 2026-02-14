@@ -289,7 +289,7 @@ public class ClientManager {
 
     private Intent createExplicitIntent(Intent implicitIntent) {
         PackageManager pm = mContext.getPackageManager();
-        List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, PackageManager.MATCH_DEFAULT_ONLY);
+        List<ResolveInfo> resolveInfo = pm.queryIntentServices(implicitIntent, 0);
 
         if (resolveInfo == null || resolveInfo.isEmpty()) {
             Log.w(TAG, "No services found for: " + implicitIntent);
