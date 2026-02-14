@@ -147,6 +147,10 @@ public class HostActivity extends AppCompatActivity {
      * 获取DisplayId
      */
     public int getDisplayId() {
+        if (mHostContainer == null) {
+            return getWindowManager() != null ? 
+                   getWindowManager().getDefaultDisplay().getDisplayId() : 0;
+        }
         return mHostContainer.getDisplay() != null ? 
                mHostContainer.getDisplay().getDisplayId() : 0;
     }
