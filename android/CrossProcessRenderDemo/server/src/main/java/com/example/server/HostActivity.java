@@ -8,7 +8,6 @@ import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.SurfaceControl;
 import android.view.SurfaceControlViewHost;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.common.WindowConfig;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,6 +40,7 @@ public class HostActivity extends AppCompatActivity {
     
     private final Map<String, SurfaceView> mWindows = new HashMap<>();
     private IBinder mHostToken;
+    private SurfaceView mTokenSurfaceView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +93,29 @@ public class HostActivity extends AppCompatActivity {
         mHostContainer.setLayoutParams(hostParams);
         rootLayout.addView(mHostContainer);
 
+        mTokenSurfaceView = new SurfaceView(this);
+        mTokenSurfaceView.setZOrderOnTop(true);
+        mTokenSurfaceView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+        mTokenSurfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                mHostToken = mTokenSurfaceView.getHostToken();
+                Log.d(TAG, "HostToken from SurfaceView: " + mHostToken);
+                RenderService.setHostActivity(HostActivity.this);
+                updateStatus("就绪 - Token已获取");
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                Log.d(TAG, "token surfaceDestroyed");
+            }
+        });
+        FrameLayout.LayoutParams tokenParams = new FrameLayout.LayoutParams(1, 1);
+        mHostContainer.addView(mTokenSurfaceView, tokenParams);
+
         TextView hint = new TextView(this);
         hint.setText("↑ 宿主容器：客户端渲染内容将显示在此");
         hint.setTextColor(Color.parseColor("#666666"));
@@ -103,13 +125,6 @@ public class HostActivity extends AppCompatActivity {
         rootLayout.addView(hint);
 
         setContentView(rootLayout);
-
-        mHostContainer.post(() -> {
-            mHostToken = getHostTokenFromView(mHostContainer);
-            Log.d(TAG, "HostToken: " + mHostToken);
-            RenderService.setHostActivity(HostActivity.this);
-            updateStatus("就绪 - Token已获取");
-        });
     }
 
     /**
@@ -117,30 +132,6 @@ public class HostActivity extends AppCompatActivity {
      */
     public IBinder getHostToken() {
         return mHostToken;
-    }
-
-    /**
-     * 通过反射获取View的HostToken
-     */
-    private IBinder getHostTokenFromView(android.view.View view) {
-        try {
-            Method getViewRootImpl = android.view.View.class.getDeclaredMethod("getViewRootImpl");
-            getViewRootImpl.setAccessible(true);
-            Object viewRootImpl = getViewRootImpl.invoke(view);
-            if (viewRootImpl != null) {
-                Method getSurfaceControl = viewRootImpl.getClass().getDeclaredMethod("getSurfaceControl");
-                getSurfaceControl.setAccessible(true);
-                Object surfaceControl = getSurfaceControl.invoke(viewRootImpl);
-                if (surfaceControl != null) {
-                    Method getHandle = surfaceControl.getClass().getDeclaredMethod("getHandle");
-                    getHandle.setAccessible(true);
-                    return (IBinder) getHandle.invoke(surfaceControl);
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "getHostTokenFromView failed", e);
-        }
-        return null;
     }
 
     /**
