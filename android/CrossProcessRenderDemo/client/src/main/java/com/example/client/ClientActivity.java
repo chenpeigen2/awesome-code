@@ -265,6 +265,10 @@ public class ClientActivity extends AppCompatActivity {
             int width = Integer.parseInt(mWidthEdit.getText().toString());
             int height = Integer.parseInt(mHeightEdit.getText().toString());
 
+            int offset = mWindowIds.size() * 25;
+            y += offset;
+            x += offset;
+
             SurfaceControlViewHost scvh = new SurfaceControlViewHost(
                     this, getWindowManager().getDefaultDisplay(), hostToken);
 
