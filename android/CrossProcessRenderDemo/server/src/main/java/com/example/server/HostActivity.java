@@ -249,4 +249,28 @@ public class HostActivity extends AppCompatActivity {
     private void updateStatus(String status) {
         mHandler.post(() -> mStatusText.setText("状态: " + status));
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        if (mHostToken != null) {
+            updateStatus("就绪 - Token已获取");
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause");
+        updateStatus("警告: 服务端在后台，渲染可能失效");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy");
+        RenderService.setHostActivity(null);
+        mWindows.clear();
+    }
 }
