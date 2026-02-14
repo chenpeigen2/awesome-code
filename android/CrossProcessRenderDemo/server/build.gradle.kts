@@ -31,4 +31,6 @@ android {
 
 dependencies {
     implementation(project(":common"))
+    // Source: https://mvnrepository.com/artifact/androidx.appcompat/appcompat
+    implementation("androidx.appcompat:appcompat:1.7.1")
 }
