@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.SurfaceControlViewHost;
 
 import com.example.common.IRenderService;
+import com.example.common.SurfacePackageWrapper;
 import com.example.common.WindowConfig;
 
 /**
@@ -44,11 +45,11 @@ public class RenderService extends Service {
 
         @Override
         public void showWindow(String windowId, WindowConfig config, 
-                              SurfaceControlViewHost.SurfacePackage surfacePackage) 
+                              SurfacePackageWrapper surfacePackageWrapper) 
                 throws RemoteException {
             Log.d(TAG, "showWindow: " + windowId);
-            if (sHostActivity != null) {
-                sHostActivity.showWindow(windowId, config, surfacePackage);
+            if (sHostActivity != null && surfacePackageWrapper != null) {
+                sHostActivity.showWindow(windowId, config, surfacePackageWrapper.getSurfacePackage());
             }
         }
 

@@ -24,6 +24,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.common.IRenderService;
+import com.example.common.SurfacePackageWrapper;
 import com.example.common.WindowConfig;
 
 import java.util.ArrayList;
@@ -276,7 +277,7 @@ public class ClientActivity extends AppCompatActivity {
             String windowId = "window_" + System.currentTimeMillis();
             WindowConfig config = new WindowConfig(width, height, x, y, Gravity.TOP | Gravity.LEFT);
 
-            mRenderService.showWindow(windowId, config, surfacePackage);
+            mRenderService.showWindow(windowId, config, new SurfacePackageWrapper(surfacePackage));
             mWindowIds.add(windowId);
 
             updateStatus("已发送窗口 #" + mWindowIds.size());
