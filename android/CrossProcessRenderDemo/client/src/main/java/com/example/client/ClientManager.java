@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.example.common.IRenderService;
-import com.example.common.SurfacePackageWrapper;
 import com.example.common.WindowConfig;
 
 import java.util.ArrayList;
@@ -185,7 +184,7 @@ public class ClientManager {
             int offsetY = y + (mWindowIds.size() * mWindowOffset);
             WindowConfig config = new WindowConfig(width, height, x, offsetY, Gravity.TOP | Gravity.LEFT);
 
-            mRenderService.showWindow(windowId, config, new SurfacePackageWrapper(surfacePackage));
+            mRenderService.showWindow(windowId, config, surfacePackage);
             mWindowIds.add(windowId);
 
             notifyWindowCreated(windowId);

@@ -1,14 +1,14 @@
 package com.example.common;
 
+import android.view.SurfaceControlViewHost.SurfacePackage;
 import com.example.common.WindowConfig;
-import com.example.common.SurfacePackageWrapper;
 
 interface IRenderService {
     IBinder getHostToken();
     
     int getDisplayId();
     
-    void showWindow(String windowId, in WindowConfig config, in SurfacePackageWrapper surfacePackageWrapper);
+    void showWindow(String windowId, in WindowConfig config, in SurfacePackage surfacePackage);
     
     void hideWindow(String windowId);
     

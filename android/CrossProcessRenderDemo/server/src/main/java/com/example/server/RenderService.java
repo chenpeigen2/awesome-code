@@ -1,14 +1,13 @@
 package com.example.server;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
+import android.view.SurfaceControlViewHost;
 
 import com.example.common.IRenderService;
-import com.example.common.SurfacePackageWrapper;
 import com.example.common.WindowConfig;
 
 /**
@@ -42,11 +41,11 @@ public class RenderService extends Service {
 
         @Override
         public void showWindow(String windowId, WindowConfig config, 
-                              SurfacePackageWrapper surfacePackageWrapper) 
+                              SurfaceControlViewHost.SurfacePackage surfacePackage) 
                 throws RemoteException {
             Log.d(TAG, "showWindow: " + windowId);
-            if (surfacePackageWrapper != null) {
-                mHostManager.showWindow(windowId, config, surfacePackageWrapper.getSurfacePackage());
+            if (surfacePackage != null) {
+                mHostManager.showWindow(windowId, config, surfacePackage);
             }
         }
 
