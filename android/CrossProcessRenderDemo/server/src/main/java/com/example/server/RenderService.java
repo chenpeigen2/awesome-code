@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
-import android.view.SurfaceControlViewHost;
 
 import com.example.common.IRenderService;
 import com.example.common.SurfacePackageWrapper;

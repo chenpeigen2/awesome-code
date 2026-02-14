@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.common.WindowConfig;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,7 +105,7 @@ public class HostActivity extends AppCompatActivity {
         setContentView(rootLayout);
 
         mHostContainer.post(() -> {
-            mHostToken = mHostContainer.getViewRootImpl().getSurfaceControl().getHandle();
+            mHostToken = getHostTokenFromView(mHostContainer);
             Log.d(TAG, "HostToken: " + mHostToken);
             RenderService.setHostActivity(HostActivity.this);
             updateStatus("就绪 - Token已获取");
@@ -116,6 +117,30 @@ public class HostActivity extends AppCompatActivity {
      */
     public IBinder getHostToken() {
         return mHostToken;
+    }
+
+    /**
+     * 通过反射获取View的HostToken
+     */
+    private IBinder getHostTokenFromView(android.view.View view) {
+        try {
+            Method getViewRootImpl = android.view.View.class.getDeclaredMethod("getViewRootImpl");
+            getViewRootImpl.setAccessible(true);
+            Object viewRootImpl = getViewRootImpl.invoke(view);
+            if (viewRootImpl != null) {
+                Method getSurfaceControl = viewRootImpl.getClass().getDeclaredMethod("getSurfaceControl");
+                getSurfaceControl.setAccessible(true);
+                Object surfaceControl = getSurfaceControl.invoke(viewRootImpl);
+                if (surfaceControl != null) {
+                    Method getHandle = surfaceControl.getClass().getDeclaredMethod("getHandle");
+                    getHandle.setAccessible(true);
+                    return (IBinder) getHandle.invoke(surfaceControl);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "getHostTokenFromView failed", e);
+        }
+        return null;
     }
 
     /**
