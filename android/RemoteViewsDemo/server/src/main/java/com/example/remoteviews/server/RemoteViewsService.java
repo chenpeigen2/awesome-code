@@ -140,7 +140,7 @@ public class RemoteViewsService extends Service {
         remoteViews.setTextViewText(R.id.tv_title, data.title);
         remoteViews.setTextViewText(R.id.tv_content, data.content);
         remoteViews.setInt(R.id.card_container, "setBackgroundColor", data.backgroundColor);
-        remoteViews.setInt(R.id.tv_counter, "setText", "更新次数: " + mUpdateCounter.get());
+        remoteViews.setTextViewText(R.id.tv_counter, "更新次数: " + mUpdateCounter.get());
         
         Intent clickIntent = new Intent(Constants.ACTION_BUTTON_CLICK);
         clickIntent.putExtra(Constants.EXTRA_VIEW_ID, viewId);
