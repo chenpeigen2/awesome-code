@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">DataStore Demo</string>
+    <string name="basic_preferences">基础Preferences存储</string>
+    <string name="proto_datastore">Proto DataStore</string>
+    <string name="reactive_updates">响应式更新</string>
+    <string name="multi_type_manager">多类型管理</string>
+    <string name="transaction_demo">事务管理</string>
+    <string name="save_data">保存数据</string>
+    <string name="read_data">读取数据</string>
+    <string name="clear_data">清除数据</string>
+    <string name="current_value">当前值: %s</string>
+    <string name="user_name">用户名</string>
+    <string name="user_age">年龄</string>
+    <string name="is_logged_in">已登录</string>
+    <string name="score">分数</string>
+    <string name="last_login">最后登录时间</string>
+    <string name="observe_changes">观察变化</string>
+    <string name="stop_observing">停止观察</string>
+    <string name="update_user">更新用户</string>
+    <string name="add_score">添加分数</string>
+    <string name="transaction_example">事务示例</string>
+    <string name="log_output">日志输出:</string>
+    <string name="clear_log">清除日志</string>
+</resources>

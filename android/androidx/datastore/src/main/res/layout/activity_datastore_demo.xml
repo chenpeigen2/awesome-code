@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DataStore 学习示例"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1. 基础 Preferences 存储"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/section_title"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etStringInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="输入字符串"
+                android:inputType="text"/>
+
+            <Button
+                android:id="@+id/btnSaveString"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保存"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etIntInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="输入整数"
+                android:inputType="number"/>
+
+            <Button
+                android:id="@+id/btnSaveInt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保存"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvBasicResult"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="当前值: -"
+                android:textSize="14sp"/>
+
+            <Button
+                android:id="@+id/btnReadBasic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="读取"/>
+
+            <Button
+                android:id="@+id/btnClearBasic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="清除"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginVertical="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2. Proto DataStore (复杂对象)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/section_title"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etUserName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="用户名"
+                android:inputType="text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <EditText
+                android:id="@+id/etUserAge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="年龄"
+                android:inputType="number"/>
+
+            <Button
+                android:id="@+id/btnSaveUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="保存用户"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvUserResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="用户信息: -"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnReadUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="读取用户信息"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginVertical="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3. 响应式更新 (LiveData)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/section_title"
+            android:layout_marginBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/tvReactiveValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="实时值: -"
+            android:textSize="16sp"
+            android:textColor="@color/reactive_text"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+
+            <Button
+                android:id="@+id/btnIncrementCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="+1"/>
+
+            <Button
+                android:id="@+id/btnDecrementCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-1"
+                android:layout_marginStart="8dp"/>
+
+            <Button
+                android:id="@+id/btnResetCounter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="重置"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginVertical="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4. 多类型数据管理"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/section_title"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnSaveMultiType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="保存多类型数据"/>
+
+        <Button
+            android:id="@+id/btnReadMultiType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="读取多类型数据"
+            android:layout_marginTop="8dp"/>
+
+        <TextView
+            android:id="@+id/tvMultiTypeResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="多类型数据: -"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginVertical="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5. 事务管理"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/section_title"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnExecuteTransaction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="执行事务"/>
+
+        <TextView
+            android:id="@+id/tvTransactionResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="事务结果: -"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginVertical="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6. 版本控制"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/section_title"
+            android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnShowVersions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="显示当前版本"/>
+
+        <TextView
+            android:id="@+id/tvVersionResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="版本信息: -"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider"
+            android:layout_marginVertical="16dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="日志输出:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#F5F5F5"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tvLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:textColor="#333333"/>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnClearLog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="清除日志"
+            android:layout_marginTop="8dp"/>
+
+    </LinearLayout>
+</ScrollView>
