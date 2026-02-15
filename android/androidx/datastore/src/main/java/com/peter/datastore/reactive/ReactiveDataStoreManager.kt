@@ -1,7 +1,9 @@
-package com.peter.datastore
+package com.peter.datastore.reactive
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
+import com.peter.datastore.basic.PreferencesDataStoreHelper
+import com.peter.datastore.json.JsonDataStoreHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,7 +23,7 @@ class DataStoreObserver<T>(
         observationJob = scope.launch(Dispatchers.Main) {
             flow
                 .distinctUntilChanged()
-                .catch { e -> 
+                .catch { e ->
                     android.util.Log.e("DataStoreObserver", "Observation error", e)
                 }
                 .collect { value ->
@@ -42,8 +44,8 @@ class DataStoreObserver<T>(
 
 class ReactiveDataStoreManager(
     private val preferencesHelper: PreferencesDataStoreHelper,
-    private val jsonHelper: JsonDataStoreHelper,
-    private val scope: CoroutineScope
+    val jsonHelper: JsonDataStoreHelper,
+    val scope: CoroutineScope
 ) {
     fun observeString(key: String, defaultValue: String = ""): DataStoreObserver<String> {
         return DataStoreObserver(preferencesHelper.getString(key, defaultValue), scope)
@@ -69,12 +71,15 @@ class ReactiveDataStoreManager(
         return DataStoreObserver(preferencesHelper.getBoolean(key, defaultValue), scope)
     }
 
-    fun observeStringSet(key: String, defaultValue: Set<String> = emptySet()): DataStoreObserver<Set<String>> {
+    fun observeStringSet(
+        key: String,
+        defaultValue: Set<String> = emptySet()
+    ): DataStoreObserver<Set<String>> {
         return DataStoreObserver(preferencesHelper.getStringSet(key, defaultValue), scope)
     }
 
-    fun <T> observeObject(key: String, defaultValue: T): DataStoreObserver<T> where T : Any {
-        return DataStoreObserver(jsonHelper.getObjectFlow(key, defaultValue), scope)
+    inline fun <reified T> observeObject(key: String, defaultValue: T): DataStoreObserver<T> {
+        return DataStoreObserver(jsonHelper.getFlow(key, defaultValue), scope)
     }
 
     fun <T> combineObservations(

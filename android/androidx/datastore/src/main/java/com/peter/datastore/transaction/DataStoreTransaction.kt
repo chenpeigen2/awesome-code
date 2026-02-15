@@ -1,13 +1,15 @@
-package com.peter.datastore
+package com.peter.datastore.transaction
 
+import com.peter.datastore.basic.PreferencesDataStoreHelper
+import com.peter.datastore.json.JsonDataStoreHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DataStoreTransaction(
     private val preferencesHelper: PreferencesDataStoreHelper,
-    private val jsonHelper: JsonDataStoreHelper
+    val jsonHelper: JsonDataStoreHelper
 ) {
-    private val operations = mutableListOf<suspend () -> Unit>()
+    val operations = mutableListOf<suspend () -> Unit>()
 
     fun putString(key: String, value: String): DataStoreTransaction {
         operations.add { preferencesHelper.putString(key, value) }
@@ -44,23 +46,8 @@ class DataStoreTransaction(
         return this
     }
 
-    fun putObject(key: String, value: Any): DataStoreTransaction {
-        operations.add { jsonHelper.saveObject(key, value) }
-        return this
-    }
-
-    fun putUserPreferences(userPreferences: UserPreferences): DataStoreTransaction {
-        operations.add { jsonHelper.saveUserPreferences(userPreferences) }
-        return this
-    }
-
-    fun putAppSettings(appSettings: AppSettings): DataStoreTransaction {
-        operations.add { jsonHelper.saveAppSettings(appSettings) }
-        return this
-    }
-
-    fun putComplexData(complexData: ComplexData): DataStoreTransaction {
-        operations.add { jsonHelper.saveComplexData(complexData) }
+    inline fun <reified T> putObject(key: String, value: T): DataStoreTransaction {
+        operations.add { jsonHelper.save(key, value) }
         return this
     }
 
@@ -71,9 +58,7 @@ class DataStoreTransaction(
 
     suspend fun execute(): Result<Unit> = withContext(Dispatchers.IO) {
         try {
-            operations.forEach { operation ->
-                operation()
-            }
+            operations.forEach { operation -> operation() }
             Result.success(Unit)
         } catch (e: Exception) {
             android.util.Log.e("DataStoreTransaction", "Transaction failed", e)

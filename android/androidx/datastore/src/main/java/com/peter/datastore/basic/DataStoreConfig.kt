@@ -1,4 +1,4 @@
-package com.peter.datastore
+package com.peter.datastore.basic
 
 object DataStoreConfig {
     const val PREFERENCES_NAME = "app_preferences"

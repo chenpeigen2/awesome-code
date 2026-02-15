@@ -109,7 +109,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2. Proto DataStore (复杂对象)"
+            android:text="2. JSON 对象存储"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/section_title"

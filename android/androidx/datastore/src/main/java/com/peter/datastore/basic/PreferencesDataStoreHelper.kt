@@ -1,4 +1,4 @@
-package com.peter.datastore
+package com.peter.datastore.basic
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = DataStoreConfig.PREFERENCES_NAME)
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "app_preferences")
 
 class PreferencesDataStoreHelper(private val context: Context) {
 
