@@ -5,15 +5,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
 import com.peter.datastore.basic.PreferencesDataStoreHelper
 import com.peter.datastore.json.JsonDataStoreHelper
-import com.peter.datastore.reactive.DataStoreObserver
-import com.peter.datastore.reactive.ReactiveDataStoreManager
 import com.peter.datastore.transaction.DataStoreTransaction
 import com.peter.datastore.transaction.TransactionManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
+
+
+private fun <T> Flow<T>.distinctWithErrorHandling(): Flow<T> =
+    this.distinctUntilChanged()
+        .catch { e ->
+            android.util.Log.e("DataStoreObserver", "Observation error", e)
+        }
+
 
 class DataStoreManager private constructor(private val context: Context) {
 
@@ -25,10 +33,6 @@ class DataStoreManager private constructor(private val context: Context) {
 
     val jsonHelper: JsonDataStoreHelper by lazy {
         JsonDataStoreHelper(preferencesHelper)
-    }
-
-    val reactiveManager: ReactiveDataStoreManager by lazy {
-        ReactiveDataStoreManager(preferencesHelper, jsonHelper, scope)
     }
 
     private val transactionManager: TransactionManager by lazy {
@@ -62,25 +66,25 @@ class DataStoreManager private constructor(private val context: Context) {
         preferencesHelper.putStringSet(key, value)
 
     fun getStringFlow(key: String, defaultValue: String = ""): Flow<String> =
-        preferencesHelper.getString(key, defaultValue)
+        preferencesHelper.getString(key, defaultValue).distinctWithErrorHandling()
 
     fun getIntFlow(key: String, defaultValue: Int = 0): Flow<Int> =
-        preferencesHelper.getInt(key, defaultValue)
+        preferencesHelper.getInt(key, defaultValue).distinctWithErrorHandling()
 
     fun getLongFlow(key: String, defaultValue: Long = 0L): Flow<Long> =
-        preferencesHelper.getLong(key, defaultValue)
+        preferencesHelper.getLong(key, defaultValue).distinctWithErrorHandling()
 
     fun getFloatFlow(key: String, defaultValue: Float = 0f): Flow<Float> =
-        preferencesHelper.getFloat(key, defaultValue)
+        preferencesHelper.getFloat(key, defaultValue).distinctWithErrorHandling()
 
     fun getDoubleFlow(key: String, defaultValue: Double = 0.0): Flow<Double> =
-        preferencesHelper.getDouble(key, defaultValue)
+        preferencesHelper.getDouble(key, defaultValue).distinctWithErrorHandling()
 
     fun getBooleanFlow(key: String, defaultValue: Boolean = false): Flow<Boolean> =
-        preferencesHelper.getBoolean(key, defaultValue)
+        preferencesHelper.getBoolean(key, defaultValue).distinctWithErrorHandling()
 
     fun getStringSetFlow(key: String, defaultValue: Set<String> = emptySet()): Flow<Set<String>> =
-        preferencesHelper.getStringSet(key, defaultValue)
+        preferencesHelper.getStringSet(key, defaultValue).distinctWithErrorHandling()
 
     suspend fun getString(key: String, defaultValue: String = ""): String =
         getStringFlow(key, defaultValue).first()
@@ -115,18 +119,6 @@ class DataStoreManager private constructor(private val context: Context) {
 
     suspend inline fun <reified T> getObject(key: String, defaultValue: T): T =
         jsonHelper.get(key, defaultValue)
-
-    fun observeString(key: String, defaultValue: String = ""): DataStoreObserver<String> =
-        reactiveManager.observeString(key, defaultValue)
-
-    fun observeInt(key: String, defaultValue: Int = 0): DataStoreObserver<Int> =
-        reactiveManager.observeInt(key, defaultValue)
-
-    fun observeBoolean(key: String, defaultValue: Boolean = false): DataStoreObserver<Boolean> =
-        reactiveManager.observeBoolean(key, defaultValue)
-
-    inline fun <reified T> observeObject(key: String, defaultValue: T): DataStoreObserver<T> =
-        reactiveManager.observeObject(key, defaultValue)
 
     fun getStringLiveData(key: String, defaultValue: String = ""): LiveData<String> =
         getStringFlow(key, defaultValue).asLiveData()

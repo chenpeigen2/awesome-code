@@ -123,8 +123,7 @@ class DataStoreDemoActivity : AppCompatActivity() {
 
     private fun setupReactiveDemo() {
         val tvReactiveValue = findViewById<android.widget.TextView>(R.id.tvReactiveValue)
-
-        dataStoreManager.observeInt("reactive_counter", 0).observe {
+        dataStoreManager.getIntLiveData("reactive_counter", 0).observe(this) {
             tvReactiveValue.text = "实时值: $it (自动更新)"
             Toast.makeText(this, tvReactiveValue.text, Toast.LENGTH_LONG).show()
         }
