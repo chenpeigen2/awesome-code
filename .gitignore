@@ -4,14 +4,17 @@
 **/build/
 **/bin/
 .gradle-wrapper.jar
+**/.gradle/
 
 # IntelliJ IDEA
 /.idea/
+**/.idea/
 *.iml
 *.iws
 *.ipr
 /out/
 .idea_modules/
+**/local.properties
 
 # Eclipse
 .classpath
