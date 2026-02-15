@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import com.peter.datastore.proto.appSettings
-import com.peter.datastore.proto.userPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,7 +30,7 @@ class DataStoreDemoActivity : AppCompatActivity() {
         }
         
         setupBasicPreferencesDemo()
-        setupProtoDataStoreDemo()
+        setupJsonDataStoreDemo()
         setupReactiveDemo()
         setupMultiTypeDemo()
         setupTransactionDemo()
@@ -88,7 +86,7 @@ class DataStoreDemoActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupProtoDataStoreDemo() {
+    private fun setupJsonDataStoreDemo() {
         val etUserName = findViewById<android.widget.EditText>(R.id.etUserName)
         val etUserAge = findViewById<android.widget.EditText>(R.id.etUserAge)
         val tvUserResult = findViewById<android.widget.TextView>(R.id.tvUserResult)
@@ -98,14 +96,12 @@ class DataStoreDemoActivity : AppCompatActivity() {
             val age = etUserAge.text.toString().toIntOrNull() ?: 0
             
             lifecycleScope.launch {
-                dataStoreManager.updateUserPreferences { current ->
-                    userPreferences {
-                        userName = name
-                        userAge = age
-                        isLoggedIn = current.isLoggedIn
-                        lastLoginTime = System.currentTimeMillis()
-                    }
-                }
+                val userPrefs = UserPreferences(
+                    userName = name,
+                    userAge = age,
+                    lastLoginTime = System.currentTimeMillis()
+                )
+                dataStoreManager.saveUserPreferences(userPrefs)
                 log("保存用户: $name, 年龄: $age")
             }
         }
@@ -211,22 +207,15 @@ class DataStoreDemoActivity : AppCompatActivity() {
                     putString("tx_key1", "事务值1")
                     putInt("tx_key2", 100)
                     putBoolean("tx_key3", true)
-                    updateUserPreferences { current ->
-                        userPreferences {
-                            userName = "事务用户"
-                            userAge = 30
-                            isLoggedIn = current.isLoggedIn
-                        }
-                    }
-                    updateAppSettings { current ->
-                        appSettings {
-                            version = current.version + 1
-                            theme = "transaction_theme"
-                            fontSize = 18
-                            language = current.language
-                            notificationsEnabled = current.notificationsEnabled
-                        }
-                    }
+                    putUserPreferences(UserPreferences(
+                        userName = "事务用户",
+                        userAge = 30
+                    ))
+                    putAppSettings(AppSettings(
+                        version = 2,
+                        theme = "transaction_theme",
+                        fontSize = 18
+                    ))
                 }
                 
                 withContext(Dispatchers.Main) {

@@ -8,11 +8,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class DataStoreObserver<T>(
-    private val flow: Flow<T>,
+    internal val flow: Flow<T>,
     private val scope: CoroutineScope
 ) {
     private var observationJob: Job? = null
@@ -43,7 +42,7 @@ class DataStoreObserver<T>(
 
 class ReactiveDataStoreManager(
     private val preferencesHelper: PreferencesDataStoreHelper,
-    private val protoHelper: ProtoDataStoreHelper,
+    private val jsonHelper: JsonDataStoreHelper,
     private val scope: CoroutineScope
 ) {
     fun observeString(key: String, defaultValue: String = ""): DataStoreObserver<String> {
@@ -74,25 +73,23 @@ class ReactiveDataStoreManager(
         return DataStoreObserver(preferencesHelper.getStringSet(key, defaultValue), scope)
     }
 
-    fun observeUserPreferences(): DataStoreObserver<com.peter.datastore.proto.UserPreferences> {
-        return DataStoreObserver(protoHelper.userPreferences, scope)
+    fun observeUserPreferences(): DataStoreObserver<UserPreferences> {
+        return DataStoreObserver(jsonHelper.getUserPreferencesFlow(), scope)
     }
 
-    fun observeAppSettings(): DataStoreObserver<com.peter.datastore.proto.AppSettings> {
-        return DataStoreObserver(protoHelper.appSettings, scope)
+    fun observeAppSettings(): DataStoreObserver<AppSettings> {
+        return DataStoreObserver(jsonHelper.getAppSettingsFlow(), scope)
     }
 
-    fun observeComplexData(): DataStoreObserver<com.peter.datastore.proto.ComplexData> {
-        return DataStoreObserver(protoHelper.complexData, scope)
+    fun observeComplexData(): DataStoreObserver<ComplexData> {
+        return DataStoreObserver(jsonHelper.getComplexDataFlow(), scope)
     }
 
     fun <T> combineObservations(
-        vararg observers: DataStoreObserver<*>,
+        vararg flows: Flow<*>,
         transform: (List<Any?>) -> T
     ): Flow<T> {
-        return kotlinx.coroutines.flow.combine(
-            observers.map { it.flow }
-        ) { values ->
+        return kotlinx.coroutines.flow.combine(*flows) { values ->
             transform(values.toList())
         }
     }

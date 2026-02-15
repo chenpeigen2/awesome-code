@@ -1,16 +1,10 @@
 package com.peter.datastore
 
-import android.content.Context
-import com.peter.datastore.proto.AppSettings
-import com.peter.datastore.proto.ComplexData
-import com.peter.datastore.proto.UserPreferences
-import com.peter.datastore.proto.complexData
-import com.peter.datastore.proto.item
 import kotlinx.coroutines.flow.first
 
 class MultiTypeDataManager(
     private val preferencesHelper: PreferencesDataStoreHelper,
-    private val protoHelper: ProtoDataStoreHelper
+    private val jsonHelper: JsonDataStoreHelper
 ) {
     data class UserData(
         val userName: String = "",
@@ -49,18 +43,17 @@ class MultiTypeDataManager(
     }
 
     suspend fun saveAppConfiguration(config: AppConfiguration) {
-        protoHelper.updateAppSettings { current ->
-            current.toBuilder()
-                .setTheme(config.theme)
-                .setFontSize(config.fontSize)
-                .setLanguage(config.language)
-                .setNotificationsEnabled(config.notificationsEnabled)
-                .build()
-        }
+        val appSettings = AppSettings(
+            theme = config.theme,
+            fontSize = config.fontSize,
+            language = config.language,
+            notificationsEnabled = config.notificationsEnabled
+        )
+        jsonHelper.saveAppSettings(appSettings)
     }
 
     suspend fun readAppConfiguration(): AppConfiguration {
-        val settings = protoHelper.appSettings.first()
+        val settings = jsonHelper.getAppSettings()
         return AppConfiguration(
             theme = settings.theme.ifEmpty { "light" },
             fontSize = if (settings.fontSize == 0) 14 else settings.fontSize,
@@ -70,41 +63,14 @@ class MultiTypeDataManager(
     }
 
     suspend fun saveComplexItems(items: List<ComplexItem>) {
-        protoHelper.updateComplexData { current ->
-            val builder = current.toBuilder()
-                .clearItems()
-                .setSchemaVersion(DataStoreConfig.DefaultValues.SCHEMA_VERSION)
-            
-            items.forEach { item ->
-                builder.addItems(
-                    com.peter.datastore.proto.ComplexData.Item.newBuilder()
-                        .setId(item.id)
-                        .setName(item.name)
-                        .setValue(item.value)
-                        .setTimestamp(item.timestamp)
-                        .build()
-                )
-            }
-            builder.build()
-        }
+        val complexData = ComplexData(
+            items = items,
+            schemaVersion = DataStoreConfig.DefaultValues.CURRENT_SCHEMA_VERSION
+        )
+        jsonHelper.saveComplexData(complexData)
     }
 
     suspend fun readComplexItems(): List<ComplexItem> {
-        val data = protoHelper.complexData.first()
-        return data.itemsList.map { item ->
-            ComplexItem(
-                id = item.id,
-                name = item.name,
-                value = item.value,
-                timestamp = item.timestamp
-            )
-        }
+        return jsonHelper.getComplexData().items
     }
-
-    data class ComplexItem(
-        val id: Int = 0,
-        val name: String = "",
-        val value: Double = 0.0,
-        val timestamp: Long = 0L
-    )
 }

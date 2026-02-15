@@ -17,6 +17,10 @@ object DataStoreConfig {
         const val NOTIFICATIONS_ENABLED = "notifications_enabled"
         const val SCORE = "score"
         const val FAVORITE_TAGS = "favorite_tags"
+        const val USER_DATA_JSON = "user_data_json"
+        const val APP_CONFIG_JSON = "app_config_json"
+        const val COMPLEX_ITEMS_JSON = "complex_items_json"
+        const val SCHEMA_VERSION = "schema_version"
     }
     
     object DefaultValues {
@@ -26,6 +30,6 @@ object DataStoreConfig {
         const val DEFAULT_FLOAT = 0f
         const val DEFAULT_DOUBLE = 0.0
         const val DEFAULT_BOOLEAN = false
-        const val SCHEMA_VERSION = 1
+        const val CURRENT_SCHEMA_VERSION = 1
     }
 }

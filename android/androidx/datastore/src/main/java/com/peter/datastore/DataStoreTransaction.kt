@@ -5,7 +5,7 @@ import kotlinx.coroutines.withContext
 
 class DataStoreTransaction(
     private val preferencesHelper: PreferencesDataStoreHelper,
-    private val protoHelper: ProtoDataStoreHelper
+    private val jsonHelper: JsonDataStoreHelper
 ) {
     private val operations = mutableListOf<suspend () -> Unit>()
 
@@ -44,23 +44,28 @@ class DataStoreTransaction(
         return this
     }
 
+    fun putObject(key: String, value: Any): DataStoreTransaction {
+        operations.add { jsonHelper.saveObject(key, value) }
+        return this
+    }
+
+    fun putUserPreferences(userPreferences: UserPreferences): DataStoreTransaction {
+        operations.add { jsonHelper.saveUserPreferences(userPreferences) }
+        return this
+    }
+
+    fun putAppSettings(appSettings: AppSettings): DataStoreTransaction {
+        operations.add { jsonHelper.saveAppSettings(appSettings) }
+        return this
+    }
+
+    fun putComplexData(complexData: ComplexData): DataStoreTransaction {
+        operations.add { jsonHelper.saveComplexData(complexData) }
+        return this
+    }
+
     fun remove(key: String): DataStoreTransaction {
         operations.add { preferencesHelper.remove(key) }
-        return this
-    }
-
-    fun updateUserPreferences(transform: (com.peter.datastore.proto.UserPreferences) -> com.peter.datastore.proto.UserPreferences): DataStoreTransaction {
-        operations.add { protoHelper.updateUserPreferences(transform) }
-        return this
-    }
-
-    fun updateAppSettings(transform: (com.peter.datastore.proto.AppSettings) -> com.peter.datastore.proto.AppSettings): DataStoreTransaction {
-        operations.add { protoHelper.updateAppSettings(transform) }
-        return this
-    }
-
-    fun updateComplexData(transform: (com.peter.datastore.proto.ComplexData) -> com.peter.datastore.proto.ComplexData): DataStoreTransaction {
-        operations.add { protoHelper.updateComplexData(transform) }
         return this
     }
 
@@ -85,10 +90,10 @@ class DataStoreTransaction(
 
 class TransactionManager(
     private val preferencesHelper: PreferencesDataStoreHelper,
-    private val protoHelper: ProtoDataStoreHelper
+    private val jsonHelper: JsonDataStoreHelper
 ) {
     fun beginTransaction(): DataStoreTransaction {
-        return DataStoreTransaction(preferencesHelper, protoHelper)
+        return DataStoreTransaction(preferencesHelper, jsonHelper)
     }
 
     suspend fun executeInTransaction(block: DataStoreTransaction.() -> Unit): Result<Unit> {

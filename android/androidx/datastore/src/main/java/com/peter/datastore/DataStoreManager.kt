@@ -3,14 +3,10 @@ package com.peter.datastore
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.asLiveData
-import com.peter.datastore.proto.AppSettings
-import com.peter.datastore.proto.ComplexData
-import com.peter.datastore.proto.UserPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,24 +18,24 @@ class DataStoreManager private constructor(private val context: Context) {
         PreferencesDataStoreHelper(context)
     }
     
-    private val protoHelper: ProtoDataStoreHelper by lazy {
-        ProtoDataStoreHelper(context)
+    private val jsonHelper: JsonDataStoreHelper by lazy {
+        JsonDataStoreHelper(preferencesHelper)
     }
     
     private val reactiveManager: ReactiveDataStoreManager by lazy {
-        ReactiveDataStoreManager(preferencesHelper, protoHelper, scope)
+        ReactiveDataStoreManager(preferencesHelper, jsonHelper, scope)
     }
     
     private val multiTypeManager: MultiTypeDataManager by lazy {
-        MultiTypeDataManager(preferencesHelper, protoHelper)
+        MultiTypeDataManager(preferencesHelper, jsonHelper)
     }
     
     private val transactionManager: TransactionManager by lazy {
-        TransactionManager(preferencesHelper, protoHelper)
+        TransactionManager(preferencesHelper, jsonHelper)
     }
     
     private val migrationManager: DataStoreMigrationManager by lazy {
-        DataStoreMigrationManager(context, preferencesHelper, protoHelper)
+        DataStoreMigrationManager(context, preferencesHelper, jsonHelper)
     }
 
     companion object {
@@ -117,32 +113,35 @@ class DataStoreManager private constructor(private val context: Context) {
     
     suspend fun clearPreferences() = preferencesHelper.clear()
 
-    fun getUserPreferencesFlow(): Flow<UserPreferences> = protoHelper.userPreferences
+    fun getUserPreferencesFlow(): Flow<UserPreferences> = jsonHelper.getUserPreferencesFlow()
     
-    fun getAppSettingsFlow(): Flow<AppSettings> = protoHelper.appSettings
+    fun getAppSettingsFlow(): Flow<AppSettings> = jsonHelper.getAppSettingsFlow()
     
-    fun getComplexDataFlow(): Flow<ComplexData> = protoHelper.complexData
+    fun getComplexDataFlow(): Flow<ComplexData> = jsonHelper.getComplexDataFlow()
 
-    suspend fun getUserPreferences(): UserPreferences = protoHelper.userPreferences.first()
+    suspend fun getUserPreferences(): UserPreferences = jsonHelper.getUserPreferences()
     
-    suspend fun getAppSettings(): AppSettings = protoHelper.appSettings.first()
+    suspend fun getAppSettings(): AppSettings = jsonHelper.getAppSettings()
     
-    suspend fun getComplexData(): ComplexData = protoHelper.complexData.first()
+    suspend fun getComplexData(): ComplexData = jsonHelper.getComplexData()
 
-    suspend fun updateUserPreferences(transform: (UserPreferences) -> UserPreferences) = 
-        protoHelper.updateUserPreferences(transform)
+    suspend fun saveUserPreferences(userPreferences: UserPreferences) = 
+        jsonHelper.saveUserPreferences(userPreferences)
     
-    suspend fun updateAppSettings(transform: (AppSettings) -> AppSettings) = 
-        protoHelper.updateAppSettings(transform)
+    suspend fun saveAppSettings(appSettings: AppSettings) = 
+        jsonHelper.saveAppSettings(appSettings)
     
-    suspend fun updateComplexData(transform: (ComplexData) -> ComplexData) = 
-        protoHelper.updateComplexData(transform)
+    suspend fun saveComplexData(complexData: ComplexData) = 
+        jsonHelper.saveComplexData(complexData)
 
-    suspend fun clearUserPreferences() = protoHelper.clearUserPreferences()
+    suspend fun <T> saveObject(key: String, value: T) where T : Any = 
+        jsonHelper.saveObject(key, value)
     
-    suspend fun clearAppSettings() = protoHelper.clearAppSettings()
+    fun <T> getObjectFlow(key: String, defaultValue: T): Flow<T> where T : Any = 
+        jsonHelper.getObjectFlow(key, defaultValue)
     
-    suspend fun clearComplexData() = protoHelper.clearComplexData()
+    suspend fun <T> getObject(key: String, defaultValue: T): T where T : Any = 
+        jsonHelper.getObject(key, defaultValue)
 
     fun observeString(key: String, defaultValue: String = ""): DataStoreObserver<String> = 
         reactiveManager.observeString(key, defaultValue)
@@ -180,10 +179,10 @@ class DataStoreManager private constructor(private val context: Context) {
     suspend fun readAppConfiguration(): MultiTypeDataManager.AppConfiguration = 
         multiTypeManager.readAppConfiguration()
     
-    suspend fun saveComplexItems(items: List<MultiTypeDataManager.ComplexItem>) = 
+    suspend fun saveComplexItems(items: List<ComplexItem>) = 
         multiTypeManager.saveComplexItems(items)
     
-    suspend fun readComplexItems(): List<MultiTypeDataManager.ComplexItem> = 
+    suspend fun readComplexItems(): List<ComplexItem> = 
         multiTypeManager.readComplexItems()
 
     fun beginTransaction(): DataStoreTransaction = transactionManager.beginTransaction()
