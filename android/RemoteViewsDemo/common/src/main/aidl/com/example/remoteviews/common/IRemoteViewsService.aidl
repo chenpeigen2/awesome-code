@@ -1,6 +1,7 @@
 package com.example.remoteviews.common;
 
 import com.example.remoteviews.common.RemoteViewInfo;
+import com.example.remoteviews.common.IRemoteViewsCallback;
 
 interface IRemoteViewsService {
     RemoteViewInfo getRemoteViewInfo(String viewId);
