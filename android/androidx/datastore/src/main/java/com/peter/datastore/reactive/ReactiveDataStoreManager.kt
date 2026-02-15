@@ -32,10 +32,6 @@ class DataStoreObserver<T>(
         }
     }
 
-    fun toLiveData(): LiveData<T> {
-        return flow.asLiveData(scope.coroutineContext)
-    }
-
     fun stopObserving() {
         observationJob?.cancel()
         observationJob = null
