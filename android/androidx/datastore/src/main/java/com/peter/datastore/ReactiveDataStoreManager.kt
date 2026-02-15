@@ -73,16 +73,8 @@ class ReactiveDataStoreManager(
         return DataStoreObserver(preferencesHelper.getStringSet(key, defaultValue), scope)
     }
 
-    fun observeUserPreferences(): DataStoreObserver<UserPreferences> {
-        return DataStoreObserver(jsonHelper.getUserPreferencesFlow(), scope)
-    }
-
-    fun observeAppSettings(): DataStoreObserver<AppSettings> {
-        return DataStoreObserver(jsonHelper.getAppSettingsFlow(), scope)
-    }
-
-    fun observeComplexData(): DataStoreObserver<ComplexData> {
-        return DataStoreObserver(jsonHelper.getComplexDataFlow(), scope)
+    fun <T> observeObject(key: String, defaultValue: T): DataStoreObserver<T> where T : Any {
+        return DataStoreObserver(jsonHelper.getObjectFlow(key, defaultValue), scope)
     }
 
     fun <T> combineObservations(
