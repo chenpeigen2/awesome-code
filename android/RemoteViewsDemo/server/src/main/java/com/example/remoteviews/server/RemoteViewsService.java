@@ -126,6 +126,21 @@ public class RemoteViewsService extends Service {
         return mBinder;
     }
 
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        if (intent != null && "com.example.remoteviews.server.UPDATE_VIEWS".equals(intent.getAction())) {
+            String viewId = intent.getStringExtra(Constants.EXTRA_VIEW_ID);
+            Log.d(TAG, "onStartCommand: update views for " + viewId);
+            
+            mUpdateCounter.incrementAndGet();
+            
+            if (viewId != null) {
+                notifyViewsUpdated(viewId);
+            }
+        }
+        return START_NOT_STICKY;
+    }
+
     private RemoteViews createRemoteViews(String viewId) {
         RemoteViewData data = mViewDataMap.get(viewId);
         if (data == null) {
@@ -143,8 +158,9 @@ public class RemoteViewsService extends Service {
         remoteViews.setTextViewText(R.id.tv_counter, "更新次数: " + mUpdateCounter.get());
         
         Intent clickIntent = new Intent(Constants.ACTION_BUTTON_CLICK);
+        clickIntent.setComponent(new android.content.ComponentName(getPackageName(), 
+                ButtonClickReceiver.class.getName()));
         clickIntent.putExtra(Constants.EXTRA_VIEW_ID, viewId);
-        clickIntent.setPackage(getPackageName());
         
         android.app.PendingIntent pendingIntent = android.app.PendingIntent.getBroadcast(
                 this,
