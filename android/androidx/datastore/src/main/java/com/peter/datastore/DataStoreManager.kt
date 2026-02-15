@@ -7,7 +7,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class DataStoreManager private constructor(private val context: Context) {
@@ -24,10 +23,6 @@ class DataStoreManager private constructor(private val context: Context) {
     
     private val reactiveManager: ReactiveDataStoreManager by lazy {
         ReactiveDataStoreManager(preferencesHelper, jsonHelper, scope)
-    }
-    
-    private val multiTypeManager: MultiTypeDataManager by lazy {
-        MultiTypeDataManager(preferencesHelper, jsonHelper)
     }
     
     private val transactionManager: TransactionManager by lazy {
@@ -52,6 +47,10 @@ class DataStoreManager private constructor(private val context: Context) {
     suspend fun initialize() {
         migrationManager.migrateIfNeeded()
     }
+
+    fun getPreferencesHelper(): PreferencesDataStoreHelper = preferencesHelper
+    
+    fun getJsonHelper(): JsonDataStoreHelper = jsonHelper
 
     suspend fun putString(key: String, value: String) = preferencesHelper.putString(key, value)
     
@@ -166,24 +165,6 @@ class DataStoreManager private constructor(private val context: Context) {
     
     fun getBooleanLiveData(key: String, defaultValue: Boolean = false): LiveData<Boolean> = 
         getBooleanFlow(key, defaultValue).asLiveData()
-
-    suspend fun saveUserData(userData: MultiTypeDataManager.UserData) = 
-        multiTypeManager.saveUserData(userData)
-    
-    suspend fun readUserData(): MultiTypeDataManager.UserData = 
-        multiTypeManager.readUserData()
-    
-    suspend fun saveAppConfiguration(config: MultiTypeDataManager.AppConfiguration) = 
-        multiTypeManager.saveAppConfiguration(config)
-    
-    suspend fun readAppConfiguration(): MultiTypeDataManager.AppConfiguration = 
-        multiTypeManager.readAppConfiguration()
-    
-    suspend fun saveComplexItems(items: List<ComplexItem>) = 
-        multiTypeManager.saveComplexItems(items)
-    
-    suspend fun readComplexItems(): List<ComplexItem> = 
-        multiTypeManager.readComplexItems()
 
     fun beginTransaction(): DataStoreTransaction = transactionManager.beginTransaction()
     

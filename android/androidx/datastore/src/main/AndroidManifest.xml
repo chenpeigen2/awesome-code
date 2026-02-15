@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application>
         <activity
-            android:name=".DataStoreDemoActivity"
+            android:name=".demo.DataStoreDemoActivity"
             android:exported="true"
             android:label="DataStore Demo">
             <intent-filter>
