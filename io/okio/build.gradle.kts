@@ -23,5 +23,6 @@ tasks.test {
 kotlin {
     compilerOptions {
         allWarningsAsErrors.set(false)
+        freeCompilerArgs.add("-Xsuppress-deprecated-warnings")
     }
 }
