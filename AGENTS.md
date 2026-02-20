@@ -5,11 +5,47 @@ This file provides guidelines and commands for AI agents working in this reposit
 ## Repository Overview
 
 Multi-language exploration repository containing:
-- **Java/Kotlin**: Algorithm practice, Spring Boot, framework explorations
+
+- **Java/Kotlin**: Algorithm practice, Spring Boot, Vert.x, gRPC, framework explorations
 - **Go Projects**: Fyne GUI apps and algorithm implementations
-- **Python**: Data science, Flask, learning exercises
+- **Python**: Data science, PyTorch, PyQt GUI apps, learning exercises
 - **TypeScript/Bun**: Modern TypeScript projects using Bun runtime
-- **Other**: C++, Groovy, Rust, Lua, Zig experiments
+- **Electron Apps**: Desktop applications (music-player, electron-music-player)
+- **Mobile**: Android native, Flutter, React Native, Capacitor
+- **Other**: C++, Groovy, Rust, Lua, Zig, Erlang experiments
+
+## Project Structure
+
+```
+awesome-code/
+├── kotlin/              # Kotlin basics and coroutines examples
+├── python/              # Python learning (PyTorch, pandas, matplotlib)
+├── go/                  # Go applications
+├── rust/                # Rust experiments
+├── zig/                 # Zig hello-world
+├── lua/                 # Lua scripts
+├── erl/                 # Erlang experiments
+├── c++/                 # C++ references
+├── flutter/             # Flutter mobile apps
+├── rn/                  # React Native apps
+├── js/                  # JavaScript experiments
+├── music-player/        # Electron + React music player
+├── javafx-music-player/ # JavaFX music player
+├── py-imageviewer/      # PyQt6 image viewer
+├── android/             # Android native projects
+├── vertx/               # Vert.x projects (gRPC, web, config)
+├── grpc/                # gRPC examples
+├── dagger/              # Dagger DI examples
+├── database/            # MongoDB, PostgreSQL, CouchDB
+├── explore/             # Framework explorations
+│   ├── ai/              # AI SDK experiments
+│   ├── bun/             # Bun runtime experiments
+│   ├── disruptor/       # LMAX Disruptor
+│   ├── Mutiny/          # SmallRye Mutiny
+│   ├── calcite-tutorial/# Apache Calcite
+│   └── ...              # More frameworks
+└── patterns/            # Design patterns
+```
 
 ## Build Commands
 
@@ -33,7 +69,16 @@ Multi-language exploration repository containing:
 
 # Build specific subproject
 ./gradlew :<subproject>:build
+
+# Examples
+./gradlew :grpc:build
+./gradlew :vertx:vertx-grpc:test
+./gradlew :explore:disruptor:build
 ```
+
+**Note:** Java 25 and Kotlin 2.3.0 are used. Some modules are excluded due to compatibility:
+- `kotlin:coroutines-examples` - Kotlin syntax errors
+- `explore:spring-shell` - JDK 25 compatibility issues
 
 ### Go Projects
 
@@ -55,7 +100,9 @@ go get <package-name>
 ### Python Projects
 
 ```bash
-# Install
+# Install (using uv recommended)
+uv pip install -e .
+# Or traditional
 pip install -e .
 
 # Run
@@ -65,6 +112,10 @@ python path/to/script.py
 pytest
 pytest path/to/test_file.py::test_function
 pytest -v
+
+# Linting (for py-imageviewer)
+ruff check .
+mypy .
 ```
 
 ### TypeScript/Bun
@@ -75,6 +126,63 @@ bun install
 bun run index.ts
 bun test
 ```
+
+### Electron Apps (music-player)
+
+```bash
+# Development
+npm run dev                    # Web only
+npm run electron:dev           # Full Electron app
+
+# Platform-specific start
+npm run start:linux
+npm run start:mac
+npm run start:win              # PowerShell
+npm run start:win-cmd          # CMD
+
+# Build
+npm run build                  # Frontend only
+npm run build:electron         # Electron main process
+npm run electron:build         # Full desktop app
+
+# Tests
+npm run test
+npm run test:watch
+npm run test:coverage
+```
+
+## Dependencies Management
+
+### Gradle Version Catalog
+
+This project uses Gradle Version Catalog (`gradle/libs.versions.toml`) for centralized dependency management:
+
+```kotlin
+// In build.gradle.kts
+dependencies {
+    implementation(libs.guava)
+    implementation(libs.okhttp)
+    testImplementation(libs.junit.jupiter)
+}
+
+// Using bundles
+implementation(libs.bundles.asm.all)
+implementation(libs.bundles.grpc.all)
+```
+
+### Key Versions
+
+| Technology | Version |
+|------------|---------|
+| Java | 25 |
+| Kotlin | 2.3.0 |
+| Gradle | 9.3.1 |
+| JUnit | 5.14.2 |
+| Guava | 33.5.0-jre |
+| OkHttp | 5.3.0 |
+| Vert.x | 4.5.24 |
+| gRPC | 1.78.0 |
+| Dagger | 2.59 |
 
 ## Code Style Guidelines
 
@@ -128,6 +236,7 @@ fun main(): Unit = runBlocking {
 
 - snake_case functions, PascalCase classes
 - Use f-strings, type hints where appropriate
+- Ruff for linting (line-length: 100)
 
 **Example:**
 ```python
@@ -156,11 +265,12 @@ const server = Bun.serve({
 
 ### Java/Kotlin
 - JUnit 5, descriptive test names
-- Mock external dependencies
+- Mock external dependencies with Mockito
 
 ### Python
 - pytest, parametrized tests
-- Mock external dependencies
+- pytest-qt for PyQt apps
+- pytest-asyncio for async tests
 
 **Example:**
 ```python
@@ -172,8 +282,8 @@ def test_double(input, expected):
     assert input * 2 == expected
 ```
 
-### TypeScript
-- Jest or Bun test runner
+### TypeScript/Electron
+- Vitest + Testing Library
 - Unit test functions, integration tests
 
 ## Error Handling
@@ -192,14 +302,55 @@ def test_double(input, expected):
 ### Python
 - Exceptions, custom exception classes, `finally` blocks
 
+## Notable Projects
+
+### music-player (Electron + React)
+A desktop music player with:
+- Local music file playback (mp3, flac, wav, aac, ogg, ape)
+- Online music search and download
+- Lyrics window (always on top)
+- Zustand state management with persistence
+- See `music-player/AGENTS.md` for details
+
+### py-imageviewer (PyQt6)
+A feature-rich image viewer with:
+- Local and online image browsing
+- PyQt6 GUI
+- Async support with aiohttp
+- See `py-imageviewer/README.md` for details
+
+### vertx/
+Vert.x ecosystem projects:
+- `vertx-grpc`: gRPC server/client
+- `vertx-web`: Web applications
+- `vertx-config`: Configuration management
+- `service-discovery`: Service discovery pattern
+
+### explore/
+Framework and library explorations:
+- `disruptor`: LMAX Disruptor patterns
+- `Mutiny`: Reactive programming
+- `calcite-tutorial`: Apache Calcite SQL
+- `jsprit`: Vehicle routing
+- `Kryo`: Serialization
+- `snappy`: Compression
+
 ## Common Gotchas
 
 - Go: `go mod tidy` after adding dependencies
-- Python: Virtual environments recommended
+- Python: Virtual environments recommended (`uv venv` or `python -m venv`)
 - TypeScript: May need `@types/*` packages
 - Java/Kotlin: Multi-module - use `./gradlew :module:task`
 - LeetCode Java projects: Chinese class names for concepts
 - Fyne projects: May need GUI development setup
+- Electron: Need to build both main and renderer processes
+- Gradle: Use version catalog (`libs.xxx`) instead of hardcoded versions
 - This is a learning repo - code quality varies
+
+## IDE Configuration
+
+- Gradle uses Aliyun and Tencent mirrors for faster downloads in China
+- Kotlin compiler uses `-Xjsr305=strict` for null-safety
+- Java release target: 25
 
 When in doubt, check existing code for patterns in each language directory.
