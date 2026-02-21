@@ -1,0 +1,19 @@
+[build]
+# 使用系统 GCC 而不是 lld
+rustflags = ["-C", "linker=gcc", "-C", "link-arg=-fuse-ld=bfd"]
+
+[target.x86_64-unknown-linux-gnu]
+linker = "/usr/bin/gcc"
+rustflags = ["-C", "link-arg=-fuse-ld=bfd"]
+
+[target.aarch64-linux-android]
+linker = "aarch64-linux-android21-clang"
+
+[target.armv7-linux-androideabi]
+linker = "armv7a-linux-androideabi21-clang"
+
+[target.i686-linux-android]
+linker = "i686-linux-android21-clang"
+
+[target.x86_64-linux-android]
+linker = "x86_64-linux-android21-clang"
