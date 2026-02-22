@@ -1,7 +1,18 @@
 #!/bin/bash
 set -e
 
-echo "=== Flutter Rust Bridge Android APK Build ==="
+# 用法: ./docker_build.sh [debug|release]
+# 默认构建 debug APK
+
+BUILD_TYPE="${1:-debug}"
+
+if [[ "$BUILD_TYPE" != "debug" && "$BUILD_TYPE" != "release" ]]; then
+    echo "错误: 构建类型必须是 'debug' 或 'release'"
+    echo "用法: $0 [debug|release]"
+    exit 1
+fi
+
+echo "=== Flutter Rust Bridge Android APK Build (${BUILD_TYPE}) ==="
 
 # 设置环境变量
 export ANDROID_HOME=/opt/android-sdk
@@ -23,15 +34,24 @@ flutter pub get
 echo "=== 生成 Rust 绑定代码 ==="
 flutter_rust_bridge_codegen generate
 
-echo "=== 构建 Android APK ==="
-flutter build apk
+echo "=== 构建 Android APK (${BUILD_TYPE}) ==="
+if [[ "$BUILD_TYPE" == "debug" ]]; then
+    flutter build apk --debug
+else
+    flutter build apk --release
+fi
 
 echo "=== 构建完成 ==="
 ls -la build/app/outputs/flutter-apk/
 
 echo "=== APK 文件信息 ==="
-APK_FILE=$(find build/app/outputs/flutter-apk -name "*.apk" | head -1)
-if [ -n "$APK_FILE" ]; then
+if [[ "$BUILD_TYPE" == "debug" ]]; then
+    APK_FILE="build/app/outputs/flutter-apk/app-debug.apk"
+else
+    APK_FILE="build/app/outputs/flutter-apk/app-release.apk"
+fi
+
+if [ -f "$APK_FILE" ]; then
     echo "APK 文件: $APK_FILE"
     echo "文件大小: $(du -h "$APK_FILE" | cut -f1)"
 fi
