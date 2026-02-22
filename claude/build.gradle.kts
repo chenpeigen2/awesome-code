@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    alias(libs.plugins.kotlin.jvm)
 }
 
 group = "org.peter"
