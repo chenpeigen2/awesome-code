@@ -188,7 +188,10 @@ class _CalculatorPageState extends State<CalculatorPage> {
         _result = record.result;
       });
       
-      widget.onCalculated(record);
+      // 过滤无意义的计算，不记录到历史
+      if (_isValidCalculation(a, b)) {
+        widget.onCalculated(record);
+      }
     } finally {
       if (mounted) {
         setState(() {
@@ -196,6 +199,31 @@ class _CalculatorPageState extends State<CalculatorPage> {
         });
       }
     }
+  }
+
+  /// 判断是否为有效计算（过滤无意义的计算）
+  bool _isValidCalculation(double a, double b) {
+    // 两个数都是 0 的计算没有意义
+    if (a == 0 && b == 0) {
+      return false;
+    }
+    // 任何数加 0 结果不变，无意义
+    if (_selectedOperation == Operation.add && b == 0) {
+      return false;
+    }
+    // 任何数减 0 结果不变，无意义
+    if (_selectedOperation == Operation.subtract && b == 0) {
+      return false;
+    }
+    // 任何数乘 0 结果为 0，无意义
+    if (_selectedOperation == Operation.multiply && (a == 0 || b == 0)) {
+      return false;
+    }
+    // 0 除以任何数结果为 0，无意义
+    if (_selectedOperation == Operation.divide && a == 0) {
+      return false;
+    }
+    return true;
   }
 
   @override
