@@ -39,51 +39,94 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final List<CalculationRecord> _history = [];
 
+  // 判断是否为宽屏（平板/桌面）
+  bool _isWideScreen(BuildContext context) {
+    return MediaQuery.of(context).size.width >= 600;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Row(
-        children: [
-          // 侧边导航
-          NavigationRail(
-            selectedIndex: _selectedIndex,
-            onDestinationSelected: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-            labelType: NavigationRailLabelType.all,
-            destinations: const [
-              NavigationRailDestination(
-                icon: Icon(Icons.calculate_outlined),
-                selectedIcon: Icon(Icons.calculate),
-                label: Text('计算器'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.history_outlined),
-                selectedIcon: Icon(Icons.history),
-                label: Text('历史记录'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.analytics_outlined),
-                selectedIcon: Icon(Icons.analytics),
-                label: Text('统计'),
-              ),
-              NavigationRailDestination(
-                icon: Icon(Icons.speed_outlined),
-                selectedIcon: Icon(Icons.speed),
-                label: Text('性能测试'),
-              ),
-            ],
-          ),
-          const VerticalDivider(thickness: 1, width: 1),
-          // 主内容
-          Expanded(
-            child: _buildContent(),
-          ),
-        ],
-      ),
-    );
+    final isWide = _isWideScreen(context);
+
+    if (isWide) {
+      // 宽屏：使用 NavigationRail
+      return Scaffold(
+        body: Row(
+          children: [
+            NavigationRail(
+              selectedIndex: _selectedIndex,
+              onDestinationSelected: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              labelType: NavigationRailLabelType.all,
+              destinations: const [
+                NavigationRailDestination(
+                  icon: Icon(Icons.calculate_outlined),
+                  selectedIcon: Icon(Icons.calculate),
+                  label: Text('计算器'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.history_outlined),
+                  selectedIcon: Icon(Icons.history),
+                  label: Text('历史记录'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.analytics_outlined),
+                  selectedIcon: Icon(Icons.analytics),
+                  label: Text('统计'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.speed_outlined),
+                  selectedIcon: Icon(Icons.speed),
+                  label: Text('性能测试'),
+                ),
+              ],
+            ),
+            const VerticalDivider(thickness: 1, width: 1),
+            Expanded(
+              child: _buildContent(),
+            ),
+          ],
+        ),
+      );
+    } else {
+      // 窄屏（手机）：使用 BottomNavigationBar
+      return Scaffold(
+        body: _buildContent(),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.calculate_outlined),
+              selectedIcon: Icon(Icons.calculate),
+              label: '计算器',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.history_outlined),
+              selectedIcon: Icon(Icons.history),
+              label: '历史记录',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.analytics_outlined),
+              selectedIcon: Icon(Icons.analytics),
+              label: '统计',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.speed_outlined),
+              selectedIcon: Icon(Icons.speed),
+              label: '性能测试',
+            ),
+          ],
+        ),
+      );
+    }
   }
 
   Widget _buildContent() {
@@ -165,101 +208,105 @@ class _CalculatorPageState extends State<CalculatorPage> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isWide = MediaQuery.of(context).size.width >= 600;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Column(
+        title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('异步计算器'),
-            Text('Rust 后端', style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
+            const Text('异步计算器'),
+            Text(
+              'Rust 后端',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.normal,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
           ],
         ),
-        backgroundColor: colorScheme.surfaceContainerHighest,
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.all(isWide ? 24 : 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // 输入卡片
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.all(isWide ? 24 : 16),
                 child: Column(
                   children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            controller: _numAController,
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            decoration: const InputDecoration(
-                              labelText: '数字 A',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.pin),
+                    // 数字A输入
+                    TextField(
+                      controller: _numAController,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration(
+                        labelText: '数字 A',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.pin),
+                      ),
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                    const SizedBox(height: 16),
+                    // 运算符选择
+                    Container(
+                      decoration: BoxDecoration(
+                        color: colorScheme.surfaceContainerHigh,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: Operation.values.map((op) {
+                          return Padding(
+                            padding: const EdgeInsets.all(4),
+                            child: _OperationButton(
+                              operation: op,
+                              isSelected: op == _selectedOperation,
+                              onTap: () {
+                                setState(() {
+                                  _selectedOperation = op;
+                                });
+                              },
                             ),
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        // 运算符按钮组
-                        Container(
-                          decoration: BoxDecoration(
-                            color: colorScheme.surfaceContainerHigh,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: Operation.values.map((op) {
-                              return Padding(
-                                padding: const EdgeInsets.all(4),
-                                child: _OperationButton(
-                                  operation: op,
-                                  isSelected: op == _selectedOperation,
-                                  onTap: () async {
-                                    setState(() {
-                                      _selectedOperation = op;
-                                    });
-                                  },
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                        const SizedBox(width: 16),
-                        Expanded(
-                          child: TextField(
-                            controller: _numBController,
-                            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                            decoration: const InputDecoration(
-                              labelText: '数字 B',
-                              border: OutlineInputBorder(),
-                              prefixIcon: Icon(Icons.pin),
-                            ),
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                        ),
-                      ],
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // 数字B输入
+                    TextField(
+                      controller: _numBController,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      decoration: const InputDecoration(
+                        labelText: '数字 B',
+                        border: OutlineInputBorder(),
+                        prefixIcon: Icon(Icons.pin),
+                      ),
+                      style: const TextStyle(fontSize: 20),
                     ),
                     const SizedBox(height: 24),
                     // 计算按钮
-                    FilledButton.icon(
-                      onPressed: _isLoading ? null : _calculate,
-                      icon: _isLoading
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Icon(Icons.play_arrow),
-                      label: Text(_isLoading ? '计算中...' : '计算'),
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 48,
-                          vertical: 16,
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: _isLoading ? null : _calculate,
+                        icon: _isLoading
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(strokeWidth: 2),
+                              )
+                            : const Icon(Icons.play_arrow),
+                        label: Text(_isLoading ? '计算中...' : '计算'),
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 48,
+                            vertical: 16,
+                          ),
+                          textStyle: const TextStyle(fontSize: 18),
                         ),
-                        textStyle: const TextStyle(fontSize: 18),
                       ),
                     ),
                   ],
@@ -271,7 +318,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
             Card(
               color: colorScheme.surfaceContainerHighest,
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.all(isWide ? 24 : 16),
                 child: Column(
                   children: [
                     Text(
@@ -321,6 +368,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                                             color: Colors.red,
                                           ),
+                                      textAlign: TextAlign.center,
                                     ),
                                   ],
                                 ),
@@ -421,7 +469,6 @@ class HistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('计算历史'),
-        backgroundColor: colorScheme.surfaceContainerHighest,
       ),
       body: history.isEmpty
           ? Center(
@@ -520,7 +567,6 @@ class StatsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('统计信息'),
-        backgroundColor: colorScheme.surfaceContainerHighest,
       ),
       body: FutureBuilder<CalculatorStats>(
         future: computeStats(records: history),
@@ -528,53 +574,37 @@ class StatsPage extends StatelessWidget {
           final stats = snapshot.data;
           
           return Padding(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 统计卡片
-                Row(
-                  children: [
-                    Expanded(
-                      child: _StatCard(
-                        title: '总计算次数',
-                        value: '${stats?.totalCalculations ?? 0}',
-                        icon: Icons.calculate,
-                        color: Colors.blue,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _StatCard(
-                        title: '成功次数',
-                        value: '${stats?.successCount ?? 0}',
-                        icon: Icons.check_circle,
-                        color: Colors.green,
-                      ),
-                    ),
-                  ],
+                // 统计卡片 - 竖向排列更适合手机
+                _StatCard(
+                  title: '总计算次数',
+                  value: '${stats?.totalCalculations ?? 0}',
+                  icon: Icons.calculate,
+                  color: Colors.blue,
                 ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: _StatCard(
-                        title: '错误次数',
-                        value: '${stats?.errorCount ?? 0}',
-                        icon: Icons.error,
-                        color: Colors.red,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: _StatCard(
-                        title: '平均值',
-                        value: (stats?.averageValue ?? 0).toStringAsFixed(4),
-                        icon: Icons.analytics,
-                        color: Colors.purple,
-                      ),
-                    ),
-                  ],
+                const SizedBox(height: 12),
+                _StatCard(
+                  title: '成功次数',
+                  value: '${stats?.successCount ?? 0}',
+                  icon: Icons.check_circle,
+                  color: Colors.green,
+                ),
+                const SizedBox(height: 12),
+                _StatCard(
+                  title: '错误次数',
+                  value: '${stats?.errorCount ?? 0}',
+                  icon: Icons.error,
+                  color: Colors.red,
+                ),
+                const SizedBox(height: 12),
+                _StatCard(
+                  title: '平均值',
+                  value: (stats?.averageValue ?? 0).toStringAsFixed(4),
+                  icon: Icons.analytics,
+                  color: Colors.purple,
                 ),
                 const SizedBox(height: 24),
                 // 说明
@@ -631,25 +661,38 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(16),
+        child: Row(
           children: [
-            Icon(icon, color: color, size: 32),
-            const SizedBox(height: 12),
-            Text(
-              title,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.outline,
-                  ),
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: color, size: 28),
             ),
-            const SizedBox(height: 4),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    color: color,
-                    fontWeight: FontWeight.bold,
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.outline,
+                        ),
                   ),
+                  const SizedBox(height: 4),
+                  Text(
+                    value,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: color,
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -722,16 +765,15 @@ class _PerformancePageState extends State<PerformancePage> {
             Text('异步计算演示', style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
           ],
         ),
-        backgroundColor: colorScheme.surfaceContainerHighest,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Card(
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -757,20 +799,23 @@ class _PerformancePageState extends State<PerformancePage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    FilledButton.icon(
-                      onPressed: _isLoading ? null : _runBenchmark,
-                      icon: _isLoading
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(strokeWidth: 2),
-                            )
-                          : const Icon(Icons.play_arrow),
-                      label: Text(_isLoading ? '计算中...' : '开始测试'),
-                      style: FilledButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 32,
-                          vertical: 12,
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton.icon(
+                        onPressed: _isLoading ? null : _runBenchmark,
+                        icon: _isLoading
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(strokeWidth: 2),
+                              )
+                            : const Icon(Icons.play_arrow),
+                        label: Text(_isLoading ? '计算中...' : '开始测试'),
+                        style: FilledButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 32,
+                            vertical: 12,
+                          ),
                         ),
                       ),
                     ),

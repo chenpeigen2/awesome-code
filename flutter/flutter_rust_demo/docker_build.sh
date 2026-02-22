@@ -23,8 +23,8 @@ flutter pub get
 echo "=== 生成 Rust 绑定代码 ==="
 flutter_rust_bridge_codegen generate
 
-echo "=== 构建 Android APK (release) ==="
-flutter build apk --release
+echo "=== 构建 Android APK ==="
+flutter build apk
 
 echo "=== 构建完成 ==="
 ls -la build/app/outputs/flutter-apk/
