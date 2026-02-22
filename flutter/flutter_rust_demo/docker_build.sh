@@ -20,6 +20,9 @@ export ANDROID_SDK_ROOT=/opt/android-sdk
 export NDK_HOME=${ANDROID_HOME}/ndk/27.0.12077973
 source $HOME/.cargo/env
 
+# 配置 GitHub 代理加速
+export GIT_PROXY_COMMAND="env -u http_proxy -u https_proxy"
+
 echo "=== 环境信息 ==="
 echo "Flutter version: $(flutter --version | head -1)"
 echo "Rust version: $(rustc --version)"
@@ -29,7 +32,17 @@ echo "=== 清理之前的构建 ==="
 flutter clean
 
 echo "=== 获取依赖 ==="
-flutter pub get
+# 尝试多次下载依赖
+for i in {1..3}; do
+    echo "尝试获取依赖 (第 $i 次)..."
+    if flutter pub get; then
+        echo "依赖获取成功!"
+        break
+    else
+        echo "依赖获取失败，等待 10 秒后重试..."
+        sleep 10
+    fi
+done
 
 echo "=== 生成 Rust 绑定代码 ==="
 flutter_rust_bridge_codegen generate
