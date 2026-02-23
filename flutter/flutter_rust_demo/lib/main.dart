@@ -38,6 +38,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   final List<CalculationRecord> _history = [];
+  
+  // 保存计算器页面状态
+  final CalculatorState _calculatorState = CalculatorState();
+  
+  // 保存性能测试页面状态
+  final PerformanceState _performanceState = PerformanceState();
 
   // 判断是否为宽屏（平板/桌面）
   bool _isWideScreen(BuildContext context) {
@@ -133,6 +139,7 @@ class _HomePageState extends State<HomePage> {
     switch (_selectedIndex) {
       case 0:
         return CalculatorPage(
+          state: _calculatorState,
           onCalculated: (record) {
             setState(() {
               _history.insert(0, record);
@@ -144,30 +151,55 @@ class _HomePageState extends State<HomePage> {
       case 2:
         return StatsPage(history: _history);
       case 3:
-        return const PerformancePage();
+        return PerformancePage(state: _performanceState);
       default:
         return const SizedBox();
     }
   }
 }
 
+// 计算器状态类
+class CalculatorState {
+  String numA = '0';
+  String numB = '0';
+  Operation operation = Operation.add;
+  CalcResult? result;
+}
+
+// 性能测试状态类
+class PerformanceState {
+  String iterations = '1000';
+  double? result;
+  Duration? duration;
+}
+
 // ==================== 计算器页面 ====================
 
 class CalculatorPage extends StatefulWidget {
+  final CalculatorState state;
   final void Function(CalculationRecord) onCalculated;
 
-  const CalculatorPage({super.key, required this.onCalculated});
+  const CalculatorPage({super.key, required this.state, required this.onCalculated});
 
   @override
   State<CalculatorPage> createState() => _CalculatorPageState();
 }
 
 class _CalculatorPageState extends State<CalculatorPage> {
-  final TextEditingController _numAController = TextEditingController(text: '0');
-  final TextEditingController _numBController = TextEditingController(text: '0');
-  Operation _selectedOperation = Operation.add;
+  late TextEditingController _numAController;
+  late TextEditingController _numBController;
+  late Operation _selectedOperation;
   CalcResult? _result;
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _numAController = TextEditingController(text: widget.state.numA);
+    _numBController = TextEditingController(text: widget.state.numB);
+    _selectedOperation = widget.state.operation;
+    _result = widget.state.result;
+  }
 
   Future<void> _calculate() async {
     final a = double.tryParse(_numAController.text) ?? 0;
@@ -187,6 +219,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
       setState(() {
         _result = record.result;
       });
+      
+      // 保存状态
+      widget.state.numA = _numAController.text;
+      widget.state.numB = _numBController.text;
+      widget.state.operation = _selectedOperation;
+      widget.state.result = record.result;
       
       // 过滤无意义的计算，不记录到历史
       if (_isValidCalculation(a, b)) {
@@ -732,17 +770,27 @@ class _StatCard extends StatelessWidget {
 // ==================== 性能测试页面 ====================
 
 class PerformancePage extends StatefulWidget {
-  const PerformancePage({super.key});
+  final PerformanceState state;
+
+  const PerformancePage({super.key, required this.state});
 
   @override
   State<PerformancePage> createState() => _PerformancePageState();
 }
 
 class _PerformancePageState extends State<PerformancePage> {
-  final TextEditingController _iterationsController = TextEditingController(text: '1000');
+  late TextEditingController _iterationsController;
   double? _result;
   bool _isLoading = false;
   Duration? _duration;
+
+  @override
+  void initState() {
+    super.initState();
+    _iterationsController = TextEditingController(text: widget.state.iterations);
+    _result = widget.state.result;
+    _duration = widget.state.duration;
+  }
 
   Future<void> _runBenchmark() async {
     final iterations = int.tryParse(_iterationsController.text) ?? 1000;
@@ -764,6 +812,11 @@ class _PerformancePageState extends State<PerformancePage> {
           _result = result;
           _duration = stopwatch.elapsed;
         });
+        
+        // 保存状态
+        widget.state.iterations = _iterationsController.text;
+        widget.state.result = result;
+        widget.state.duration = stopwatch.elapsed;
       }
     } finally {
       if (mounted) {
