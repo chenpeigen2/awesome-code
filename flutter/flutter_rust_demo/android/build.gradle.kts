@@ -3,6 +3,10 @@ allprojects {
         maven { url = uri("https://maven.aliyun.com/repository/google") }
         maven { url = uri("https://maven.aliyun.com/repository/central") }
         maven { url = uri("https://maven.aliyun.com/repository/public") }
+        maven { url = uri("https://mirrors.cloud.tencent.com/maven/") }
+        maven { url = uri("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/") }
+        // Flutter 中国镜像，用于下载 Flutter Android 引擎组件
+        maven { url = uri("https://download.flutter.io") }
         google()
         mavenCentral()
     }
