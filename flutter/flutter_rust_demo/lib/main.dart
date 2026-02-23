@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'package:flutter_rust_demo/src/rust/api/simple.dart';
 import 'package:flutter_rust_demo/src/rust/frb_generated.dart';
+import 'dart:math' as math;
 
 Future<void> main() async {
   await RustLib.init();
@@ -14,7 +15,7 @@ class CalculatorApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter + Rust Bridge Demo',
+      title: '计算器',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -44,6 +45,9 @@ class _HomePageState extends State<HomePage> {
   
   // 保存性能测试页面状态
   final PerformanceState _performanceState = PerformanceState();
+  
+  // 保存单位换算页面状态
+  final UnitConverterState _unitConverterState = UnitConverterState();
 
   // 判断是否为宽屏（平板/桌面）
   bool _isWideScreen(BuildContext context) {
@@ -72,6 +76,11 @@ class _HomePageState extends State<HomePage> {
                   icon: Icon(Icons.calculate_outlined),
                   selectedIcon: Icon(Icons.calculate),
                   label: Text('计算器'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.swap_horiz_outlined),
+                  selectedIcon: Icon(Icons.swap_horiz),
+                  label: Text('单位换算'),
                 ),
                 NavigationRailDestination(
                   icon: Icon(Icons.history_outlined),
@@ -115,6 +124,11 @@ class _HomePageState extends State<HomePage> {
               label: '计算器',
             ),
             NavigationDestination(
+              icon: Icon(Icons.swap_horiz_outlined),
+              selectedIcon: Icon(Icons.swap_horiz),
+              label: '单位换算',
+            ),
+            NavigationDestination(
               icon: Icon(Icons.history_outlined),
               selectedIcon: Icon(Icons.history),
               label: '历史记录',
@@ -147,10 +161,12 @@ class _HomePageState extends State<HomePage> {
           },
         );
       case 1:
-        return HistoryPage(history: _history);
+        return UnitConverterPage(state: _unitConverterState);
       case 2:
-        return StatsPage(history: _history);
+        return HistoryPage(history: _history);
       case 3:
+        return StatsPage(history: _history);
+      case 4:
         return PerformancePage(state: _performanceState);
       default:
         return const SizedBox();
@@ -171,6 +187,14 @@ class PerformanceState {
   String iterations = '1000';
   double? result;
   Duration? duration;
+}
+
+// 单位换算状态类
+class UnitConverterState {
+  int tabIndex = 0;
+  Map<String, String> inputValues = {};
+  Map<String, String> fromUnits = {};
+  Map<String, String> toUnits = {};
 }
 
 // ==================== 计算器页面 ====================
@@ -241,26 +265,11 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
   /// 判断是否为有效计算（过滤无意义的计算）
   bool _isValidCalculation(double a, double b) {
-    // 两个数都是 0 的计算没有意义
-    if (a == 0 && b == 0) {
-      return false;
-    }
-    // 任何数加 0 结果不变，无意义
-    if (_selectedOperation == Operation.add && b == 0) {
-      return false;
-    }
-    // 任何数减 0 结果不变，无意义
-    if (_selectedOperation == Operation.subtract && b == 0) {
-      return false;
-    }
-    // 任何数乘 0 结果为 0，无意义
-    if (_selectedOperation == Operation.multiply && (a == 0 || b == 0)) {
-      return false;
-    }
-    // 0 除以任何数结果为 0，无意义
-    if (_selectedOperation == Operation.divide && a == 0) {
-      return false;
-    }
+    if (a == 0 && b == 0) return false;
+    if (_selectedOperation == Operation.add && b == 0) return false;
+    if (_selectedOperation == Operation.subtract && b == 0) return false;
+    if (_selectedOperation == Operation.multiply && (a == 0 || b == 0)) return false;
+    if (_selectedOperation == Operation.divide && a == 0) return false;
     return true;
   }
 
@@ -278,20 +287,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text('异步计算器'),
-            Text(
-              'Rust 后端',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.normal,
-                color: colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ),
+        title: const Text('异步计算器'),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(isWide ? 24 : 16),
@@ -304,7 +300,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                 padding: EdgeInsets.all(isWide ? 24 : 16),
                 child: Column(
                   children: [
-                    // 数字A输入
                     TextField(
                       controller: _numAController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -316,7 +311,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       style: const TextStyle(fontSize: 20),
                     ),
                     const SizedBox(height: 16),
-                    // 运算符选择
                     Container(
                       decoration: BoxDecoration(
                         color: colorScheme.surfaceContainerHigh,
@@ -341,7 +335,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    // 数字B输入
                     TextField(
                       controller: _numBController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -353,7 +346,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                       style: const TextStyle(fontSize: 20),
                     ),
                     const SizedBox(height: 24),
-                    // 计算按钮
                     SizedBox(
                       width: double.infinity,
                       child: FilledButton.icon(
@@ -405,11 +397,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               CalcResult_Success(:final value) => Column(
                                   key: const ValueKey('success'),
                                   children: [
-                                    Icon(
-                                      Icons.check_circle,
-                                      color: Colors.green,
-                                      size: 48,
-                                    ),
+                                    Icon(Icons.check_circle, color: Colors.green, size: 48),
                                     const SizedBox(height: 8),
                                     Text(
                                       value.toStringAsFixed(4),
@@ -423,11 +411,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                               CalcResult_Error(:final message) => Column(
                                   key: const ValueKey('error'),
                                   children: [
-                                    Icon(
-                                      Icons.error,
-                                      color: Colors.red,
-                                      size: 48,
-                                    ),
+                                    Icon(Icons.error, color: Colors.red, size: 48),
                                     const SizedBox(height: 8),
                                     Text(
                                       message,
@@ -442,28 +426,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
                     ),
                   ],
                 ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            // 技术说明
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: colorScheme.primaryContainer,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Row(
-                children: [
-                  Icon(Icons.info_outline, color: colorScheme.onPrimaryContainer),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      '此计算器使用 Flutter + Rust Bridge 构建。'
-                      '计算逻辑运行在 Rust 中，通过异步调用不阻塞 UI。',
-                      style: TextStyle(color: colorScheme.onPrimaryContainer),
-                    ),
-                  ),
-                ],
               ),
             ),
           ],
@@ -521,6 +483,384 @@ class _OperationButton extends StatelessWidget {
   }
 }
 
+// ==================== 单位换算页面 ====================
+
+class UnitConverterPage extends StatefulWidget {
+  final UnitConverterState state;
+
+  const UnitConverterPage({super.key, required this.state});
+
+  @override
+  State<UnitConverterPage> createState() => _UnitConverterPageState();
+}
+
+class _UnitConverterPageState extends State<UnitConverterPage> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  late TextEditingController _inputController;
+  String _result = '';
+  
+  // 定义各类单位
+  final Map<String, List<String>> _unitCategories = {
+    '温度': ['摄氏度 (°C)', '华氏度 (°F)', '开尔文 (K)'],
+    '长度': ['米 (m)', '千米 (km)', '厘米 (cm)', '毫米 (mm)', '英寸 (in)', '英尺 (ft)', '英里 (mi)', '海里 (nmi)'],
+    '速度': ['米/秒 (m/s)', '千米/时 (km/h)', '英里/时 (mph)', '节 (kn)', '马赫 (Ma)'],
+    '时间': ['秒 (s)', '分 (min)', '时 (h)', '天 (d)', '周 (wk)', '月', '年'],
+    '质量': ['克 (g)', '千克 (kg)', '毫克 (mg)', '吨 (t)', '盎司 (oz)', '磅 (lb)'],
+    '面积': ['平方米 (m²)', '平方千米 (km²)', '平方厘米 (cm²)', '公顷 (ha)', '亩', '平方英尺 (ft²)', '英亩 (ac)'],
+    '体积': ['升 (L)', '毫升 (mL)', '立方米 (m³)', '立方厘米 (cm³)', '加仑 (gal)', '品脱 (pt)'],
+    '压强': ['帕斯卡 (Pa)', '千帕 (kPa)', '兆帕 (MPa)', '巴 (bar)', '标准大气压 (atm)', '毫米汞柱 (mmHg)', '磅/平方英寸 (psi)'],
+    '电压': ['伏特 (V)', '千伏 (kV)', '毫伏 (mV)', '微伏 (μV)'],
+    '进制': ['二进制', '八进制', '十进制', '十六进制'],
+  };
+
+  String? _fromUnit;
+  String? _toUnit;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(
+      length: _unitCategories.length,
+      vsync: this,
+      initialIndex: widget.state.tabIndex,
+    );
+    _tabController.addListener(() {
+      widget.state.tabIndex = _tabController.index;
+      _resetUnits();
+    });
+    
+    _inputController = TextEditingController();
+    _resetUnits();
+  }
+
+  void _resetUnits() {
+    final category = _unitCategories.keys.elementAt(_tabController.index);
+    final units = _unitCategories[category]!;
+    setState(() {
+      _fromUnit = units.first;
+      _toUnit = units.length > 1 ? units[1] : units.first;
+      _result = '';
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _inputController.dispose();
+    super.dispose();
+  }
+
+  void _convert() {
+    final input = _inputController.text;
+    if (input.isEmpty) {
+      setState(() => _result = '');
+      return;
+    }
+
+    final category = _unitCategories.keys.elementAt(_tabController.index);
+    double? value;
+    
+    // 进制换算特殊处理
+    if (category == '进制') {
+      try {
+        int intValue;
+        if (_fromUnit == '二进制') {
+          intValue = int.parse(input, radix: 2);
+        } else if (_fromUnit == '八进制') {
+          intValue = int.parse(input, radix: 8);
+        } else if (_fromUnit == '十进制') {
+          intValue = int.parse(input);
+        } else if (_fromUnit == '十六进制') {
+          intValue = int.parse(input, radix: 16);
+        } else {
+          intValue = int.parse(input);
+        }
+
+        String converted;
+        if (_toUnit == '二进制') {
+          converted = intValue.toRadixString(2);
+        } else if (_toUnit == '八进制') {
+          converted = intValue.toRadixString(8);
+        } else if (_toUnit == '十进制') {
+          converted = intValue.toString();
+        } else if (_toUnit == '十六进制') {
+          converted = intValue.toRadixString(16).toUpperCase();
+        } else {
+          converted = intValue.toString();
+        }
+
+        setState(() => _result = converted);
+      } catch (e) {
+        setState(() => _result = '输入格式错误');
+      }
+      return;
+    }
+
+    // 数值换算
+    value = double.tryParse(input);
+    if (value == null) {
+      setState(() => _result = '请输入有效数字');
+      return;
+    }
+
+    double result = _convertValue(value, category, _fromUnit!, _toUnit!);
+    setState(() => _result = _formatResult(result));
+  }
+
+  double _convertValue(double value, String category, String from, String to) {
+    // 温度换算
+    if (category == '温度') {
+      double celsius;
+      // 先转成摄氏度
+      if (from.contains('摄氏')) celsius = value;
+      else if (from.contains('华氏')) celsius = (value - 32) * 5 / 9;
+      else if (from.contains('开尔文')) celsius = value - 273.15;
+      else celsius = value;
+
+      // 再从摄氏度转成目标单位
+      if (to.contains('摄氏')) return celsius;
+      else if (to.contains('华氏')) return celsius * 9 / 5 + 32;
+      else if (to.contains('开尔文')) return celsius + 273.15;
+      return celsius;
+    }
+
+    // 其他单位：使用基准单位换算
+    Map<String, double> factors = _getConversionFactors(category);
+    double baseValue = value * (factors[from] ?? 1);
+    return baseValue / (factors[to] ?? 1);
+  }
+
+  Map<String, double> _getConversionFactors(String category) {
+    switch (category) {
+      case '长度':
+        return {
+          '米 (m)': 1,
+          '千米 (km)': 1000,
+          '厘米 (cm)': 0.01,
+          '毫米 (mm)': 0.001,
+          '英寸 (in)': 0.0254,
+          '英尺 (ft)': 0.3048,
+          '英里 (mi)': 1609.344,
+          '海里 (nmi)': 1852,
+        };
+      case '速度':
+        return {
+          '米/秒 (m/s)': 1,
+          '千米/时 (km/h)': 1 / 3.6,
+          '英里/时 (mph)': 0.44704,
+          '节 (kn)': 0.514444,
+          '马赫 (Ma)': 340.29,
+        };
+      case '时间':
+        return {
+          '秒 (s)': 1,
+          '分 (min)': 60,
+          '时 (h)': 3600,
+          '天 (d)': 86400,
+          '周 (wk)': 604800,
+          '月': 2592000,
+          '年': 31536000,
+        };
+      case '质量':
+        return {
+          '克 (g)': 0.001,
+          '千克 (kg)': 1,
+          '毫克 (mg)': 0.000001,
+          '吨 (t)': 1000,
+          '盎司 (oz)': 0.0283495,
+          '磅 (lb)': 0.453592,
+        };
+      case '面积':
+        return {
+          '平方米 (m²)': 1,
+          '平方千米 (km²)': 1000000,
+          '平方厘米 (cm²)': 0.0001,
+          '公顷 (ha)': 10000,
+          '亩': 666.667,
+          '平方英尺 (ft²)': 0.092903,
+          '英亩 (ac)': 4046.86,
+        };
+      case '体积':
+        return {
+          '升 (L)': 0.001,
+          '毫升 (mL)': 0.000001,
+          '立方米 (m³)': 1,
+          '立方厘米 (cm³)': 0.000001,
+          '加仑 (gal)': 0.00378541,
+          '品脱 (pt)': 0.000473176,
+        };
+      case '压强':
+        return {
+          '帕斯卡 (Pa)': 1,
+          '千帕 (kPa)': 1000,
+          '兆帕 (MPa)': 1000000,
+          '巴 (bar)': 100000,
+          '标准大气压 (atm)': 101325,
+          '毫米汞柱 (mmHg)': 133.322,
+          '磅/平方英寸 (psi)': 6894.76,
+        };
+      case '电压':
+        return {
+          '伏特 (V)': 1,
+          '千伏 (kV)': 1000,
+          '毫伏 (mV)': 0.001,
+          '微伏 (μV)': 0.000001,
+        };
+      default:
+        return {};
+    }
+  }
+
+  String _formatResult(double value) {
+    if (value == value.toInt()) {
+      return value.toInt().toString();
+    } else if (value.abs() < 0.0001 || value.abs() > 1000000) {
+      return value.toStringAsExponential(6);
+    } else {
+      return value.toStringAsFixed(6).replaceAll(RegExp(r'0+$'), '').replaceAll(RegExp(r'\.$'), '');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final categories = _unitCategories.keys.toList();
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('单位换算'),
+        bottom: TabBar(
+          controller: _tabController,
+          isScrollable: true,
+          tabAlignment: TabAlignment.start,
+          tabs: categories.map((c) => Tab(text: c)).toList(),
+        ),
+      ),
+      body: TabBarView(
+        controller: _tabController,
+        children: categories.map((category) {
+          final units = _unitCategories[category]!;
+          return SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // 输入卡片
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        // 输入值
+                        TextField(
+                          controller: _inputController,
+                          keyboardType: category == '进制' && _fromUnit?.contains('十六') == true
+                              ? TextInputType.text
+                              : const TextInputType.numberWithOptions(decimal: true, signed: true),
+                          decoration: InputDecoration(
+                            labelText: '输入数值',
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: const Icon(Icons.clear),
+                              onPressed: () {
+                                _inputController.clear();
+                                setState(() => _result = '');
+                              },
+                            ),
+                          ),
+                          style: const TextStyle(fontSize: 24),
+                          onChanged: (_) => _convert(),
+                        ),
+                        const SizedBox(height: 16),
+                        // 源单位
+                        DropdownButtonFormField<String>(
+                          value: _fromUnit,
+                          decoration: const InputDecoration(
+                            labelText: '从',
+                            border: OutlineInputBorder(),
+                          ),
+                          items: units.map((u) => DropdownMenuItem(value: u, child: Text(u))).toList(),
+                          onChanged: (v) {
+                            setState(() => _fromUnit = v);
+                            _convert();
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        // 交换按钮
+                        IconButton(
+                          icon: const Icon(Icons.swap_vert, size: 32),
+                          onPressed: () {
+                            setState(() {
+                              final temp = _fromUnit;
+                              _fromUnit = _toUnit;
+                              _toUnit = temp;
+                            });
+                            _convert();
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        // 目标单位
+                        DropdownButtonFormField<String>(
+                          value: _toUnit,
+                          decoration: const InputDecoration(
+                            labelText: '到',
+                            border: OutlineInputBorder(),
+                          ),
+                          items: units.map((u) => DropdownMenuItem(value: u, child: Text(u))).toList(),
+                          onChanged: (v) {
+                            setState(() => _toUnit = v);
+                            _convert();
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                // 结果卡片
+                Card(
+                  color: colorScheme.primaryContainer,
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Column(
+                      children: [
+                        Text(
+                          '转换结果',
+                          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: colorScheme.onPrimaryContainer,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          _result.isEmpty ? '—' : _result,
+                          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            color: colorScheme.onPrimaryContainer,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        if (_result.isNotEmpty && _toUnit != null) ...[
+                          const SizedBox(height: 8),
+                          Text(
+                            _toUnit!,
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onPrimaryContainer.withOpacity(0.7),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+}
+
 // ==================== 历史记录页面 ====================
 
 class HistoryPage extends StatelessWidget {
@@ -541,11 +881,7 @@ class HistoryPage extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.history,
-                    size: 64,
-                    color: colorScheme.outline,
-                  ),
+                  Icon(Icons.history, size: 64, color: colorScheme.outline),
                   const SizedBox(height: 16),
                   Text(
                     '暂无计算记录',
@@ -644,36 +980,14 @@ class StatsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // 统计卡片 - 竖向排列更适合手机
-                _StatCard(
-                  title: '总计算次数',
-                  value: '${stats?.totalCalculations ?? 0}',
-                  icon: Icons.calculate,
-                  color: Colors.blue,
-                ),
+                _StatCard(title: '总计算次数', value: '${stats?.totalCalculations ?? 0}', icon: Icons.calculate, color: Colors.blue),
                 const SizedBox(height: 12),
-                _StatCard(
-                  title: '成功次数',
-                  value: '${stats?.successCount ?? 0}',
-                  icon: Icons.check_circle,
-                  color: Colors.green,
-                ),
+                _StatCard(title: '成功次数', value: '${stats?.successCount ?? 0}', icon: Icons.check_circle, color: Colors.green),
                 const SizedBox(height: 12),
-                _StatCard(
-                  title: '错误次数',
-                  value: '${stats?.errorCount ?? 0}',
-                  icon: Icons.error,
-                  color: Colors.red,
-                ),
+                _StatCard(title: '错误次数', value: '${stats?.errorCount ?? 0}', icon: Icons.error, color: Colors.red),
                 const SizedBox(height: 12),
-                _StatCard(
-                  title: '平均值',
-                  value: (stats?.averageValue ?? 0).toStringAsFixed(4),
-                  icon: Icons.analytics,
-                  color: Colors.purple,
-                ),
+                _StatCard(title: '平均值', value: (stats?.averageValue ?? 0).toStringAsFixed(4), icon: Icons.analytics, color: Colors.purple),
                 const SizedBox(height: 24),
-                // 说明
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
@@ -687,10 +1001,7 @@ class StatsPage extends StatelessWidget {
                         children: [
                           Icon(Icons.code, color: colorScheme.primary),
                           const SizedBox(width: 8),
-                          Text(
-                            'Rust 计算逻辑',
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
+                          Text('Rust 计算逻辑', style: Theme.of(context).textTheme.titleMedium),
                         ],
                       ),
                       const SizedBox(height: 8),
@@ -716,12 +1027,7 @@ class _StatCard extends StatelessWidget {
   final IconData icon;
   final Color color;
 
-  const _StatCard({
-    required this.title,
-    required this.value,
-    required this.icon,
-    required this.color,
-  });
+  const _StatCard({required this.title, required this.value, required this.icon, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -743,20 +1049,9 @@ class _StatCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.outline,
-                        ),
-                  ),
+                  Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.outline)),
                   const SizedBox(height: 4),
-                  Text(
-                    value,
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: color,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
+                  Text(value, style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: color, fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -813,7 +1108,6 @@ class _PerformancePageState extends State<PerformancePage> {
           _duration = stopwatch.elapsed;
         });
         
-        // 保存状态
         widget.state.iterations = _iterationsController.text;
         widget.state.result = result;
         widget.state.duration = stopwatch.elapsed;
@@ -839,13 +1133,7 @@ class _PerformancePageState extends State<PerformancePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('性能测试'),
-            Text('异步计算演示', style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-          ],
-        ),
+        title: const Text('性能测试'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
@@ -858,15 +1146,10 @@ class _PerformancePageState extends State<PerformancePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '模拟耗时计算',
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+                    Text('模拟耗时计算', style: Theme.of(context).textTheme.titleLarge),
                     const SizedBox(height: 8),
                     Text(
-                      '此功能演示 Rust 异步计算的能力。'
-                      'Rust 后端会执行指定次数的三角函数计算，'
-                      '期间 UI 保持响应。',
+                      '此功能演示 Rust 异步计算的能力。Rust 后端会执行指定次数的三角函数计算，期间 UI 保持响应。',
                       style: TextStyle(color: colorScheme.onSurfaceVariant),
                     ),
                     const SizedBox(height: 24),
@@ -885,18 +1168,11 @@ class _PerformancePageState extends State<PerformancePage> {
                       child: FilledButton.icon(
                         onPressed: _isLoading ? null : _runBenchmark,
                         icon: _isLoading
-                            ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(strokeWidth: 2),
-                              )
+                            ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
                             : const Icon(Icons.play_arrow),
                         label: Text(_isLoading ? '计算中...' : '开始测试'),
                         style: FilledButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 32,
-                            vertical: 12,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
                         ),
                       ),
                     ),
@@ -914,15 +1190,9 @@ class _PerformancePageState extends State<PerformancePage> {
                     children: [
                       const Icon(Icons.timer, size: 48),
                       const SizedBox(height: 16),
-                      Text(
-                        '耗时: ${_duration?.inMilliseconds ?? 0} ms',
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
+                      Text('耗时: ${_duration?.inMilliseconds ?? 0} ms', style: Theme.of(context).textTheme.headlineSmall),
                       const SizedBox(height: 8),
-                      Text(
-                        '结果: ${_result?.toStringAsFixed(6) ?? 'N/A'}',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
+                      Text('结果: ${_result?.toStringAsFixed(6) ?? 'N/A'}', style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),
