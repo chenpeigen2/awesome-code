@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'package:flutter_rust_demo/src/rust/api/simple.dart';
 import 'package:flutter_rust_demo/src/rust/frb_generated.dart';
-import 'dart:math' as math;
+import 'package:flutter_rust_demo/src/utils/unit_converter.dart';
 
 Future<void> main() async {
   await RustLib.init();
@@ -552,173 +552,12 @@ class _UnitConverterPageState extends State<UnitConverterPage> with SingleTicker
 
   void _convert() {
     final input = _inputController.text;
-    if (input.isEmpty) {
-      setState(() => _result = '');
-      return;
-    }
-
     final category = _unitCategories.keys.elementAt(_tabController.index);
-    double? value;
     
-    // 进制换算特殊处理
-    if (category == '进制') {
-      try {
-        int intValue;
-        if (_fromUnit == '二进制') {
-          intValue = int.parse(input, radix: 2);
-        } else if (_fromUnit == '八进制') {
-          intValue = int.parse(input, radix: 8);
-        } else if (_fromUnit == '十进制') {
-          intValue = int.parse(input);
-        } else if (_fromUnit == '十六进制') {
-          intValue = int.parse(input, radix: 16);
-        } else {
-          intValue = int.parse(input);
-        }
-
-        String converted;
-        if (_toUnit == '二进制') {
-          converted = intValue.toRadixString(2);
-        } else if (_toUnit == '八进制') {
-          converted = intValue.toRadixString(8);
-        } else if (_toUnit == '十进制') {
-          converted = intValue.toString();
-        } else if (_toUnit == '十六进制') {
-          converted = intValue.toRadixString(16).toUpperCase();
-        } else {
-          converted = intValue.toString();
-        }
-
-        setState(() => _result = converted);
-      } catch (e) {
-        setState(() => _result = '输入格式错误');
-      }
-      return;
-    }
-
-    // 数值换算
-    value = double.tryParse(input);
-    if (value == null) {
-      setState(() => _result = '请输入有效数字');
-      return;
-    }
-
-    double result = _convertValue(value, category, _fromUnit!, _toUnit!);
-    setState(() => _result = _formatResult(result));
-  }
-
-  double _convertValue(double value, String category, String from, String to) {
-    // 温度换算
-    if (category == '温度') {
-      double celsius;
-      // 先转成摄氏度
-      if (from.contains('摄氏')) celsius = value;
-      else if (from.contains('华氏')) celsius = (value - 32) * 5 / 9;
-      else if (from.contains('开尔文')) celsius = value - 273.15;
-      else celsius = value;
-
-      // 再从摄氏度转成目标单位
-      if (to.contains('摄氏')) return celsius;
-      else if (to.contains('华氏')) return celsius * 9 / 5 + 32;
-      else if (to.contains('开尔文')) return celsius + 273.15;
-      return celsius;
-    }
-
-    // 其他单位：使用基准单位换算
-    Map<String, double> factors = _getConversionFactors(category);
-    double baseValue = value * (factors[from] ?? 1);
-    return baseValue / (factors[to] ?? 1);
-  }
-
-  Map<String, double> _getConversionFactors(String category) {
-    switch (category) {
-      case '长度':
-        return {
-          '米 (m)': 1,
-          '千米 (km)': 1000,
-          '厘米 (cm)': 0.01,
-          '毫米 (mm)': 0.001,
-          '英寸 (in)': 0.0254,
-          '英尺 (ft)': 0.3048,
-          '英里 (mi)': 1609.344,
-          '海里 (nmi)': 1852,
-        };
-      case '速度':
-        return {
-          '米/秒 (m/s)': 1,
-          '千米/时 (km/h)': 1 / 3.6,
-          '英里/时 (mph)': 0.44704,
-          '节 (kn)': 0.514444,
-          '马赫 (Ma)': 340.29,
-        };
-      case '时间':
-        return {
-          '秒 (s)': 1,
-          '分 (min)': 60,
-          '时 (h)': 3600,
-          '天 (d)': 86400,
-          '周 (wk)': 604800,
-          '月': 2592000,
-          '年': 31536000,
-        };
-      case '质量':
-        return {
-          '克 (g)': 0.001,
-          '千克 (kg)': 1,
-          '毫克 (mg)': 0.000001,
-          '吨 (t)': 1000,
-          '盎司 (oz)': 0.0283495,
-          '磅 (lb)': 0.453592,
-        };
-      case '面积':
-        return {
-          '平方米 (m²)': 1,
-          '平方千米 (km²)': 1000000,
-          '平方厘米 (cm²)': 0.0001,
-          '公顷 (ha)': 10000,
-          '亩': 666.667,
-          '平方英尺 (ft²)': 0.092903,
-          '英亩 (ac)': 4046.86,
-        };
-      case '体积':
-        return {
-          '升 (L)': 0.001,
-          '毫升 (mL)': 0.000001,
-          '立方米 (m³)': 1,
-          '立方厘米 (cm³)': 0.000001,
-          '加仑 (gal)': 0.00378541,
-          '品脱 (pt)': 0.000473176,
-        };
-      case '压强':
-        return {
-          '帕斯卡 (Pa)': 1,
-          '千帕 (kPa)': 1000,
-          '兆帕 (MPa)': 1000000,
-          '巴 (bar)': 100000,
-          '标准大气压 (atm)': 101325,
-          '毫米汞柱 (mmHg)': 133.322,
-          '磅/平方英寸 (psi)': 6894.76,
-        };
-      case '电压':
-        return {
-          '伏特 (V)': 1,
-          '千伏 (kV)': 1000,
-          '毫伏 (mV)': 0.001,
-          '微伏 (μV)': 0.000001,
-        };
-      default:
-        return {};
-    }
-  }
-
-  String _formatResult(double value) {
-    if (value == value.toInt()) {
-      return value.toInt().toString();
-    } else if (value.abs() < 0.0001 || value.abs() > 1000000) {
-      return value.toStringAsExponential(6);
-    } else {
-      return value.toStringAsFixed(6).replaceAll(RegExp(r'0+$'), '').replaceAll(RegExp(r'\.$'), '');
-    }
+    final result = UnitConverter.convert(category, _fromUnit!, _toUnit!, input);
+    setState(() {
+      _result = result ?? (input.isEmpty ? '' : '输入无效');
+    });
   }
 
   @override
