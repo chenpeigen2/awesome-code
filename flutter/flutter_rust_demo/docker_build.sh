@@ -34,6 +34,9 @@ echo "Cargo version: $(cargo --version)"
 
 echo "=== 清理之前的构建 ==="
 flutter clean
+# 清理 Gradle 缓存，避免锁文件冲突
+rm -rf android/.gradle
+rm -rf build
 
 echo "=== 获取依赖 ==="
 # 尝试多次下载依赖
