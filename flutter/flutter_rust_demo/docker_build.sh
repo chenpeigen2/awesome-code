@@ -20,6 +20,10 @@ export ANDROID_SDK_ROOT=/opt/android-sdk
 export NDK_HOME=${ANDROID_HOME}/ndk/27.0.12077973
 source $HOME/.cargo/env
 
+# 配置 Flutter 中国镜像（解决 storage.googleapis.com 下载超时问题）
+export PUB_HOSTED_URL=https://pub.flutter-io.cn
+export FLUTTER_STORAGE_BASE_URL=https://storage.flutter-io.cn
+
 # 配置 GitHub 代理加速
 export GIT_PROXY_COMMAND="env -u http_proxy -u https_proxy"
 
