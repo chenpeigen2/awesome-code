@@ -23,19 +23,23 @@ class _HomePageState extends State<HomePage> {
   int _currentIndex = 0;
   final PageController _pageController = PageController();
 
-  final List<Widget> _pages = const [
-    BasicsPage(),
-    LayoutPage(),
-    ContainerPage(),
-    ScrollPage(),
-    InteractivePage(),
-    AnimationPage(),
-    material_page.MaterialPage(),
-    FormPage(),
-    DialogPage(),
-    AdvancedPage(),
-    CupertinoPage(),
-  ];
+  // 懒加载的页面构建器
+  Widget _buildPage(int index) {
+    switch (index) {
+      case 0: return const BasicsPage();
+      case 1: return const LayoutPage();
+      case 2: return const ContainerPage();
+      case 3: return const ScrollPage();
+      case 4: return const InteractivePage();
+      case 5: return const AnimationPage();
+      case 6: return const material_page.MaterialPage();
+      case 7: return const FormPage();
+      case 8: return const DialogPage();
+      case 9: return const AdvancedPage();
+      case 10: return const CupertinoPage();
+      default: return const SizedBox();
+    }
+  }
 
   final List<_NavItem> _navItems = const [
     _NavItem(icon: Icons.widgets, label: '基础', color: Colors.blue),
@@ -65,12 +69,13 @@ class _HomePageState extends State<HomePage> {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           _buildSliverAppBar(context),
         ],
-        body: PageView(
+        body: PageView.builder(
           controller: _pageController,
           onPageChanged: (index) {
             setState(() => _currentIndex = index);
           },
-          children: _pages,
+          itemCount: _navItems.length,
+          itemBuilder: (context, index) => _buildPage(index),
         ),
       ),
       bottomNavigationBar: _buildBottomNav(),
@@ -231,7 +236,9 @@ class _HomePageState extends State<HomePage> {
   void _showQuickSearch(BuildContext context) {
     showSearch(
       context: context,
-      delegate: _WidgetSearchDelegate(_navItems, _pageController),
+      delegate: _WidgetSearchDelegate(_navItems, _pageController, (index) {
+        setState(() => _currentIndex = index);
+      }),
     );
   }
 }
@@ -251,8 +258,9 @@ class _NavItem {
 class _WidgetSearchDelegate extends SearchDelegate<String> {
   final List<_NavItem> navItems;
   final PageController pageController;
+  final Function(int) onIndexChanged;
 
-  _WidgetSearchDelegate(this.navItems, this.pageController);
+  _WidgetSearchDelegate(this.navItems, this.pageController, this.onIndexChanged);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -308,6 +316,7 @@ class _WidgetSearchDelegate extends SearchDelegate<String> {
           onTap: () {
             final originalIndex = navItems.indexOf(item);
             pageController.jumpToPage(originalIndex);
+            onIndexChanged(originalIndex);  // 同步状态
             close(context, item.label);
           },
         );

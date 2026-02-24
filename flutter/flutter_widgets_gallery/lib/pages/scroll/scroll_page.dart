@@ -515,21 +515,20 @@ class _ScrollControllerDemo extends StatefulWidget {
 
 class _ScrollControllerDemoState extends State<_ScrollControllerDemo> {
   final ScrollController _controller = ScrollController();
-  bool _showButton = false;
+  final ValueNotifier<bool> _showButtonNotifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
     super.initState();
     _controller.addListener(() {
-      setState(() {
-        _showButton = _controller.offset > 100;
-      });
+      _showButtonNotifier.value = _controller.offset > 100;
     });
   }
 
   @override
   void dispose() {
     _controller.dispose();
+    _showButtonNotifier.dispose();
     super.dispose();
   }
 
@@ -544,28 +543,37 @@ class _ScrollControllerDemoState extends State<_ScrollControllerDemo> {
             itemCount: 20,
             itemBuilder: (context, index) => ListTile(title: Text('项目 $index')),
           ),
-          if (_showButton)
-            Positioned(
-              right: 16,
-              bottom: 16,
-              child: FloatingActionButton.small(
-                onPressed: () {
-                  _controller.animateTo(
-                    0,
-                    duration: const Duration(milliseconds: 300),
-                    curve: Curves.easeOut,
-                  );
-                },
-                child: const Icon(Icons.arrow_upward),
-              ),
-            ),
+          ValueListenableBuilder<bool>(
+            valueListenable: _showButtonNotifier,
+            builder: (context, showButton, child) {
+              return AnimatedOpacity(
+                opacity: showButton ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 200),
+                child: showButton
+                    ? Positioned(
+                        right: 16,
+                        bottom: 16,
+                        child: FloatingActionButton.small(
+                          onPressed: () {
+                            _controller.animateTo(
+                              0,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeOut,
+                            );
+                          },
+                          child: const Icon(Icons.arrow_upward),
+                        ),
+                      )
+                    : const SizedBox(),
+              );
+            },
+          ),
         ],
       ),
     );
   }
 }
 
-/// 滚动通知演示
 class _ScrollNotificationDemo extends StatefulWidget {
   @override
   State<_ScrollNotificationDemo> createState() => _ScrollNotificationDemoState();
