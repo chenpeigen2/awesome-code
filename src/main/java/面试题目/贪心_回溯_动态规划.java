@@ -353,36 +353,37 @@ public class 贪心_回溯_动态规划 {
     }
 
     // https://leetcode.cn/problems/pascals-triangle/submissions/628154915/?envType=study-plan-v2&envId=top-100-liked
+
     /**
      * 生成杨辉三角的前numRows行
-     * 
+     * <p>
      * 杨辉三角的特点：
      * 1. 每一行的第一个和最后一个元素都是1
      * 2. 中间的元素等于上一行相邻两个元素的和
      * 3. 第n行有n个元素
-     * 
+     * <p>
      * 算法思路：
      * 1. 外层循环控制行数，从第0行到第(numRows-1)行
      * 2. 内层循环控制每行的列数，第i行有(i+1)个元素
      * 3. 对于每行的元素：
-     *    - 首尾元素直接设为1
-     *    - 中间元素通过上一行的相邻元素相加得到
-     * 
+     * - 首尾元素直接设为1
+     * - 中间元素通过上一行的相邻元素相加得到
+     * <p>
      * 时间复杂度：O(n²)，其中n是行数
      * 空间复杂度：O(n²)，需要存储整个三角形
-     * 
+     *
      * @param numRows 需要生成的行数（非负整数）
      * @return 包含杨辉三角前numRows行的二维列表
      */
     public List<List<Integer>> generate(int numRows) {
         // 创建结果列表，用于存储杨辉三角的所有行
         List<List<Integer>> ret = new ArrayList<>();
-        
+
         // 外层循环：逐行生成杨辉三角
         for (int i = 0; i < numRows; i++) {
             // 创建当前行的列表
             List<Integer> row = new ArrayList<>();
-            
+
             // 内层循环：生成当前行的所有元素
             for (int j = 0; j <= i; j++) {
                 // 判断是否为首尾元素
@@ -398,9 +399,110 @@ public class 贪心_回溯_动态规划 {
             // 将生成的行添加到结果列表中
             ret.add(row);
         }
-        
+
         // 返回完整的杨辉三角
         return ret;
+    }
+
+    // https://leetcode.cn/problems/house-robber/?envType=study-plan-v2&envId=top-100-liked
+
+    /**
+     * 计算在不触发警报的情况下能够偷窃到的最高金额
+     * <p>
+     * 问题描述：你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，
+     * 影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋
+     * 在同一晚上被小偷闯入，系统会自动报警。
+     * <p>
+     * 解题思路：
+     * 这是一个经典的动态规划问题。对于每个房屋，我们有两个选择：
+     * 1. 偷窃当前房屋：那么就不能偷窃前一个房屋，最大金额为 当前房屋金额 + 前前个房屋的最大金额
+     * 2. 不偷窃当前房屋：那么最大金额就是前一个房屋的最大金额
+     * <p>
+     * 状态定义：
+     * f[i] 表示偷窃前 i+1 间房屋能够获得的最高金额
+     * <p>
+     * 状态转移方程：
+     * f[i] = max(nums[i] + f[i-2], f[i-1])
+     * <p>
+     * 边界条件：
+     * f[0] = nums[0] （只有一间房屋时，只能偷这一间）
+     * f[1] = max(nums[0], nums[1]) （只有两间房屋时，选择金额较大的那一间）
+     *
+     * @param nums 每个房屋存放的金额数组
+     * @return 能够偷窃到的最高金额
+     */
+    public int rob(int[] nums) {
+        // 创建dp数组，f[i]表示偷窃前i+1间房屋能获得的最高金额
+        int[] f = new int[nums.length];
+
+        // 特殊情况处理：如果只有一间房屋，直接返回该房屋的金额
+        if (f.length == 1) {
+            return nums[0];
+        }
+
+        // 初始化前两个状态
+        f[0] = nums[0];                           // 第一间房屋的最大金额就是它本身
+        f[1] = Math.max(nums[0], nums[1]);        // 前两间房屋选择金额较大的那一间
+
+        // 从第三间房屋开始，按照状态转移方程计算每个位置的最优解
+        for (int i = 2; i < nums.length; i++) {
+            // 对于第i间房屋，选择偷或不偷的最大值：
+            // 偷：当前房屋金额 + 前前间房屋的最大金额
+            // 不偷：前一间房屋的最大金额
+            f[i] = Math.max(nums[i] + f[i - 2], f[i - 1]);
+        }
+
+        // 返回偷窃所有房屋能获得的最高金额
+        return f[nums.length - 1];
+    }
+
+    // https://leetcode.cn/problems/perfect-squares/description/?envType=study-plan-v2&envId=top-100-liked
+
+    /**
+     * 计算和为 n 的完全平方数的最少数量
+     * <p>
+     * 解题思路：
+     * 这是一个典型的动态规划问题，类似于"零钱兑换"问题。
+     * <p>
+     * 状态定义：
+     * f[i] 表示和为 i 的完全平方数的最少数量
+     * <p>
+     * 状态转移方程：
+     * f[i] = min(f[i - j*j]) + 1，其中 j*j <= i
+     * <p>
+     * 初始条件：
+     * f[0] = 0（和为0需要0个完全平方数）
+     * <p>
+     * 计算顺序：
+     * 从小到大计算每个 f[i]，确保在计算 f[i] 时，所有 f[i-j*j] 都已计算完成
+     *
+     * @param n 目标和
+     * @return 和为 n 的完全平方数的最少数量
+     */
+    public int numSquares(int n) {
+        // 创建dp数组，f[i]表示和为i的完全平方数的最少数量
+        int[] f = new int[n + 1];
+
+        // 初始化：f[0] = 0，和为0需要0个完全平方数
+        f[0] = 0;
+
+        // 从1到n依次计算每个状态值
+        for (int i = 1; i <= n; i++) {
+            // 初始化当前状态的最小值为最大整数值
+            int minCount = Integer.MAX_VALUE;
+
+            // 遍历所有可能的完全平方数 j*j，其中 j*j <= i
+            for (int j = 1; j * j <= i; j++) {
+                // 更新最小值：f[i-j*j] + 1 表示使用一个 j*j 后，剩余部分的最优解
+                minCount = Math.min(minCount, f[i - j * j]);
+            }
+
+            // 当前状态的最优解 = 最小值 + 1（加上当前使用的这个完全平方数）
+            f[i] = minCount + 1;
+        }
+
+        // 返回和为n的完全平方数的最少数量
+        return f[n];
     }
 
 }
