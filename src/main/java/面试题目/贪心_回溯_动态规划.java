@@ -479,6 +479,7 @@ public class 贪心_回溯_动态规划 {
      * @param n 目标和
      * @return 和为 n 的完全平方数的最少数量
      */
+    @NeedDeepLearn
     public int numSquares(int n) {
         // 创建dp数组，f[i]表示和为i的完全平方数的最少数量
         int[] f = new int[n + 1];
@@ -504,5 +505,307 @@ public class 贪心_回溯_动态规划 {
         // 返回和为n的完全平方数的最少数量
         return f[n];
     }
+
+    // https://leetcode.cn/problems/coin-change/description/?envType=study-plan-v2&envId=top-100-liked
+
+    /**
+     * 计算凑成指定金额所需的最少硬币个数
+     * <p>
+     * 问题描述：给定不同面额的硬币 coins 和一个总金额 amount，
+     * 计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
+     * <p>
+     * 解题思路：
+     * 这是一个典型的动态规划问题，属于"完全背包"问题的变种。
+     * <p>
+     * 状态定义：
+     * dp[i] 表示凑成金额 i 所需的最少硬币个数
+     * <p>
+     * 状态转移方程：
+     * dp[i] = min(dp[i], dp[i - coins[j]] + 1)
+     * 其中 coins[j] 是当前考虑的硬币面额，且 coins[j] <= i
+     * <p>
+     * 初始条件：
+     * dp[0] = 0（凑成金额0需要0个硬币）
+     * 其他位置初始化为一个较大值（amount + 1），表示不可达状态
+     * <p>
+     * 计算顺序：
+     * 从小到大计算每个 dp[i]，确保在计算 dp[i] 时，所有 dp[i-coins[j]] 都已计算完成
+     *
+     * @param coins  硬币面额数组
+     * @param amount 目标金额
+     * @return 凑成目标金额所需的最少硬币个数，无法凑成则返回-1
+     */
+    @NeedDeepLearn
+    public int coinChange(int[] coins, int amount) {
+        // 设置一个比最大可能值还大的数，用来标记无法达到的状态
+        int max = amount + 1;
+
+        // 创建dp数组，dp[i]表示凑成金额i所需的最少硬币个数
+        int[] dp = new int[amount + 1];
+
+        // 初始化dp数组，将所有位置设为max（不可达状态）
+        Arrays.fill(dp, max);
+
+        // 初始条件：凑成金额0需要0个硬币
+        dp[0] = 0;
+
+        // 从小到大计算每个金额的最优解
+        for (int i = 1; i <= amount; i++) {
+            // 尝试使用每一种硬币面额
+            for (int j = 0; j < coins.length; j++) {
+                // 只有当硬币面额不超过当前金额时才考虑使用
+                if (coins[j] <= i) {
+                    // 状态转移方程：
+                    // dp[i] = min(当前值, 使用coins[j]硬币后的最优解)
+                    // dp[i - coins[j]] + 1 表示使用一枚coins[j]硬币后，剩余金额的最优解加1
+                    dp[i] = Math.min(dp[i], dp[i - coins[j]] + 1);
+                }
+            }
+        }
+
+        // 如果dp[amount]仍然大于amount，说明无法凑成目标金额，返回-1
+        // 否则返回计算得到的最少硬币个数
+        return dp[amount] > amount ? -1 : dp[amount];
+    }
+
+    /**
+     * 判断字符串是否可以被字典中的单词拼接而成
+     * <p>
+     * 问题描述：给定一个字符串 s 和一个字符串列表 wordDict 作为字典，
+     * 如果可以利用字典中出现的一个或多个单词拼接出 s，则返回 true。
+     * 注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。
+     * <p>
+     * 解题思路：
+     * 这是一个动态规划问题，类似于"单词拆分"问题。
+     * <p>
+     * 状态定义：
+     * dp[i] 表示字符串 s 的前 i 个字符是否可以被字典中的单词拼接而成
+     * <p>
+     * 状态转移方程：
+     * dp[i] = dp[j] && wordDictSet.contains(s.substring(j, i))
+     * 其中 j < i，表示检查是否存在一个 j，使得 s 的前 j 个字符可以拼接，
+     * 并且 s 的第 j 到 i 个字符是一个字典中的单词。
+     * <p>
+     * 初始条件：
+     * dp[0] = true（空字符串可以被拼接）
+     * <p>
+     * 计算顺序：
+     * 从小到大计算每个 dp[i]，确保在计算 dp[i] 时，所有 dp[j] 都已计算完成
+     *
+     * @param s        待判断的字符串
+     * @param wordDict 字典中的单词列表
+     * @return 如果字符串可以被字典中的单词拼接而成，返回 true；否则返回 false
+     */
+    // https://leetcode.cn/problems/word-break/submissions/700786437/?envType=study-plan-v2&envId=top-100-liked
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // 将字典转换为 HashSet，提高查找效率
+        Set<String> wordDictSet = new HashSet<>(wordDict);
+
+        // 创建 dp 数组，dp[i] 表示 s 的前 i 个字符是否可以被拼接
+        boolean[] dp = new boolean[s.length() + 1];
+
+        // 初始条件：空字符串可以被拼接
+        dp[0] = true;
+
+        // 从小到大计算每个 dp[i]
+        for (int i = 1; i <= s.length(); i++) {
+            // 遍历所有可能的 j 值，检查是否存在一个 j 使得 dp[j] 为 true
+            // 并且 s.substring(j, i) 是字典中的单词
+            for (int j = 0; j < i; j++) {
+                // 如果 dp[j] 为 true 且 s.substring(j, i) 在字典中
+                if (dp[j] && wordDictSet.contains(s.substring(j, i))) {
+                    // 则 dp[i] 为 true
+                    dp[i] = true;
+                    // 找到一个满足条件的 j 后即可跳出内层循环
+                    break;
+                }
+            }
+        }
+
+        // 返回 dp[s.length()]，即整个字符串是否可以被拼接
+        return dp[s.length()];
+    }
+
+    // 多纬动态规划
+
+    /**
+     * 计算机器人从左上角到右下角的不同路径数
+     * <p>
+     * 问题描述：一个机器人位于一个 m x n 网格的左上角，机器人每次只能向下或向右移动一步，
+     * 问总共有多少条不同的路径可以到达右下角。
+     * <p>
+     * 解题思路：
+     * 这是一个经典的动态规划问题。我们可以使用二维数组来表示每个位置的路径数。
+     * <p>
+     * 状态定义：
+     * grid[i][j] 表示从起点 (0,0) 到达位置 (i,j) 的不同路径数
+     * <p>
+     * 状态转移方程：
+     * grid[i][j] = grid[i-1][j] + grid[i][j-1]
+     * 即当前位置的路径数等于上方位置和左方位置路径数之和
+     * <p>
+     * 边界条件：
+     * 第一行和第一列的所有位置路径数都为1，因为只能一直向右或一直向下
+     * grid[0][0] = 1（起点）
+     *
+     * @param m 网格的行数
+     * @param n 网格的列数
+     * @return 从左上角到右下角的不同路径总数
+     */
+    // https://leetcode.cn/problems/unique-paths/?envType=study-plan-v2&envId=top-100-liked
+    public int uniquePaths(int m, int n) {
+        // 创建二维数组存储每个位置的路径数
+        int[][] grid = new int[m][n];
+
+        // 初始化起点路径数为1
+        grid[0][0] = 1;
+
+        // 遍历网格中的每个位置
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                // 跳过起点位置
+                if (i == 0 && j == 0) continue;
+
+                // 处理第一行：只能从左边来
+                if (i == 0) {
+                    grid[i][j] = grid[i][j - 1];
+                }
+                // 处理第一列：只能从上面来
+                else if (j == 0) {
+                    grid[i][j] = grid[i - 1][j];
+                }
+                // 处理其他位置：可以从上面或左边来
+                else {
+                    grid[i][j] = grid[i - 1][j] + grid[i][j - 1];
+                }
+            }
+        }
+
+        // 返回右下角位置的路径数
+        return grid[m - 1][n - 1];
+    }
+
+
+    /**
+     * 计算从左上角到右下角的最小路径和
+     * <p>
+     * 问题描述：给定一个包含非负整数的 m x n 网格 grid，
+     * 找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+     * 机器人每次只能向下或向右移动一步。
+     * <p>
+     * 解题思路：
+     * 使用动态规划方法，在原地修改网格数组来存储到达每个位置的最小路径和。
+     * <p>
+     * 状态定义：
+     * grid[i][j] 表示从起点 (0,0) 到达位置 (i,j) 的最小路径和
+     * <p>
+     * 状态转移方程：
+     * - 如果在第一行 (i == 0 且 j != 0)：只能从左边来
+     * grid[i][j] = grid[i][j] + grid[i][j-1]
+     * - 如果在第一列 (j == 0 且 i != 0)：只能从上面来
+     * grid[i][j] = grid[i][j] + grid[i-1][j]
+     * - 其他位置：可以选择从上面或左边来，取较小值
+     * grid[i][j] = grid[i][j] + min(grid[i-1][j], grid[i][j-1])
+     * <p>
+     * 边界条件：
+     * 起点 grid[0][0] 保持不变，因为这是路径的起始点
+     * <p>
+     * 时间复杂度：O(m*n)，需要遍历整个网格
+     * 空间复杂度：O(1)，原地修改数组，不使用额外空间
+     *
+     * @param grid 包含非负整数的二维网格数组
+     * @return 从左上角到右下角的最小路径和
+     */
+    // https://leetcode.cn/problems/minimum-path-sum/?envType=study-plan-v2&envId=top-100-liked
+    public int minPathSum(int[][] grid) {
+        // 遍历网格中的每个位置
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                // 跳过起点位置，因为起点的路径和就是它本身的值
+                if (i == 0 && j == 0) continue;
+
+                // 处理第一行：只能从左边来，累加左边位置的路径和
+                if (i == 0) {
+                    grid[i][j] += grid[i][j - 1];
+                }
+                // 处理第一列：只能从上面来，累加上面位置的路径和
+                else if (j == 0) {
+                    grid[i][j] += grid[i - 1][j];
+                }
+                // 处理其他位置：可以选择从上面或左边来，取路径和较小的方向
+                else {
+                    grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+                }
+            }
+        }
+
+        // 返回右下角位置存储的最小路径和
+        return grid[grid.length - 1][grid[0].length - 1];
+    }
+
+
+    /**
+     * 计算两个字符串的最长公共子序列长度
+     * <p>
+     * 问题描述：给定两个字符串 text1 和 text2，返回这两个字符串的最长公共子序列的长度。
+     * 如果不存在公共子序列，返回 0。
+     * <p>
+     * 解题思路：
+     * 这是一个经典的动态规划问题。我们需要找到两个字符串中字符相同的最长子序列。
+     * 子序列是指在不改变字符相对顺序的前提下，删除某些字符后形成的序列。
+     * <p>
+     * 状态定义：
+     * dp[i][j] 表示 text1 的前 i 个字符和 text2 的前 j 个字符的最长公共子序列长度
+     * <p>
+     * 状态转移方程：
+     * - 如果 text1[i-1] == text2[j-1]：
+     * dp[i][j] = dp[i-1][j-1] + 1
+     * （当前字符相同，公共子序列长度加1）
+     * - 如果 text1[i-1] != text2[j-1]：
+     * dp[i][j] = Math.max(dp[i-1][j], dp[i][j-1])
+     * （当前字符不同，取两种情况的最大值）
+     * <p>
+     * 边界条件：
+     * dp[0][j] = 0 （text1为空时，公共子序列长度为0）
+     * dp[i][0] = 0 （text2为空时，公共子序列长度为0）
+     * <p>
+     * 时间复杂度：O(m*n)，其中m和n分别是两个字符串的长度
+     * 空间复杂度：O(m*n)，需要创建二维dp数组
+     *
+     * @param text1 第一个字符串
+     * @param text2 第二个字符串
+     * @return 两个字符串的最长公共子序列长度
+     */
+    public int longestCommonSubsequence(String text1, String text2) {
+        // 获取两个字符串的长度
+        int m = text1.length(), n = text2.length();
+
+        // 创建二维dp数组，dp[i][j]表示text1前i个字符和text2前j个字符的LCS长度
+        int[][] dp = new int[m + 1][n + 1];
+
+        // 填充dp数组
+        for (int i = 1; i <= m; i++) {
+            // 获取text1的第i个字符（注意索引从0开始）
+            char c1 = text1.charAt(i - 1);
+
+            for (int j = 1; j <= n; j++) {
+                // 获取text2的第j个字符（注意索引从0开始）
+                char c2 = text2.charAt(j - 1);
+
+                // 如果当前字符相同
+                if (c1 == c2) {
+                    // LCS长度等于左上角的值加1
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    // 如果当前字符不同，取上方和左方的最大值
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+
+        // 返回右下角的值，即两个完整字符串的LCS长度
+        return dp[m][n];
+    }
+
 
 }
