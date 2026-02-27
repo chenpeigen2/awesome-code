@@ -1,4 +1,4 @@
-package 面试题目;
+package 面试题目.day1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,23 +6,44 @@ import java.util.List;
 public class 矩阵 {
 
     // https://leetcode.cn/problems/set-matrix-zeroes/?envType=study-plan-v2&envId=top-100-liked
+    // 不能用一个set去做状态记录
+    /**
+     * 将矩阵中所有包含0的行和列都设置为0
+     * 
+     * 解题思路：
+     * 1. 使用两个布尔数组分别记录哪些行和列需要被置零
+     * 2. 第一次遍历矩阵，标记所有包含0的行和列
+     * 3. 第二次遍历矩阵，根据标记将对应的行列全部置零
+     * 
+     * 时间复杂度：O(m*n)，其中m是行数，n是列数
+     * 空间复杂度：O(m+n)，用于存储行和列的标记数组
+     * 
+     * @param matrix 输入的二维整数矩阵
+     */
     public void setZeroes(int[][] matrix) {
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        boolean[] row = new boolean[rows];
-        boolean[] col = new boolean[cols];
+        int rows = matrix.length;           // 获取矩阵行数
+        int cols = matrix[0].length;        // 获取矩阵列数
+        
+        // 创建行和列的标记数组，初始值都是false
+        boolean[] row = new boolean[rows];  // 标记需要置零的行
+        boolean[] col = new boolean[cols];  // 标记需要置零的列
+        
+        // 第一遍遍历：找出所有包含0的行列位置并标记
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (matrix[i][j] == 0) {
-                    row[i] = true;
-                    col[j] = true;
+                if (matrix[i][j] == 0) {    // 发现0元素
+                    row[i] = true;          // 标记该行需要置零
+                    col[j] = true;          // 标记该列需要置零
                 }
             }
         }
+        
+        // 第二遍遍历：根据标记将对应行列的所有元素置零
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
+                // 如果当前行或当前列被标记为需要置零
                 if (row[i] || col[j]) {
-                    matrix[i][j] = 0;
+                    matrix[i][j] = 0;       // 将该位置置零
                 }
             }
         }
@@ -57,7 +78,8 @@ public class 矩阵 {
             int nextCol = col + directions[directionIndex][1];
 
             // 检查是否越界或已访问过，如果是则改变方向
-            if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n || visited[nextRow][nextCol]) {
+            if (nextRow < 0 || nextRow >= m || nextCol < 0 || nextCol >= n
+                    || visited[nextRow][nextCol]) { // 触发 visit检查的是nextRow, nextCol
                 directionIndex = (directionIndex + 1) % 4;  // 转向下一个方向
                 // 重新计算新方向下的下一个位置
                 nextRow = row + directions[directionIndex][0];
@@ -82,7 +104,7 @@ public class 矩阵 {
         int row = matrix.length;
         int col = matrix[0].length;
 
-        // 步骤1: 上下翻转矩阵
+        // 步骤1: 上下翻转矩阵， j = row -1 （记住这个）
         for (int i = 0, j = row - 1; i < j; i++, j--) {
             for (int co = 0; co < col; co++) {
                 int temp = matrix[i][co];
@@ -101,25 +123,45 @@ public class 矩阵 {
         }
     }
 
-
+    // https://leetcode.cn/problems/search-a-2d-matrix-ii/description/?envType=study-plan-v2&envId=top-100-liked
+    /**
+     * 在排序矩阵中搜索目标值
+     * 
+     * 解题思路：
+     * 利用矩阵的特性：每行从左到右递增，每列从上到下递增
+     * 从矩阵的右上角开始搜索（第0行，最后一列）
+     * - 如果当前元素等于目标值，返回true
+     * - 如果当前元素大于目标值，说明目标值不可能在当前列，向左移动一列
+     * - 如果当前元素小于目标值，说明目标值不可能在当前行，向下移动一行
+     * 
+     * 时间复杂度：O(m+n)，其中m是行数，n是列数
+     * 空间复杂度：O(1)，只使用了常数级别的额外空间
+     * 
+     * @param matrix 排序矩阵，满足每行从左到右递增，每列从上到下递增
+     * @param target 要搜索的目标值
+     * @return 如果找到目标值返回true，否则返回false
+     */
     public boolean searchMatrix(int[][] matrix, int target) {
-        // 从右上角开始搜索，利用矩阵的有序性质
-        // 矩阵每行从左到右升序，每列从上到下升序
-        int row = matrix.length;
-        int col = matrix[0].length;
-        int i = 0;           // 起始行：第0行
-        int j = col - 1;     // 起始列：最后一列
-
-        while (i < row && j >= 0) {
-            if (matrix[i][j] == target) {
-                return true;  // 找到目标值
-            } else if (matrix[i][j] > target) {
-                j--;          // 当前值大于目标值，向左移动（排除当前列）
+        int m = matrix.length;              // 获取矩阵行数
+        int n = matrix[0].length;           // 获取矩阵列数
+        
+        // 从右上角开始搜索：第0行，最后一列
+        for (int row = 0, col = n - 1; row >= 0 && row < m && col >= 0 && col < n;) {
+            if (matrix[row][col] == target) {
+                // 找到目标值，直接返回true
+                return true;
+            } else if (matrix[row][col] > target) {
+                // 当前值大于目标值，由于列是递增的，目标值不可能在当前列
+                // 向左移动一列继续搜索
+                col--;
             } else {
-                i++;          // 当前值小于目标值，向下移动（排除当前行）
+                // 当前值小于目标值，由于行是递增的，目标值不可能在当前行
+                // 向下移动一行继续搜索
+                row++;
             }
         }
-        return false;  // 未找到目标值
+        // 遍历完所有可能位置都没找到目标值，返回false
+        return false;
     }
 
 

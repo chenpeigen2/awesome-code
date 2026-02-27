@@ -1,4 +1,7 @@
-package 面试题目;
+package 面试题目.day1;
+
+import 面试题目.DoubleCheck;
+import 面试题目.NeedDeepLearn;
 
 public class 二分 {
     /**
@@ -167,6 +170,7 @@ public class 二分 {
      * @return 数组中的最小值
      */
     // https://assets.leetcode.cn/solution-static/153/1.png
+    @DoubleCheck
     public int findMin(int[] nums) {
         int ans = Integer.MAX_VALUE; // 初始化答案为最大整数值
         int l = 0, r = nums.length - 1; // 设置左右边界

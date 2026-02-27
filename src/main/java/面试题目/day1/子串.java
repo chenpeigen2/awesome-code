@@ -1,10 +1,14 @@
-package 面试题目;
+package 面试题目.day1;
+
+import 面试题目.DoubleCheck;
+import 面试题目.NeedDeepLearn;
 
 import java.util.*;
 
 public class 子串 {
 
     // https://leetcode.cn/problems/subarray-sum-equals-k/submissions/608733528/?envType=study-plan-v2&envId=top-100-liked
+    @DoubleCheck
     public int subarraySum(int[] nums, int k) {
         int count = 0;
         // 外层循环：以每个位置作为子数组的起始位置
@@ -24,6 +28,7 @@ public class 子串 {
     }
 
     // https://leetcode.cn/problems/sliding-window-maximum/submissions/695212269/?envType=study-plan-v2&envId=top-100-liked
+    @NeedDeepLearn
     public int[] maxSlidingWindow(int[] nums, int k) {
         int n = nums.length;
         // 倒序
@@ -64,6 +69,7 @@ public class 子串 {
     Map<Character, Integer> cnt = new HashMap<>();
 
 
+    @NeedDeepLearn
     public String minWindow(String s, String t) {
         int tLen = t.length();
         for (int i = 0; i < tLen; i++) {
