@@ -24,6 +24,9 @@ lifecycle = "2.8.7"
 # Kotlinx Serialization 版本
 kotlinxSerializationJson = "1.6.3"
 
+# Koin 依赖注入版本
+koin = "4.1.1"
+
 # 测试库版本
 junit = "4.13.2"
 junitVersion = "1.2.1"
@@ -61,6 +64,10 @@ androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-s
 
 # Kotlinx Serialization
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+# Koin 依赖注入
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 
 # 测试库
 junit = { group = "junit", name = "junit", version.ref = "junit" }
