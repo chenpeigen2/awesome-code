@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupScaleAnimations() {
-        findViewById<Button>(R.id.btnScaleUp).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnScaleUp).setDebouncedClickListener { view ->
             AnimationBuilder.on(view)
                 .scale(1.3f)
                 .duration(300)
@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }
 
-        findViewById<Button>(R.id.btnScaleDown).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnScaleDown).setDebouncedClickListener { view ->
             AnimationBuilder.on(view)
                 .scale(0.7f)
                 .duration(300)
@@ -103,7 +103,7 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }
 
-        findViewById<Button>(R.id.btnScalePulse).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnScalePulse).setDebouncedClickListener { view ->
             val pulse = Runnable {
                 AnimationBuilder.on(view)
                     .scale(1.2f)
@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRotationAnimations() {
-        findViewById<Button>(R.id.btnRotate).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnRotate).setDebouncedClickListener { view ->
             AnimationBuilder.on(view)
                 .rotation(view.rotation + 360f)
                 .duration(500)
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }
 
-        findViewById<Button>(R.id.btnShake).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnShake).setDebouncedClickListener { view ->
             val shake = Runnable {
                 AnimationBuilder.on(view)
                     .translationX(-20f)
@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTranslationAnimations() {
-        findViewById<Button>(R.id.btnMoveLeft).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnMoveLeft).setDebouncedClickListener { view ->
             AnimationBuilder.on(view)
                 .translationX(-100f)
                 .duration(300)
@@ -182,7 +182,7 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }
 
-        findViewById<Button>(R.id.btnMoveRight).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnMoveRight).setDebouncedClickListener { view ->
             AnimationBuilder.on(view)
                 .translationX(100f)
                 .duration(300)
@@ -196,7 +196,7 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }
 
-        findViewById<Button>(R.id.btnMoveUp).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnMoveUp).setDebouncedClickListener { view ->
             AnimationBuilder.on(view)
                 .translationY(-50f)
                 .duration(300)
@@ -212,7 +212,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupAlphaAnimations() {
-        findViewById<Button>(R.id.btnFadeOut).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnFadeOut).setDebouncedClickListener { view ->
             AnimationBuilder.on(view)
                 .alpha(0.3f)
                 .duration(300)
@@ -226,7 +226,7 @@ class MainActivity : AppCompatActivity() {
                 .start()
         }
 
-        findViewById<Button>(R.id.btnFadeIn).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnFadeIn).setDebouncedClickListener { view ->
             view.alpha = 0.3f
             AnimationBuilder.on(view)
                 .alpha(1f)
@@ -237,7 +237,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupComboAnimation() {
-        findViewById<Button>(R.id.btnCombo).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnCombo).setDebouncedClickListener { view ->
             AnimationBuilder.on(view)
                 .scale(1.2f)
                 .rotation(360f)
@@ -258,7 +258,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupInterpolatorTest() {
-        findViewById<Button>(R.id.btnTestInterpolator).setOnClickListener { view ->
+        findViewById<Button>(R.id.btnTestInterpolator).setDebouncedClickListener { view ->
             val name = selectedInterpolator.displayName
             Toast.makeText(this, "测试插值器: $name", Toast.LENGTH_SHORT).show()
 
