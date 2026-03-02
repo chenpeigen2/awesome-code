@@ -1,4 +1,8 @@
-package 面试题目;
+package 面试题目.day2;
+
+import 面试题目.Important;
+import 面试题目.NeedDeepLearn;
+import 面试题目.Tested;
 
 import java.util.*;
 
@@ -34,6 +38,8 @@ public class 堆栈 {
      * @param s 编码后的字符串，格式为字母、数字和方括号的组合
      * @return 解码后的字符串
      */
+    @NeedDeepLearn
+    @Important
     public String decodeString(String s) {
         // 初始化两个栈：数字栈存储重复次数，字符串栈存储历史字符串
         Deque<Integer> numStack = new ArrayDeque<>();
@@ -101,6 +107,7 @@ public class 堆栈 {
      * @param temperatures 温度数组
      * @return 每日等待更高温度的天数数组
      */
+    @Tested("xhs")
     public int[] dailyTemperatures(int[] temperatures) {
         int n = temperatures.length;
         // 初始化结果数组，默认值为0
@@ -165,37 +172,31 @@ public class 堆栈 {
      */
     // https://leetcode.cn/problems/top-k-frequent-elements/submissions/697148018/?envType=study-plan-v2&envId=top-100-liked
     public int[] topKFrequent(int[] nums, int k) {
-        // 使用HashMap统计每个数字出现的频次
+        // 步骤 1: 统计每个元素的出现频次
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
-            // getOrDefault方法获取当前数字的频次，不存在则默认为0，然后加1
             map.put(num, map.getOrDefault(num, 0) + 1);
         }
-
-        // 创建最小堆，按照频次升序排列（堆顶是最小频次元素）
-        // 比较器(a,b)->b.getValue()-a.getValue()实现按频次降序排列
+        // 步骤 2: 创建最小堆，比较器基于元素的频次（升序）
+        // 堆的大小维持在 k，堆顶是当前 k 个高频元素中频率最小的
         PriorityQueue<Map.Entry<Integer, Integer>> pq = new PriorityQueue<>(
-                (a, b) -> b.getValue() - a.getValue()
+                (a, b) -> a.getValue() - b.getValue()
         );
-
-        // 遍历频次映射，将元素加入堆中
+        // 遍历频次表，维护大小为 k 的最小堆
         for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
-            pq.offer(entry);  // 将当前元素加入堆
-            // 如果堆大小超过k，则移除频次最小的元素（堆顶）
-            // 这样保证堆中始终只保留频次最高的k个元素
+            pq.offer(entry);
+            // 如果堆大小超过 k，移除频率最小的元素（堆顶）
             if (pq.size() > k) {
                 pq.poll();
             }
         }
-
-        // 构造结果数组，从堆中取出前k个高频元素
+        // 步骤 3: 将堆中元素存入结果数组
+        // 由于是最小堆，需要逆序存储以保证结果按频率降序排列
         int[] res = new int[k];
-        // 从后往前填充结果数组，因为堆顶是频次最小的元素
         for (int i = k - 1; i >= 0; i--) {
-            res[i] = pq.poll().getKey();  // 取出键值（原数组中的数字）
+            res[i] = pq.poll().getKey();
         }
-
-        return res;  // 返回前k个高频元素数组
+        return res;
     }
 
 }
@@ -322,29 +323,29 @@ class MedianFinder {
 
         // 测试 dailyTemperatures 方法
         System.out.println("\n=== 测试 dailyTemperatures 方法 ===");
-        int[] temps1 = {73,74,75,71,69,72,76,73};
+        int[] temps1 = {73, 74, 75, 71, 69, 72, 76, 73};
         int[] result1 = solution.dailyTemperatures(temps1);
         System.out.println(Arrays.toString(result1)); // [1, 1, 4, 2, 1, 1, 0, 0]
 
-        int[] temps2 = {30,40,50,60};
+        int[] temps2 = {30, 40, 50, 60};
         int[] result2 = solution.dailyTemperatures(temps2);
         System.out.println(Arrays.toString(result2)); // [1, 1, 1, 0]
 
-        int[] temps3 = {30,60,90};
+        int[] temps3 = {30, 60, 90};
         int[] result3 = solution.dailyTemperatures(temps3);
         System.out.println(Arrays.toString(result3)); // [1, 1, 0]
 
         // 测试 findKthLargest 方法
         System.out.println("\n=== 测试 findKthLargest 方法 ===");
-        int[] nums1 = {3,2,1,5,6,4};
+        int[] nums1 = {3, 2, 1, 5, 6, 4};
         System.out.println(solution.findKthLargest(nums1, 2)); // 5
 
-        int[] nums2 = {3,2,3,1,2,4,5,5,6};
+        int[] nums2 = {3, 2, 3, 1, 2, 4, 5, 5, 6};
         System.out.println(solution.findKthLargest(nums2, 4)); // 4
 
         // 测试 topKFrequent 方法
         System.out.println("\n=== 测试 topKFrequent 方法 ===");
-        int[] nums3 = {1,1,1,2,2,3};
+        int[] nums3 = {1, 1, 1, 2, 2, 3};
         int[] result4 = solution.topKFrequent(nums3, 2);
         System.out.println(Arrays.toString(result4)); // [1, 2]
 

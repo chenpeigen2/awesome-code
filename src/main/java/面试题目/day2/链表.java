@@ -1,6 +1,4 @@
-package 面试题目;
-
-import jdkversions.oldjava.AnnoDemo;
+package 面试题目.day2;
 
 import java.util.*;
 
@@ -30,30 +28,25 @@ public class 链表 {
      */
     // https://leetcode.cn/problems/intersection-of-two-linked-lists/solutions/811625/xiang-jiao-lian-biao-by-leetcode-solutio-a8jn/?envType=study-plan-v2&envId=top-100-liked
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        // 边界条件检查：如果任一链表为空，则不可能有交点
-        if (headA == null || headB == null) {
-            return null;
-        }
-
         // 初始化两个指针，分别指向两个链表的头节点
-        ListNode pointerA = headA;
-        ListNode pointerB = headB;
-
-        // 当两个指针不相等时继续遍历
-        // 如果存在交点，两个指针最终会在交点相遇
-        // 如果不存在交点，两个指针最终都会变为null
-        while (pointerA != pointerB) {
-            // 当pointerA到达链表A的末尾时，跳转到链表B的头部
-            // 否则继续向后移动一步
-            pointerA = (pointerA == null) ? headB : pointerA.next;
-
-            // 当pointerB到达链表B的末尾时，跳转到链表A的头部
-            // 否则继续向后移动一步
-            pointerB = (pointerB == null) ? headA : pointerB.next;
+        ListNode hA = headA;
+        ListNode hB = headB;
+        // 结果节点，初始化为null
+        ListNode res = null;
+        // 循环条件：只要有一个指针不为null就继续遍历
+        while (hA != null || hB != null) {
+            // 如果两个指针指向同一个节点，说明找到了相交节点
+            if (hA == hB) {
+                res = hA;
+                break; // 找到相交节点，退出循环
+            }
+            // 移动指针：如果当前指针不为null，则移动到下一个节点；
+            // 如果当前指针为null，则跳转到另一个链表的头部
+            hA = (hA != null) ? hA.next : headB;
+            hB = (hB != null) ? hB.next : headA;
         }
-
-        // 返回相交的节点，如果没有交点则返回null
-        return pointerA;
+        // 返回相交节点，如果没有相交节点则返回null
+        return res;
     }
 
     /**
@@ -72,17 +65,13 @@ public class 链表 {
         // 使用虚拟头节点方法进行链表反转
         ListNode dummy = new ListNode(-1); // 创建虚拟头节点
         ListNode cur = head;               // 当前处理的节点
-
         while (cur != null) {
             ListNode next = cur.next;      // 保存下一个节点
-
             // 将当前节点插入到虚拟头节点之后（头插法）
             cur.next = dummy.next;         // 当前节点指向虚拟头节点原来的下一个节点
             dummy.next = cur;              // 虚拟头节点指向当前节点
-
             cur = next;                    // 移动到下一个待处理节点
         }
-
         return dummy.next;                 // 返回反转后的链表头节点
     }
 
@@ -100,50 +89,44 @@ public class 链表 {
     public boolean isPalindrome(ListNode head) {
         // 方法1: 使用StringBuilder存储值，然后比较字符串与其反转
         // 时间复杂度: O(n), 空间复杂度: O(n)
-        StringBuilder sb = new StringBuilder();
-        ListNode current = head;
-        while (current != null) {
-            sb.append(current.val);
-            current = current.next;
-        }
-        String original = sb.toString();
-        String reversed = sb.reverse().toString();
-        return original.equals(reversed);
+//        StringBuilder sb = new StringBuilder();
+//        ListNode current = head;
+//        while (current != null) {
+//            sb.append(current.val);
+//            current = current.next;
+//        }
+//        String original = sb.toString();
+//        String reversed = sb.reverse().toString();
+//        return original.equals(reversed);
 
         // 方法2: 更优解法 - 快慢指针找中点，反转后半部分，然后比较
-        /*
-        if (head == null || head.next == null) {
-            return true;
-        }
-        
-        // 找到链表中点
-        ListNode slow = head, fast = head;
-        while (fast.next != null && fast.next.next != null) {
+        // 步骤 1: 使用快慢指针找到链表的中间节点
+        // slow 每次走一步，fast 每次走两步
+        // 当 fast 到达链表末尾时，slow 正好位于链表中点（或中点的前一个节点，取决于链表长度奇偶）
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
-        
-        // 反转后半部分链表
+        // 步骤 2: 反转链表的后半部分
+        // slow.next 是后半部分的头节点，调用 reverseList 进行反转
         ListNode secondHalf = reverseList(slow.next);
-        
-        // 比较前半部分和反转后的后半部分
-        ListNode firstHalf = head;
-        ListNode secondHalfCopy = secondHalf;
-        boolean result = true;
-        while (secondHalf != null) {
-            if (firstHalf.val != secondHalf.val) {
-                result = false;
-                break;
+        // 步骤 3: 比较前半部分和反转后的后半部分是否相同
+        // c1 指向链表头部（前半部分开始），c2 指向反转后的后半部分头部
+        ListNode c1 = head;
+        ListNode c2 = secondHalf;
+        while (c2 != null) {
+            // 如果对应位置的值不相等，则不是回文链表
+            if (c1.val != c2.val) {
+                return false;
             }
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
+            // 移动两个指针继续比较下一个节点
+            c1 = c1.next;
+            c2 = c2.next;
         }
-        
-        // 恢复链表结构（可选）
-        slow.next = reverseList(secondHalfCopy);
-        
-        return result;
-        */
+        // 步骤 4: 所有节点都比较完毕且相等，说明是回文链表
+        return true;
     }
 
 
@@ -159,11 +142,6 @@ public class 链表 {
      * 空间复杂度：O(1)
      */
     public boolean hasCycle(ListNode head) {
-        // 边界条件检查：空链表或单节点链表不可能有环
-        if (head == null || head.next == null) {
-            return false;
-        }
-
         // 初始化快慢指针
         ListNode slow = head;       // 慢指针，每次移动一步
         ListNode fast = head;  // 快指针，每次移动两步
@@ -196,43 +174,66 @@ public class 链表 {
      * 时间复杂度：O(n)，其中n是链表的长度
      * 空间复杂度：O(1)
      */
-    // https://leetcode.cn/problems/linked-list-cycle-ii/?envType=study-plan-v2&envId=top-100-liked
+// https://leetcode.cn/problems/linked-list-cycle-ii/?envType=study-plan-v2&envId=top-100-liked
+
+    /**
+     * 检测链表中是否存在环，并返回环的入口节点
+     * <p>
+     * 算法思路：快慢指针法（Floyd 判圈算法）
+     * 1. 第一阶段：判断是否有环
+     * - 使用两个指针，慢指针 (slow) 每次移动一步，快指针 (fast) 每次移动两步
+     * - 如果链表中存在环，快慢指针终将相遇；如果无环，快指针将先到达链表末尾 (null)
+     * 2. 第二阶段：寻找环的入口
+     * - 当快慢指针第一次相遇时，说明存在环
+     * - 此时将慢指针重新指向头节点 (head)，快指针保持在相遇点
+     * - 两个指针都改为每次移动一步，继续向前遍历
+     * - 当它们再次相遇时，相遇点即为环的入口节点
+     * <p>
+     * 数学原理简述：
+     * 假设头节点到环入口的距离为 a，环入口到第一次相遇点的距离为 b，
+     * 相遇点再回到环入口的距离为 c。
+     * 慢指针走的距离：a + b
+     * 快指针走的距离：a + b + n(b + c) （n 为快指针在环内多走的圈数）
+     * 因为快指针速度是慢指针的 2 倍，所以：2(a + b) = a + b + n(b + c)
+     * 化简得：a = (n - 1)(b + c) + c
+     * 这意味着从头节点走 a 步，和从相遇点走 c 步（加上 n-1 圈），最终都会到达环入口。
+     * <p>
+     * 时间复杂度：O(n)，其中 n 是链表的长度
+     * 空间复杂度：O(1)，只使用了常数级别的额外空间
+     *
+     * @param head 链表的头节点
+     * @return 环的入口节点，如果不存在环则返回 null
+     */
     public ListNode detectCycle(ListNode head) {
-        if (head == null || head.next == null) {
-            return null;
-        }
-
-        // 第一步：使用快慢指针判断是否有环
+        // 初始化快慢指针，都指向头节点
         ListNode slow = head;
-        ListNode fast = head; // 快指针，每次移动两步
+        ListNode fast = head;
 
-        // 快慢指针寻找环的相遇点
+        // 第一阶段：检测是否存在环
+        // 循环条件：快指针及其下一个节点不为空，防止空指针异常
         while (fast != null && fast.next != null) {
-
-
+            // 慢指针每次移动一步
             slow = slow.next;
+            // 快指针每次移动两步
             fast = fast.next.next;
 
+            // 如果快慢指针相遇，说明链表中存在环
             if (slow == fast) {
-                break; // 相遇，说明有环
+                // 第二阶段：寻找环的入口
+                // 将慢指针重置为头节点
+                slow = head;
+                // 快指针保持在相遇点，两个指针现在都每次移动一步
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+                // 当两个指针再次相遇时，该节点即为环的入口
+                return slow;
             }
         }
 
-        // 如果没有相遇，说明无环
-        if (fast == null || fast.next == null) {
-            return null;
-        }
-
-        // 第二步：找到环的入口点
-        // 将其中一个指针重新指向头节点，两个指针同时以相同速度移动
-        // 它们相遇的位置就是环的入口点
-        ListNode ptr = head;
-        while (ptr != slow) {
-            ptr = ptr.next;
-            slow = slow.next;
-        }
-
-        return ptr; // 返回环的入口节点
+        // 如果遍历完整个链表都没有相遇，说明链表无环，返回 null
+        return null;
     }
 
     /**
@@ -287,7 +288,7 @@ public class 链表 {
      * 时间复杂度：O(max(m, n))，其中m和n分别是两个链表的长度
      * 空间复杂度：O(max(m, n))，用于存储结果链表
      */
-    // https://leetcode.cn/problems/add-two-numbers/?envType=study-plan-v2&envId=top-100-liked
+// https://leetcode.cn/problems/add-two-numbers/?envType=study-plan-v2&envId=top-100-liked
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         ListNode dummy = new ListNode(-1); // 创建虚拟头节点，简化链表操作
 
@@ -304,7 +305,6 @@ public class 链表 {
                 v1 = l1.val;
                 l1 = l1.next;
             }
-
             // 获取l2当前节点的值，并移动到下一个节点
             if (l2 != null) {
                 v2 = l2.val;
@@ -406,30 +406,59 @@ public class 链表 {
      * 时间复杂度：O(n)，其中n是链表节点数量
      * 空间复杂度：O(n)，哈希表存储所有节点的映射关系
      */
+    // 缓存映射：存储原节点到复制节点的映射关系，避免重复创建和处理循环引用
     private final Map<Node, Node> nodeCache = new HashMap<>();
 
+    /**
+     * 复制带随机指针的链表
+     * <p>
+     * 算法思路：递归 + 哈希表缓存（记忆化搜索）
+     * 1. 使用哈希表 (nodeCache) 记录原节点与新创建的复制节点之间的映射关系。
+     *    这有两个作用：
+     *    a) 避免为同一个原节点创建多个复制节点。
+     *    b) 处理 random 指针可能指向任意节点（包括尚未创建的节点或形成环）的情况。
+     * 2. 递归终止条件：如果当前节点 head 为 null，直接返回 null。
+     * 3. 检查缓存：如果当前节点已经在缓存中存在，说明已经创建过对应的复制节点，直接返回该节点。
+     * 4. 创建新节点：如果缓存中不存在，则创建一个值相同的新节点 copyHead。
+     * 5. 存入缓存：在递归处理 next 和 random 指针之前，先将 (head, copyHead) 放入缓存。
+     *    这一步至关重要，可以防止因 random 指针指向自身或前方节点而导致的无限递归。
+     * 6. 递归构建：
+     *    - 递归调用 copyRandomList(head.next) 构建 next 指针指向的复制节点。
+     *    - 递归调用 copyRandomList(head.random) 构建 random 指针指向的复制节点。
+     * 7. 返回结果：返回当前创建的复制节点 copyHead。
+     * <p>
+     * 时间复杂度：O(n)，其中 n 是链表节点数量。每个节点只会被创建和访问一次。
+     * 空间复杂度：O(n)，哈希表存储所有节点的映射关系，以及递归调用栈的深度最坏情况下为 O(n)。
+     *
+     * @param head 原链表的头节点
+     * @return 复制后的新链表的头节点
+     */
     public Node copyRandomList(Node head) {
-        // 递归终止条件：如果当前节点为空，返回空
+        // 基本情况：如果节点为空，返回 null
         if (head == null) {
             return null;
         }
 
-        // 为了防止重复拷贝，我们需要首先检查当前节点是否被拷贝过，如果已经拷贝过，我们可以直接从哈希表中取出拷贝后的节点的指针并返回即可。
-        // 检查缓存中是否已存在该节点的副本
-        if (!nodeCache.containsKey(head)) {
-            // 创建新节点，复制当前节点的值
-            Node newNode = new Node(head.val);
-
-            // 将原节点与新节点的映射关系存入缓存
-            nodeCache.put(head, newNode);
-
-            // 递归复制 next 指针和 random 指针
-            newNode.next = copyRandomList(head.next);
-            newNode.random = copyRandomList(head.random);
+        Node copyHead;
+        // 检查当前节点是否已经被复制过
+        if (nodeCache.containsKey(head)) {
+            // 如果已存在，直接从缓存中获取并返回
+            copyHead = nodeCache.get(head);
+        } else {
+            // 如果不存在，创建一个新的复制节点
+            copyHead = new Node(head.val);
+            // 关键步骤：在递归调用之前先将映射关系存入缓存
+            // 这样可以防止 random 指针形成环或指向前方节点时导致的无限递归
+            nodeCache.put(head, copyHead);
+            
+            // 递归构建 next 指针指向的节点
+            copyHead.next = copyRandomList(head.next);
+            // 递归构建 random 指针指向的节点
+            copyHead.random = copyRandomList(head.random);
         }
-
-        // 返回缓存中的新节点
-        return nodeCache.get(head);
+        
+        // 返回当前节点对应的复制节点
+        return copyHead;
     }
 
     /**
@@ -471,7 +500,7 @@ public class 链表 {
         return list.get(0);
     }
 
-    // https://leetcode.cn/problems/merge-k-sorted-lists/submissions/696882938/?envType=study-plan-v2&envId=top-100-liked
+// https://leetcode.cn/problems/merge-k-sorted-lists/submissions/696882938/?envType=study-plan-v2&envId=top-100-liked
 
     /**
      * 合并k个升序链表
@@ -541,12 +570,9 @@ public class 链表 {
     }
 
     class LRUCache2 {
-
-
         public @interface Important {
 
         }
-
 
         class DLinkedNode {
             int key;
@@ -647,7 +673,7 @@ public class 链表 {
         }
 
     }
-    
+
     public static void main(String[] args) {
         链表 solution = new 链表();
 
@@ -822,5 +848,5 @@ public class 链表 {
         }
         System.out.println();
     }
-    
+
 }
