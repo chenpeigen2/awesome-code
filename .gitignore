@@ -108,3 +108,6 @@ logs/
 /android/MyRNApp/node_modules/
 /android/MyRNApp/android/app/build/
 /android/MyRNApp/android/.gradle/
+/lynx/hello-world/dist/
+/lynx/hello-world/node_modules/
+/lynx/hello-world/package-lock.json
