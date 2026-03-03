@@ -5,82 +5,31 @@ import org.objectweb.asm.Opcodes
 
 class MethodStatsMethodVisitor(
     mv: MethodVisitor,
-    private val callerClass: String,
-    private val callerMethod: String,
-    private val callerDesc: String,
-    private val isConstructor: Boolean
+    private val className: String,
+    private val methodName: String,
+    private val methodDesc: String
 ) : MethodVisitor(Opcodes.ASM9, mv) {
 
-    override fun visitMethodInsn(
-        opcode: Int,
-        owner: String?,
-        name: String?,
-        descriptor: String?,
-        isInterface: Boolean
-    ) {
-        if (owner != null && name != null && descriptor != null) {
-            val key = "$owner.$name$descriptor"
-            
-            val existingInfo = MethodStatsClassVisitor.methodCalls[key]
-            if (existingInfo != null) {
-                val updatedInfo = existingInfo.copy(
-                    callCount = existingInfo.callCount + 1,
-                    calls = existingInfo.calls.apply {
-                        add(
-                            MethodCall(
-                                callerClass = callerClass,
-                                callerMethod = callerMethod,
-                                callerDesc = callerDesc,
-                                calleeClass = owner,
-                                calleeMethod = name,
-                                calleeDesc = descriptor
-                            )
-                        )
-                    }
-                )
-                MethodStatsClassVisitor.methodCalls[key] = updatedInfo
-            } else {
-                MethodStatsClassVisitor.methodCalls[key] = MethodCallInfo(
-                    className = owner,
-                    methodName = name,
-                    methodDesc = descriptor,
-                    callCount = 1,
-                    calls = mutableListOf(
-                        MethodCall(
-                            callerClass = callerClass,
-                            callerMethod = callerMethod,
-                            callerDesc = callerDesc,
-                            calleeClass = owner,
-                            calleeMethod = name,
-                            calleeDesc = descriptor
-                        )
-                    )
-                )
-            }
-        }
+    override fun visitCode() {
+        super.visitCode()
         
-        super.visitMethodInsn(opcode, owner, name, descriptor, isInterface)
+        mv.visitFieldInsn(Opcodes.GETSTATIC, "android/util/Log", "d", "Landroid/util/Log;")
+        
+        mv.visitLdcInsn("MethodStats")
+        mv.visitLdcInsn(">>> $className.$methodName$methodDesc")
+        
+        mv.visitMethodInsn(
+            Opcodes.INVOKESTATIC,
+            "android/util/Log",
+            "d",
+            "(Ljava/lang/String;Ljava/lang/String;)I",
+            false
+        )
+        
+        mv.visitInsn(Opcodes.POP)
     }
 
-    override fun visitFieldInsn(
-        opcode: Int,
-        owner: String?,
-        name: String?,
-        descriptor: String?
-    ) {
-        super.visitFieldInsn(opcode, owner, name, descriptor)
-    }
-
-    override fun visitTypeInsn(opcode: Int, type: String?) {
-        super.visitTypeInsn(opcode, type)
-    }
-
-    override fun visitInvokeDynamicInsn(
-        name: String?,
-        descriptor: String?,
-        bootstrapMethodHandle: org.objectweb.asm.Handle?,
-        vararg bootstrapMethodArguments: Any?
-    ) {
-        super.visitInvokeDynamicInsn(name, descriptor, bootstrapMethodHandle, *bootstrapMethodArguments)
+    override fun visitMaxs(maxStack: Int, maxLocals: Int) {
+        mv.visitMaxs(maxStack + 4, maxLocals)
     }
 }
