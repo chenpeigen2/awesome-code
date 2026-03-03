@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.peter.androidx.methodstats")
 }
 
 android {
@@ -61,4 +62,18 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+methodStats {
+    outputFile = "method_stats.json"
+    includePatterns.addAll(listOf(
+        "com\\.peter\\.androidx\\..*",
+        "androidx\\..*"
+    ))
+    excludePatterns.addAll(listOf(
+        ".*\\.R\\$.*",
+        ".*\\.BuildConfig"
+    ))
+    trackConstructors = true
+    trackMethods = true
 }
