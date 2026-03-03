@@ -1,4 +1,4 @@
-package 面试题目;
+package 面试题目.day3;
 
 import java.util.*;
 
@@ -48,22 +48,24 @@ public class 图论 {
 
         // 当队列不为空时继续搜索
         while (!queue.isEmpty()) {
-            // 取出队列头部元素
-            int[] poll = queue.poll();
-            int x = poll[0];
-            int y = poll[1];
-
-            // 检查坐标是否有效且为未访问的陆地
-            if (x >= 0 && x < grid.length
-                    && y >= 0 && y < grid[0].length
-                    && grid[x][y] == '1') {
-                // 标记为已访问
-                grid[x][y] = '0';
-                // 将四个方向的相邻坐标加入队列
-                queue.offer(new int[]{x + 1, y}); // 下
-                queue.offer(new int[]{x - 1, y}); // 上
-                queue.offer(new int[]{x, y + 1}); // 右
-                queue.offer(new int[]{x, y - 1}); // 左
+            int sz = queue.size();
+            for (int k = 0; k < sz; k++) {
+                // 取出队列头部元素
+                int[] poll = queue.poll();
+                int x = poll[0];
+                int y = poll[1];
+                // 检查坐标是否有效且为未访问的陆地
+                if (x >= 0 && x < grid.length
+                        && y >= 0 && y < grid[0].length
+                        && grid[x][y] == '1') {
+                    // 标记为已访问
+                    grid[x][y] = '0';
+                    // 将四个方向的相邻坐标加入队列
+                    queue.offer(new int[]{x + 1, y}); // 下
+                    queue.offer(new int[]{x - 1, y}); // 上
+                    queue.offer(new int[]{x, y + 1}); // 右
+                    queue.offer(new int[]{x, y - 1}); // 左
+                }
             }
         }
     }
@@ -188,6 +190,9 @@ public class 图论 {
         // 拓扑排序过程
         while (!queue.isEmpty()) {
             visited++;           // 完成一门课程
+//            int sz = queue.size();
+//            for (int i = 0; i < sz; i++) {
+
             int u = queue.poll(); // 取出当前可学习的课程
 
             // 遍历当前课程的所有后续课程
@@ -197,6 +202,7 @@ public class 图论 {
                     queue.offer(v);
                 }
             }
+//            }
         }
 
         // 如果所有课程都能完成，则visited等于课程总数
@@ -229,6 +235,7 @@ class Trie {
 
     /**
      * 向Trie中插入一个单词
+     *
      * @param word 需要插入的字符串
      */
     public void insert(String word) {
@@ -247,6 +254,7 @@ class Trie {
 
     /**
      * 在Trie中搜索一个完整的单词
+     *
      * @param word 需要搜索的字符串
      * @return 如果单词存在返回true，否则返回false
      */
@@ -267,6 +275,7 @@ class Trie {
     /**
      * 检查Trie中是否存在以指定前缀开头的单词
      * 注意：原代码有逻辑错误，这里修正为正确的startsWith实现
+     *
      * @param prefix 需要检查的前缀
      * @return 如果存在以该前缀开头的单词返回true，否则返回false
      */
