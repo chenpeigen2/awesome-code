@@ -12,9 +12,7 @@ class MethodStatsMethodVisitor(
 
     override fun visitCode() {
         super.visitCode()
-        
-        mv.visitFieldInsn(Opcodes.GETSTATIC, "android/util/Log", "d", "Landroid/util/Log;")
-        
+
         mv.visitLdcInsn("MethodStats")
         mv.visitLdcInsn(">>> $className.$methodName$methodDesc")
         
