@@ -5,7 +5,6 @@ import com.android.build.api.instrumentation.InstrumentationScope
 import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import java.io.File
 
 class MethodStatsPlugin : Plugin<Project> {
 
@@ -15,8 +14,6 @@ class MethodStatsPlugin : Plugin<Project> {
         project.afterEvaluate {
             println("[MethodStats] Analyzing method calls in project: ${project.name}")
             println("[MethodStats] Output file: ${ext.outputFile}")
-            println("[MethodStats] Include patterns: ${ext.includePatterns}")
-            println("[MethodStats] Exclude patterns: ${ext.excludePatterns}")
         }
         
         val androidComponents = project.extensions.getByType(AndroidComponentsExtension::class.java)
@@ -24,8 +21,8 @@ class MethodStatsPlugin : Plugin<Project> {
             if (variant.name.capitalize() == "Debug") {
                 variant.transformClassesWith(MethodStatsClassVisitorFactory::class.java, InstrumentationScope.PROJECT) {
                     it.outputFile.set(ext.outputFile)
-                    it.includePatterns.set(ext.includePatterns)
-                    it.excludePatterns.set(ext.excludePatterns)
+                    it.includePatterns.set(listOf(".*"))
+                    it.excludePatterns.set(listOf(".*\\.R\\$.*", ".*\\.BuildConfig"))
                     it.trackConstructors.set(ext.trackConstructors)
                     it.trackMethods.set(ext.trackMethods)
                 }
@@ -37,8 +34,6 @@ class MethodStatsPlugin : Plugin<Project> {
 
 open class MethodStatsExtension {
     var outputFile: String = "method_stats.json"
-    var includePatterns: MutableList<String> = mutableListOf(".*")
-    var excludePatterns: MutableList<String> = mutableListOf()
     var trackConstructors: Boolean = true
     var trackMethods: Boolean = true
 }

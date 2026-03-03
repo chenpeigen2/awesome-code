@@ -63,17 +63,3 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }
-
-methodStats {
-    outputFile = "method_stats.json"
-    includePatterns.addAll(listOf(
-        "com\\.peter\\.androidx\\..*",
-        "androidx\\..*"
-    ))
-    excludePatterns.addAll(listOf(
-        ".*\\.R\\$.*",
-        ".*\\.BuildConfig"
-    ))
-    trackConstructors = true
-    trackMethods = true
-}

@@ -1,22 +1,22 @@
 package com.peter.androidx.methodstats
 
+import com.android.build.api.instrumentation.InstrumentationParameters
 import org.gradle.api.tasks.Input
-import java.io.File
 
-abstract class MethodStatsParameters : org.gradle.api.tasks.Input {
-
-    @get:Input
-    abstract var outputFile: String
+interface MethodStatsParameters : InstrumentationParameters {
 
     @get:Input
-    abstract var includePatterns: List<String>
+    var outputFile: String
 
     @get:Input
-    abstract var excludePatterns: List<String>
+    var includePatterns: List<String>
 
     @get:Input
-    abstract var trackConstructors: Boolean
+    var excludePatterns: List<String>
 
     @get:Input
-    abstract var trackMethods: Boolean
+    var trackConstructors: Boolean
+
+    @get:Input
+    var trackMethods: Boolean
 }
