@@ -1,4 +1,6 @@
-package 面试题目;
+package 面试题目.day3;
+
+import 面试题目.Important;
 
 import java.util.*;
 
@@ -100,6 +102,7 @@ public class 二叉树 {
     // root -> left -> right
     // root -> right -> left
     // 双栈实现
+    // 好像可以前序遍历之后 翻转过来就行
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> result = new ArrayList<>();
         if (root == null) return result;
@@ -171,12 +174,8 @@ public class 二叉树 {
         root.left = right;
         root.right = left;
         // 对交换后的左右子树进行遍历操作（原实现中是中序遍历）
-        if (root.left != null) {
-            invertTree(root.left);
-        }
-        if (root.right != null) {
-            invertTree(root.right);
-        }
+        invertTree(root.left);
+        invertTree(root.right);
         // 返回翻转后的根节点
         return root;
     }
@@ -198,11 +197,10 @@ public class 二叉树 {
 
     private boolean isMirror(TreeNode left, TreeNode right) {
         // 递归结束条件
-        if (left == null && right == null) return true;
+        if (left == null && right == null) return true; // core 关键的一步
         if (left == null || right == null) return false;
         if (left.val != right.val) return false;
         // 递归结束条件end
-
         // 比较左子树的左子树与右子树的右子树，以及左子树的右子树与右子树的左子树
         return isMirror(left.left, right.right) && isMirror(left.right, right.left);
     }
@@ -219,6 +217,7 @@ public class 二叉树 {
         return Math.max(left, right) + 1;
     }
 
+    // https://leetcode.cn/problems/diameter-of-binary-tree/?envType=study-plan-v2&envId=top-100-liked
     public int diameterOfBinaryTree(TreeNode root) {
         depth(root);
         return ans - 1; // core
@@ -279,7 +278,7 @@ public class 二叉树 {
     }
 
     TreeNode buildTree(int l, int r, int[] nums) {
-        if (l > r) return null;
+        if (l > r) return null; // 递归的退出条件不能忘记
         int mid = (l + r) / 2;
         TreeNode node = new TreeNode(nums[mid]);
         node.left = buildTree(l, mid - 1, nums);
@@ -499,6 +498,7 @@ public class 二叉树 {
      * @return 路径和等于目标值的路径总数
      */
     // https://leetcode.cn/problems/path-sum-iii/submissions/697091192/?envType=study-plan-v2&envId=top-100-liked
+    @Important
     public int pathSum(TreeNode root, int targetSum) {
         // 如果当前节点为空，返回0条路径
         if (root == null) {
@@ -589,6 +589,7 @@ public class 二叉树 {
      * @param root 二叉树的根节点
      * @return 二叉树中的最大路径和
      */
+    @Important
     public int maxPathSum(TreeNode root) {
         // 调用辅助函数计算每个节点的最大贡献值，并更新全局最大路径和
         maxGain(root);

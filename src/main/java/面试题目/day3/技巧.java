@@ -1,4 +1,6 @@
-package 面试题目;
+package 面试题目.day3;
+
+import 面试题目.NeedDeepLearn;
 
 import java.util.Arrays;
 
@@ -59,13 +61,10 @@ public class 技巧 {
     // https://leetcode.cn/problems/next-permutation/description/?envType=study-plan-v2&envId=top-100-liked
     @NeedDeepLearn
     public void nextPermutation(int[] nums) {
-
         int i = nums.length - 2;
-
         while (i >= 0 && nums[i] >= nums[i + 1]) {
             i--;
         }
-
         if (i >= 0) {
             int j = nums.length - 1;
             while (j > i && nums[j] <= nums[i]) {
