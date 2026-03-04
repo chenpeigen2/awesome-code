@@ -14,6 +14,10 @@ gradlePlugin {
             id = "com.peter.androidx.methodstats"
             implementationClass = "com.peter.androidx.methodstats.MethodStatsPlugin"
         }
+        create("MethodClickPlugin") {
+            id = "com.peter.androidx.methodclick"
+            implementationClass = "com.peter.androidx.methodstats.OnClickPlugin"
+        }
     }
 }
 
