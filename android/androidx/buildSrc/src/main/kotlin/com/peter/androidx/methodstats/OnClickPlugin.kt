@@ -11,63 +11,75 @@ import com.android.build.api.instrumentation.InstrumentationScope
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.objectweb.asm.ClassVisitor
-import org.objectweb.asm.MethodVisitor
 import org.objectweb.asm.Opcodes
+import org.objectweb.asm.tree.ClassNode
+import org.objectweb.asm.tree.InsnList
+import org.objectweb.asm.tree.LdcInsnNode
+import org.objectweb.asm.tree.MethodInsnNode
+import org.objectweb.asm.tree.InsnNode
+import org.objectweb.asm.tree.TypeInsnNode
 
-// OnClickClassVisitor —— 真正插桩逻辑
-class OnClickClassVisitor(
-    api: Int,
-    classVisitor: ClassVisitor
-) : ClassVisitor(api, classVisitor) {
+// OnClickClassNode —— 使用 Tree API 进行插桩
+class OnClickClassNode(
+    api: Int
+) : ClassNode(api) {
 
-    private var className: String? = null
+    override fun visitEnd() {
+        // 在 visitEnd 中对所有方法进行插桩
+        for (method in methods) {
+            // 跳过静态初始化块
+            if (method.name == "<clinit>") continue
 
-    override fun visit(
-        version: Int, access: Int, name: String?,
-        signature: String?, superName: String?, interfaces: Array<out String>?
-    ) {
-        super.visit(version, access, name, signature, superName, interfaces)
-        className = name
-    }
+            // 在方法开头插入日志代码
+            val insns = InsnList()
 
-    override fun visitMethod(
-        access: Int, name: String?, descriptor: String?,
-        signature: String?, exceptions: Array<out String>?
-    ): MethodVisitor {
-        val mv = super.visitMethod(access, name, descriptor, signature, exceptions)
-        if (mv != null && name != null && name != "<clinit>") {
-            return OnClickMethodVisitor(api, mv, className)
+            // 1. Tag
+            insns.add(LdcInsnNode("OnClickMethodVisitor"))
+
+            // 2. Msg
+            insns.add(LdcInsnNode(">>> $name ${method.name}"))
+
+            // 3. 构造 Throwable 对象
+            insns.add(TypeInsnNode(Opcodes.NEW, "java/lang/Throwable")) // NEW Throwable
+            insns.add(InsnNode(Opcodes.DUP))                            // DUP 复制引用
+            insns.add(MethodInsnNode(                                  // 调用构造函数 <init>
+                Opcodes.INVOKESPECIAL,
+                "java/lang/Throwable",
+                "<init>",
+                "()V",
+                false
+            ))
+            // 此时栈顶是一个初始化好的 Throwable 对象
+
+            // 4. 调用 Log.d (String, String, Throwable)
+            insns.add(
+                MethodInsnNode(
+                    Opcodes.INVOKESTATIC,
+                    "android/util/Log",
+                    "d",
+                    "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I", // 注意参数变化
+                    false
+                )
+            )
+
+            // 5. 清理返回值
+            insns.add(InsnNode(Opcodes.POP))
+
+            // 插入到方法指令的最前面
+            method.instructions.insert(insns)
         }
-        return mv
+        // 修改完成后，将 ClassNode 传递给下一个 visitor
+        accept(nextClassVisitor)
+    }
+
+
+    private var nextClassVisitor: ClassVisitor? = null
+
+    fun setNextClassVisitor(cv: ClassVisitor) {
+        this.nextClassVisitor = cv
     }
 }
 
-// OnClickMethodVisitor —— 方法里插具体代码
-class OnClickMethodVisitor(
-    api: Int,
-    methodVisitor: MethodVisitor,
-    private val className: String?
-) : MethodVisitor(api, methodVisitor) {
-
-    override fun visitCode() {
-        super.visitCode()
-
-        mv.visitLdcInsn("MethodStats111")
-        mv.visitLdcInsn(">>> $className")
-
-        mv.visitMethodInsn(
-            Opcodes.INVOKESTATIC,
-            "android/util/Log",
-            "d",
-            "(Ljava/lang/String;Ljava/lang/String;)I",
-            false
-        )
-
-        mv.visitInsn(Opcodes.POP)
-    }
-}
-
-// Factory —— AGP 通过它创建 ClassVisitor
 abstract class OnClickClassVisitorFactory :
     AsmClassVisitorFactory<InstrumentationParameters.None> {
 
@@ -80,10 +92,11 @@ abstract class OnClickClassVisitorFactory :
         classContext: ClassContext,
         nextClassVisitor: ClassVisitor
     ): ClassVisitor {
-        return OnClickClassVisitor(
+        val classNode = OnClickClassNode(
             instrumentationContext.apiVersion.get(),
-            nextClassVisitor
         )
+        classNode.setNextClassVisitor(nextClassVisitor)
+        return classNode
     }
 }
 
