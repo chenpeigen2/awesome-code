@@ -9,16 +9,25 @@ import org.gradle.api.Project
 class MethodStatsPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
+
         project.afterEvaluate {
             println("[MethodStats] Method call logging plugin applied to: ${project.name}")
         }
-        
-        val androidComponents = project.extensions.getByType(AndroidComponentsExtension::class.java)
+
+        val androidComponents = project.extensions
+            .getByType(AndroidComponentsExtension::class.java)
+
         androidComponents.onVariants { variant ->
-            if (variant.name.capitalize() == "Debug") {
-                variant.transformClassesWith(MethodStatsClassVisitorFactory::class.java, InstrumentationScope.PROJECT) {}
-                variant.setAsmFramesComputationMode(FramesComputationMode.COPY_FRAMES)
+
+            variant.instrumentation.transformClassesWith(
+                MethodStatsClassVisitorFactory::class.java,
+                InstrumentationScope.PROJECT
+            ) {
+                // 如果有参数，在这里配置
             }
+            variant.instrumentation.setAsmFramesComputationMode(
+                FramesComputationMode.COPY_FRAMES
+            )
         }
     }
 }
