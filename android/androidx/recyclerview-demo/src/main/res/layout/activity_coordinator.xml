@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    CoordinatorLayout + AppBarLayout + RecyclerView 联动示例
+    
+    滑动行为控制：
+    - Toolbar: scroll|enterAlways - 滚动时隐藏，向下滚动立即出现
+    - TabLayout: scroll|enterAlways|snap - 滚动时隐藏，向下滚动立即出现，吸附效果
+    
+    注意：
+    - RecyclerView 必须设置 app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    - AppBarLayout 中的子 View 必须设置 app:layout_scrollFlags
+    - fitsSystemWindows="true" 解决状态栏遮挡问题
+-->
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:fitsSystemWindows="true">
+
+        <!-- 
+            MaterialToolbar 滑动行为：
+            - scroll: 可以滚动出屏幕
+            - enterAlways: 向下滚动时立即显示
+        -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:navigationIcon="@drawable/ic_back"
+            app:title="CoordinatorLayout 联动"
+            app:titleTextColor="@color/white" />
+
+        <!-- 
+            TabLayout 滑动行为：
+            - scroll: 可以滚动出屏幕
+            - enterAlways: 向下滚动时立即显示
+            - snap: 自动吸附效果
+        -->
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:tabIndicatorColor="?attr/colorPrimary"
+            app:tabSelectedTextColor="?attr/colorPrimary"
+            app:tabTextColor="@color/gray">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="推荐" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="热门" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最新" />
+
+        </com.google.android.material.tabs.TabLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- 
+        RecyclerView 必须设置 layout_behavior
+        这样才能与 AppBarLayout 联动
+    -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="4dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <!-- 
+        FloatingActionButton 示例
+        位置：右下角
+        当滚动时会自动隐藏/显示
+    -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:contentDescription="添加"
+        app:srcCompat="@drawable/ic_back" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

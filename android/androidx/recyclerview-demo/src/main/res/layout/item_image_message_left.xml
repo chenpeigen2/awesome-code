@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 他人的图片消息 - 显示在左侧 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="start"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <View
+        android:id="@+id/imageView"
+        android:layout_width="160dp"
+        android:layout_height="120dp"
+        android:layout_marginEnd="60dp"
+        android:background="@color/card_orange" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/gray"
+        android:textSize="12sp"
+        tools:text="14:30" />
+
+</LinearLayout>

@@ -37,3 +37,6 @@ include(":apt-compiler")
 
 // Lifecycle demo
 include(":lifecycle-demo")
+
+// RecyclerView demo
+include(":recyclerview-demo")

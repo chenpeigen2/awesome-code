@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="NestedScrollView 嵌套滑动"
+            app:navigationIcon="@drawable/ic_back" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <!-- NestedScrollView 作为外层容器 -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 顶部内容区域 -->
+            <TextView
+                android:id="@+id/tvHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/card_blue"
+                android:padding="16dp"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                tools:text="这是顶部内容" />
+
+            <!-- 内部 RecyclerView -->
+            <!-- 
+                重要配置：
+                1. layout_height 不能是 match_parent，否则会占满整个 NestedScrollView
+                2. 建议设置为 wrap_content，让 RecyclerView 根据内容计算高度
+                3. 在代码中禁用 nestedScrollingEnabled
+            -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:padding="4dp" />
+
+            <!-- 底部内容 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/gray_light"
+                android:padding="16dp"
+                android:text="这是底部内容区域"
+                android:textColor="@color/gray"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

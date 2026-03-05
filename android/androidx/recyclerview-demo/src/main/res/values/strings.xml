@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RecyclerView Demo</string>
+    
+    <!-- 基础示例标题 -->
+    <string name="basic_title">基础示例</string>
+    <string name="simple_list">简单列表</string>
+    <string name="grid_list">网格列表</string>
+    <string name="staggered_grid">瀑布流布局</string>
+    <string name="header_footer">头部与尾部</string>
+    <string name="drag_swipe">拖拽与滑动删除</string>
+    
+    <!-- 进阶示例标题 -->
+    <string name="advanced_title">进阶示例</string>
+    <string name="multi_type">多类型 Item</string>
+    <string name="diff_util">DiffUtil 数据更新</string>
+    <string name="paging_simulation">分页加载模拟</string>
+    
+    <!-- 滑动冲突示例标题 -->
+    <string name="conflict_title">滑动冲突示例</string>
+    <string name="viewpager2_nested">ViewPager2 嵌套</string>
+    <string name="rv_nested">RecyclerView 嵌套</string>
+    <string name="nested_scroll">NestedScrollView 嵌套</string>
+    <string name="coordinator">CoordinatorLayout 联动</string>
+    <string name="custom_conflict">自定义冲突处理</string>
+    
+    <!-- 示例说明 -->
+    <string name="simple_list_desc">最基础的 RecyclerView 使用，包含点击事件和长按事件</string>
+    <string name="grid_list_desc">使用 GridLayoutManager 实现网格布局</string>
+    <string name="staggered_grid_desc">使用 StaggeredGridLayoutManager 实现瀑布流</string>
+    <string name="header_footer_desc">为 RecyclerView 添加头部和尾部视图</string>
+    <string name="drag_swipe_desc">实现拖拽排序和滑动删除功能</string>
+    <string name="multi_type_desc">实现多种类型的 Item，类似聊天列表</string>
+    <string name="diff_util_desc">使用 DiffUtil 高效更新数据</string>
+    <string name="paging_simulation_desc">模拟分页加载更多数据</string>
+    <string name="viewpager2_nested_desc">ViewPager2 内部嵌套水平/垂直滑动的 RecyclerView</string>
+    <string name="rv_nested_desc">RecyclerView 内部嵌套另一个 RecyclerView</string>
+    <string name="nested_scroll_desc">NestedScrollView 内部嵌套 RecyclerView</string>
+    <string name="coordinator_desc">CoordinatorLayout + AppBarLayout + RecyclerView 联动</string>
+    <string name="custom_conflict_desc">自定义 NestedScrollingChild 处理滑动冲突</string>
+</resources>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 使用 NoActionBar 主题，因为布局中使用 MaterialToolbar -->
+    <style name="Theme.RecyclerViewDemo" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- 状态栏颜色 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- 让状态栏内容使用深色（适配浅色背景） -->
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

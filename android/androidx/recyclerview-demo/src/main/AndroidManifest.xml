@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.RecyclerViewDemo">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 基础示例 -->
+        <activity android:name=".basic.SimpleListActivity" />
+        <activity android:name=".basic.GridListActivity" />
+        <activity android:name=".basic.StaggeredGridActivity" />
+        <activity android:name=".basic.HeaderFooterActivity" />
+        <activity android:name=".basic.DragSwipeActivity" />
+
+        <!-- 进阶示例 -->
+        <activity android:name=".advanced.MultiTypeActivity" />
+        <activity android:name=".advanced.DiffUtilActivity" />
+        <activity android:name=".advanced.PagingSimulationActivity" />
+
+        <!-- 滑动冲突示例 -->
+        <activity android:name=".conflict.ViewPager2NestedActivity" />
+        <activity android:name=".conflict.RecyclerViewNestedActivity" />
+        <activity android:name=".conflict.NestedScrollActivity" />
+        <activity android:name=".conflict.CoordinatorActivity" />
+        <activity android:name=".conflict.CustomConflictActivity" />
+
+    </application>
+
+</manifest>
