@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 背景圆 -->
+    <path
+        android:fillColor="#4ECDC4"
+        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0" />
+    <!-- CL 文字 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,45h4v18h-4z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M58,45v18h-4v-18h4z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M68,45v14h-10v4h14v-18h-4z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M44,45v4h10v-4h-10z" />
+</vector>

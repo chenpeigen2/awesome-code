@@ -40,3 +40,6 @@ include(":lifecycle-demo")
 
 // RecyclerView demo
 include(":recyclerview-demo")
+
+// ConstraintLayout demo
+include(":constraintlayout-demo")

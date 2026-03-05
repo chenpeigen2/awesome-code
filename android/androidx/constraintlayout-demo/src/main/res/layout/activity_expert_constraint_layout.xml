@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    ConstraintLayout 高级示例布局
+    
+    本布局演示 ConstraintLayout 高级功能：
+    1. ConstraintSet - 代码动态修改约束
+    2. Transition - 约束变化动画
+    3. Layer - 层，对多个视图进行整体变换
+    4. Circular Positioning - 圆形定位
+    5. Flow - 虚拟布局，自动换行排列
+-->
+<ScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:fillViewport="true"
+    tools:context=".expert.ExpertConstraintLayoutActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第一部分：ConstraintSet 动态约束                                              ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+        <TextView
+            android:id="@+id/tv_section1_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="第一部分：ConstraintSet 动态约束"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_section1_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="ConstraintSet 允许在代码中动态修改约束，配合 TransitionManager 可实现平滑动画切换"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section1_title" />
+
+        <!-- ConstraintSet 演示容器 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_set_container"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section1_desc">
+
+            <TextView
+                android:id="@+id/tv_demo_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FF6B6B"
+                android:padding="12dp"
+                android:text="A"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_demo_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_demo_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#4ECDC4"
+                android:padding="12dp"
+                android:text="B"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toStartOf="@id/tv_demo_3"
+                app:layout_constraintStart_toEndOf="@id/tv_demo_1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_demo_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#45B7D1"
+                android:padding="12dp"
+                android:text="C"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_demo_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_toggle_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="切换布局"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraint_set_container" />
+
+        <!-- 
+            ConstraintSet 代码示例说明：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            // 创建 ConstraintSet
+            val constraintSet = ConstraintSet()
+            
+            // 从现有布局克隆约束
+            constraintSet.clone(constraintLayout)
+            
+            // 修改约束
+            constraintSet.connect(
+                viewId,           // 要修改的视图 ID
+                ConstraintSet.START,  // 要修改的边
+                targetId,         // 目标视图 ID
+                ConstraintSet.END    // 目标边
+            )
+            
+            // 设置偏移
+            constraintSet.setHorizontalBias(viewId, 0.5f)
+            
+            // 应用动画过渡
+            TransitionManager.beginDelayedTransition(
+                constraintLayout,
+                ChangeBounds()
+            )
+            
+            // 应用新约束
+            constraintSet.applyTo(constraintLayout)
+        -->
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第二部分：圆形定位 (Circular Positioning)                                    ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+        <TextView
+            android:id="@+id/tv_section2_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="第二部分：圆形定位 (Circular Positioning)"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_toggle_layout" />
+
+        <TextView
+            android:id="@+id/tv_section2_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="将视图定位在相对于另一个视图的圆形轨迹上，可设置半径和角度"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section2_title" />
+
+        <!-- 圆形定位容器 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/circular_container"
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section2_desc">
+
+            <!-- 中心点 -->
+            <TextView
+                android:id="@+id/tv_center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#E74C3C"
+                android:padding="16dp"
+                android:text="中心"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 
+                圆形定位属性：
+                app:layout_constraintCircle - 圆心视图 ID
+                app:layout_constraintCircleRadius - 半径 (dp)
+                app:layout_constraintCircleAngle - 角度 (0-360, 0 为正上方)
+            -->
+
+            <!-- 角度 0° (正上方) -->
+            <TextView
+                android:id="@+id/tv_circle_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#3498DB"
+                android:padding="8dp"
+                android:text="0°"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintCircle="@id/tv_center"
+                app:layout_constraintCircleAngle="0"
+                app:layout_constraintCircleRadius="80dp" />
+
+            <!-- 角度 90° (右边) -->
+            <TextView
+                android:id="@+id/tv_circle_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#2ECC71"
+                android:padding="8dp"
+                android:text="90°"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintCircle="@id/tv_center"
+                app:layout_constraintCircleAngle="90"
+                app:layout_constraintCircleRadius="80dp" />
+
+            <!-- 角度 180° (下方) -->
+            <TextView
+                android:id="@+id/tv_circle_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#9B59B6"
+                android:padding="8dp"
+                android:text="180°"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintCircle="@id/tv_center"
+                app:layout_constraintCircleAngle="180"
+                app:layout_constraintCircleRadius="80dp" />
+
+            <!-- 角度 270° (左边) -->
+            <TextView
+                android:id="@+id/tv_circle_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#F39C12"
+                android:padding="8dp"
+                android:text="270°"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                app:layout_constraintCircle="@id/tv_center"
+                app:layout_constraintCircleAngle="270"
+                app:layout_constraintCircleRadius="80dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_rotate_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="旋转一圈"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/circular_container" />
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第三部分：Layer 层变换                                                       ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+        <TextView
+            android:id="@+id/tv_section3_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="第三部分：Layer 层变换"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_rotate_circle" />
+
+        <TextView
+            android:id="@+id/tv_section3_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Layer 可以对多个视图进行整体变换：旋转、缩放、透明度"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section3_title" />
+
+        <!-- Layer 演示容器 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layer_container"
+            android:layout_width="0dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section3_desc">
+
+            <!-- 
+                Layer 定义 - 引用多个视图
+                可以对整个组应用变换
+            -->
+            <androidx.constraintlayout.helper.widget.Layer
+                android:id="@+id/layer_demo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tv_layer_1,tv_layer_2,tv_layer_3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_layer_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:background="#E74C3C"
+                android:padding="12dp"
+                android:text="A"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_layer_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="#3498DB"
+                android:padding="12dp"
+                android:text="B"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/tv_layer_1"
+                app:layout_constraintTop_toTopOf="@id/tv_layer_1" />
+
+            <TextView
+                android:id="@+id/tv_layer_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="#2ECC71"
+                android:padding="12dp"
+                android:text="C"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                app:layout_constraintStart_toEndOf="@id/tv_layer_2"
+                app:layout_constraintTop_toTopOf="@id/tv_layer_1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/layer_buttons"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layer_container">
+
+            <Button
+                android:id="@+id/btn_rotate_layer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="旋转+15°"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_scale_layer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="缩放切换"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_alpha_layer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="透明度切换"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第四部分：Flow 自动换行布局                                                   ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+        <TextView
+            android:id="@+id/tv_section4_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="第四部分：Flow 自动换行布局"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layer_buttons" />
+
+        <TextView
+            android:id="@+id/tv_section4_desc"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Flow 是虚拟布局，可以自动排列多个视图并支持换行"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section4_title" />
+
+        <!-- Flow 演示容器 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/flow_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            android:padding="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section4_desc">
+
+            <!-- 
+                Flow 属性说明：
+                app:flow_wrapMode - 换行模式
+                    - none (默认)：不换行
+                    - chain：换行后形成链
+                    - aligned：换行后对齐
+                
+                app:flow_maxElementsWrap - 每行最大元素数
+                app:flow_horizontalStyle - 水平链样式 (spread/spread_inside/packed)
+                app:flow_verticalStyle - 垂直链样式
+                app:flow_horizontalGap - 水平间距
+                app:flow_verticalGap - 垂直间距
+                app:flow_horizontalAlign - 水平对齐 (start/end/center)
+                app:flow_verticalAlign - 垂直对齐 (top/bottom/center/baseline)
+            -->
+
+            <androidx.constraintlayout.helper.widget.Flow
+                android:id="@+id/flow"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="tag_1,tag_2,tag_3,tag_4,tag_5,tag_6,tag_7,tag_8"
+                app:flow_horizontalGap="8dp"
+                app:flow_horizontalStyle="packed"
+                app:flow_maxElementsWrap="4"
+                app:flow_verticalGap="8dp"
+                app:flow_wrapMode="chain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- 标签视图 -->
+            <TextView
+                android:id="@+id/tag_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FF6B6B"
+                android:padding="8dp"
+                android:text="Kotlin"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tag_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#4ECDC4"
+                android:padding="8dp"
+                android:text="Java"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tag_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#45B7D1"
+                android:padding="8dp"
+                android:text="Android"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tag_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#96CEB4"
+                android:padding="8dp"
+                android:text="Jetpack"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tag_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFEAA7"
+                android:padding="8dp"
+                android:text="Compose"
+                android:textColor="#333333"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tag_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#DDA0DD"
+                android:padding="8dp"
+                android:text="Coroutines"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tag_7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#74B9FF"
+                android:padding="8dp"
+                android:text="Flow"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tag_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#A29BFE"
+                android:padding="8dp"
+                android:text="Hilt"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            总结：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            高级功能要点：
+            
+            1. ConstraintSet
+               - 动态修改约束
+               - 配合 TransitionManager 实现动画
+               - 适用于布局切换场景
+            
+            2. 圆形定位
+               - 相对于另一个视图进行圆形排列
+               - 可设置半径和角度
+               - 适用于圆形菜单、仪表盘等
+            
+            3. Layer
+               - 对多个视图进行整体变换
+               - 支持旋转、缩放、透明度
+               - 不影响子视图的约束
+            
+            4. Flow
+               - 自动排列多个视图
+               - 支持自动换行
+               - 适用于标签云、筛选器等
+            
+            5. 其他高级功能（未演示）：
+               - Placeholder：占位符，动态替换视图
+               - ImageFilterButton/ImageFilterView：图片滤镜
+               - MotionLayout：复杂动画编排
+        -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
