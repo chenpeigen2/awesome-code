@@ -7,6 +7,8 @@ import com.peter.layoutinflater.demo.advanced.LayoutInflaterCompatActivity
 import com.peter.layoutinflater.demo.async.AsyncInflateActivity
 import com.peter.layoutinflater.demo.basic.BasicInflateActivity
 import com.peter.layoutinflater.demo.basic.GetLayoutInflaterActivity
+import com.peter.layoutinflater.demo.basic.InflaterInstanceActivity
+import com.peter.layoutinflater.demo.clone.CloneInflaterActivity
 import com.peter.layoutinflater.demo.custom.CustomLayoutInflaterActivity
 import com.peter.layoutinflater.demo.dynamic.DynamicViewActivity
 import com.peter.layoutinflater.demo.factory.FactoryActivity
@@ -29,6 +31,7 @@ data class MenuItem(
 // 基础示例
 fun createBasicInflateIntent(context: Context) = Intent(context, BasicInflateActivity::class.java)
 fun createGetLayoutInflaterIntent(context: Context) = Intent(context, GetLayoutInflaterActivity::class.java)
+fun createInflaterInstanceIntent(context: Context) = Intent(context, InflaterInstanceActivity::class.java)
 
 // 进阶示例
 fun createAttachToRootIntent(context: Context) = Intent(context, AttachToRootActivity::class.java)
@@ -40,6 +43,7 @@ fun createFactoryIntent(context: Context) = Intent(context, FactoryActivity::cla
 
 // 自定义 LayoutInflater
 fun createCustomLayoutInflaterIntent(context: Context) = Intent(context, CustomLayoutInflaterActivity::class.java)
+fun createCloneInflaterIntent(context: Context) = Intent(context, CloneInflaterActivity::class.java)
 
 // 实战示例
 fun createRecyclerViewIntent(context: Context) = Intent(context, RecyclerViewActivity::class.java)

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 说明 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Activity.layoutInflater 深入解析"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Activity.layoutInflater 与 Context.getSystemService() 获取的 LayoutInflater 可能是不同的实例，这是由 Activity 的特殊机制决定的。"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 原理说明 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="为什么可能是不同的实例？"
+                    android:textColor="@color/teal_700"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="#F5F5F5"
+                    android:fontFamily="monospace"
+                    android:padding="8dp"
+                    android:text="// Activity 中的两种获取方式\n\n// 方式 A: Context.getSystemService()\n// 调用父类 ContextImpl 的方法\nval inflaterA = getSystemService(\n    LAYOUT_INFLATER_SERVICE)\n\n// 方式 B: Activity.getActivitySystemService()\n// Activity 有自己的实现\nval inflaterB = layoutInflater\n// 等价于 getActivitySystemService(\n//     LAYOUT_INFLATER_SERVICE)"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="【关键区别】\n\n• Context.getSystemService() 返回系统级 LayoutInflater\n\n• Activity.layoutInflater 调用 getActivitySystemService()，可能返回 Activity 专用的 LayoutInflater 副本\n\n• AppCompatActivity 会进一步包装 LayoutInflater 以支持兼容特性"
+                    android:textColor="@color/black"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 演示按钮 -->
+        <Button
+            android:id="@+id/btnTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="执行实例对比测试" />
+
+        <Button
+            android:id="@+id/btnFactoryTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="演示 Factory 影响范围" />
+
+        <!-- 实例对比结果 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="实例对比结果"
+                    android:textColor="@color/purple_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvInstanceResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Factory 影响范围演示 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Factory 影响范围演示"
+                    android:textColor="@color/purple_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="如果为 layoutInflater 设置 Factory，会影响整个 Activity 的布局加载（包括 setContentView）："
+                    android:textColor="#757575"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tvFactoryResult"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="monospace"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 两种 LayoutInflater 加载结果对比 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="加载结果对比"
+            android:textColor="@color/purple_700"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/containerA"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#E0E0E0"
+                android:minHeight="80dp"
+                android:padding="4dp" />
+
+            <FrameLayout
+                android:id="@+id/containerB"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:background="#E0E0E0"
+                android:minHeight="80dp"
+                android:padding="4dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="左: Context.getSystemService()  |  右: Activity.layoutInflater"
+            android:textColor="#757575"
+            android:textSize="11sp" />
+
+        <!-- 代码示例 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="实际应用场景"
+                    android:textColor="@color/teal_700"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="1. 【AppCompatActivity】自动设置 Factory 来支持 tint 等兼容特性\n\n2. 【全局样式注入】在 Activity.onCreate 前设置 Factory，影响整个 Activity 的 View 创建\n\n3. 【皮肤切换】通过 Factory 统一替换控件实现\n\n4. 【调试监控】注入 Factory 记录所有 View 创建"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

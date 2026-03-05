@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 说明 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="cloneInContext 深入解析"
+                    android:textColor="@color/purple_700"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="cloneInContext() 创建一个 LayoutInflater 的副本，可以独立设置 Factory 而不影响原始实例。这是实现局部样式替换的关键技术。"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 方法签名 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="方法签名"
+                    android:textColor="@color/teal_700"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="#F5F5F5"
+                    android:fontFamily="monospace"
+                    android:padding="8dp"
+                    android:text="public LayoutInflater cloneInContext(\n    Context newContext\n)"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="【参数】newContext - 新的 Context\n【返回】新的 LayoutInflater 实例\n【特点】复制原有配置，使用新 Context"
+                    android:textColor="#757575"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 核心特性 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="核心特性"
+                    android:textColor="@color/teal_700"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="1. 【独立性】副本的修改不影响原始实例\n\n2. 【Factory 隔离】可设置不同的 Factory\n\n3. 【Context 切换】可使用不同的 Context（如主题）\n\n4. 【浅拷贝】共享某些内部资源（如 mConstructorArgs）"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 演示区域 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="示例演示"
+            android:textColor="@color/purple_700"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="对比原始 LayoutInflater 和 cloneInContext 后的副本："
+            android:textColor="#757575"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/btnCompare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="执行对比测试" />
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="清空" />
+
+        <!-- 原始 inflater 结果 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="原始 LayoutInflater 加载结果"
+            android:textColor="@color/teal_700"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:id="@+id/containerOriginal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#E0E0E0"
+            android:minHeight="80dp"
+            android:padding="8dp" />
+
+        <!-- 克隆 inflater 结果 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="克隆后设置 Factory 的结果"
+            android:textColor="@color/teal_700"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <FrameLayout
+            android:id="@+id/containerCloned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#E0E0E0"
+            android:minHeight="80dp"
+            android:padding="8dp" />
+
+        <!-- 日志输出 -->
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#F5F5F5"
+            android:fontFamily="monospace"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
+
+        <!-- 代码示例 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="完整代码示例"
+                    android:textColor="@color/teal_700"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="#F5F5F5"
+                    android:fontFamily="monospace"
+                    android:padding="8dp"
+                    android:text="// 1. 克隆 LayoutInflater\nval clonedInflater = layoutInflater\n    .cloneInContext(this)\n\n// 2. 设置独立的 Factory\nclonedInflater.factory = object : LayoutInflater.Factory {\n    override fun onCreateView(\n        name: String,\n        context: Context,\n        attrs: AttributeSet\n    ): View? {\n        if (name == \&quot;TextView\&quot;) {\n            // 创建自定义样式的 TextView\n            val tv = TextView(context)\n            tv.setTextColor(Color.MAGENTA)\n            return tv\n        }\n        return null\n    }\n}\n\n// 3. 使用克隆的 inflater 加载布局\nval view = clonedInflater.inflate(\n    R.layout.item_sample, container, false)\n\n// 4. 原始 inflater 不受影响\n// 仍然使用默认行为"
+                    android:textColor="@color/black"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 应用场景 -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="典型应用场景"
+                    android:textColor="@color/purple_700"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="1. 【局部皮肤】只对部分区域应用自定义样式\n\n2. 【插件化加载】使用不同 Context 加载插件资源\n\n3. 【主题切换】临时使用不同主题加载布局\n\n4. 【调试模式】在调试时注入额外的监控逻辑"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+</ScrollView>

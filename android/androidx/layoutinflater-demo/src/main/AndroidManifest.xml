@@ -25,6 +25,7 @@
         <!-- 基础示例 -->
         <activity android:name=".basic.BasicInflateActivity" />
         <activity android:name=".basic.GetLayoutInflaterActivity" />
+        <activity android:name=".basic.InflaterInstanceActivity" />
         
         <!-- attachToRoot 参数详解 -->
         <activity android:name=".advanced.AttachToRootActivity" />
@@ -34,6 +35,9 @@
         
         <!-- 自定义 LayoutInflater -->
         <activity android:name=".custom.CustomLayoutInflaterActivity" />
+        
+        <!-- cloneInContext -->
+        <activity android:name=".clone.CloneInflaterActivity" />
         
         <!-- RecyclerView 示例 -->
         <activity android:name=".recyclerview.RecyclerViewActivity" />

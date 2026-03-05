@@ -8,6 +8,8 @@
     <string name="basic_inflate_desc">最简单的 inflate 使用方式</string>
     <string name="get_layout_inflater">获取 LayoutInflater</string>
     <string name="get_layout_inflater_desc">四种获取 LayoutInflater 的方式对比</string>
+    <string name="inflater_instance">实例深入解析</string>
+    <string name="inflater_instance_desc">Activity.layoutInflater 与 Context.getSystemService 的区别</string>
     
     <!-- 进阶示例 -->
     <string name="advanced_title">LayoutInflater 进阶</string>
@@ -27,6 +29,8 @@
     <string name="custom_title">自定义 LayoutInflater</string>
     <string name="custom_layout_inflater">自定义 LayoutInflater 示例</string>
     <string name="custom_layout_inflater_desc">Clone LayoutInflater 并自定义行为</string>
+    <string name="clone_inflater">cloneInContext 深入解析</string>
+    <string name="clone_inflater_desc">创建独立副本，设置隔离的 Factory</string>
     
     <!-- 实战示例 -->
     <string name="practice_title">LayoutInflater 实战</string>

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.peter.layoutinflater.demo.databinding.ActivityMainBinding
+import com.peter.layoutinflater.demo.basic.InflaterInstanceActivity
 
 /**
  * LayoutInflater Demo 主入口
@@ -66,6 +67,11 @@ class MainActivity : AppCompatActivity() {
                 description = getString(R.string.get_layout_inflater_desc),
                 intent = createGetLayoutInflaterIntent(this)
             ),
+            MenuItem(
+                title = getString(R.string.inflater_instance),
+                description = getString(R.string.inflater_instance_desc),
+                intent = createInflaterInstanceIntent(this)
+            ),
 
             // 进阶示例
             MenuItem(
@@ -108,6 +114,11 @@ class MainActivity : AppCompatActivity() {
                 title = getString(R.string.custom_layout_inflater),
                 description = getString(R.string.custom_layout_inflater_desc),
                 intent = createCustomLayoutInflaterIntent(this)
+            ),
+            MenuItem(
+                title = getString(R.string.clone_inflater),
+                description = getString(R.string.clone_inflater_desc),
+                intent = createCloneInflaterIntent(this)
             ),
 
             // 实战示例
