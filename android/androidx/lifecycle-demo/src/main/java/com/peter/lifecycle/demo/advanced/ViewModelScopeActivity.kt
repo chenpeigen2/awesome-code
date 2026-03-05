@@ -1,12 +1,18 @@
 package com.peter.lifecycle.demo.advanced
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import com.peter.lifecycle.demo.databinding.ActivityViewModelScopeBinding
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -63,17 +69,20 @@ class ViewModelScopeActivity : AppCompatActivity() {
     private fun observeData() {
         viewModel.loading.observe(this) { isLoading ->
             binding.progressBar.visibility = if (isLoading) 
-                android.view.View.VISIBLE 
+                View.VISIBLE 
             else 
-                android.view.View.GONE
+                View.GONE
         }
         
         viewModel.result.observe(this) { result ->
             binding.tvResult.text = result
         }
         
-        viewModel.countdown.collect(this) { count ->
-            binding.tvCountdown.text = "倒计时: $count"
+        // 观察 StateFlow
+        lifecycleScope.launch {
+            viewModel.countdown.collect { count ->
+                binding.tvCountdown.text = "倒计时: $count"
+            }
         }
     }
 }
@@ -128,23 +137,23 @@ class ScopeViewModel : ViewModel() {
             
             try {
                 // 使用 async 并行执行
-                val deferred1 = kotlinx.coroutines.async(Dispatchers.IO) {
+                val deferred1 = async(Dispatchers.IO) {
                     delay(1000)
                     "数据1"
                 }
                 
-                val deferred2 = kotlinx.coroutines.async(Dispatchers.IO) {
+                val deferred2 = async(Dispatchers.IO) {
                     delay(1500)
                     "数据2"
                 }
                 
-                val deferred3 = kotlinx.coroutines.async(Dispatchers.IO) {
+                val deferred3 = async(Dispatchers.IO) {
                     delay(800)
                     "数据3"
                 }
                 
                 // 等待所有结果
-                val results = kotlinx.coroutines.awaitAll(deferred1, deferred2, deferred3)
+                val results = awaitAll(deferred1, deferred2, deferred3)
                 _result.value = "并行结果: ${results.joinToString()}"
             } catch (e: Exception) {
                 _result.value = "错误: ${e.message}"
@@ -176,8 +185,3 @@ class ScopeViewModel : ViewModel() {
      * 所有使用 viewModelScope 启动的协程都会被取消
      */
 }
-
-// 需要导入 LiveData 和 MutableLiveData
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.async

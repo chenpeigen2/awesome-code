@@ -17,8 +17,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.launch
 
 /**
  * Flow 与 LiveData 互转示例
@@ -144,42 +143,5 @@ class FlowLiveDataExamples {
             emit("Item $it")
             delay(1000)
         }
-    }
-
-    /**
-     * 3. Cold Flow 转 Hot Flow
-     * 
-     * stateIn: 转换为 StateFlow（必须有初始值）
-     * shareIn: 转换为 SharedFlow（不需要初始值）
-     */
-    fun coldToHotFlow(): Pair<StateFlow<String>, Flow<String>> {
-        val coldFlow = flow {
-            repeat(10) {
-                emit("Item $it")
-                delay(1000)
-            }
-        }
-
-        // stateIn 参数:
-        // - scope: 协程作用域
-        // - started: 何时开始（LAZY, EAGERLY, WhileSubscribed）
-        // - initialValue: 初始值
-        val stateFlow = coldFlow.stateIn(
-            scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Default),
-            started = kotlinx.coroutines.flow.SharingStarted.WhileSubscribed(5000),
-            initialValue = "Initial"
-        )
-
-        // shareIn 参数:
-        // - scope: 协程作用域
-        // - started: 何时开始
-        // - replay: 重播数量
-        val sharedFlow = coldFlow.shareIn(
-            scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Default),
-            started = kotlinx.coroutines.flow.SharingStarted.Lazily,
-            replay = 1
-        )
-
-        return stateFlow to sharedFlow
     }
 }

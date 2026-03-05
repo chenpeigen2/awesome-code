@@ -3,6 +3,7 @@ package com.peter.lifecycle.demo.basic
 import android.util.Log
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 
 /**
  * 数据统计 Observer
@@ -10,7 +11,7 @@ import androidx.lifecycle.Lifecycle
  * 演示如何获取当前生命周期状态
  */
 class AnalyticsObserver : DefaultLifecycleObserver {
-
+    
     private val TAG = "AnalyticsObserver"
     private var startTime: Long = 0
 
