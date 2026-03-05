@@ -1,6 +1,7 @@
 [versions]
 # Gradle 插件版本
 agp = "8.13.2"
+asynclayoutinflater = "1.1.0"
 kotlin = "2.2.21"
 
 # AndroidX 库版本
@@ -43,9 +44,9 @@ testRules = "1.5.0"
 recyclerview = "1.4.0"
 viewpager2 = "1.1.0"
 swiperefreshlayout = "1.1.0"
-
 [libraries]
 # AndroidX 核心库
+androidx-asynclayoutinflater = { module = "androidx.asynclayoutinflater:asynclayoutinflater", version.ref = "asynclayoutinflater" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }

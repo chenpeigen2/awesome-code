@@ -46,3 +46,6 @@ include(":constraintlayout-demo")
 
 // WorkManager demo
 include(":workmanager-demo")
+
+// LayoutInflater demo
+include(":layoutinflater-demo")

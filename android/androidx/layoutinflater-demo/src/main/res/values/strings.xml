@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LayoutInflater Demo</string>
+    
+    <!-- 基础示例 -->
+    <string name="basic_title">LayoutInflater 基础</string>
+    <string name="basic_inflate">基本 inflate 方法</string>
+    <string name="basic_inflate_desc">最简单的 inflate 使用方式</string>
+    <string name="get_layout_inflater">获取 LayoutInflater</string>
+    <string name="get_layout_inflater_desc">四种获取 LayoutInflater 的方式对比</string>
+    
+    <!-- 进阶示例 -->
+    <string name="advanced_title">LayoutInflater 进阶</string>
+    <string name="attach_to_root">attachToRoot 参数详解</string>
+    <string name="attach_to_root_desc">深入理解 attachToRoot 参数的作用与影响</string>
+    <string name="layout_inflater_compat">LayoutInflaterCompat 与 Factory2</string>
+    <string name="layout_inflater_compat_desc">使用 LayoutInflaterCompat 设置自定义工厂</string>
+    <string name="async_inflate">AsyncLayoutInflater 异步加载</string>
+    <string name="async_inflate_desc">在后台线程加载布局，避免阻塞主线程</string>
+    
+    <!-- 工厂机制 -->
+    <string name="factory_title">LayoutInflater 工厂机制</string>
+    <string name="factory_example">LayoutInflater.Factory</string>
+    <string name="factory_example_desc">使用 Factory 拦截和替换 View 创建</string>
+    
+    <!-- 自定义 LayoutInflater -->
+    <string name="custom_title">自定义 LayoutInflater</string>
+    <string name="custom_layout_inflater">自定义 LayoutInflater 示例</string>
+    <string name="custom_layout_inflater_desc">Clone LayoutInflater 并自定义行为</string>
+    
+    <!-- 实战示例 -->
+    <string name="practice_title">LayoutInflater 实战</string>
+    <string name="recyclerview_example">RecyclerView 中使用</string>
+    <string name="recyclerview_example_desc">在 RecyclerView.Adapter 中正确使用 LayoutInflater</string>
+    <string name="dynamic_view">动态添加 View</string>
+    <string name="dynamic_view_desc">运行时动态加载和添加 View</string>
+    
+    <!-- 说明文字 -->
+    <string name="basic_usage">基本用法</string>
+    <string name="different_root">不同 root 参数效果</string>
+    <string name="attach_true">attachToRoot = true</string>
+    <string name="attach_false">attachToRoot = false</string>
+    <string name="attach_null">root = null</string>
+    <string name="result_view">结果预览</string>
+    <string name="code_example">代码示例</string>
+    <string name="view_hierarchy">View 层级</string>
+</resources>
