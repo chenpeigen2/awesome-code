@@ -4,13 +4,13 @@
     
     本布局演示 ConstraintLayout 进阶功能：
     1. 尺寸控制 (match_constraint)
-    2. 宽高比 (Ratio)
-    3. 链式布局 (Chains)
+    2. 宽高比
+    3. 链式布局
     4. Guidelines
     5. Barriers
     6. Group
 -->
-<androidx.constraintlayout.widget.ConstraintLayout 
+<ScrollView 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -18,619 +18,625 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     android:fitsSystemWindows="true"
-    android:padding="16dp"
     tools:context=".advanced.AdvancedConstraintLayoutActivity">
 
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  第一部分：尺寸控制                                                 ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
-
-    <TextView
-        android:id="@+id/tv_section1_title"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="第一部分：尺寸控制"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="16dp">
 
-    <!-- 
-        尺寸设置方式：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ 1. 固定尺寸：android:layout_width="100dp"                                │
-        │    - 视图尺寸固定为指定值                                                 │
-        │                                                                         │
-        │ 2. wrap_content：android:layout_width="wrap_content"                    │
-        │    - 视图尺寸刚好包裹内容                                                 │
-        │                                                                         │
-        │ 3. 0dp (match_constraint)：android:layout_width="0dp"                   │
-        │    - 视图尺寸由约束决定，填充约束空间                                      │
-        │    - 这是 ConstraintLayout 特有的，类似于 LinearLayout 中的 match_parent  │
-        │      但更灵活，因为可以同时有左右约束                                     │
-        └─────────────────────────────────────────────────────────────────────────┘
-    -->
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第一部分：尺寸控制                                                 ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
 
-    <!-- 固定尺寸 -->
-    <TextView
-        android:id="@+id/tv_fixed_size"
-        android:layout_width="100dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:background="#FF6B6B"
-        android:gravity="center"
-        android:text="固定尺寸\n100x60dp"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_section1_title" />
+        <TextView
+            android:id="@+id/tv_section1_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="第一部分：尺寸控制"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- wrap_content -->
-    <TextView
-        android:id="@+id/tv_wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="#4ECDC4"
-        android:padding="12dp"
-        android:text="wrap_content"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@id/tv_fixed_size"
-        app:layout_constraintTop_toTopOf="@id/tv_fixed_size" />
+        <!-- 
+            尺寸设置方式：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ 1. 固定尺寸：android:layout_width="100dp"                                │
+            │    - 视图尺寸固定为指定值                                                 │
+            │                                                                         │
+            │ 2. wrap_content：android:layout_width="wrap_content"                    │
+            │    - 视图尺寸刚好包裹内容                                                 │
+            │                                                                         │
+            │ 3. 0dp (match_constraint)：android:layout_width="0dp"                   │
+            │    - 视图尺寸由约束决定，填充约束空间                                      │
+            │    - 这是 ConstraintLayout 特有的，类似于 LinearLayout 中的 match_parent  │
+            │      但更灵活，因为可以同时有左右约束                                     │
+            └─────────────────────────────────────────────────────────────────────────┘
+        -->
 
-    <!-- 0dp (match_constraint) - 宽度填充到右边 -->
-    <TextView
-        android:id="@+id/tv_match_constraint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="#45B7D1"
-        android:gravity="center"
-        android:padding="12dp"
-        android:text="0dp (match_constraint)\n宽度由左右约束决定"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_wrap_content"
-        app:layout_constraintTop_toTopOf="@id/tv_fixed_size" />
+        <!-- 固定尺寸 -->
+        <TextView
+            android:id="@+id/tv_fixed_size"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="8dp"
+            android:background="#FF6B6B"
+            android:gravity="center"
+            android:text="固定尺寸\n100x60dp"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section1_title" />
 
-    <!-- 
-        ═══════════════════════════════════════════════════════════════════════════
-        宽高比约束说明：
-        ═══════════════════════════════════════════════════════════════════════════
+        <!-- wrap_content -->
+        <TextView
+            android:id="@+id/tv_wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="#4ECDC4"
+            android:padding="12dp"
+            android:text="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/tv_fixed_size"
+            app:layout_constraintTop_toTopOf="@id/tv_fixed_size" />
+
+        <!-- 0dp (match_constraint) - 宽度填充到右边 -->
+        <TextView
+            android:id="@+id/tv_match_constraint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="#45B7D1"
+            android:gravity="center"
+            android:padding="12dp"
+            android:text="0dp (match_constraint)\n宽度由左右约束决定"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_fixed_size" />
+
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            宽高比约束说明：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            当使用 0dp 时，可以通过 layout_constraintDimensionRatio 设置宽高比
+            
+            格式：
+            - "W,H" 比例值，如 "16:9", "1:1"
+            - 也可以只写比例值 "1.5" 表示宽是高的 1.5 倍
+            
+            注意：至少有一个维度要设置为 0dp
+        -->
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第二部分：宽高比                                                     ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+        <TextView
+            android:id="@+id/tv_section2_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="第二部分：宽高比"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_fixed_size" />
+
+        <!-- 
+            宽高比 1:1 正方形
+            宽度为 0dp，高度为固定值，比例生效后宽度 = 高度 * 1
+        -->
+        <TextView
+            android:id="@+id/tv_ratio_square"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="8dp"
+            android:background="#96CEB4"
+            android:gravity="center"
+            android:text="1:1\n正方形"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section2_title" />
+
+        <!-- 
+            宽高比 16:9 视频比例
+            宽度由约束决定（填充），高度按比例计算
+        -->
+        <TextView
+            android:id="@+id/tv_ratio_16_9"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:background="#FFEAA7"
+            android:gravity="center"
+            android:text="16:9 视频比例"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_ratio_square"
+            app:layout_constraintTop_toTopOf="@id/tv_ratio_square" />
+
+        <!-- 
+            宽高比 4:3 图片比例
+            使用 "H,4:3" 表示高度由宽度和比例决定
+        -->
+
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            Ratio 使用技巧：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            场景1：宽度固定，高度按比例
+            - layout_width="100dp"
+            - layout_height="0dp"
+            - app:layout_constraintDimensionRatio="1:1"
+            
+            场景2：高度固定，宽度按比例
+            - layout_width="0dp"
+            - layout_height="100dp"
+            - app:layout_constraintDimensionRatio="1:1"
+            
+            场景3：都设为 0dp，需要额外的约束来确定其中一个维度
+            - 需要同时使用 bias 或其他约束
+        -->
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第三部分：链式布局                                                  ║
+            ║  链是一组相互连接的视图，可以统一控制它们的分布方式                              ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+        <TextView
+            android:id="@+id/tv_ratio_4_3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:background="#DDA0DD"
+            android:gravity="center"
+            android:text="4:3 图片比例\n宽度固定，高度按比例"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ratio_square" />
+
+        <TextView
+            android:id="@+id/tv_section3_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="第三部分：链式布局"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_ratio_4_3" />
+
+        <!-- 
+            链式布局的类型：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ CHAIN_SPREAD (默认) - 视图均匀分布，占满整个空间                           │
+            │ CHAIN_SPREAD_INSIDE - 首尾视图贴边，中间视图均匀分布                       │
+            │ CHAIN_PACKED - 所有视图挤在一起，整体可以通过 bias 调整位置                 │
+            └─────────────────────────────────────────────────────────────────────────┘
+        -->
+
+        <!-- Spread Chain - 默认类型 -->
+        <TextView
+            android:id="@+id/tv_chain_spread_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Spread Chain (默认):"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section3_title" />
+
+        <!-- 
+            Spread Chain - 均匀分布
+            链头设置 chainStyle 即可
+        -->
+        <TextView
+            android:id="@+id/tv_chain_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#74B9FF"
+            android:padding="12dp"
+            android:text="A"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@id/tv_chain_2"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chain_spread_label" />
+
+        <TextView
+            android:id="@+id/tv_chain_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#A29BFE"
+            android:padding="12dp"
+            android:text="B"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@id/tv_chain_3"
+            app:layout_constraintStart_toEndOf="@id/tv_chain_1"
+            app:layout_constraintTop_toTopOf="@id/tv_chain_1" />
+
+        <TextView
+            android:id="@+id/tv_chain_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FD79A8"
+            android:padding="12dp"
+            android:text="C"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_chain_2"
+            app:layout_constraintTop_toTopOf="@id/tv_chain_1" />
+
+        <!-- Spread Inside Chain -->
+        <TextView
+            android:id="@+id/tv_chain_spread_inside_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Spread Inside Chain:"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chain_1" />
+
+        <TextView
+            android:id="@+id/tv_chain_inside_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#00B894"
+            android:padding="12dp"
+            android:text="A"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@id/tv_chain_inside_2"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chain_spread_inside_label" />
+
+        <TextView
+            android:id="@+id/tv_chain_inside_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#E17055"
+            android:padding="12dp"
+            android:text="B"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@id/tv_chain_inside_3"
+            app:layout_constraintStart_toEndOf="@id/tv_chain_inside_1"
+            app:layout_constraintTop_toTopOf="@id/tv_chain_inside_1" />
+
+        <TextView
+            android:id="@+id/tv_chain_inside_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#6C5CE7"
+            android:padding="12dp"
+            android:text="C"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_chain_inside_2"
+            app:layout_constraintTop_toTopOf="@id/tv_chain_inside_1" />
+
+        <!-- Packed Chain -->
+        <TextView
+            android:id="@+id/tv_chain_packed_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Packed Chain (bias=0.3):"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chain_inside_1" />
+
+        <TextView
+            android:id="@+id/tv_chain_packed_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#00CEC9"
+            android:padding="12dp"
+            android:text="A"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toStartOf="@id/tv_chain_packed_2"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chain_packed_label" />
+
+        <TextView
+            android:id="@+id/tv_chain_packed_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FDCB6E"
+            android:padding="12dp"
+            android:text="B"
+            android:textColor="#333333"
+            app:layout_constraintEnd_toStartOf="@id/tv_chain_packed_3"
+            app:layout_constraintStart_toEndOf="@id/tv_chain_packed_1"
+            app:layout_constraintTop_toTopOf="@id/tv_chain_packed_1" />
+
+        <TextView
+            android:id="@+id/tv_chain_packed_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#E84393"
+            android:padding="12dp"
+            android:text="C"
+            android:textColor="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_chain_packed_2"
+            app:layout_constraintTop_toTopOf="@id/tv_chain_packed_1" />
+
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            Chain 属性速查表：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            设置链式布局：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ 1. 所有视图相互连接 (A → B → C)                                          │
+            │ 2. 首视图连接父布局左边，尾视图连接父布局右边                               │
+            │ 3. 在链头（第一个视图）设置 chainStyle                                     │
+            │                                                                         │
+            │ 水平链：app:layout_constraintHorizontal_chainStyle                       │
+            │ 垂直链：app:layout_constraintVertical_chainStyle                         │
+            │                                                                         │
+            │ 可选值：                                                                 │
+            │ - spread (默认)：均匀分布                                                │
+            │ - spread_inside：首尾贴边，中间均匀分布                                   │
+            │ - packed：紧靠在一起                                                     │
+            └─────────────────────────────────────────────────────────────────────────┘
+            
+            加权分布（使用 match_constraint）：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ 当链中的视图使用 0dp 时，可以通过 layout_weight 分配空间                   │
+            │ app:layout_constraintHorizontal_weight="1"                              │
+            │ app:layout_constraintVertical_weight="1"                                │
+            └─────────────────────────────────────────────────────────────────────────┘
+        -->
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第四部分：Guidelines 和 Barriers                                             ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+        <TextView
+            android:id="@+id/tv_section4_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="第四部分：Guidelines 和 Barriers"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_chain_packed_1" />
+
+        <!-- 
+            Guideline - 辅助定位线
+            不会显示在界面上，但可以用来对齐其他视图
+            
+            类型：
+            - app:layout_constraintGuide_begin="100dp" - 从起始边偏移
+            - app:layout_constraintGuide_end="100dp" - 从结束边偏移
+            - app:layout_constraintGuide_percent="0.5" - 百分比位置
+        -->
         
-        当使用 0dp 时，可以通过 layout_constraintDimensionRatio 设置宽高比
+        <!-- 垂直 Guideline - 30% 位置 -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <!-- 使用 Guideline 对齐的视图 -->
+        <TextView
+            android:id="@+id/tv_guideline_demo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#FF6B6B"
+            android:padding="12dp"
+            android:text="Guideline 左边"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_section4_title" />
+
+        <TextView
+            android:id="@+id/tv_guideline_demo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="#4ECDC4"
+            android:padding="12dp"
+            android:text="Guideline 右边"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/guideline_vertical"
+            app:layout_constraintTop_toTopOf="@id/tv_guideline_demo" />
+
+        <!-- 
+            Barrier - 屏障
+            根据多个视图的位置自动调整位置，防止视图重叠
+        -->
         
-        格式：
-        - "W,H" 比例值，如 "16:9", "1:1"
-        - 也可以只写比例值 "1.5" 表示宽是高的 1.5 倍
-        
-        注意：至少有一个维度要设置为 0dp
-    -->
+        <TextView
+            android:id="@+id/tv_barrier_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Barrier 示例："
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_guideline_demo" />
 
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  第二部分：宽高比                                                     ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
+        <!-- 左边的两个视图，长度不同 -->
+        <TextView
+            android:id="@+id/tv_barrier_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#96CEB4"
+            android:padding="8dp"
+            android:text="短文本"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_barrier_label" />
 
-    <TextView
-        android:id="@+id/tv_section2_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="第二部分：宽高比"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_fixed_size" />
+        <TextView
+            android:id="@+id/tv_barrier_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#45B7D1"
+            android:padding="8dp"
+            android:text="这是一段很长的文本"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_barrier_1" />
 
-    <!-- 
-        宽高比 1:1 正方形
-        宽度为 0dp，高度为固定值，比例生效后宽度 = 高度 * 1
-    -->
-    <TextView
-        android:id="@+id/tv_ratio_square"
-        android:layout_width="0dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="8dp"
-        android:background="#96CEB4"
-        android:gravity="center"
-        android:text="1:1\n正方形"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_section2_title" />
+        <!-- 
+            Barrier - 在两个视图的右边创建屏障
+            会自动选择最右边的视图作为参考
+        -->
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="end"
+            app:constraint_referenced_ids="tv_barrier_1,tv_barrier_2" />
 
-    <!-- 
-        宽高比 16:9 视频比例
-        宽度由约束决定（填充），高度按比例计算
-    -->
-    <TextView
-        android:id="@+id/tv_ratio_16_9"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="16dp"
-        android:background="#FFEAA7"
-        android:gravity="center"
-        android:text="16:9 视频比例"
-        android:textColor="#333333"
-        android:textSize="12sp"
-        app:layout_constraintDimensionRatio="16:9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_ratio_square"
-        app:layout_constraintTop_toTopOf="@id/tv_ratio_square" />
+        <!-- 使用 Barrier 对齐的视图 -->
+        <TextView
+            android:id="@+id/tv_barrier_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="#DDA0DD"
+            android:padding="8dp"
+            android:text="这个视图始终在左边两个视图的最右边"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/barrier"
+            app:layout_constraintTop_toTopOf="@id/tv_barrier_1" />
 
-    <!-- 
-        宽高比 4:3 图片比例
-        使用 "H,4:3" 表示高度由宽度和比例决定
-    -->
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            Group - 组控制多个视图的可见性
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            可以同时控制多个视图的 visibility
+            只需要设置 visibility 一次，所有引用的视图都会同步
+        -->
 
-    <!-- 
-        ═══════════════════════════════════════════════════════════════════════════
-        Ratio 使用技巧：
-        ═══════════════════════════════════════════════════════════════════════════
-        
-        场景1：宽度固定，高度按比例
-        - layout_width="100dp"
-        - layout_height="0dp"
-        - app:layout_constraintDimensionRatio="1:1"
-        
-        场景2：高度固定，宽度按比例
-        - layout_width="0dp"
-        - layout_height="100dp"
-        - app:layout_constraintDimensionRatio="1:1"
-        
-        场景3：都设为 0dp，需要额外的约束来确定其中一个维度
-        - 需要同时使用 bias 或其他约束
-    -->
+        <TextView
+            android:id="@+id/tv_group_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Group 示例（同时控制多个视图）:"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_barrier_2" />
 
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  第三部分：链式布局                                                  ║
-        ║  链是一组相互连接的视图，可以统一控制它们的分布方式                              ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
+        <!-- Group 引用的视图 -->
+        <TextView
+            android:id="@+id/tv_group_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:background="#74B9FF"
+            android:padding="8dp"
+            android:text="视图1"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_group_label" />
 
-    <TextView
-        android:id="@+id/tv_ratio_4_3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:background="#DDA0DD"
-        android:gravity="center"
-        android:text="4:3 图片比例\n宽度固定，高度按比例"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintDimensionRatio="4:3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_ratio_square" />
+        <TextView
+            android:id="@+id/tv_group_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="#A29BFE"
+            android:padding="8dp"
+            android:text="视图2"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/tv_group_1"
+            app:layout_constraintTop_toTopOf="@id/tv_group_1" />
 
-    <TextView
-        android:id="@+id/tv_section3_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="第三部分：链式布局"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_ratio_4_3" />
+        <TextView
+            android:id="@+id/tv_group_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:background="#FD79A8"
+            android:padding="8dp"
+            android:text="视图3"
+            android:textColor="#FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/tv_group_2"
+            app:layout_constraintTop_toTopOf="@id/tv_group_1" />
 
-    <!-- 
-        链式布局的类型：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ CHAIN_SPREAD (默认) - 视图均匀分布，占满整个空间                           │
-        │ CHAIN_SPREAD_INSIDE - 首尾视图贴边，中间视图均匀分布                       │
-        │ CHAIN_PACKED - 所有视图挤在一起，整体可以通过 bias 调整位置                 │
-        └─────────────────────────────────────────────────────────────────────────┘
-    -->
+        <!-- 
+            Group 定义 - 通过代码设置 visibility 可以同时控制三个视图
+        -->
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:constraint_referenced_ids="tv_group_1,tv_group_2,tv_group_3" />
 
-    <!-- Spread Chain - 默认类型 -->
-    <TextView
-        android:id="@+id/tv_chain_spread_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Spread Chain (默认):"
-        android:textColor="#666666"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_section3_title" />
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            总结：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            进阶功能要点：
+            1. 尺寸：优先使用 0dp (match_constraint) 配合约束
+            2. 比例：使用 layout_constraintDimensionRatio 设置宽高比
+            3. 链：用于均匀分布或控制多个视图的排列
+            4. Guideline：辅助定位，不影响布局层级
+            5. Barrier：防止视图重叠，动态调整位置
+            6. Group：批量控制视图可见性
+        -->
 
-    <!-- 
-        Spread Chain - 均匀分布
-        链头设置 chainStyle 即可
-    -->
-    <TextView
-        android:id="@+id/tv_chain_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="#74B9FF"
-        android:padding="12dp"
-        android:text="A"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@id/tv_chain_2"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_chain_spread_label" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/tv_chain_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#A29BFE"
-        android:padding="12dp"
-        android:text="B"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@id/tv_chain_3"
-        app:layout_constraintStart_toEndOf="@id/tv_chain_1"
-        app:layout_constraintTop_toTopOf="@id/tv_chain_1" />
-
-    <TextView
-        android:id="@+id/tv_chain_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FD79A8"
-        android:padding="12dp"
-        android:text="C"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_chain_2"
-        app:layout_constraintTop_toTopOf="@id/tv_chain_1" />
-
-    <!-- Spread Inside Chain -->
-    <TextView
-        android:id="@+id/tv_chain_spread_inside_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Spread Inside Chain:"
-        android:textColor="#666666"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_chain_1" />
-
-    <TextView
-        android:id="@+id/tv_chain_inside_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="#00B894"
-        android:padding="12dp"
-        android:text="A"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@id/tv_chain_inside_2"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_chain_spread_inside_label" />
-
-    <TextView
-        android:id="@+id/tv_chain_inside_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#E17055"
-        android:padding="12dp"
-        android:text="B"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@id/tv_chain_inside_3"
-        app:layout_constraintStart_toEndOf="@id/tv_chain_inside_1"
-        app:layout_constraintTop_toTopOf="@id/tv_chain_inside_1" />
-
-    <TextView
-        android:id="@+id/tv_chain_inside_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#6C5CE7"
-        android:padding="12dp"
-        android:text="C"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_chain_inside_2"
-        app:layout_constraintTop_toTopOf="@id/tv_chain_inside_1" />
-
-    <!-- Packed Chain -->
-    <TextView
-        android:id="@+id/tv_chain_packed_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Packed Chain (bias=0.3):"
-        android:textColor="#666666"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_chain_inside_1" />
-
-    <TextView
-        android:id="@+id/tv_chain_packed_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="#00CEC9"
-        android:padding="12dp"
-        android:text="A"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@id/tv_chain_packed_2"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_chain_packed_label" />
-
-    <TextView
-        android:id="@+id/tv_chain_packed_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FDCB6E"
-        android:padding="12dp"
-        android:text="B"
-        android:textColor="#333333"
-        app:layout_constraintEnd_toStartOf="@id/tv_chain_packed_3"
-        app:layout_constraintStart_toEndOf="@id/tv_chain_packed_1"
-        app:layout_constraintTop_toTopOf="@id/tv_chain_packed_1" />
-
-    <TextView
-        android:id="@+id/tv_chain_packed_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#E84393"
-        android:padding="12dp"
-        android:text="C"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/tv_chain_packed_2"
-        app:layout_constraintTop_toTopOf="@id/tv_chain_packed_1" />
-
-    <!-- 
-        ═══════════════════════════════════════════════════════════════════════════
-        Chain 属性速查表：
-        ═══════════════════════════════════════════════════════════════════════════
-        
-        设置链式布局：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ 1. 所有视图相互连接 (A → B → C)                                          │
-        │ 2. 首视图连接父布局左边，尾视图连接父布局右边                               │
-        │ 3. 在链头（第一个视图）设置 chainStyle                                     │
-        │                                                                         │
-        │ 水平链：app:layout_constraintHorizontal_chainStyle                       │
-        │ 垂直链：app:layout_constraintVertical_chainStyle                         │
-        │                                                                         │
-        │ 可选值：                                                                 │
-        │ - spread (默认)：均匀分布                                                │
-        │ - spread_inside：首尾贴边，中间均匀分布                                   │
-        │ - packed：紧靠在一起                                                     │
-        └─────────────────────────────────────────────────────────────────────────┘
-        
-        加权分布（使用 match_constraint）：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ 当链中的视图使用 0dp 时，可以通过 layout_weight 分配空间                   │
-        │ app:layout_constraintHorizontal_weight="1"                              │
-        │ app:layout_constraintVertical_weight="1"                                │
-        └─────────────────────────────────────────────────────────────────────────┘
-    -->
-
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  第四部分：Guidelines 和 Barriers                                             ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
-
-    <TextView
-        android:id="@+id/tv_section4_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="第四部分：Guidelines 和 Barriers"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_chain_packed_1" />
-
-    <!-- 
-        Guideline - 辅助定位线
-        不会显示在界面上，但可以用来对齐其他视图
-        
-        类型：
-        - app:layout_constraintGuide_begin="100dp" - 从起始边偏移
-        - app:layout_constraintGuide_end="100dp" - 从结束边偏移
-        - app:layout_constraintGuide_percent="0.5" - 百分比位置
-    -->
-    
-    <!-- 垂直 Guideline - 30% 位置 -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.5" />
-
-    <!-- 使用 Guideline 对齐的视图 -->
-    <TextView
-        android:id="@+id/tv_guideline_demo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="#FF6B6B"
-        android:padding="12dp"
-        android:text="Guideline 左边"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@id/guideline_vertical"
-        app:layout_constraintTop_toBottomOf="@id/tv_section4_title" />
-
-    <TextView
-        android:id="@+id/tv_guideline_demo2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="#4ECDC4"
-        android:padding="12dp"
-        android:text="Guideline 右边"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/guideline_vertical"
-        app:layout_constraintTop_toTopOf="@id/tv_guideline_demo" />
-
-    <!-- 
-        Barrier - 屏障
-        根据多个视图的位置自动调整位置，防止视图重叠
-    -->
-    
-    <TextView
-        android:id="@+id/tv_barrier_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Barrier 示例："
-        android:textColor="#666666"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_guideline_demo" />
-
-    <!-- 左边的两个视图，长度不同 -->
-    <TextView
-        android:id="@+id/tv_barrier_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="#96CEB4"
-        android:padding="8dp"
-        android:text="短文本"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_barrier_label" />
-
-    <TextView
-        android:id="@+id/tv_barrier_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="#45B7D1"
-        android:padding="8dp"
-        android:text="这是一段很长的文本"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_barrier_1" />
-
-    <!-- 
-        Barrier - 在两个视图的右边创建屏障
-        会自动选择最右边的视图作为参考
-    -->
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="end"
-        app:constraint_referenced_ids="tv_barrier_1,tv_barrier_2" />
-
-    <!-- 使用 Barrier 对齐的视图 -->
-    <TextView
-        android:id="@+id/tv_barrier_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="#DDA0DD"
-        android:padding="8dp"
-        android:text="这个视图始终在左边两个视图的最右边"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/barrier"
-        app:layout_constraintTop_toTopOf="@id/tv_barrier_1" />
-
-    <!-- 
-        ═══════════════════════════════════════════════════════════════════════════
-        Group - 组控制多个视图的可见性
-        ═══════════════════════════════════════════════════════════════════════════
-        
-        可以同时控制多个视图的 visibility
-        只需要设置 visibility 一次，所有引用的视图都会同步
-    -->
-
-    <TextView
-        android:id="@+id/tv_group_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Group 示例（同时控制多个视图）:"
-        android:textColor="#666666"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_barrier_2" />
-
-    <!-- Group 引用的视图 -->
-    <TextView
-        android:id="@+id/tv_group_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:background="#74B9FF"
-        android:padding="8dp"
-        android:text="视图1"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_group_label" />
-
-    <TextView
-        android:id="@+id/tv_group_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="#A29BFE"
-        android:padding="8dp"
-        android:text="视图2"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/tv_group_1"
-        app:layout_constraintTop_toTopOf="@id/tv_group_1" />
-
-    <TextView
-        android:id="@+id/tv_group_3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:background="#FD79A8"
-        android:padding="8dp"
-        android:text="视图3"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintStart_toEndOf="@id/tv_group_2"
-        app:layout_constraintTop_toTopOf="@id/tv_group_1" />
-
-    <!-- 
-        Group 定义 - 通过代码设置 visibility 可以同时控制三个视图
-    -->
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="tv_group_1,tv_group_2,tv_group_3" />
-
-    <!-- 
-        ═══════════════════════════════════════════════════════════════════════════
-        总结：
-        ═══════════════════════════════════════════════════════════════════════════
-        
-        进阶功能要点：
-        1. 尺寸：优先使用 0dp (match_constraint) 配合约束
-        2. 比例：使用 layout_constraintDimensionRatio 设置宽高比
-        3. 链：用于均匀分布或控制多个视图的排列
-        4. Guideline：辅助定位，不影响布局层级
-        5. Barrier：防止视图重叠，动态调整位置
-        6. Group：批量控制视图可见性
-    -->
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
