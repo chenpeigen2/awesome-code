@@ -8,7 +8,7 @@
     3. 居中定位
     4. 偏移定位 (horizontalBias, verticalBias)
 -->
-<androidx.constraintlayout.widget.ConstraintLayout 
+<ScrollView 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -16,423 +16,489 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     android:fitsSystemWindows="true"
-    android:padding="16dp"
     tools:context=".basic.BasicConstraintLayoutActivity">
 
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  第一部分：相对定位 (Relative Positioning)                                    ║
-        ║  这是 ConstraintLayout 最基础的功能                                          ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
-
-    <!-- 
-        TextView A - 位于父布局左上角
-        约束说明：
-        - app:layout_constraintStart_toStartOf="parent" - 左边对齐父布局左边
-        - app:layout_constraintTop_toTopOf="parent" - 顶部对齐父布局顶部
-    -->
-    <TextView
-        android:id="@+id/tv_a"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF6B6B"
-        android:padding="16dp"
-        android:text="A"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:padding="16dp">
 
-    <!-- 
-        TextView B - 位于 A 的右边
-        约束说明：
-        - app:layout_constraintStart_toEndOf="@id/tv_a" - 左边对齐 A 的右边
-        - app:layout_constraintTop_toTopOf="@id/tv_a" - 顶部对齐 A 的顶部
-        - android:layout_marginStart="16dp" - 与 A 之间的左边距
-    -->
-    <TextView
-        android:id="@+id/tv_b"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="#4ECDC4"
-        android:padding="16dp"
-        android:text="B"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_a"
-        app:layout_constraintTop_toTopOf="@id/tv_a" />
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第一部分：相对定位 (Relative Positioning)                                    ║
+            ║  这是 ConstraintLayout 最基础的功能                                          ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
 
-    <!-- 
-        TextView C - 位于 B 的右边
-        约束说明：
-        - app:layout_constraintStart_toEndOf="@id/tv_b" - 左边对齐 B 的右边
-        - app:layout_constraintTop_toTopOf="@id/tv_a" - 顶部对齐 A 的顶部（保持同一行）
-    -->
-    <TextView
-        android:id="@+id/tv_c"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="#45B7D1"
-        android:padding="16dp"
-        android:text="C"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_b"
-        app:layout_constraintTop_toTopOf="@id/tv_a" />
+        <!-- 
+            TextView A - 位于父布局左上角
+            约束说明：
+            - app:layout_constraintStart_toStartOf="parent" - 左边对齐父布局左边
+            - app:layout_constraintTop_toTopOf="parent" - 顶部对齐父布局顶部
+        -->
+        <TextView
+            android:id="@+id/tv_a"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#FF6B6B"
+            android:padding="16dp"
+            android:text="A"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 
-        ═══════════════════════════════════════════════════════════════════════════
-        约束属性速查表：
-        ═══════════════════════════════════════════════════════════════════════════
-        
-        水平方向约束：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ app:layout_constraintStart_toStartOf   - 左边对齐目标左边                │
-        │ app:layout_constraintStart_toEndOf     - 左边对齐目标右边                │
-        │ app:layout_constraintEnd_toStartOf     - 右边对齐目标左边                │
-        │ app:layout_constraintEnd_toEndOf       - 右边对齐目标右边                │
-        │ app:layout_constraintLeft_toLeftOf     - 左边对齐目标左边 (旧版)         │
-        │ app:layout_constraintLeft_toRightOf    - 左边对齐目标右边 (旧版)         │
-        │ app:layout_constraintRight_toLeftOf    - 右边对齐目标左边 (旧版)         │
-        │ app:layout_constraintRight_toRightOf   - 右边对齐目标右边 (旧版)         │
-        └─────────────────────────────────────────────────────────────────────────┘
-        
-        垂直方向约束：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ app:layout_constraintTop_toTopOf        - 顶部对齐目标顶部               │
-        │ app:layout_constraintTop_toBottomOf     - 顶部对齐目标底部               │
-        │ app:layout_constraintBottom_toTopOf     - 底部对齐目标顶部               │
-        │ app:layout_constraintBottom_toBottomOf  - 底部对齐目标底部               │
-        └─────────────────────────────────────────────────────────────────────────┘
-        
-        基线对齐：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ app:layout_constraintBaseline_toBaselineOf - 文字基线对齐               │
-        └─────────────────────────────────────────────────────────────────────────┘
-    -->
+        <!-- 
+            TextView B - 位于 A 的右边
+            约束说明：
+            - app:layout_constraintStart_toEndOf="@id/tv_a" - 左边对齐 A 的右边
+            - app:layout_constraintTop_toTopOf="@id/tv_a" - 顶部对齐 A 的顶部
+            - android:layout_marginStart="16dp" - 与 A 之间的左边距
+        -->
+        <TextView
+            android:id="@+id/tv_b"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="#4ECDC4"
+            android:padding="16dp"
+            android:text="B"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/tv_a"
+            app:layout_constraintTop_toTopOf="@id/tv_a" />
 
-    <!-- 分隔标题 -->
-    <TextView
-        android:id="@+id/tv_section2_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="第二部分：居中定位与偏移"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_a" />
+        <!-- 
+            TextView C - 位于 B 的右边
+            约束说明：
+            - app:layout_constraintStart_toEndOf="@id/tv_b" - 左边对齐 B 的右边
+            - app:layout_constraintTop_toTopOf="@id/tv_a" - 顶部对齐 A 的顶部（保持同一行）
+        -->
+        <TextView
+            android:id="@+id/tv_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="#45B7D1"
+            android:padding="16dp"
+            android:text="C"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/tv_b"
+            app:layout_constraintTop_toTopOf="@id/tv_a" />
 
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  第二部分：居中定位 (Centering Positioning)                                   ║
-        ║  当视图的两边都有约束时，视图会居中                                            ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            约束属性速查表：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            水平方向约束：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ app:layout_constraintStart_toStartOf   - 左边对齐目标左边                │
+            │ app:layout_constraintStart_toEndOf     - 左边对齐目标右边                │
+            │ app:layout_constraintEnd_toStartOf     - 右边对齐目标左边                │
+            │ app:layout_constraintEnd_toEndOf       - 右边对齐目标右边                │
+            │ app:layout_constraintLeft_toLeftOf     - 左边对齐目标左边 (旧版)         │
+            │ app:layout_constraintLeft_toRightOf    - 左边对齐目标右边 (旧版)         │
+            │ app:layout_constraintRight_toLeftOf    - 右边对齐目标左边 (旧版)         │
+            │ app:layout_constraintRight_toRightOf   - 右边对齐目标右边 (旧版)         │
+            └─────────────────────────────────────────────────────────────────────────┘
+            
+            垂直方向约束：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ app:layout_constraintTop_toTopOf        - 顶部对齐目标顶部               │
+            │ app:layout_constraintTop_toBottomOf     - 顶部对齐目标底部               │
+            │ app:layout_constraintBottom_toTopOf     - 底部对齐目标顶部               │
+            │ app:layout_constraintBottom_toBottomOf  - 底部对齐目标底部               │
+            └─────────────────────────────────────────────────────────────────────────┘
+            
+            基线对齐：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ app:layout_constraintBaseline_toBaselineOf - 文字基线对齐               │
+            └─────────────────────────────────────────────────────────────────────────┘
+        -->
 
-    <!-- 
-        水平居中示例
-        约束说明：
-        - 左边对齐父布局左边，右边对齐父布局右边
-        - 当两边都有约束时，视图会居中显示
-    -->
-    <TextView
-        android:id="@+id/tv_horizontal_center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="#96CEB4"
-        android:padding="12dp"
-        android:text="水平居中"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_section2_title" />
+        <!-- 分隔标题 -->
+        <TextView
+            android:id="@+id/tv_section2_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="第二部分：居中定位与偏移"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_a" />
 
-    <!-- 
-        垂直居中示例
-        约束说明：
-        - 顶部对齐父布局顶部，底部对齐父布局底部
-        - 这样实现垂直居中
-    -->
-    <TextView
-        android:id="@+id/tv_vertical_center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#FFEAA7"
-        android:padding="12dp"
-        android:text="垂直居中"
-        android:textColor="#333333"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第二部分：居中定位 (Centering Positioning)                                   ║
+            ║  当视图的两边都有约束时，视图会居中                                            ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
 
-    <!-- 
-        完全居中示例
-        约束说明：
-        - 水平方向：左边对齐父左边，右边对齐父右边
-        - 垂直方向：顶部对齐父顶部，底部对齐父底部
-        - 结合起来就是完全居中
-    -->
-    <TextView
-        android:id="@+id/tv_full_center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#DDA0DD"
-        android:padding="16dp"
-        android:text="完全居中"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <!-- 
+            水平居中示例
+            约束说明：
+            - 左边对齐父布局左边，右边对齐父布局右边
+            - 当两边都有约束时，视图会居中显示
+        -->
+        <TextView
+            android:id="@+id/tv_horizontal_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#96CEB4"
+            android:padding="12dp"
+            android:text="水平居中"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section2_title" />
 
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  第三部分：偏移定位 (Bias)                                                    ║
-        ║  当视图居中时，可以使用 bias 调整偏移比例                                       ║
-        ║  bias = 0.5 表示居中，0 表示偏向一边，1 表示偏向另一边                           ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
+        <!-- 
+            垂直居中示例 - 需要容器来展示
+        -->
+        <TextView
+            android:id="@+id/tv_vertical_center_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="垂直居中（演示区域内）"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_horizontal_center" />
 
-    <!-- 
-        水平偏移 30% 示例
-        约束说明：
-        - horizontalBias = 0.3 表示水平方向偏左 30%（0是左边界，1是右边界）
-    -->
-    <TextView
-        android:id="@+id/tv_bias_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="#74B9FF"
-        android:padding="12dp"
-        android:text="水平偏移30%"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_horizontal_center" />
+        <!-- 垂直居中演示容器 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vertical_center_container"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_vertical_center_label">
 
-    <!-- 
-        水平偏移 70% 示例
-        约束说明：
-        - horizontalBias = 0.7 表示水平方向偏右 70%
-    -->
-    <TextView
-        android:id="@+id/tv_bias_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#A29BFE"
-        android:padding="12dp"
-        android:text="水平偏移70%"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.7"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tv_bias_left" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FFEAA7"
+                android:padding="12dp"
+                android:text="垂直居中"
+                android:textColor="#333333"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 
-        垂直偏移 30% 示例
-        约束说明：
-        - verticalBias = 0.3 表示垂直方向偏上 30%（0是顶部，1是底部）
-    -->
-    <TextView
-        android:id="@+id/tv_bias_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:background="#FD79A8"
-        android:padding="12dp"
-        android:text="垂直偏移30%"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 
-        ═══════════════════════════════════════════════════════════════════════════
-        偏移 (Bias) 属性速查表：
-        ═══════════════════════════════════════════════════════════════════════════
-        
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ app:layout_constraintHorizontal_bias - 水平偏移比例 (0.0 ~ 1.0)          │
-        │ app:layout_constraintVertical_bias   - 垂直偏移比例 (0.0 ~ 1.0)          │
-        │                                                                         │
-        │ 注意：                                                                   │
-        │ - bias 只在视图在该方向上有两个相对约束时生效                              │
-        │ - 默认值是 0.5 (居中)                                                    │
-        │ - 0 表示靠近起始边，1 表示靠近结束边                                      │
-        └─────────────────────────────────────────────────────────────────────────┘
-    -->
+        <!-- 
+            完全居中示例
+        -->
+        <TextView
+            android:id="@+id/tv_full_center_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="完全居中（演示区域内）"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vertical_center_container" />
 
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  第四部分：基线对齐 (Baseline Alignment)                                      ║
-        ║  用于文本视图的文字基线对齐，而不是顶部或底部对齐                                ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
+        <!-- 完全居中演示容器 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/full_center_container"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_full_center_label">
 
-    <!-- 分隔标题 -->
-    <TextView
-        android:id="@+id/tv_section4_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="第三部分：基线对齐"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_bias_left" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#DDA0DD"
+                android:padding="16dp"
+                android:text="完全居中"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- 
-        基线对齐示例
-        注意：D 比 C 的字体大，但它们的文字基线是对齐的
-    -->
-    <TextView
-        android:id="@+id/tv_baseline_c"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="#00B894"
-        android:padding="12dp"
-        android:text="C: 小字体"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_section4_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- 
-        D 使用基线对齐 C
-        约束说明：
-        - app:layout_constraintBaseline_toBaselineOf="@id/tv_baseline_c" 
-        - 这使得 D 的文字基线与 C 的文字基线对齐
-        - 即使 D 的字体更大，文字也会在基线上对齐
-    -->
-    <TextView
-        android:id="@+id/tv_baseline_d"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="#E17055"
-        android:padding="12dp"
-        android:text="D: 大字体基线对齐"
-        android:textColor="#FFFFFF"
-        android:textSize="22sp"
-        app:layout_constraintBaseline_toBaselineOf="@id/tv_baseline_c"
-        app:layout_constraintStart_toEndOf="@id/tv_baseline_c" />
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第三部分：偏移定位 (Bias)                                                    ║
+            ║  当视图居中时，可以使用 bias 调整偏移比例                                       ║
+            ║  bias = 0.5 表示居中，0 表示偏向一边，1 表示偏向另一边                           ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
 
-    <!-- 
-        ═══════════════════════════════════════════════════════════════════════════
-        边距 (Margins) 属性速查表：
-        ═══════════════════════════════════════════════════════════════════════════
-        
-        普通边距：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ android:layout_marginStart    - 左边距 (LTR 布局)                        │
-        │ android:layout_marginEnd      - 右边距 (LTR 布局)                        │
-        │ android:layout_marginTop      - 上边距                                  │
-        │ android:layout_marginBottom   - 下边距                                  │
-        │ android:layout_marginLeft     - 左边距 (旧版，不推荐)                    │
-        │ android:layout_marginRight    - 右边距 (旧版，不推荐)                    │
-        └─────────────────────────────────────────────────────────────────────────┘
-        
-        可选边距 (Gone Margins) - 当约束目标 View 的 visibility 为 gone 时生效：
-        ┌─────────────────────────────────────────────────────────────────────────┐
-        │ app:layout_goneMarginStart    - 目标 gone 时的左边距                     │
-        │ app:layout_goneMarginEnd      - 目标 gone 时的右边距                     │
-        │ app:layout_goneMarginTop      - 目标 gone 时的上边距                     │
-        │ app:layout_goneMarginBottom   - 目标 gone 时的下边距                     │
-        └─────────────────────────────────────────────────────────────────────────┘
-    -->
+        <!-- 
+            水平偏移 30% 示例
+            约束说明：
+            - horizontalBias = 0.3 表示水平方向偏左 30%（0是左边界，1是右边界）
+        -->
+        <TextView
+            android:id="@+id/tv_bias_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#74B9FF"
+            android:padding="12dp"
+            android:text="水平偏移30%"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/full_center_container" />
 
-    <!-- 分隔标题 -->
-    <TextView
-        android:id="@+id/tv_section5_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="第四部分：可选边距 (Gone Margin)"
-        android:textColor="#333333"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_baseline_c" />
+        <!-- 
+            水平偏移 70% 示例
+            约束说明：
+            - horizontalBias = 0.7 表示水平方向偏右 70%
+        -->
+        <TextView
+            android:id="@+id/tv_bias_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#A29BFE"
+            android:padding="12dp"
+            android:text="水平偏移70%"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_bias_left" />
 
-    <!-- 
-        Gone Margin 示例
-        当 E 隐藏时，F 会使用 goneMarginStart 而不是 marginStart
-    -->
-    <TextView
-        android:id="@+id/tv_gone_e"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="#6C5CE7"
-        android:padding="12dp"
-        android:text="E"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_section5_title" />
+        <!-- 
+            垂直偏移示例
+        -->
+        <TextView
+            android:id="@+id/tv_bias_vertical_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="垂直偏移（演示区域内）"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_bias_left" />
 
-    <!-- 
-        F 使用 goneMargin
-        当 E 的 visibility 为 gone 时：
-        - 普通的 marginStart="16dp" 不会生效
-        - goneMarginStart="80dp" 会生效，这样 F 会移动到更左边的位置
-    -->
-    <TextView
-        android:id="@+id/tv_gone_f"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="#00CEC9"
-        android:padding="12dp"
-        android:text="F (goneMargin=80dp)"
-        android:textColor="#FFFFFF"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/tv_gone_e"
-        app:layout_constraintTop_toTopOf="@id/tv_gone_e"
-        app:layout_goneMarginStart="80dp" />
+        <!-- 垂直偏移演示容器 -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/vertical_bias_container"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:background="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_bias_vertical_label">
 
-    <!-- 说明文字 -->
-    <TextView
-        android:id="@+id/tv_gone_hint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="提示：当 E 隐藏时，F 会使用 goneMargin(80dp) 而非普通 margin(16dp)"
-        android:textColor="#666666"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_gone_e" />
+            <TextView
+                android:id="@+id/tv_bias_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FD79A8"
+                android:padding="12dp"
+                android:text="垂直偏移30%"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.3" />
 
-    <!-- 
-        ╔═══════════════════════════════════════════════════════════════════════════╗
-        ║  总结：                                                                      ║
-        ║  1. 相对定位是基础，至少需要水平和垂直各一个约束                               ║
-        ║  2. 居中需要两边都有约束                                                     ║
-        ║  3. bias 可以调整居中的偏移比例                                              ║
-        ║  4. baseline 用于文本对齐                                                   ║
-        ║  5. goneMargin 用于处理目标视图隐藏时的布局调整                               ║
-        ╚═══════════════════════════════════════════════════════════════════════════╝
-    -->
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            偏移 (Bias) 属性速查表：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ app:layout_constraintHorizontal_bias - 水平偏移比例 (0.0 ~ 1.0)          │
+            │ app:layout_constraintVertical_bias   - 垂直偏移比例 (0.0 ~ 1.0)          │
+            │                                                                         │
+            │ 注意：                                                                   │
+            │ - bias 只在视图在该方向上有两个相对约束时生效                              │
+            │ - 默认值是 0.5 (居中)                                                    │
+            │ - 0 表示靠近起始边，1 表示靠近结束边                                      │
+            └─────────────────────────────────────────────────────────────────────────┘
+        -->
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  第四部分：基线对齐 (Baseline Alignment)                                      ║
+            ║  用于文本视图的文字基线对齐，而不是顶部或底部对齐                                ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+        <!-- 分隔标题 -->
+        <TextView
+            android:id="@+id/tv_section4_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="第三部分：基线对齐"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/vertical_bias_container" />
+
+        <!-- 
+            基线对齐示例
+            注意：D 比 C 的字体大，但它们的文字基线是对齐的
+        -->
+        <TextView
+            android:id="@+id/tv_baseline_c"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#00B894"
+            android:padding="12dp"
+            android:text="C: 小字体"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section4_title" />
+
+        <!-- 
+            D 使用基线对齐 C
+            约束说明：
+            - app:layout_constraintBaseline_toBaselineOf="@id/tv_baseline_c" 
+            - 这使得 D 的文字基线与 C 的文字基线对齐
+            - 即使 D 的字体更大，文字也会在基线上对齐
+        -->
+        <TextView
+            android:id="@+id/tv_baseline_d"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="#E17055"
+            android:padding="12dp"
+            android:text="D: 大字体基线对齐"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            app:layout_constraintBaseline_toBaselineOf="@id/tv_baseline_c"
+            app:layout_constraintStart_toEndOf="@id/tv_baseline_c" />
+
+        <!-- 
+            ═══════════════════════════════════════════════════════════════════════════
+            边距 (Margins) 属性速查表：
+            ═══════════════════════════════════════════════════════════════════════════
+            
+            普通边距：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ android:layout_marginStart    - 左边距 (LTR 布局)                        │
+            │ android:layout_marginEnd      - 右边距 (LTR 布局)                        │
+            │ android:layout_marginTop      - 上边距                                  │
+            │ android:layout_marginBottom   - 下边距                                  │
+            │ android:layout_marginLeft     - 左边距 (旧版，不推荐)                    │
+            │ android:layout_marginRight    - 右边距 (旧版，不推荐)                    │
+            └─────────────────────────────────────────────────────────────────────────┘
+            
+            可选边距 (Gone Margins) - 当约束目标 View 的 visibility 为 gone 时生效：
+            ┌─────────────────────────────────────────────────────────────────────────┐
+            │ app:layout_goneMarginStart    - 目标 gone 时的左边距                     │
+            │ app:layout_goneMarginEnd      - 目标 gone 时的右边距                     │
+            │ app:layout_goneMarginTop      - 目标 gone 时的上边距                     │
+            │ app:layout_goneMarginBottom   - 目标 gone 时的下边距                     │
+            └─────────────────────────────────────────────────────────────────────────┘
+        -->
+
+        <!-- 分隔标题 -->
+        <TextView
+            android:id="@+id/tv_section5_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="第四部分：可选边距 (Gone Margin)"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_baseline_c" />
+
+        <!-- 
+            Gone Margin 示例
+            当 E 隐藏时，F 会使用 goneMarginStart 而不是 marginStart
+        -->
+        <TextView
+            android:id="@+id/tv_gone_e"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="#6C5CE7"
+            android:padding="12dp"
+            android:text="E"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section5_title" />
+
+        <!-- 
+            F 使用 goneMargin
+            当 E 的 visibility 为 gone 时：
+            - 普通的 marginStart="16dp" 不会生效
+            - goneMarginStart="80dp" 会生效，这样 F 会移动到更左边的位置
+        -->
+        <TextView
+            android:id="@+id/tv_gone_f"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="#00CEC9"
+            android:padding="12dp"
+            android:text="F (goneMargin=80dp)"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@id/tv_gone_e"
+            app:layout_constraintTop_toTopOf="@id/tv_gone_e"
+            app:layout_goneMarginStart="80dp" />
+
+        <!-- 说明文字 -->
+        <TextView
+            android:id="@+id/tv_gone_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="提示：当 E 隐藏时，F 会使用 goneMargin(80dp) 而非普通 margin(16dp)"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_gone_e" />
+
+        <!-- 
+            ╔═══════════════════════════════════════════════════════════════════════════╗
+            ║  总结：                                                                      ║
+            ║  1. 相对定位是基础，至少需要水平和垂直各一个约束                               ║
+            ║  2. 居中需要两边都有约束                                                     ║
+            ║  3. bias 可以调整居中的偏移比例                                              ║
+            ║  4. baseline 用于文本对齐                                                   ║
+            ║  5. goneMargin 用于处理目标视图隐藏时的布局调整                               ║
+            ╚═══════════════════════════════════════════════════════════════════════════╝
+        -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
