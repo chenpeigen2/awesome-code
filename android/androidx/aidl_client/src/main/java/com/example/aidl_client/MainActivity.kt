@@ -86,9 +86,12 @@ class MainActivity : AppCompatActivity() {
     }
     
     private fun bindAidlService() {
+        // 使用显式 Intent 绑定服务（Android 5.0+ 必须使用显式 Intent）
         val intent = Intent().apply {
-            action = "com.example.aidl_common.IMyAidlInterface"
-            setPackage(SERVER_PACKAGE)
+            component = ComponentName(
+                SERVER_PACKAGE,  // 服务端包名
+                "$SERVER_PACKAGE.MyAidlService"  // 服务端 Service 完整类名
+            )
         }
         
         try {
@@ -102,6 +105,9 @@ class MainActivity : AppCompatActivity() {
         } catch (e: SecurityException) {
             Log.e(TAG, "绑定权限错误", e)
             Toast.makeText(this, "权限错误: ${e.message}", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Log.e(TAG, "绑定异常", e)
+            Toast.makeText(this, "绑定异常: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
     
