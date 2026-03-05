@@ -2,6 +2,8 @@ package com.peter.apt.compiler;
 
 import com.google.auto.service.AutoService;
 import com.peter.apt.annotation.Bindable;
+import com.peter.apt.annotation.BindView;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -12,11 +14,14 @@ import javax.annotation.processing.Processor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementKind;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.Elements;
 import javax.tools.Diagnostic;
 import java.io.IOException;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -35,7 +40,10 @@ public class BindableProcessor extends AbstractProcessor {
 
     @Override
     public Set<String> getSupportedAnnotationTypes() {
-        return Collections.singleton(Bindable.class.getCanonicalName());
+        Set<String> types = new HashSet<>();
+        types.add(Bindable.class.getCanonicalName());
+        types.add(BindView.class.getCanonicalName());
+        return types;
     }
 
     @Override
@@ -45,12 +53,13 @@ public class BindableProcessor extends AbstractProcessor {
 
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        // 处理所有被 @Bindable 标记的类
         for (Element element : roundEnv.getElementsAnnotatedWith(Bindable.class)) {
             TypeElement typeElement = (TypeElement) element;
             try {
                 generateBindingClass(typeElement);
             } catch (IOException e) {
-                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR, 
+                processingEnv.getMessager().printMessage(Diagnostic.Kind.ERROR,
                     "Failed to generate binding class: " + e.getMessage(), element);
             }
         }
@@ -63,17 +72,36 @@ public class BindableProcessor extends AbstractProcessor {
         String bindingClassName = className + "_Binding";
 
         // 创建 bind 方法
-        MethodSpec bindMethod = MethodSpec.methodBuilder("bind")
-                .addModifiers(javax.lang.model.element.Modifier.PUBLIC, javax.lang.model.element.Modifier.STATIC)
+        MethodSpec.Builder bindMethodBuilder = MethodSpec.methodBuilder("bind")
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(void.class)
-                .addParameter(com.squareup.javapoet.ClassName.get(typeElement), "target")
-                .addStatement("// TODO: implement binding logic")
-                .build();
+                .addParameter(ClassName.get(typeElement), "target");
+
+        // 查找该类中所有被 @BindView 标记的字段
+        for (Element enclosedElement : typeElement.getEnclosedElements()) {
+            if (enclosedElement.getKind() == ElementKind.FIELD) {
+                VariableElement field = (VariableElement) enclosedElement;
+                BindView bindView = field.getAnnotation(BindView.class);
+                if (bindView != null) {
+                    String fieldName = field.getSimpleName().toString();
+                    String fieldType = field.asType().toString();
+                    int viewId = bindView.value();
+                    
+                    // 直接使用资源ID
+                    bindMethodBuilder.addStatement(
+                            "target.$L = ($L) target.findViewById($L)",
+                            fieldName,
+                            fieldType,
+                            viewId
+                    );
+                }
+            }
+        }
 
         // 创建绑定类
         TypeSpec bindingClass = TypeSpec.classBuilder(bindingClassName)
-                .addModifiers(javax.lang.model.element.Modifier.PUBLIC)
-                .addMethod(bindMethod)
+                .addModifiers(Modifier.PUBLIC)
+                .addMethod(bindMethodBuilder.build())
                 .build();
 
         // 生成 Java 文件
@@ -83,7 +111,6 @@ public class BindableProcessor extends AbstractProcessor {
 
         javaFile.writeTo(processingEnv.getFiler());
         
-        // 打印信息
         System.out.println("========================================");
         System.out.println("Generated: " + packageName + "." + bindingClassName);
         System.out.println("Target: " + typeElement.getQualifiedName());
