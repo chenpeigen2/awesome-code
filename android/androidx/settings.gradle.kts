@@ -35,3 +35,6 @@ include(":koin")
 // APT modules
 include(":apt-annotation")
 include(":apt-compiler")
+
+// Lifecycle demo
+include(":lifecycle-demo")
