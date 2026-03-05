@@ -42,6 +42,11 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "../libs", "include" to listOf("*.aar"))))
     implementation(project(":dynamicanimation"))
+    
+    // APT dependencies
+    implementation(project(":apt-annotation"))
+    annotationProcessor(project(":apt-compiler"))
+    
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

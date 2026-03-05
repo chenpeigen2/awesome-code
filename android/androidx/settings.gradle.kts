@@ -31,3 +31,7 @@ include(":dynamicanimation")
 include(":datastore")
 include(":datastore-demo")
 include(":koin")
+
+// APT modules
+include(":apt-annotation")
+include(":apt-compiler")

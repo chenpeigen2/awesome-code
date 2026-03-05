@@ -106,10 +106,6 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
-//        Messenger
-
-        Messenger
-
         Toast.makeText(this, "onCreate: " + (getFilesDir() + "  " + getCacheDir()), Toast.LENGTH_SHORT).show();
 
     }
