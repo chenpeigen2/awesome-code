@@ -72,6 +72,11 @@ dependencies {
     androidTestImplementation(libs.androidx.fragment.testing)
     debugImplementation(libs.androidx.fragment.testing)
     
+    // Test core libraries
+    androidTestImplementation(libs.androidx.test.core)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.androidx.test.rules)
+    
     // Coroutines Test
     testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.kotlinx.coroutines.test)

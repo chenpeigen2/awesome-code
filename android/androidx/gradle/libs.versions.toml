@@ -7,7 +7,7 @@ kotlin = "2.2.21"
 coreKtx = "1.15.0"
 appcompat = "1.7.0"
 activity = "1.9.3"
-fragment = "1.8.5"
+fragment = "1.6.2"
 constraintlayout = "2.2.0"
 
 # Material Design 版本
@@ -34,6 +34,9 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 coreTesting = "2.2.0"
 coroutinesTest = "1.8.1"
+testCore = "1.5.0"
+testRunner = "1.5.2"
+testRules = "1.5.0"
 recyclerview = "1.4.0"
 viewpager2 = "1.1.0"
 swiperefreshlayout = "1.1.0"
@@ -87,6 +90,9 @@ androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso
 androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version.ref = "coreTesting" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutinesTest" }
 androidx-fragment-testing = { group = "androidx.fragment", name = "fragment-testing", version.ref = "fragment" }
+androidx-test-core = { group = "androidx.test", name = "core", version.ref = "testCore" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "testRunner" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "testRules" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
