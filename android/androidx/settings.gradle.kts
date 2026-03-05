@@ -21,12 +21,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "androidx"
 include(":app")
-//include(":appdisplayapp")
-//include(":myapplication")
 include(":apprenderapp")
 include(":appdisplayapp")
-//include(":aidl_server")
-//include(":aidl_client")
+include(":aidl-common")
+include(":aidl_server")
+include(":aidl_client")
 include(":dynamicanimation")
 include(":datastore")
 include(":datastore-demo")

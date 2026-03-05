@@ -6,7 +6,7 @@ import android.os.IBinder;
 import android.os.RemoteException;
 import android.util.Log;
 
-import com.example.appdisplayapp.IMyAidlInterface;
+import com.example.aidl_common.IMyAidlInterface;
 
 public class MyAidlService extends Service {
     private static final String TAG = "MyAidlService";
@@ -17,7 +17,35 @@ public class MyAidlService extends Service {
         public int add(int a, int b) throws RemoteException {
             Log.d(TAG, "收到加法请求: " + a + " + " + b);
             int result = a + b;
-            // 这里可以添加业务逻辑
+            Log.d(TAG, "计算结果: " + result);
+            return result;
+        }
+
+        @Override
+        public int subtract(int a, int b) throws RemoteException {
+            Log.d(TAG, "收到减法请求: " + a + " - " + b);
+            int result = a - b;
+            Log.d(TAG, "计算结果: " + result);
+            return result;
+        }
+
+        @Override
+        public int multiply(int a, int b) throws RemoteException {
+            Log.d(TAG, "收到乘法请求: " + a + " * " + b);
+            int result = a * b;
+            Log.d(TAG, "计算结果: " + result);
+            return result;
+        }
+
+        @Override
+        public int divide(int a, int b) throws RemoteException {
+            Log.d(TAG, "收到除法请求: " + a + " / " + b);
+            if (b == 0) {
+                Log.e(TAG, "除数不能为0");
+                throw new RemoteException("Division by zero");
+            }
+            int result = a / b;
+            Log.d(TAG, "计算结果: " + result);
             return result;
         }
     };

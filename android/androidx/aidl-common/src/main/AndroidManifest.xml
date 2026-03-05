@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 这是一个纯 AIDL 接口库模块，没有实际组件 -->
+</manifest>

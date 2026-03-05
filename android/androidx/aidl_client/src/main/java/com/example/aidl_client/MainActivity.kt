@@ -6,36 +6,40 @@ import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-
+import com.example.aidl_common.IMyAidlInterface
 
 class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    
+    companion object {
+        private const val TAG = "AidlClientMainActivity"
+        private const val SERVER_PACKAGE = "com.example.aidl_server"
     }
+    
+    private lateinit var tvStatus: TextView
+    private lateinit var tvResult: TextView
+    private lateinit var etNum1: EditText
+    private lateinit var etNum2: EditText
+    private lateinit var btnConnect: Button
+    private lateinit var btnDisconnect: Button
+    private lateinit var btnAdd: Button
+    private lateinit var btnSubtract: Button
+    private lateinit var btnMultiply: Button
+    private lateinit var btnDivide: Button
+    
+    private var mAidlService: IMyAidlInterface? = null
+    private var mServiceConnected = false
 
-    // 定义Service连接
-    private val mServiceConnection: ServiceConnection = object : ServiceConnection {
+    private val mServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             Log.d(TAG, "成功连接到AIDL服务")
-
-
-            // 获取AIDL接口实例
             mAidlService = IMyAidlInterface.Stub.asInterface(service)
             mServiceConnected = true
-
-            updateUI()
+            updateConnectionStatus(true)
             Toast.makeText(this@MainActivity, "服务连接成功", Toast.LENGTH_SHORT).show()
         }
 
@@ -43,42 +47,158 @@ class MainActivity : AppCompatActivity() {
             Log.d(TAG, "与AIDL服务断开连接")
             mAidlService = null
             mServiceConnected = false
-
-            updateUI()
+            updateConnectionStatus(false)
             Toast.makeText(this@MainActivity, "服务已断开", Toast.LENGTH_SHORT).show()
         }
     }
 
-    /**
-     * 绑定AIDL服务
-     */
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+        
+        initViews()
+        setupListeners()
+    }
+    
+    private fun initViews() {
+        tvStatus = findViewById(R.id.tv_status)
+        tvResult = findViewById(R.id.tv_result)
+        etNum1 = findViewById(R.id.et_num1)
+        etNum2 = findViewById(R.id.et_num2)
+        btnConnect = findViewById(R.id.btn_connect)
+        btnDisconnect = findViewById(R.id.btn_disconnect)
+        btnAdd = findViewById(R.id.btn_add)
+        btnSubtract = findViewById(R.id.btn_subtract)
+        btnMultiply = findViewById(R.id.btn_multiply)
+        btnDivide = findViewById(R.id.btn_divide)
+        
+        updateConnectionStatus(false)
+    }
+    
+    private fun setupListeners() {
+        btnConnect.setOnClickListener { bindAidlService() }
+        btnDisconnect.setOnClickListener { unbindAidlService() }
+        
+        btnAdd.setOnClickListener { calculate("add") }
+        btnSubtract.setOnClickListener { calculate("subtract") }
+        btnMultiply.setOnClickListener { calculate("multiply") }
+        btnDivide.setOnClickListener { calculate("divide") }
+    }
+    
     private fun bindAidlService() {
-        val intent = Intent()
-
-
-        // 方法1: 使用隐式Intent（推荐用于跨应用）
-        intent.setAction("com.example.appdisplayapp.IMyAidlInterface")
-
-
-        // Android 5.0+ 必须设置包名
-        intent.setPackage("com.example.aidl_server")
-
-
-        // 方法2: 使用显式Intent（适用于同应用）
-        // intent.setComponent(new ComponentName(
-        //     "com.example.appdisplayapp",  // 服务端包名
-        //     "com.example.appdisplayapp.MyAidlService"  // 服务端Service完整类名
-        // ));
+        val intent = Intent().apply {
+            action = "com.example.aidl_common.IMyAidlInterface"
+            setPackage(SERVER_PACKAGE)
+        }
+        
         try {
             val result = bindService(intent, mServiceConnection, BIND_AUTO_CREATE)
             if (result) {
                 Log.d(TAG, "开始绑定服务...")
+                Toast.makeText(this, "正在连接服务...", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(this, "绑定服务失败", Toast.LENGTH_SHORT).show()
             }
         } catch (e: SecurityException) {
-            e.printStackTrace()
-            Toast.makeText(this, "绑定权限错误: " + e.message, Toast.LENGTH_SHORT).show()
+            Log.e(TAG, "绑定权限错误", e)
+            Toast.makeText(this, "权限错误: ${e.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+    
+    private fun unbindAidlService() {
+        if (mServiceConnected) {
+            try {
+                unbindService(mServiceConnection)
+                mServiceConnected = false
+                mAidlService = null
+                updateConnectionStatus(false)
+                Log.d(TAG, "服务已解绑")
+            } catch (e: Exception) {
+                Log.e(TAG, "解绑失败", e)
+            }
+        }
+    }
+    
+    private fun calculate(operation: String) {
+        if (!mServiceConnected || mAidlService == null) {
+            Toast.makeText(this, "请先连接服务", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
+        val num1Str = etNum1.text.toString()
+        val num2Str = etNum2.text.toString()
+        
+        if (num1Str.isEmpty() || num2Str.isEmpty()) {
+            Toast.makeText(this, "请输入两个数字", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
+        val num1 = num1Str.toIntOrNull()
+        val num2 = num2Str.toIntOrNull()
+        
+        if (num1 == null || num2 == null) {
+            Toast.makeText(this, "请输入有效的整数", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
+        try {
+            val result = when (operation) {
+                "add" -> {
+                    mAidlService?.add(num1, num2)
+                    "$num1 + $num2 = ${mAidlService?.add(num1, num2)}"
+                }
+                "subtract" -> {
+                    mAidlService?.subtract(num1, num2)
+                    "$num1 - $num2 = ${mAidlService?.subtract(num1, num2)}"
+                }
+                "multiply" -> {
+                    mAidlService?.multiply(num1, num2)
+                    "$num1 × $num2 = ${mAidlService?.multiply(num1, num2)}"
+                }
+                "divide" -> {
+                    if (num2 == 0) {
+                        Toast.makeText(this, "除数不能为0", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                    mAidlService?.divide(num1, num2)
+                    "$num1 ÷ $num2 = ${mAidlService?.divide(num1, num2)}"
+                }
+                else -> "未知操作"
+            }
+            
+            tvResult.text = "结果: $result"
+            Log.d(TAG, "计算完成: $result")
+        } catch (e: Exception) {
+            Log.e(TAG, "计算失败", e)
+            tvResult.text = "计算错误: ${e.message}"
+        }
+    }
+    
+    private fun updateConnectionStatus(isConnected: Boolean) {
+        if (isConnected) {
+            tvStatus.text = "连接状态: 已连接"
+            tvStatus.setTextColor(getColor(android.R.color.holo_green_dark))
+            btnConnect.isEnabled = false
+            btnDisconnect.isEnabled = true
+            enableCalcButtons(true)
+        } else {
+            tvStatus.text = "连接状态: 未连接"
+            tvStatus.setTextColor(getColor(android.R.color.holo_red_dark))
+            btnConnect.isEnabled = true
+            btnDisconnect.isEnabled = false
+            enableCalcButtons(false)
+        }
+    }
+    
+    private fun enableCalcButtons(enabled: Boolean) {
+        btnAdd.isEnabled = enabled
+        btnSubtract.isEnabled = enabled
+        btnMultiply.isEnabled = enabled
+        btnDivide.isEnabled = enabled
+    }
+    
+    override fun onDestroy() {
+        super.onDestroy()
+        unbindAidlService()
     }
 }

@@ -25,7 +25,7 @@
             android:exported="true">
             <!-- 隐式Intent过滤器 -->
             <intent-filter>
-                <action android:name="com.example.appdisplayapp.IMyAidlInterface" />
+                <action android:name="com.example.aidl_common.IMyAidlInterface" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
