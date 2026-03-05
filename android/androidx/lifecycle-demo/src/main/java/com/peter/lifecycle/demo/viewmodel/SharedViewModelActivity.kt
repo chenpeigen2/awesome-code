@@ -10,6 +10,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.peter.lifecycle.demo.R
 import com.peter.lifecycle.demo.databinding.ActivitySharedViewModelBinding
@@ -136,7 +138,3 @@ class ReceiverFragment : Fragment() {
         }
     }
 }
-
-// 需要导入 LiveData 和 MutableLiveData
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData

@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.miui.lifecycle"
+    namespace = "com.peter.lifecycle.demo"
     compileSdk = SdkConfig.compileSdk
 
     defaultConfig {
-        applicationId = "com.miui.lifecycle"
+        applicationId = "com.peter.lifecycle.demo"
         minSdk = SdkConfig.minSdk
         targetSdk = SdkConfig.targetSdk
         versionCode = 1
@@ -32,8 +32,14 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-    kotlinOptions {
-        jvmTarget = "11"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
+        }
+    }
+    
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -43,12 +49,20 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.swiperefreshlayout)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.savedstate)
+    implementation(libs.androidx.lifecycle.common.java8)
+    implementation(libs.androidx.lifecycle.process)
+    
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
