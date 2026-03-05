@@ -1,3 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">lifecycle</string>
+    <string name="app_name">Lifecycle Demo</string>
+    
+    <!-- Lifecycle 基础 -->
+    <string name="lifecycle_title">Lifecycle 基础</string>
+    <string name="lifecycle_observer">LifecycleObserver</string>
+    <string name="custom_lifecycle_owner">自定义 LifecycleOwner</string>
+    
+    <!-- ViewModel 进阶 -->
+    <string name="viewmodel_title">ViewModel 进阶</string>
+    <string name="viewmodel_savedstate">SavedStateHandle</string>
+    <string name="viewmodel_factory">ViewModelProvider.Factory</string>
+    <string name="shared_viewmodel">共享 ViewModel</string>
+    
+    <!-- LiveData 转换 -->
+    <string name="livedata_title">LiveData 转换</string>
+    <string name="transformations">Transformations</string>
+    <string name="mediator_livedata">MediatorLiveData</string>
+    <string name="custom_livedata">自定义 LiveData</string>
+    
+    <!-- Kotlin Flow -->
+    <string name="flow_title">Kotlin Flow</string>
+    <string name="state_flow">StateFlow</string>
+    <string name="shared_flow">SharedFlow</string>
+    <string name="flow_livedata">Flow 与 LiveData 互转</string>
+    
+    <!-- 协程进阶 -->
+    <string name="coroutine_title">协程进阶</string>
+    <string name="viewmodel_scope">viewModelScope</string>
+    <string name="repeat_on_lifecycle">repeatOnLifecycle</string>
+    <string name="process_lifecycle">ProcessLifecycleOwner</string>
+    
+    <!-- MVVM 实战 -->
+    <string name="practice_title">MVVM 实战</string>
+    <string name="mvvm_practice">完整 MVVM 示例</string>
+    
+    <!-- 示例说明 -->
+    <string name="lifecycle_observer_desc">DefaultLifecycleObserver 监听生命周期事件</string>
+    <string name="custom_lifecycle_owner_desc">自定义类实现 LifecycleOwner 接口</string>
+    <string name="viewmodel_savedstate_desc">使用 SavedStateHandle 保存和恢复数据</string>
+    <string name="viewmodel_factory_desc">自定义 ViewModelProvider.Factory 创建 ViewModel</string>
+    <string name="shared_viewmodel_desc">Activity 和 Fragment 共享 ViewModel 通信</string>
+    <string name="transformations_desc">使用 map、switchMap 转换 LiveData</string>
+    <string name="mediator_livedata_desc">合并多个 LiveData 数据源</string>
+    <string name="custom_livedata_desc">自定义 LiveData 监听网络状态</string>
+    <string name="state_flow_desc">StateFlow 替代 LiveData 管理状态</string>
+    <string name="shared_flow_desc">SharedFlow 实现事件总线</string>
+    <string name="flow_livedata_desc">Flow 与 LiveData 相互转换</string>
+    <string name="viewmodel_scope_desc">viewModelScope 自动管理协程生命周期</string>
+    <string name="repeat_on_lifecycle_desc">在特定生命周期状态下安全收集 Flow</string>
+    <string name="process_lifecycle_desc">监听整个应用的生命周期状态</string>
+    <string name="mvvm_practice_desc">完整 MVVM 架构：Repository + Network + Error Handling</string>
 </resources>
