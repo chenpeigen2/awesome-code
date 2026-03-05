@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.appdisplayapp"
-    compileSdk = 35
+    compileSdk = SdkConfig.compileSdk
 
     buildFeatures {
         aidl = true
@@ -13,8 +13,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.appdisplayapp"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = SdkConfig.minSdk
+        targetSdk = SdkConfig.targetSdk
         versionCode = 1
         versionName = "1.0"
 

@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.koin"
-    compileSdk = 35
+    compileSdk = SdkConfig.compileSdk
 
     defaultConfig {
         applicationId = "com.example.koin"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = SdkConfig.minSdk
+        targetSdk = SdkConfig.targetSdk
         versionCode = 1
         versionName = "1.0"
 

@@ -5,10 +5,10 @@ plugins {
 
 android {
     namespace = "com.peter.dynamicanimation"
-    compileSdk = 35
+    compileSdk = SdkConfig.compileSdk
 
     defaultConfig {
-        minSdk = 21
+        minSdk = SdkConfig.minSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
