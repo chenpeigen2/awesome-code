@@ -6,7 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.peter.lifecycle.demo.databinding.ActivityViewModelSavedStateBinding
+import com.peter.lifecycle.demo.databinding.ActivityViewmodelSavedStateBinding
 
 /**
  * SavedStateHandle 示例
@@ -23,12 +23,12 @@ import com.peter.lifecycle.demo.databinding.ActivityViewModelSavedStateBinding
  */
 class ViewModelSavedStateActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityViewModelSavedStateBinding
+    private lateinit var binding: ActivityViewmodelSavedStateBinding
     private val viewModel: SavedStateViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityViewModelSavedStateBinding.inflate(layoutInflater)
+        binding = ActivityViewmodelSavedStateBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupViews()

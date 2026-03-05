@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.lifecycleScope
 import com.peter.lifecycle.demo.databinding.ActivityStateFlowBinding
 import kotlinx.coroutines.delay

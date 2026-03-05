@@ -14,7 +14,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.peter.lifecycle.demo.R
-import com.peter.lifecycle.demo.databinding.ActivitySharedViewModelBinding
+import com.peter.lifecycle.demo.databinding.ActivitySharedViewmodelBinding
 
 /**
  * 共享 ViewModel 示例
@@ -31,13 +31,13 @@ import com.peter.lifecycle.demo.databinding.ActivitySharedViewModelBinding
  */
 class SharedViewModelActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySharedViewModelBinding
+    private lateinit var binding: ActivitySharedViewmodelBinding
     // 使用 viewModels 获取 Activity 级别的 ViewModel
     private val viewModel: SharedViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySharedViewModelBinding.inflate(layoutInflater)
+        binding = ActivitySharedViewmodelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupFragments()

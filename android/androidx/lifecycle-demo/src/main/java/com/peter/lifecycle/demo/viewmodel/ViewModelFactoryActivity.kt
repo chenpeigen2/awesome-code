@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.peter.lifecycle.demo.databinding.ActivityViewModelFactoryBinding
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.peter.lifecycle.demo.databinding.ActivityViewmodelFactoryBinding
 
 /**
  * ViewModelProvider.Factory 示例
@@ -25,12 +27,12 @@ import com.peter.lifecycle.demo.databinding.ActivityViewModelFactoryBinding
  */
 class ViewModelFactoryActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityViewModelFactoryBinding
+    private lateinit var binding: ActivityViewmodelFactoryBinding
     private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityViewModelFactoryBinding.inflate(layoutInflater)
+        binding = ActivityViewmodelFactoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // 方式1：使用自定义 Factory
@@ -175,7 +177,7 @@ class UserViewModelFactory3(
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
         // 从 CreationExtras 获取 SavedStateHandle
-        val savedStateHandle = extras.createSavedStateHandle()
+        val savedStateHandle = SavedStateHandle()
         
         // 获取 Application
         val application = extras[APPLICATION_KEY]

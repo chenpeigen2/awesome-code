@@ -6,16 +6,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
+import androidx.lifecycle.switchMap
 import com.peter.lifecycle.demo.databinding.ActivityTransformationsBinding
 
 /**
  * Transformations 示例
  * 
  * 知识点：
- * 1. Transformations.map - 一对一转换
- * 2. Transformations.switchMap - 一对多动态切换
+ * 1. map - 一对一转换
+ * 2. switchMap - 一对多动态切换
  * 3. 延迟计算 - 只有在观察时才计算
  * 
  * 使用场景：
@@ -80,7 +81,7 @@ class TransformationsViewModel : ViewModel() {
     
     // 使用 map 进行一对一转换
     // 只有当 _inputText 有观察者时，才会执行转换
-    val formattedText: LiveData<String> = Transformations.map(_inputText) { input ->
+    val formattedText: LiveData<String> = _inputText.map { input ->
         // 将输入转换为大写并添加前缀
         "【$input】".uppercase()
     }
@@ -90,7 +91,7 @@ class TransformationsViewModel : ViewModel() {
     
     // 使用 switchMap 动态切换数据源
     // 类似于 flatMap，每次 _searchQuery 变化都会切换到新的 LiveData
-    val searchResult: LiveData<String> = Transformations.switchMap(_searchQuery) { query ->
+    val searchResult: LiveData<String> = _searchQuery.switchMap { query ->
         // 根据查询条件返回不同的 LiveData
         if (query.startsWith("user:")) {
             searchUser(query.removePrefix("user:"))
@@ -103,7 +104,7 @@ class TransformationsViewModel : ViewModel() {
     private val _userId = MutableLiveData<String>("user_1")
     
     // 根据用户ID动态切换用户数据源
-    val currentUser: LiveData<User> = Transformations.switchMap(_userId) { id ->
+    val currentUser: LiveData<User> = _userId.switchMap { id ->
         getUserById(id)
     }
 

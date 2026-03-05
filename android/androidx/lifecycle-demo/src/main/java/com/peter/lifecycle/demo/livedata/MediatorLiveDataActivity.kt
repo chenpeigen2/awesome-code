@@ -1,13 +1,15 @@
 package com.peter.lifecycle.demo.livedata
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.peter.lifecycle.demo.databinding.ActivityMediatorLiveDataBinding
+import com.peter.lifecycle.demo.databinding.ActivityMediatorLivedataBinding
 
 /**
  * MediatorLiveData 示例
@@ -24,12 +26,12 @@ import com.peter.lifecycle.demo.databinding.ActivityMediatorLiveDataBinding
  */
 class MediatorLiveDataActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMediatorLiveDataBinding
+    private lateinit var binding: ActivityMediatorLivedataBinding
     private val viewModel: MediatorViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMediatorLiveDataBinding.inflate(layoutInflater)
+        binding = ActivityMediatorLivedataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupViews()
@@ -37,10 +39,26 @@ class MediatorLiveDataActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        // 价格区间
-        binding.sbPrice.setOnRangeChangeListener { min, max ->
-            viewModel.setPriceRange(min, max)
-        }
+        // 价格区间 - 使用 EditText 输入
+        binding.etMinPrice.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val min = s?.toString()?.toIntOrNull() ?: 0
+                val max = binding.etMaxPrice.text?.toString()?.toIntOrNull() ?: 1000
+                viewModel.setPriceRange(min, max)
+            }
+        })
+        
+        binding.etMaxPrice.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                val min = binding.etMinPrice.text?.toString()?.toIntOrNull() ?: 0
+                val max = s?.toString()?.toIntOrNull() ?: 1000
+                viewModel.setPriceRange(min, max)
+            }
+        })
         
         // 类别选择
         binding.rgCategory.setOnCheckedChangeListener { _, checkedId ->
@@ -54,17 +72,29 @@ class MediatorLiveDataActivity : AppCompatActivity() {
         }
         
         // 表单输入
-        binding.etUsername.addTextChangedListener { 
-            viewModel.setUsername(it?.toString() ?: "")
-        }
+        binding.etUsername.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.setUsername(s?.toString() ?: "")
+            }
+        })
         
-        binding.etPassword.addTextChangedListener { 
-            viewModel.setPassword(it?.toString() ?: "")
-        }
+        binding.etPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.setPassword(s?.toString() ?: "")
+            }
+        })
         
-        binding.etConfirmPassword.addTextChangedListener { 
-            viewModel.setConfirmPassword(it?.toString() ?: "")
-        }
+        binding.etConfirmPassword.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.setConfirmPassword(s?.toString() ?: "")
+            }
+        })
     }
 
     private fun observeData() {

@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
-import com.peter.lifecycle.demo.databinding.ActivityViewModelScopeBinding
+import com.peter.lifecycle.demo.databinding.ActivityViewmodelScopeBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -40,12 +40,12 @@ import kotlinx.coroutines.withContext
  */
 class ViewModelScopeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityViewModelScopeBinding
+    private lateinit var binding: ActivityViewmodelScopeBinding
     private val viewModel: ScopeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityViewModelScopeBinding.inflate(layoutInflater)
+        binding = ActivityViewmodelScopeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupViews()

@@ -7,14 +7,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.liveData
-import com.peter.lifecycle.demo.databinding.ActivityFlowLiveDataBinding
+import com.peter.lifecycle.demo.databinding.ActivityFlowLivedataBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -34,12 +34,12 @@ import kotlinx.coroutines.launch
  */
 class FlowLiveDataActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityFlowLiveDataBinding
+    private lateinit var binding: ActivityFlowLivedataBinding
     private val viewModel: FlowLiveDataViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityFlowLiveDataBinding.inflate(layoutInflater)
+        binding = ActivityFlowLivedataBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupViews()
