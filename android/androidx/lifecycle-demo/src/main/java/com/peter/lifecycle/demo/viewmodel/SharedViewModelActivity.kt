@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -83,27 +84,23 @@ class SenderFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return TextView(requireContext()).apply {
-            setText("发送 Fragment")
-            setPadding(16, 16, 16, 16)
-        }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        
-        val button = Button(requireContext()).apply {
-            text = "发送消息"
-            setOnClickListener {
-                viewModel.sendMessage("来自 SenderFragment 的消息 ${System.currentTimeMillis()}")
-            }
-        }
-        
-        (view as TextView).text = """
-            发送 Fragment
+        return LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(32, 32, 32, 32)
             
-            点击按钮发送消息到共享 ViewModel
-        """.trimIndent()
+            addView(TextView(requireContext()).apply {
+                text = "发送 Fragment"
+                textSize = 18f
+                setPadding(0, 0, 0, 16)
+            })
+            
+            addView(Button(requireContext()).apply {
+                text = "发送消息"
+                setOnClickListener {
+                    viewModel.sendMessage("来自 SenderFragment 的消息 ${System.currentTimeMillis()}")
+                }
+            })
+        }
     }
 }
 
