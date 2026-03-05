@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WorkManager Demo</string>
+    
+    <!-- WorkManager 基础 -->
+    <string name="basic_title">WorkManager 基础</string>
+    <string name="basic_worker">基础 Worker</string>
+    <string name="one_time_work">一次性任务</string>
+    <string name="periodic_work">周期性任务</string>
+    <string name="work_data">任务数据传递</string>
+    <string name="work_status">任务状态监听</string>
+    
+    <!-- WorkManager 进阶 -->
+    <string name="advanced_title">WorkManager 进阶</string>
+    <string name="work_constraints">任务约束条件</string>
+    <string name="work_chain">链式任务</string>
+    <string name="unique_work">唯一任务</string>
+    <string name="work_tag">任务标签</string>
+    
+    <!-- WorkManager 高级 -->
+    <string name="expert_title">WorkManager 高级</string>
+    <string name="coroutine_worker">CoroutineWorker</string>
+    <string name="rx_worker">RxWorker</string>
+    <string name="foreground_worker">前台服务 Worker</string>
+    <string name="work_exception">任务异常处理</string>
+    
+    <!-- WorkManager 实战 -->
+    <string name="practice_title">WorkManager 实战</string>
+    <string name="download_file">文件下载</string>
+    <string name="image_compress">图片压缩</string>
+    <string name="data_sync">数据同步</string>
+    
+    <!-- 示例说明 -->
+    <string name="basic_worker_desc">最基础的 Worker 使用示例</string>
+    <string name="one_time_work_desc">OneTimeWorkRequest 执行一次性任务</string>
+    <string name="periodic_work_desc">PeriodicWorkRequest 执行周期性任务</string>
+    <string name="work_data_desc">使用 Data 在任务间传递数据</string>
+    <string name="work_status_desc">监听任务的执行状态和进度</string>
+    <string name="work_constraints_desc">设置任务执行的网络、存储、电量等约束</string>
+    <string name="work_chain_desc">使用 WorkContinuation 组合多个任务</string>
+    <string name="unique_work_desc">确保同一时间只有一个相同任务在执行</string>
+    <string name="work_tag_desc">使用标签管理和取消一组任务</string>
+    <string name="coroutine_worker_desc">使用 Kotlin 协程编写异步任务</string>
+    <string name="rx_worker_desc">使用 RxJava 编写响应式任务</string>
+    <string name="foreground_worker_desc">执行需要前台服务的长时间任务</string>
+    <string name="work_exception_desc">处理任务执行中的异常和重试策略</string>
+    <string name="download_file_desc">使用 WorkManager 下载大文件</string>
+    <string name="image_compress_desc">使用 WorkManager 压缩和处理图片</string>
+    <string name="data_sync_desc">使用 WorkManager 同步服务器数据</string>
+    
+    <!-- 通用按钮 -->
+    <string name="btn_start">开始任务</string>
+    <string name="btn_cancel">取消任务</string>
+    <string name="btn_enqueue">入队任务</string>
+    <string name="btn_observe">观察状态</string>
+    <string name="btn_get_result">获取结果</string>
+    <string name="btn_chain">执行链式任务</string>
+    <string name="btn_download">下载</string>
+    <string name="btn_compress">压缩</string>
+    <string name="btn_sync">同步</string>
+    
+    <!-- 状态文本 -->
+    <string name="status_idle">等待开始</string>
+    <string name="status_enqueued">已入队</string>
+    <string name="status_running">执行中</string>
+    <string name="status_succeeded">执行成功</string>
+    <string name="status_failed">执行失败</string>
+    <string name="status_blocked">被阻塞</string>
+    <string name="status_cancelled">已取消</string>
+    
+    <!-- 详细说明 -->
+    <string name="worker_intro">WorkManager 是 Android Jetpack 的一部分，用于管理可延期执行的后台任务。\n\n主要特点：\n1. 向后兼容到 API 14\n2. 支持任务约束（网络、电量、存储等）\n3. 支持一次性任务和周期性任务\n4. 支持任务链式调用\n5. 系统重启后任务依然有效</string>
+</resources>

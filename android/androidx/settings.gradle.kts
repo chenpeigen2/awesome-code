@@ -43,3 +43,6 @@ include(":recyclerview-demo")
 
 // ConstraintLayout demo
 include(":constraintlayout-demo")
+
+// WorkManager demo
+include(":workmanager-demo")

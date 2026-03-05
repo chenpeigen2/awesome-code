@@ -22,6 +22,9 @@ coroutines = "1.8.1"
 # Lifecycle 版本
 lifecycle = "2.8.7"
 
+# WorkManager 版本
+workmanager = "2.10.0"
+
 # Kotlinx Serialization 版本
 kotlinxSerializationJson = "1.6.3"
 
@@ -74,6 +77,13 @@ androidx-lifecycle-livedata-core-ktx = { group = "androidx.lifecycle", name = "l
 androidx-lifecycle-common-java8 = { group = "androidx.lifecycle", name = "lifecycle-common-java8", version.ref = "lifecycle" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
 androidx-lifecycle-service = { group = "androidx.lifecycle", name = "lifecycle-service", version.ref = "lifecycle" }
+
+# WorkManager
+androidx-work-runtime = { group = "androidx.work", name = "work-runtime", version.ref = "workmanager" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workmanager" }
+androidx-work-rxjava2 = { group = "androidx.work", name = "work-rxjava2", version.ref = "workmanager" }
+androidx-work-gcm = { group = "androidx.work", name = "work-gcm", version.ref = "workmanager" }
+androidx-work-testing = { group = "androidx.work", name = "work-testing", version.ref = "workmanager" }
 
 # Kotlinx Serialization
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
