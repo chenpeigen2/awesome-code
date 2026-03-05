@@ -17,6 +17,17 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments(
+                    mapOf(
+                        "apt.debug" to "true",
+                        "apt.logLevel" to "2"
+                    )
+                )
+            }
+        }
     }
 
     buildTypes {
