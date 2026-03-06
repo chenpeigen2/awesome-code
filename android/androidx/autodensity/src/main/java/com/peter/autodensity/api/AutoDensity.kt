@@ -41,7 +41,7 @@ object AutoDensity {
     /**
      * 初始化密度适配
      */
-    fun init(application: Application, densityConfig: DensityConfig = DensityConfig()) {
+    fun init(application: Application, densityConfig: DensityConfig) {
         if (isInitialized) return
 
         this.app = application
