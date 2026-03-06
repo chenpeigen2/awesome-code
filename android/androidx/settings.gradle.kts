@@ -52,3 +52,7 @@ include(":context-demo")
 
 // Window demo
 include(":window-demo")
+
+// AutoDensity - 屏幕密度适配库
+include(":autodensity")
+include(":autodensity-demo")
