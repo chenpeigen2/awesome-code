@@ -31,10 +31,10 @@ class DemoService : Service(), ServiceDensityAware {
     }
 
     // 启用密度适配
-    override fun shouldAdaptDensity(): Boolean = true
+    override fun shouldAdaptDensity(): Boolean = true // TODO
 
     // 强制使用 designWidthDp
-    override fun forceDesignWidth(): Boolean = false
+    override fun forceDesignWidth(): Boolean = true
 
     override fun onBind(intent: Intent?): IBinder? = null
 

@@ -261,7 +261,7 @@ object DensityDebugger {
     /**
      * 打印 Service 密度应用
      */
-    fun printServiceApply(serviceName: String, designWidth: Int, fontScale: Float?, forceDesignWidth: Boolean) {
+    fun printServiceApply(serviceName: String, designWidth: Int, fontScale: Float?, forceDesignWidth: Boolean, baseWidthDp: Int) {
         Log.d(TAG, "")
         Log.d(TAG, "╔══════════════════════════════════════════════════════════╗")
         Log.d(TAG, "║  Service 密度应用: $serviceName")
@@ -269,7 +269,7 @@ object DensityDebugger {
         Log.d(TAG, "║  designWidth     = $designWidth dp")
         Log.d(TAG, "║  fontScale       = $fontScale")
         Log.d(TAG, "║  forceDesignWidth= $forceDesignWidth")
-        Log.d(TAG, "║  baseWidthDp     = 0 (Service 无限制)")
+        Log.d(TAG, "║  baseWidthDp     = $baseWidthDp dp (屏幕实际宽度)")
         Log.d(TAG, "╚══════════════════════════════════════════════════════════╝")
         Log.d(TAG, "")
     }

@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(), ActivityDensityAware {
     // 返回具体值表示使用该值作为基准
     override fun getBaseWidthDp(): Int = -1
 
-    override fun forceDesignWidth(): Boolean = true
+    override fun forceDesignWidth(): Boolean = false
 
     private fun updateInfo() {
         val dm: DisplayMetrics = resources.displayMetrics
