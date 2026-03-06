@@ -259,6 +259,16 @@ object DensityDebugger {
     }
 
     /**
+     * 打印 Context 跳过适配
+     */
+    fun printContextSkipped(contextName: String) {
+        Log.d(TAG, "╔══════════════════════════════════════════════════════════╗")
+        Log.d(TAG, "║  Context 跳过密度适配: $contextName")
+        Log.d(TAG, "║  shouldAdaptDensity = false")
+        Log.d(TAG, "╚══════════════════════════════════════════════════════════╝")
+    }
+
+    /**
      * 打印 Service 密度应用
      */
     fun printServiceApply(serviceName: String, designWidth: Int, fontScale: Float?, forceDesignWidth: Boolean, baseWidthDp: Int) {

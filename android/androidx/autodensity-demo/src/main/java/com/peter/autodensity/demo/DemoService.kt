@@ -31,7 +31,7 @@ class DemoService : Service(), ServiceDensityAware {
     }
 
     // 启用密度适配
-    override fun shouldAdaptDensity(): Boolean = true // TODO
+    override fun shouldAdaptDensity(): Boolean = false
 
     // 强制使用 designWidthDp
     override fun forceDesignWidth(): Boolean = true

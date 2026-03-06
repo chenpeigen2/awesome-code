@@ -139,6 +139,11 @@ object AutoDensity {
      * @param context Context（Service、Application 等）
      */
     fun applyToContext(context: Context) {
+        val shouldAdapt = resolveShouldAdaptForContext(context)
+        if (!shouldAdapt) {
+            DensityDebugger.printContextSkipped(context.javaClass.simpleName)
+            return
+        }
         val forceDesignWidth = resolveForceDesignWidthForContext(context)
         DensityManager.applyToContext(context, forceDesignWidth)
     }
@@ -163,6 +168,20 @@ object AutoDensity {
     fun getAdaptedMetrics(context: Context): DisplayMetrics {
         val forceDesignWidth = resolveForceDesignWidthForContext(context)
         return DensityManager.getAdaptedMetrics(context, forceDesignWidth)
+    }
+
+    /**
+     * 解析 Context 的 shouldAdaptDensity 设置
+     * 支持 ServiceDensityAware 接口
+     */
+    private fun resolveShouldAdaptForContext(context: Context): Boolean {
+        val appInstance = app
+        return when {
+            context is ServiceDensityAware -> context.shouldAdaptDensity()
+            context is DensityAware -> context.shouldAdaptDensity()
+            appInstance is DensityAware -> appInstance.shouldAdaptDensity()
+            else -> true
+        }
     }
 
     /**
