@@ -150,7 +150,7 @@ object AutoDensity {
 
             // 获取 forceDesignWidth
             val forceDesignWidth = when {
-                userForceDesignWidth != null -> userForceDesignWidth!!
+                userForceDesignWidth != null -> userForceDesignWidth == true
                 activity is ActivityDensityAware -> activity.forceDesignWidth()
                 else -> config.forceDesignWidth
             }
