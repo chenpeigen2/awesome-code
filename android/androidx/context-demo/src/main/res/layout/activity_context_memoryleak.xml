@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="内存泄漏分析"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnStaticLeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="静态变量泄漏"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnInnerClassLeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="内部类泄漏"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnHandlerLeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Handler泄漏"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnSingletonLeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="单例泄漏"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnListenerLeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="监听器泄漏"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnCoroutineLeak"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="协程泄漏"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnCorrectUsage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="正确使用总结"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray_dark"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Context Demo</string>
+    
+    <!-- 基础示例标题 -->
+    <string name="basic_title">一、Context 基础</string>
+    
+    <string name="context_type">Context 类型介绍</string>
+    <string name="context_type_desc">Application、Activity、Service Context 的区别</string>
+    
+    <string name="context_resources">资源访问</string>
+    <string name="context_resources_desc">通过 Context 获取字符串、颜色、尺寸、图片等资源</string>
+    
+    <string name="context_shared_preferences">SharedPreferences</string>
+    <string name="context_shared_preferences_desc">使用 Context 进行轻量级数据存储</string>
+    
+    <string name="context_file">文件操作</string>
+    <string name="context_file_desc">内部存储、外部存储、缓存文件操作</string>
+    
+    <!-- 进阶示例标题 -->
+    <string name="advanced_title">二、Context 进阶</string>
+    
+    <string name="context_database">数据库操作</string>
+    <string name="context_database_desc">使用 Context 打开或创建数据库</string>
+    
+    <string name="context_system_services">系统服务</string>
+    <string name="context_system_services_desc">通过 Context 获取各种系统服务</string>
+    
+    <string name="context_window">Window 和 Dialog</string>
+    <string name="context_window_desc">使用 Context 创建 Dialog 和 Window</string>
+    
+    <!-- 深入示例标题 -->
+    <string name="deep_title">三、Context 深入</string>
+    
+    <string name="context_wrapper">ContextWrapper 详解</string>
+    <string name="context_wrapper_desc">Context 的装饰器模式，自定义 Context</string>
+    
+    <string name="context_memory_leak">内存泄漏分析</string>
+    <string name="context_memory_leak_desc">Context 使用不当导致的内存泄漏及解决方案</string>
+    
+    <string name="context_best_practices">最佳实践</string>
+    <string name="context_best_practices_desc">Context 使用的最佳实践和注意事项</string>
+    
+    <!-- 通用 -->
+    <string name="get_application_context">获取 Application Context</string>
+    <string name="get_activity_context">获取 Activity Context</string>
+    <string name="get_string">获取字符串</string>
+    <string name="get_color">获取颜色</string>
+    <string name="get_dimension">获取尺寸</string>
+    <string name="get_drawable">获取图片</string>
+    <string name="save_data">保存数据</string>
+    <string name="read_data">读取数据</string>
+    <string name="clear_data">清除数据</string>
+    <string name="write_file">写入文件</string>
+    <string name="read_file">读取文件</string>
+    <string name="delete_file">删除文件</string>
+    <string name="create_database">创建数据库</string>
+    <string name="query_data">查询数据</string>
+    <string name="insert_data">插入数据</string>
+    <string name="show_dialog">显示对话框</string>
+    <string name="get_system_service">获取系统服务</string>
+    
+    <!-- 用于资源示例 -->
+    <string name="hello">你好，世界！</string>
+</resources>

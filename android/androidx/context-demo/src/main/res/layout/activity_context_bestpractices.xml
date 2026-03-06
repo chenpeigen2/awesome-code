@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Context 最佳实践"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnContextSelection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Context选择指南"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnCommonPatterns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="常用模式"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnExtensionFunctions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="扩展函数"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnTips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="技巧与窍门"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnAntiPatterns"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="反模式(不要写)"
+                android:textSize="11sp"
+                android:textColor="@color/error" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray_dark"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>

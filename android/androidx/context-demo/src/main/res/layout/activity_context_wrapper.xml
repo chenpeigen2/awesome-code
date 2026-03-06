@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ContextWrapper 示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAnalyze"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分析Context链"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnCustomWrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="自定义Wrapper"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnMutableWrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MutableWrapper"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btnThemeWrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="ThemeWrapper"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray_dark"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>

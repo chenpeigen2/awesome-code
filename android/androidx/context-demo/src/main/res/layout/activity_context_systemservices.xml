@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="系统服务示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnActivityManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activity"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnPowerManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Power"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnConnectivityManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Connect"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnWifiManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="WiFi"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnAudioManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Audio"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnTelephonyManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Telephony"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnSensorManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Sensor"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnClipboardManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Clipboard"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btnInputMethodManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="InputMethod"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnVibrator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Vibrator"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnAlarmManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Alarm"
+                android:textSize="11sp" />
+
+            <Button
+                android:id="@+id/btnNotificationManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Notify"
+                android:textSize="11sp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray_dark"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -49,3 +49,6 @@ include(":workmanager-demo")
 
 // LayoutInflater demo
 include(":layoutinflater-demo")
+
+// Context demo
+include(":context-demo")

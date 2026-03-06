@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 格式化字符串 -->
+    <string name="format_string">Hello, %1$s! Version: %2$d</string>
+    
+    <!-- 数量字符串 -->
+    <plurals name="apples">
+        <item quantity="one">One apple</item>
+        <item quantity="other">%d apples</item>
+    </plurals>
+    
+    <!-- 数组 -->
+    <string-array name="planets">
+        <item>Mercury</item>
+        <item>Venus</item>
+        <item>Earth</item>
+        <item>Mars</item>
+        <item>Jupiter</item>
+    </string-array>
+    
+    <integer-array name="numbers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </integer-array>
+</resources>
