@@ -4,6 +4,8 @@ package com.peter.autodensity.api
 
 import android.app.Activity
 import android.app.Application
+import android.content.ComponentCallbacks2
+import android.content.res.Configuration
 import android.os.Bundle
 import com.peter.autodensity.core.DensityDebugger
 import com.peter.autodensity.core.DensityManager
@@ -33,6 +35,9 @@ object AutoDensity {
     private var isInitialized = false
     private lateinit var app: Application
 
+    // 当前活跃的 Activity 列表（用于配置改变时重新适配）
+    private val activeActivities = mutableSetOf<Activity>()
+
     /**
      * 初始化密度适配
      */
@@ -43,17 +48,40 @@ object AutoDensity {
         DensityManager.initialize(application, densityConfig)
         isInitialized = true
 
+        // 注册 Activity 生命周期回调
         application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 handleActivityCreate(activity)
             }
 
-            override fun onActivityStarted(activity: Activity) {}
-            override fun onActivityResumed(activity: Activity) {}
+            override fun onActivityStarted(activity: Activity) {
+                activeActivities.add(activity)
+            }
+
+            override fun onActivityResumed(activity: Activity) {
+                // 每次 Resume 时重新检查并应用（处理分辨率切换等不触发 onConfigurationChanged 的场景）
+                handleActivityResume(activity)
+            }
+
+            override fun onActivityStopped(activity: Activity) {
+                activeActivities.remove(activity)
+            }
+
+            override fun onActivityDestroyed(activity: Activity) {
+                activeActivities.remove(activity)
+            }
             override fun onActivityPaused(activity: Activity) {}
-            override fun onActivityStopped(activity: Activity) {}
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
-            override fun onActivityDestroyed(activity: Activity) {}
+        })
+
+        // 注册全局配置改变回调（处理字体缩放等系统设置变化）
+        application.registerComponentCallbacks(object : ComponentCallbacks2 {
+            override fun onConfigurationChanged(newConfig: Configuration) {
+                handleGlobalConfigChange()
+            }
+
+            override fun onLowMemory() {}
+            override fun onTrimMemory(level: Int) {}
         })
     }
 
@@ -83,7 +111,7 @@ object AutoDensity {
      */
     fun refresh(activity: Activity) {
         val forceDesignWidth = DensityManager.getConfig().forceDesignWidth
-        DensityManager.calculate(activity, 0, forceDesignWidth)
+        applyToActivity(activity, forceDesignWidth)
     }
 
     /**
@@ -97,20 +125,69 @@ object AutoDensity {
     fun getLastResult() = DensityManager.getLastResult()
 
     private fun handleActivityCreate(activity: Activity) {
-        val appInstance = app
-        val shouldAdapt = when {
-            activity is ActivityDensityAware -> activity.shouldAdaptDensity()
-            activity is DensityAware -> activity.shouldAdaptDensity()
-            appInstance is DensityAware -> appInstance.shouldAdaptDensity()
-            else -> true
-        }
+        val shouldAdapt = resolveShouldAdapt(activity)
 
         DensityDebugger.printActivityHandle(activity.javaClass.simpleName, shouldAdapt)
 
         if (shouldAdapt) {
-            val baseWidthDp = resolveBaseWidthDp(activity)
             val forceDesignWidth = resolveForceDesignWidth(activity)
-            DensityManager.calculate(activity, baseWidthDp, forceDesignWidth)
+            applyToActivity(activity, forceDesignWidth)
+        }
+    }
+
+    private fun handleActivityResume(activity: Activity) {
+        // 每次 Resume 时重新检查屏幕参数，处理分辨率切换等场景
+        val shouldAdapt = resolveShouldAdapt(activity)
+        if (shouldAdapt) {
+            // 检查屏幕参数是否变化
+            val currentInfo = DisplayInfo.from(activity)
+            val lastResult = DensityManager.getLastResult()
+
+            // 如果屏幕宽度变化（分辨率切换、折叠屏等），重新计算
+            if (lastResult == null ||
+                lastResult.original.widthPixels != currentInfo.widthPixels ||
+                lastResult.original.heightPixels != currentInfo.heightPixels) {
+
+                DensityDebugger.printConfigChange("${activity.javaClass.simpleName} Resume - 检测到屏幕参数变化")
+
+                // 清除缓存
+                DensityManager.clearCache()
+
+                // 重新应用
+                val forceDesignWidth = resolveForceDesignWidth(activity)
+                applyToActivity(activity, forceDesignWidth)
+            }
+        }
+    }
+
+    private fun handleGlobalConfigChange() {
+        DensityDebugger.printConfigChange("全局配置改变")
+
+        // 清除缓存，强制重新计算
+        DensityManager.clearCache()
+
+        // 重新适配所有活跃的 Activity
+        activeActivities.forEach { activity ->
+            val shouldAdapt = resolveShouldAdapt(activity)
+            if (shouldAdapt) {
+                val forceDesignWidth = resolveForceDesignWidth(activity)
+                applyToActivity(activity, forceDesignWidth)
+            }
+        }
+    }
+
+    private fun applyToActivity(activity: Activity, forceDesignWidth: Boolean) {
+        val baseWidthDp = resolveBaseWidthDp(activity)
+        DensityManager.calculate(activity, baseWidthDp, forceDesignWidth)
+    }
+
+    private fun resolveShouldAdapt(activity: Activity): Boolean {
+        val appInstance = app
+        return when {
+            activity is ActivityDensityAware -> activity.shouldAdaptDensity()
+            activity is DensityAware -> activity.shouldAdaptDensity()
+            appInstance is DensityAware -> appInstance.shouldAdaptDensity()
+            else -> true
         }
     }
 

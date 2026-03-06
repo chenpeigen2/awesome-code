@@ -54,6 +54,13 @@ internal object DensityManager {
 
     fun getConfig(): DensityConfig = config
 
+    /**
+     * 清除缓存（配置改变时调用）
+     */
+    fun clearCache() {
+        lastResult = null
+    }
+
     fun calculate(
         activity: Activity,
         baseWidthDp: Int,
