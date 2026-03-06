@@ -75,3 +75,16 @@ interface ActivityDensityAware : DensityAware {
      */
     fun forceDesignWidth(): Boolean = true
 }
+
+/**
+ * Service 密度适配接口
+ *
+ * 实现 this 接口来控制 Service 是否启用密度适配
+ */
+interface ServiceDensityAware : DensityAware {
+    /**
+     * 是否强制使用 designWidthDp
+     * @return true 强制使用 designWidthDp
+     */
+    fun forceDesignWidth(): Boolean = false
+}
