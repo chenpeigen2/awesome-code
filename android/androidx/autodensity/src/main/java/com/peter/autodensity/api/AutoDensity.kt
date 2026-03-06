@@ -51,7 +51,8 @@ object AutoDensity {
         isInitialized = true
 
         // 注册 Activity 生命周期回调
-        application.registerActivityLifecycleCallbacks(object : Application.ActivityLifecycleCallbacks {
+        application.registerActivityLifecycleCallbacks(object :
+            Application.ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 handleActivityCreate(activity)
             }
@@ -72,6 +73,7 @@ object AutoDensity {
             override fun onActivityDestroyed(activity: Activity) {
                 activeActivities.remove(activity)
             }
+
             override fun onActivityPaused(activity: Activity) {}
             override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
         })
@@ -112,7 +114,7 @@ object AutoDensity {
      * 手动刷新 Activity 的密度
      */
     fun refresh(activity: Activity) {
-        val forceDesignWidth = DensityManager.getConfig().forceDesignWidth
+        val forceDesignWidth = resolveForceDesignWidth(activity)
         applyToActivity(activity, forceDesignWidth)
     }
 
@@ -197,7 +199,8 @@ object AutoDensity {
             // 如果屏幕宽度变化（分辨率切换、折叠屏等），重新计算
             if (lastResult == null ||
                 lastResult.original.widthPixels != currentInfo.widthPixels ||
-                lastResult.original.heightPixels != currentInfo.heightPixels) {
+                lastResult.original.heightPixels != currentInfo.heightPixels
+            ) {
 
                 DensityDebugger.printConfigChange("${activity.javaClass.simpleName} Resume - 检测到屏幕参数变化")
 
@@ -252,6 +255,7 @@ object AutoDensity {
                     else -> 0
                 }
             }
+
             else -> 0
         }
     }

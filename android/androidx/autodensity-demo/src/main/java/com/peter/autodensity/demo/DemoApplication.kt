@@ -18,7 +18,7 @@ class DemoApplication : Application(), DensityAware {
         val config = DensityConfig(
             designWidthDp = 660,
             debug = true,
-            forceDesignWidth = false  // 不强制，使用 baseWidthDp 限制
+            forceDesignWidth = true  // 不强制，使用 baseWidthDp 限制
         )
 
         // 初始化

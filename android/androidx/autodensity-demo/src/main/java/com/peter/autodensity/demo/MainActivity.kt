@@ -1,7 +1,9 @@
 package com.peter.autodensity.demo
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.autodensity.api.ActivityDensityAware
@@ -22,6 +24,11 @@ class MainActivity : AppCompatActivity(), ActivityDensityAware {
 
         tvDensityInfo = findViewById(R.id.tv_density_info)
         tvDeviceInfo = findViewById(R.id.tv_device_info)
+
+        // 启动 Service 按钮
+        findViewById<Button>(R.id.btn_start_service).setOnClickListener {
+            startService(Intent(this, DemoService::class.java))
+        }
 
         updateInfo()
     }

@@ -20,6 +20,10 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".DemoService"
+            android:exported="false" />
+
     </application>
 
 </manifest>

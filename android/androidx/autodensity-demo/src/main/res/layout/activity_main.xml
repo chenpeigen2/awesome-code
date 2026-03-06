@@ -72,6 +72,22 @@
             android:textSize="12sp"
             android:layout_marginTop="4dp" />
 
+        <!-- Service 测试按钮 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Service 测试"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_start_service"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="启动 DemoService" />
+
     </LinearLayout>
 
 </ScrollView>
