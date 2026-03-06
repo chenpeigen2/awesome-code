@@ -15,7 +15,7 @@ class DemoApplication : Application(), IDensity {
         super.onCreate()
 
         // 启用调试日志（可选）
-        AutoDensityConfig.debugEnabled = BuildConfig.DEBUG
+        AutoDensityConfig.debugEnabled = true
 
         // 初始化自动密度适配
         AutoDensity.init(this)
