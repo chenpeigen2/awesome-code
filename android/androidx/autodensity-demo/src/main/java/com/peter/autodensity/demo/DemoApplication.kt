@@ -16,7 +16,7 @@ class DemoApplication : Application(), DensityAware {
 
         // 配置：设计稿宽度 360dp，启用调试
         val config = DensityConfig(
-            designWidthDp = 180,
+            designWidthDp = 660,
             debug = true,
             forceDesignWidth = false  // 不强制，使用 baseWidthDp 限制
         )
