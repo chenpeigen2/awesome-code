@@ -1,6 +1,8 @@
 [versions]
 # SDK 版本
+autoService = "1.1.1"
 compileSdk = "36"
+javapoet = "1.13.0"
 targetSdk = "36"
 minSdk = "24"
 
@@ -62,6 +64,8 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
+javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 # DataStore

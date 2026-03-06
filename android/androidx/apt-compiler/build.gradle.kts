@@ -9,9 +9,9 @@ java {
 
 dependencies {
     implementation(project(":apt-annotation"))
-    implementation("com.squareup:javapoet:1.13.0")
+    implementation(libs.javapoet)
     
     // AutoService - 需要 annotationProcessor 来处理 @AutoService 注解
-    implementation("com.google.auto.service:auto-service:1.1.1")
-    annotationProcessor("com.google.auto.service:auto-service:1.1.1")
+    implementation(libs.auto.service)
+    annotationProcessor(libs.auto.service)
 }
