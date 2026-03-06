@@ -73,10 +73,5 @@ interface ActivityDensityAware : DensityAware {
      * 是否强制使用 designWidthDp（忽略 baseWidthDp 限制）
      * @return true 强制使用 designWidthDp
      */
-    fun forceDesignWidth(): Boolean = false
+    fun forceDesignWidth(): Boolean = true
 }
-
-/**
- * 内部使用：标记接口
- */
-internal interface ActivityDensityAwareMarker

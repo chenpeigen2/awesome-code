@@ -34,8 +34,6 @@ class MainActivity : AppCompatActivity(), ActivityDensityAware {
     // 返回具体值表示使用该值作为基准
     override fun getBaseWidthDp(): Int = -1
 
-    // 是否强制使用 designWidthDp（忽略 baseWidthDp 限制）
-    // true = 强制使用 designWidthDp，界面可以变大或变小
     override fun forceDesignWidth(): Boolean = true
 
     private fun updateInfo() {
