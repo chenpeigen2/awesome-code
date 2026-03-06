@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">四大组件 Demo</string>
+
+    <!-- Activity -->
+    <string name="activity_title">Activity 组件</string>
+    <string name="activity_basic">基础 Activity</string>
+    <string name="activity_basic_desc">显式/隐式 Intent 启动，数据传递</string>
+    <string name="activity_lifecycle">生命周期</string>
+    <string name="activity_lifecycle_desc">Activity 生命周期回调，透明/对话框主题影响</string>
+    <string name="activity_launchmode">启动模式</string>
+    <string name="activity_launchmode_desc">standard/singleTop/singleTask/singleInstance</string>
+    <string name="activity_advanced">进阶特性</string>
+    <string name="activity_advanced_desc">TaskAffinity/ActivityResult/SharedElement/Fragment通信</string>
+
+    <!-- Service -->
+    <string name="service_title">Service 组件</string>
+    <string name="service_basic">基础 Service</string>
+    <string name="service_basic_desc">启动服务与 IntentService</string>
+    <string name="service_foreground">前台服务</string>
+    <string name="service_foreground_desc">带通知栏的前台服务，下载任务示例</string>
+    <string name="service_bind">绑定服务</string>
+    <string name="service_bind_desc">本地绑定与跨进程绑定(AIDL)</string>
+
+    <!-- BroadcastReceiver -->
+    <string name="receiver_title">BroadcastReceiver</string>
+    <string name="receiver_basic">基础广播</string>
+    <string name="receiver_basic_desc">静态注册与动态注册，系统广播</string>
+    <string name="receiver_ordered">有序广播</string>
+    <string name="receiver_ordered_desc">优先级、拦截、修改数据</string>
+    <string name="receiver_local">本地广播</string>
+    <string name="receiver_local_desc">LocalBroadcastManager 应用内安全通信</string>
+
+    <!-- ContentProvider -->
+    <string name="provider_title">ContentProvider</string>
+    <string name="provider_basic">基础 Provider</string>
+    <string name="provider_basic_desc">CRUD 操作，UriMatcher，ContentObserver</string>
+    <string name="provider_advanced">进阶用法</string>
+    <string name="provider_advanced_desc">批量操作，MIME 类型，权限控制</string>
+
+    <!-- 通用 -->
+    <string name="start">开始</string>
+    <string name="stop">停止</string>
+    <string name="bind">绑定</string>
+    <string name="unbind">解绑</string>
+    <string name="send">发送</string>
+    <string name="register">注册</string>
+    <string name="unregister">注销</string>
+    <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="query">查询</string>
+    <string name="update">更新</string>
+    <string name="log">日志</string>
+    <string name="clear_log">清空日志</string>
+</resources>

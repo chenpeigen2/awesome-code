@@ -1,4 +1,0 @@
--dontwarn miuix.autodensity.*
--keep class miuix.autodensity.AutoDensityConfig {*;}
--keep class miuix.autodensity.AutoDensityConfig$* {*;}
--keep class miui.util.FeatureParser {*;}

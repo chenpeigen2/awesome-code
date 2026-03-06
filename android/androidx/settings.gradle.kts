@@ -56,3 +56,6 @@ include(":window-demo")
 // AutoDensity - 屏幕密度适配库
 include(":autodensity")
 include(":autodensity-demo")
+
+// Components Demo - Android 四大组件示例
+include(":components-demo")
