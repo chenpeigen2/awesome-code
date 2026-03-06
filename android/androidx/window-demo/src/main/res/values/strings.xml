@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Window Demo</string>
+    
+    <!-- 基础篇 -->
+    <string name="basic_title">基础篇：Window概念与WindowManager</string>
+    <string name="basic_window">Window基础概念</string>
+    <string name="basic_window_manager">WindowManager详解</string>
+    
+    <!-- 进阶篇 -->
+    <string name="advanced_title">进阶篇：Dialog、PopupWindow、悬浮窗</string>
+    <string name="advanced_dialog">Dialog详解</string>
+    <string name="advanced_popup">PopupWindow详解</string>
+    <string name="advanced_floating">悬浮窗实现</string>
+    <string name="advanced_mechanism">Window内部机制</string>
+    <string name="advanced_view_relation">Window与View关系</string>
+    
+    <!-- 深入篇 -->
+    <string name="deep_title">深入篇：WindowManagerService与Window创建</string>
+    <string name="deep_wms">WindowManagerService</string>
+    <string name="deep_create">Window创建过程</string>
+    
+    <!-- 实战篇 -->
+    <string name="practice_title">实战篇：自定义Window与动态窗口</string>
+    <string name="practice_custom">自定义Window</string>
+    <string name="practice_dynamic">动态窗口</string>
+</resources>

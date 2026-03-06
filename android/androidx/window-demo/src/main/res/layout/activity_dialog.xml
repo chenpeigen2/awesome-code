@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dialog 示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/accent" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnAlertDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AlertDialog"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnListDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="列表Dialog"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnMultiChoiceDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="多选Dialog"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnSingleChoiceDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="单选Dialog"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnCustomDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自定义Dialog"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnDatePickerDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="日期选择"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnTimePickerDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间选择"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnProgressDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ProgressDialog"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnDialogFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DialogFragment"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="错误示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/error" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnErrorAppContext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Application Context 创建 Dialog"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray_dark"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>

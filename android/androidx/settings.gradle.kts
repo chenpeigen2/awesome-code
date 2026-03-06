@@ -49,3 +49,6 @@ include(":layoutinflater-demo")
 
 // Context demo
 include(":context-demo")
+
+// Window demo
+include(":window-demo")

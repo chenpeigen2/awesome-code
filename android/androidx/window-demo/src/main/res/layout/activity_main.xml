@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 基础篇 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/basic_title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipWindowBasic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/basic_window"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipWindowManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/basic_window_manager"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- 进阶篇 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/advanced_title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/accent" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advanced_dialog"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipPopup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advanced_popup"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipFloating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advanced_floating"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipMechanism"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advanced_mechanism"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipViewRelation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/advanced_view_relation"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- 深入篇 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/deep_title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/warning" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipWMS"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deep_wms"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/deep_create"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- 实战篇 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/practice_title"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/error" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipCustomWindow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/practice_custom"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipDynamicWindow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/practice_dynamic"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- 说明文字 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Window Demo 涵盖从基础到深入的Window相关知识"
+            android:textSize="14sp"
+            android:textColor="@color/gray_dark"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>

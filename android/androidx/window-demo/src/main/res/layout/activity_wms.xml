@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="WindowManagerService (WMS)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/error" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnOverview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WMS概述"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnWindowState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WindowState"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnWindowToken"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="WindowToken"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnZOrder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Z-Order层级"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnInputDispatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="输入事件分发"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnSurfaceManagement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surface管理"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/tvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textSize="11sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray_dark"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>

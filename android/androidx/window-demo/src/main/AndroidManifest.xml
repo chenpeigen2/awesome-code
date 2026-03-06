@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- 悬浮窗权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    
+    <!-- 用于系统级Dialog -->
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.WindowDemo"
+        tools:targetApi="31">
+        
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- 基础篇 -->
+        <activity
+            android:name=".basic.WindowBasicActivity"
+            android:label="基础篇：Window概念"
+            android:exported="false" />
+        
+        <activity
+            android:name=".basic.WindowManagerActivity"
+            android:label="基础篇：WindowManager"
+            android:exported="false" />
+        
+        <!-- 进阶篇 -->
+        <activity
+            android:name=".advanced.DialogActivity"
+            android:label="进阶篇：Dialog"
+            android:exported="false" />
+        
+        <activity
+            android:name=".advanced.PopupWindowActivity"
+            android:label="进阶篇：PopupWindow"
+            android:exported="false" />
+        
+        <activity
+            android:name=".advanced.FloatingWindowActivity"
+            android:label="进阶篇：悬浮窗"
+            android:exported="false" />
+        
+        <!-- 高级篇 -->
+        <activity
+            android:name=".advanced.WindowMechanismActivity"
+            android:label="高级篇：Window机制"
+            android:exported="false" />
+        
+        <activity
+            android:name=".advanced.WindowViewRelationActivity"
+            android:label="高级篇：Window与View"
+            android:exported="false" />
+        
+        <!-- 深入篇 -->
+        <activity
+            android:name=".deep.WMSActivity"
+            android:label="深入篇：WindowManagerService"
+            android:exported="false" />
+        
+        <activity
+            android:name=".deep.WindowCreateProcessActivity"
+            android:label="深入篇：Window创建过程"
+            android:exported="false" />
+        
+        <!-- 实战篇 -->
+        <activity
+            android:name=".practice.CustomWindowActivity"
+            android:label="实战篇：自定义Window"
+            android:exported="false" />
+        
+        <activity
+            android:name=".practice.DynamicWindowActivity"
+            android:label="实战篇：动态窗口"
+            android:exported="false" />
+        
+        <!-- 悬浮窗服务 -->
+        <service
+            android:name=".practice.FloatingWindowService"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
