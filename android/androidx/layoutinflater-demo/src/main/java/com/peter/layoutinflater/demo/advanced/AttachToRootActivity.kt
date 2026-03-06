@@ -26,10 +26,29 @@ class AttachToRootActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // 打印 LayoutInflater 信息
+        printLayoutInflaterInfo()
+        
         binding = ActivityAttachToRootBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         demonstrateAllScenarios()
+    }
+
+    /**
+     * 打印当前 Activity 的 LayoutInflater 信息
+     */
+    private fun printLayoutInflaterInfo() {
+        val inflater = layoutInflater
+        val sb = StringBuilder()
+        sb.appendLine("========== AttachToRootActivity ==========")
+        sb.appendLine("LayoutInflater 实例: $inflater")
+        sb.appendLine("hashCode: ${inflater.hashCode()}")
+        sb.appendLine("Factory: ${inflater.factory}")
+        sb.appendLine("Factory2: ${inflater.factory2}")
+        sb.appendLine("===========================================")
+        android.util.Log.d("LayoutInflaterDemo", sb.toString())
     }
 
     private fun demonstrateAllScenarios() {

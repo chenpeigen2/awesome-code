@@ -37,11 +37,30 @@ class DynamicViewActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // 打印 LayoutInflater 信息
+        printLayoutInflaterInfo()
+        
         binding = ActivityDynamicViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupButtons()
         updateLog("初始化完成")
+    }
+
+    /**
+     * 打印当前 Activity 的 LayoutInflater 信息
+     */
+    private fun printLayoutInflaterInfo() {
+        val inflater = layoutInflater
+        val sb = StringBuilder()
+        sb.appendLine("========== DynamicViewActivity ==========")
+        sb.appendLine("LayoutInflater 实例: $inflater")
+        sb.appendLine("hashCode: ${inflater.hashCode()}")
+        sb.appendLine("Factory: ${inflater.factory}")
+        sb.appendLine("Factory2: ${inflater.factory2}")
+        sb.appendLine("===========================================")
+        android.util.Log.d("LayoutInflaterDemo", sb.toString())
     }
 
     private fun setupButtons() {

@@ -33,10 +33,16 @@ class FactoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFactoryBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 打印 LayoutInflater 信息（设置 Factory 前）
+        printLayoutInflaterInfo("设置 Factory 前")
+        
         // 【关键步骤】在 super.onCreate 之前设置 Factory
         // 因为 setContentView 会触发 inflate，此时 Factory 已生效
         val inflater = layoutInflater
         inflater.factory = CustomFactory()
+        
+        // 打印 LayoutInflater 信息（设置 Factory 后）
+        printLayoutInflaterInfo("设置 Factory 后")
 
         super.onCreate(savedInstanceState)
         binding = ActivityFactoryBinding.inflate(layoutInflater)
@@ -44,6 +50,21 @@ class FactoryActivity : AppCompatActivity() {
 
         // 动态加载演示
         demonstrateFactory()
+    }
+
+    /**
+     * 打印当前 Activity 的 LayoutInflater 信息
+     */
+    private fun printLayoutInflaterInfo(stage: String) {
+        val inflater = layoutInflater
+        val sb = StringBuilder()
+        sb.appendLine("========== FactoryActivity [$stage] ==========")
+        sb.appendLine("LayoutInflater 实例: $inflater")
+        sb.appendLine("hashCode: ${inflater.hashCode()}")
+        sb.appendLine("Factory: ${inflater.factory}")
+        sb.appendLine("Factory2: ${inflater.factory2}")
+        sb.appendLine("===============================================")
+        android.util.Log.d("LayoutInflaterDemo", sb.toString())
     }
 
     /**

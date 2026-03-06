@@ -32,13 +32,34 @@ class LayoutInflaterCompatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLayoutInflaterCompatBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 打印 LayoutInflater 信息（设置 Factory2 前）
+        printLayoutInflaterInfo("设置 Factory2 前")
+        
         // 【关键】在 super.onCreate 之前设置 Factory2
         // 这样 setContentView 时 Factory2 就已生效
         LayoutInflaterCompat.setFactory2(layoutInflater, CustomFactory2())
+        
+        // 打印 LayoutInflater 信息（设置 Factory2 后）
+        printLayoutInflaterInfo("设置 Factory2 后")
 
         super.onCreate(savedInstanceState)
         binding = ActivityLayoutInflaterCompatBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    /**
+     * 打印当前 Activity 的 LayoutInflater 信息
+     */
+    private fun printLayoutInflaterInfo(stage: String) {
+        val inflater = layoutInflater
+        val sb = StringBuilder()
+        sb.appendLine("========== LayoutInflaterCompatActivity [$stage] ==========")
+        sb.appendLine("LayoutInflater 实例: $inflater")
+        sb.appendLine("hashCode: ${inflater.hashCode()}")
+        sb.appendLine("Factory: ${inflater.factory}")
+        sb.appendLine("Factory2: ${inflater.factory2}")
+        sb.appendLine("==========================================================")
+        android.util.Log.d("LayoutInflaterDemo", sb.toString())
     }
 
     /**
