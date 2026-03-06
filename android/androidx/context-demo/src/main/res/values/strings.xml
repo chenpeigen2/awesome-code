@@ -41,6 +41,9 @@
     <string name="context_best_practices">最佳实践</string>
     <string name="context_best_practices_desc">Context 使用的最佳实践和注意事项</string>
     
+    <string name="context_configuration">配置变化处理</string>
+    <string name="context_configuration_desc">Context 处理 DPI、字体大小等配置变化</string>
+    
     <!-- 通用 -->
     <string name="get_application_context">获取 Application Context</string>
     <string name="get_activity_context">获取 Activity Context</string>

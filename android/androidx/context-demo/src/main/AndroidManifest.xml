@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- 悬浮窗权限 -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
     <application
         android:name=".ContextDemoApp"
         android:allowBackup="true"
@@ -42,6 +45,9 @@
         <activity android:name=".deep.ContextWrapperActivity" />
         <activity android:name=".deep.ContextMemoryLeakActivity" />
         <activity android:name=".deep.ContextBestPracticesActivity" />
+        <activity
+            android:name=".deep.ContextConfigurationActivity"
+            android:configChanges="fontScale|density|screenLayout|orientation|screenSize|smallestScreenSize" />
         
     </application>
 

@@ -15,6 +15,7 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import com.peter.context.demo.deep.ContextConfigurationActivity
 
 /**
  * Context 扩展函数集合
@@ -270,4 +271,13 @@ fun Context.getContextTypeName(): String {
 fun Context.isApplicationContext(): Boolean {
     return this is android.app.Application || 
            (this is ContextWrapper && baseContext is android.app.Application)
+}
+
+// ==================== Activity Intent 扩展 ====================
+
+/**
+ * 创建 ContextConfigurationActivity 的 Intent
+ */
+fun createContextConfigurationIntent(context: Context): Intent {
+    return Intent(context, ContextConfigurationActivity::class.java)
 }

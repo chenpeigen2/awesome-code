@@ -115,6 +115,11 @@ class MainActivity : AppCompatActivity() {
                 title = getString(R.string.context_best_practices),
                 description = getString(R.string.context_best_practices_desc),
                 intent = createContextBestPracticesIntent(this)
+            ),
+            MenuItem(
+                title = getString(R.string.context_configuration),
+                description = getString(R.string.context_configuration_desc),
+                intent = createContextConfigurationIntent(this)
             )
         )
     }

@@ -5,9 +5,12 @@ import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.PixelFormat
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -18,6 +21,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.context.demo.R
 import com.peter.context.demo.databinding.ActivityContextWindowBinding
+
+private const val REQUEST_CODE_OVERLAY_PERMISSION = 1001
 
 /**
  * Context Window 和 Dialog 示例
@@ -274,18 +279,10 @@ class ContextWindowActivity : AppCompatActivity() {
         sb.appendLine("=== 添加悬浮窗 ===\n")
         
         // 检查权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && 
-            !android.provider.Settings.canDrawOverlays(this)) {
+        if (!hasOverlayPermission()) {
             sb.appendLine("没有悬浮窗权限")
-            sb.appendLine("请到设置中开启")
-            
-            // 打开设置页面
-            val intent = android.content.Intent(
-                android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                android.net.Uri.parse("package:$packageName")
-            )
-            startActivity(intent)
-            
+            sb.appendLine("正在请求权限...")
+            requestOverlayPermission()
             binding.tvResult.text = sb.toString()
             return
         }
@@ -335,6 +332,62 @@ class ContextWindowActivity : AppCompatActivity() {
         
         binding.tvResult.text = sb.toString()
         Log.d("ContextWindow", sb.toString())
+    }
+
+    /**
+     * 检查是否有悬浮窗权限
+     */
+    private fun hasOverlayPermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Settings.canDrawOverlays(this)
+        } else {
+            true // Android 6.0 以下默认有权限
+        }
+    }
+
+    /**
+     * 请求悬浮窗权限
+     * 注意：悬浮窗权限无法通过 requestPermissions 申请
+     * 必须引导用户到系统设置页面手动开启
+     */
+    private fun requestOverlayPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            // 显示说明对话框
+            AlertDialog.Builder(this)
+                .setTitle("需要悬浮窗权限")
+                .setMessage("显示悬浮窗需要您手动开启权限。\n\n请在设置页面中找到本应用，开启\"显示在其他应用上层\"权限。")
+                .setPositiveButton("去设置") { _, _ ->
+                    val intent = Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:$packageName")
+                    )
+                    @Suppress("DEPRECATION")
+                    startActivityForResult(intent, REQUEST_CODE_OVERLAY_PERMISSION)
+                }
+                .setNegativeButton("取消", null)
+                .show()
+        }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        
+        if (requestCode == REQUEST_CODE_OVERLAY_PERMISSION) {
+            sb.clear()
+            sb.appendLine("=== 权限申请结果 ===\n")
+            
+            if (hasOverlayPermission()) {
+                sb.appendLine("悬浮窗权限已获取!")
+                sb.appendLine("可以点击\"添加悬浮窗\"按钮")
+            } else {
+                sb.appendLine("悬浮窗权限被拒绝")
+                sb.appendLine("如需使用悬浮窗功能，请手动到设置中开启")
+            }
+            
+            binding.tvResult.text = sb.toString()
+            Log.d("ContextWindow", sb.toString())
+        }
     }
 
     private fun removeFloatingWindow() {
