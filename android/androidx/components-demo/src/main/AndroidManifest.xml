@@ -66,6 +66,9 @@
 
         <!-- ==================== Service 示例 ==================== -->
 
+        <!-- Service 入口 Activity -->
+        <activity android:name=".service.ServiceMainActivity" />
+
         <!-- 基础 Service -->
         <service android:name=".service.basic.SimpleService" />
         <service android:name=".service.basic.IntentServiceDemo" />
@@ -86,6 +89,11 @@
         </service>
 
         <!-- ==================== BroadcastReceiver 示例 ==================== -->
+
+        <!-- Receiver 示例 Activity -->
+        <activity android:name=".receiver.SystemBroadcastActivity" />
+        <activity android:name=".receiver.OrderedBroadcastActivity" />
+        <activity android:name=".receiver.LocalBroadcastActivity" />
 
         <!-- 静态注册的广播接收者 -->
         <receiver
@@ -117,6 +125,10 @@
         <!-- 本地广播不需要在 Manifest 中注册 -->
 
         <!-- ==================== ContentProvider 示例 ==================== -->
+
+        <!-- Provider 示例 Activity -->
+        <activity android:name=".provider.ProviderBasicActivity" />
+        <activity android:name=".provider.ProviderAdvancedActivity" />
 
         <provider
             android:name=".provider.UserProvider"

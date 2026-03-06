@@ -52,9 +52,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.recyclerview)
-
-    // CardView
-    implementation("androidx.cardview:cardview:1.0.0")
+    implementation(libs.androidx.cardview)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -66,9 +64,5 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
 
     // LocalBroadcastManager
-    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.localbroadcastmanager)
 }

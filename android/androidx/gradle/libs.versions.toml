@@ -3,6 +3,7 @@
 autoService = "1.1.1"
 compileSdk = "36"
 javapoet = "1.13.0"
+localbroadcastmanager = "1.1.0"
 targetSdk = "36"
 minSdk = "24"
 
@@ -52,10 +53,12 @@ testCore = "1.5.0"
 testRunner = "1.5.2"
 testRules = "1.5.0"
 recyclerview = "1.4.0"
+cardview = "1.0.0"
 viewpager2 = "1.1.0"
 swiperefreshlayout = "1.1.0"
 [libraries]
 # ASM 字节码操作
+androidx-localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
 asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
 asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
 
@@ -71,6 +74,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
 androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version.ref = "viewpager2" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+androidx-cardview = { module = "androidx.cardview:cardview", version.ref = "cardview" }
 auto-service = { module = "com.google.auto.service:auto-service", version.ref = "autoService" }
 javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }

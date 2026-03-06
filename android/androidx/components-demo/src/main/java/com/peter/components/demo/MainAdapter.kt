@@ -14,8 +14,8 @@ class MainAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
-        private const val TYPE_HEADER = 0
-        private const val TYPE_ITEM = 1
+        internal const val TYPE_HEADER = 0
+        internal const val TYPE_ITEM = 1
     }
 
     override fun getItemViewType(position: Int): Int {
