@@ -8,7 +8,7 @@ data class DensityConfig(
      * 设计稿宽度（dp）
      * 默认 360dp，这是常见的 Android 设计稿宽度
      */
-    val designWidthDp: Int = 360,
+    val designWidthDp: Int,
 
     /**
      * 字体缩放比例
