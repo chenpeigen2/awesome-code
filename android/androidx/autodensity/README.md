@@ -1,154 +1,192 @@
-# AutoDensity
+# AutoDensity - Android 屏幕密度适配库
 
-一个轻量级的 Android 屏幕密度适配库，支持自动计算最佳 DPI，让你的应用在不同屏幕尺寸的设备上保持一致的视觉效果。
+一个轻量级、易用的 Android 屏幕密度适配库，让你告别多屏幕适配烦恼。
 
-## 功能特性
+## 核心原理
 
-- ✅ 自动计算最佳屏幕密度（DPI）
-- ✅ 支持手机、平板、折叠屏等不同设备类型
-- ✅ 支持基于宽度的等比缩放
-- ✅ 支持无障碍显示大小设置
-- ✅ 支持配置变更时自动更新
-- ✅ 支持多窗口/分屏模式
-- ✅ 零小米依赖，可独立使用
+### 什么是密度适配？
+
+Android 使用 `dp`（density-independent pixels）作为布局单位：
+```
+px = dp × density
+```
+
+不同手机的 `density` 不同，导致同样的 `dp` 值显示的像素数不同：
+- 手机 A：density=2.75，360dp = 990px
+- 手机 B：density=3.0，360dp = 1080px
+
+**密度适配**就是统一不同设备的 `density`，让界面显示一致。
+
+### 如何实现？
+
+修改 `DisplayMetrics` 中的三个关键值：
+
+| 属性 | 说明 | 影响 |
+|------|------|------|
+| `density` | 密度值 | dp 转换 |
+| `scaledDensity` | 缩放密度 | sp 转换（文字） |
+| `densityDpi` | DPI | 资源选择 |
+
+**计算公式**：
+```
+targetDensity = screenWidth / designWidthDp
+```
+
+例如：屏幕宽 1080px，设计稿 360dp
+```
+targetDensity = 1080 / 360 = 3.0
+```
+
+这样，`360dp` 的宽度刚好填满屏幕。
 
 ## 快速开始
 
 ### 1. 添加依赖
 
-```groovy
+```kotlin
+// build.gradle.kts
 dependencies {
-    implementation 'com.peter.autodensity:autodensity:1.0.0'
+    implementation("com.peter.autodensity:autodensity:1.0.0")
 }
 ```
 
 ### 2. 初始化
 
-在 `Application.onCreate()` 中初始化：
-
 ```kotlin
-class MyApplication : Application(), IDensity {
+class MyApp : Application(), DensityAware {
 
     override fun onCreate() {
         super.onCreate()
-        // 初始化自动密度适配
+        // 初始化
         AutoDensity.init(this)
     }
 
-    override fun shouldAdaptAutoDensity(): Boolean = true
+    // 启用密度适配
+    override fun shouldAdaptDensity() = true
 }
 ```
 
-### 3. Activity 配置（可选）
+### 3. 完成！
 
-如果需要单独控制某个 Activity 是否启用适配：
-
-```kotlin
-class MainActivity : AppCompatActivity(), IDensity {
-
-    override fun shouldAdaptAutoDensity(): Boolean = true
-
-    // 可选：设置基准宽度，用于等比缩放
-    // 例如：以 360dp 为基准进行缩放
-    override fun getRatioUiBaseWidthDp(): Int = 360
-}
-```
+就这么简单，你的应用已经完成密度适配。
 
 ## 高级用法
 
-### 自定义密度配置
+### 指定设计稿宽度
 
 ```kotlin
-// 在 init 之前设置
-AutoDensity.setForceDeviceScale(1.1f)  // 强制设备缩放值
-AutoDensity.setForcePPI(400)            // 强制PPI
-
-// 初始化
 AutoDensity.init(this)
+AutoDensity.setDesignWidth(375)  // iOS 设计稿通常是 375dp
 ```
 
-### 启用调试日志
+### 控制字体大小
 
 ```kotlin
-AutoDensityConfig.debugEnabled = true
+AutoDensity.setFontScale(1.15f)  // 字体放大 15%
+AutoDensity.setFontScale(0.85f)  // 字体缩小 15%
 ```
 
-### 自定义标准 DPI
+### 单个 Activity 禁用适配
 
 ```kotlin
-AutoDensityConfig.setStandardDpi(420f)
-AutoDensityConfig.setStandardPpi(380f)
+class SpecialActivity : AppCompatActivity(), ActivityDensityAware {
+
+    // 这个 Activity 不进行密度适配
+    override fun shouldAdaptDensity() = false
+}
 ```
 
-### 手动更新密度
+### 小屏等比缩放
+
+当屏幕宽度小于设计稿时，自动等比缩小：
 
 ```kotlin
-// 在任意位置更新密度
-AutoDensity.updateDensity(context)
+class MyActivity : AppCompatActivity(), ActivityDensityAware {
 
-// 强制更新
-AutoDensity.forceUpdateDensity(context)
+    // 当屏幕宽度 < 360dp 时，等比缩放
+    override fun getBaseWidthDp() = 360
+}
 ```
 
-### 创建适配的 Context
+## 架构设计
 
-```kotlin
-// 创建自动适配的 Context
-val wrappedContext = AutoDensity.createAutoDensityContextWrapper(context)
-
-// 指定基准宽度
-val wrappedContext = AutoDensity.createAutoDensityContextWrapperWithBaseDp(context, 360)
+```
+com.peter.autodensity/
+├── api/                          # 公开 API
+│   ├── AutoDensity.kt            # 主入口
+│   ├── DensityConfig.kt          # 配置 & 接口
+│
+├── core/                         # 核心实现
+│   ├── DisplayMetricsInfo.kt     # 数据模型
+│   ├── DensityCalculator.kt      # 密度计算
+│   ├── DensityApplier.kt         # 应用密度
+│   └── DensityManager.kt         # 管理器
+│
+└── util/                         # 工具类
+    └── Logger.kt                 # 日志
 ```
 
-## 工作原理
+### 核心类说明
 
-1. **PPI 计算**：根据设备物理尺寸和分辨率计算真实 PPI
-2. **缩放计算**：根据设备类型（手机/平板）计算最佳缩放值
-3. **DPI 调整**：动态修改 `Resources.DisplayMetrics` 的 density 相关属性
-4. **配置监听**：监听 `Configuration` 变化，自动更新密度
+| 类 | 职责 |
+|---|------|
+| `AutoDensity` | 对外入口，提供 init/setDesignWidth/setFontScale 等方法 |
+| `DensityConfig` | 配置类，包含设计稿宽度、字体缩放等参数 |
+| `DensityCalculator` | 计算目标 density、scaledDensity、densityDpi |
+| `DensityApplier` | 将计算结果应用到 Resources |
+| `DensityManager` | 管理配置、缓存、生命周期 |
 
-## 注意事项
+### 调用流程
 
-1. **初始化时机**：必须在 `Application.onCreate()` 中调用 `AutoDensity.init()`
-2. **配置变更**：Activity 需要正确处理 `onConfigurationChanged`，库会自动监听
-3. **多进程**：暂不支持多进程环境
-4. **系统资源**：默认会更新系统资源密度，可通过 `AutoDensity.init(this, false)` 禁用
+```
+Application.onCreate()
+    ↓
+AutoDensity.init()
+    ↓
+DensityManager.initialize()
+    ↓
+Activity.onCreate()
+    ↓
+ActivityCallbackHandler.onActivityCreated()
+    ↓
+DensityCalculator.calculate()
+    ↓
+DensityApplier.apply()
+    ↓
+resources.displayMetrics 更新完成
+```
 
 ## 常见问题
 
-### Q: 为什么我的布局在某些设备上显示不正常？
+### Q: 为什么设置 PPI 不能让字体变大？
 
-A: 检查是否使用了固定像素值（px），建议使用 dp/sp 作为单位。
+A: PPI 影响的是整体 density，不只是字体。要单独控制字体大小，请使用 `setFontScale()`：
 
-### Q: 如何禁用某个 Activity 的密度适配？
+```kotlin
+// ❌ 错误方式
+AutoDensity.setForcePPI(8888)  // 整个 UI 都会变得很大
 
-A: 让 Activity 实现 `IDensity` 接口，返回 `shouldAdaptAutoDensity() = false`。
+// ✅ 正确方式
+AutoDensity.setFontScale(1.5f)  // 只放大字体 50%
+```
 
-### Q: 支持哪些 Android 版本？
+### Q: 如何处理横竖屏切换？
 
-A: 支持 Android 7.0 (API 24) 及以上版本。
+A: 库会自动处理。`Activity` 的 `onConfigurationChanged` 会触发重新计算。
 
-## 迁移指南（从小米 miuix.autodensity）
+### Q: 对性能有影响吗？
 
-如果你之前使用小米的 `miuix.autodensity`，可以通过以下步骤迁移：
+A: 几乎没有。密度计算只在 Activity 创建时执行一次，之后直接使用缓存。
 
-1. **包名替换**：
-   - `miuix.autodensity.AutoDensityConfig` → `com.peter.autodensity.AutoDensity`
-   - `miuix.autodensity.IDensity` → `com.peter.autodensity.IDensity`
+### Q: 支持 AndroidX 吗？
 
-2. **移除小米特有功能**：
-   - 移除 `MiuixApplication` 的使用
-   - 移除对 `miuix.os.Build.IS_FOLDABLE` 等的依赖
-   - 移除 `SkuScale` 的使用
+A: 是的，完全兼容 AndroidX。
 
-3. **初始化方式变化**：
-   ```kotlin
-   // 旧方式
-   AutoDensityConfig.init(this)
+## 注意事项
 
-   // 新方式
-   AutoDensity.init(this)
-   ```
+1. **初始化时机**：必须在 `Application.onCreate()` 中初始化
+2. **接口实现**：Application 或 Activity 需要实现 `DensityAware` 接口
+3. **调用顺序**：`setDesignWidth()` / `setFontScale()` 要在 `init()` 之前调用
 
 ## License
 
