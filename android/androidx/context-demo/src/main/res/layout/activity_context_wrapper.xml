@@ -19,51 +19,40 @@
             android:textStyle="bold"
             android:textColor="@color/black" />
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="12dp">
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnAnalyze"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="分析Context链"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnCustomWrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="自定义Wrapper"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnMutableWrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MutableWrapper"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnThemeWrapper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="ThemeWrapper"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/tvInfo"

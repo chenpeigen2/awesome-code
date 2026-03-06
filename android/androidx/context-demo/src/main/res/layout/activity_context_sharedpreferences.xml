@@ -46,52 +46,47 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="12dp">
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnSave"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="保存"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="读取"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnClear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="清除"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnListen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="监听"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnMultiProcess"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="多进程说明"
+                style="@style/Widget.Material3.Chip.Input" />
 
-        <Button
-            android:id="@+id/btnMultiProcess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="多进程说明"
-            android:textSize="12sp" />
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/tvInfo"

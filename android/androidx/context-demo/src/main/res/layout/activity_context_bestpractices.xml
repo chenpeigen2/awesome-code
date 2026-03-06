@@ -19,60 +19,47 @@
             android:textStyle="bold"
             android:textColor="@color/black" />
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="12dp">
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnContextSelection"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Context选择指南"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnCommonPatterns"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="常用模式"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnExtensionFunctions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="扩展函数"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnTips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="技巧与窍门"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnAntiPatterns"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="反模式(不要写)"
-                android:textSize="11sp"
-                android:textColor="@color/error" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/tvInfo"

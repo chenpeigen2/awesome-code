@@ -19,75 +19,61 @@
             android:textStyle="bold"
             android:textColor="@color/black" />
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="12dp">
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnStaticLeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="静态变量泄漏"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnInnerClassLeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="内部类泄漏"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnHandlerLeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="Handler泄漏"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnSingletonLeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="单例泄漏"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
-
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnListenerLeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="监听器泄漏"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnCoroutineLeak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="协程泄漏"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnCorrectUsage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
                 android:text="正确使用总结"
-                android:textSize="11sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/tvInfo"

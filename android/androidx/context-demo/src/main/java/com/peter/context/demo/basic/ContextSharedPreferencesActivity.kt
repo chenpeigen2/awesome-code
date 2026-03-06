@@ -34,6 +34,10 @@ class ContextSharedPreferencesActivity : AppCompatActivity() {
     private val KEY_AGE = "age"
     private val KEY_IS_LOGGED_IN = "is_logged_in"
     private val KEY_LAST_LOGIN = "last_login"
+    
+    // 监听器引用 - 必须保存引用，否则会被 GC 回收导致监听失效
+    private var preferenceListener: SharedPreferences.OnSharedPreferenceChangeListener? = null
+    private var isListening = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +67,7 @@ class ContextSharedPreferencesActivity : AppCompatActivity() {
         
         // 监听数据变化
         binding.btnListen.setOnClickListener {
-            demonstrateChangeListener()
+            toggleChangeListener()
         }
         
         // 多进程
@@ -119,8 +123,7 @@ class ContextSharedPreferencesActivity : AppCompatActivity() {
         
         // 4. 文件位置
         sb.appendLine("=== 4. 存储位置 ===")
-        val prefsFile = getFileStreamPath("../shared_prefs/$PREF_NAME.xml")
-        sb.appendLine("文件路径: $prefsFile")
+        sb.appendLine("文件路径: /data/data/$packageName/shared_prefs/$PREF_NAME.xml")
         sb.appendLine()
         
         binding.tvInfo.text = sb.toString()
@@ -158,8 +161,9 @@ class ContextSharedPreferencesActivity : AppCompatActivity() {
         // 方式2: apply() - 异步提交，无返回值
         // 适用于：不需要知道结果，性能更好
         // 注意：apply() 是异步的，但数据会立即写入内存
-        editor.putString("async_key", "async_value")
-        editor.apply()
+        prefs.edit()
+            .putString("async_key", "async_value")
+            .apply()
         sb.appendLine("apply() 是异步操作，不阻塞当前线程")
         sb.appendLine("推荐使用 apply()，性能更好")
         sb.appendLine()
@@ -241,28 +245,55 @@ class ContextSharedPreferencesActivity : AppCompatActivity() {
         Log.d("SharedPreferences", sb.toString())
     }
     
-    private fun demonstrateChangeListener() {
+    /**
+     * 开关监听器
+     * 重要：监听器对象必须保存为成员变量，否则会被 GC 回收导致监听失效
+     */
+    private fun toggleChangeListener() {
         sb.clear()
         sb.appendLine("=== 监听数据变化 ===\n")
         
         val prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
         
-        // 注册监听器
-        val listener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
-            sb.appendLine("数据变化: key = $key")
-            sb.appendLine("新值 = ${sharedPreferences.all[key]}")
+        if (isListening && preferenceListener != null) {
+            // 注销监听器
+            prefs.unregisterOnSharedPreferenceChangeListener(preferenceListener)
+            preferenceListener = null
+            isListening = false
+            sb.appendLine("已注销监听器")
+            sb.appendLine("点击按钮可重新注册")
+        } else {
+            // 创建并注册监听器 - 必须保存引用！
+            preferenceListener = SharedPreferences.OnSharedPreferenceChangeListener { sharedPreferences, key ->
+                // 在主线程更新 UI
+                runOnUiThread {
+                    val newValue = when (key) {
+                        KEY_USERNAME -> sharedPreferences.getString(key, "")
+                        KEY_AGE -> sharedPreferences.getInt(key, 0)
+                        KEY_IS_LOGGED_IN -> sharedPreferences.getBoolean(key, false)
+                        KEY_LAST_LOGIN -> sharedPreferences.getLong(key, 0)
+                        else -> sharedPreferences.all[key]
+                    }
+                    
+                    sb.clear()
+                    sb.appendLine("=== 监听器触发 ===\n")
+                    sb.appendLine("变化的 key: $key")
+                    sb.appendLine("新值: $newValue")
+                    binding.tvResult.text = sb.toString()
+                    Log.d("SharedPreferences", "数据变化: key=$key, value=$newValue")
+                }
+            }
+            
+            prefs.registerOnSharedPreferenceChangeListener(preferenceListener)
+            isListening = true
+            sb.appendLine("已注册监听器")
+            sb.appendLine("现在修改数据会触发回调")
+            sb.appendLine()
+            sb.appendLine("测试方法：")
+            sb.appendLine("1. 输入用户名")
+            sb.appendLine("2. 点击「保存」按钮")
+            sb.appendLine("3. 观察下方显示变化")
         }
-        
-        prefs.registerOnSharedPreferenceChangeListener(listener)
-        sb.appendLine("已注册监听器")
-        sb.appendLine("现在修改数据会触发回调")
-        sb.appendLine()
-        
-        // 修改数据触发监听
-        prefs.edit().putString(KEY_USERNAME, "listener_test").apply()
-        
-        // 注意：需要在合适的时机注销监听器（如 onDestroy）
-        // prefs.unregisterOnSharedPreferenceChangeListener(listener)
         
         binding.tvResult.text = sb.toString()
         Log.d("SharedPreferences", sb.toString())
@@ -291,6 +322,11 @@ class ContextSharedPreferencesActivity : AppCompatActivity() {
     
     override fun onDestroy() {
         super.onDestroy()
-        // 注意：注销监听器，避免内存泄漏
+        // 重要：注销监听器，避免内存泄漏
+        preferenceListener?.let {
+            getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
+                .unregisterOnSharedPreferenceChangeListener(it)
+        }
+        preferenceListener = null
     }
 }

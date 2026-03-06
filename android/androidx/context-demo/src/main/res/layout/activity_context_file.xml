@@ -20,44 +20,41 @@
             android:textStyle="bold"
             android:textColor="@color/black" />
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:visibility="visible">
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnInternalWrite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="写入"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnInternalRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="读取"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnInternalDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="删除"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnInternalList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="列表"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <!-- 缓存存储 -->
         <TextView
@@ -69,28 +66,26 @@
             android:textStyle="bold"
             android:textColor="@color/black" />
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="8dp">
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnCacheWrite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="写入缓存"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnCacheRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="查看缓存"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <!-- 外部存储 -->
         <TextView
@@ -102,28 +97,26 @@
             android:textStyle="bold"
             android:textColor="@color/black" />
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="8dp">
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnExternalWrite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="写入外部"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-            <Button
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnExternalRead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:text="读取外部"
-                android:textSize="12sp" />
+                style="@style/Widget.Material3.Chip.Input" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:id="@+id/tvInfo"
