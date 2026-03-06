@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".viewroot.basic.ViewRootBasicActivity">
+    tools:context=".viewroot.deep.SurfaceRenderActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="ViewRootImpl 基础概念"
+            app:title="Surface 与渲染"
             app:navigationIcon="@drawable/abc_ic_ab_back_material" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -47,58 +47,58 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
                     <Button
-                        android:id="@+id/btnGetViewRoot"
+                        android:id="@+id/btnSurface"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="获取方式"
+                        android:text="Surface详解"
                         android:layout_marginStart="8dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
                     <Button
-                        android:id="@+id/btnCoreFields"
+                        android:id="@+id/btnHardwareAccel"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="核心字段"
+                        android:text="硬件加速"
                         android:layout_marginStart="8dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
                     <Button
-                        android:id="@+id/btnCoreMethods"
+                        android:id="@+id/btnRenderNode"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="核心方法"
+                        android:text="RenderNode"
                         android:layout_marginStart="8dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
                     <Button
-                        android:id="@+id/btnLifecycle"
+                        android:id="@+id/btnDrawProcess"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="生命周期"
+                        android:text="绘制流程"
                         android:layout_marginStart="8dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
                     <Button
-                        android:id="@+id/btnRelation"
+                        android:id="@+id/btnSurfaceFlinger"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="组件关系"
+                        android:text="SurfaceFlinger"
                         android:layout_marginStart="8dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
                     <Button
-                        android:id="@+id/btnViewTreeObserver"
+                        android:id="@+id/btnDoubleBuffer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="ViewTreeObserver"
+                        android:text="缓冲机制"
                         android:layout_marginStart="8dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
                     <Button
-                        android:id="@+id/btnStartupFlow"
+                        android:id="@+id/btnPractice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="启动流程"
+                        android:text="实践演示"
                         android:layout_marginStart="8dp"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
@@ -115,6 +115,13 @@
                 android:fontFamily="monospace"
                 android:background="#1A000000"
                 android:padding="12dp" />
+
+            <FrameLayout
+                android:id="@+id/demoContainer"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:background="#0D000000" />
 
         </LinearLayout>
 

@@ -9,22 +9,24 @@ import com.peter.window.demo.viewroot.basic.ViewRootBasicActivity
 import com.peter.window.demo.viewroot.advanced.MeasureLayoutDrawActivity
 import com.peter.window.demo.viewroot.deep.ChoreographerActivity
 import com.peter.window.demo.viewroot.deep.InputEventDispatchActivity
+import com.peter.window.demo.viewroot.deep.SurfaceRenderActivity
+import com.peter.window.demo.viewroot.deep.ThreadModelActivity
 import com.peter.window.demo.viewroot.practice.ViewRootMonitorActivity
 
 /**
  * ViewRootImpl Demo 主入口
- * 
+ *
  * ViewRootImpl 是 Android GUI 系统中最核心的类之一，
  * 它是连接 View 树和 WindowManagerService 的桥梁。
- * 
+ *
  * 本 Demo 涵盖以下内容：
- * 
+ *
  * 一、基础篇：ViewRootImpl 概念
  *    1. ViewRootImpl 是什么
  *    2. 如何获取 ViewRootImpl
  *    3. 核心字段和方法
  *    4. 生命周期
- * 
+ *
  * 二、进阶篇：测量、布局、绘制
  *    1. performTraversals 详解
  *    2. Measure 测量流程
@@ -32,14 +34,16 @@ import com.peter.window.demo.viewroot.practice.ViewRootMonitorActivity
  *    4. Draw 绘制流程
  *    5. MeasureSpec 详解
  *    6. requestLayout vs invalidate
- * 
+ *
  * 三、深入篇：输入事件与 VSync
  *    1. 输入事件分发机制
  *    2. 触摸事件分发
  *    3. 键盘事件分发
  *    4. InputStage 责任链
  *    5. Choreographer 与 VSync
- * 
+ *    6. Surface 与渲染
+ *    7. 线程模型与 Handler
+ *
  * 四、实践篇：性能监控
  *    1. 帧率监控
  *    2. 布局监控
@@ -78,6 +82,14 @@ class ViewRootMainActivity : AppCompatActivity() {
 
         addChip("Choreographer", "VSync、帧回调、帧率监控") {
             startActivity(Intent(this, ChoreographerActivity::class.java))
+        }
+
+        addChip("Surface与渲染", "Surface、硬件加速、RenderNode、SurfaceFlinger") {
+            startActivity(Intent(this, SurfaceRenderActivity::class.java))
+        }
+
+        addChip("线程模型", "线程检查、Handler、同步屏障、消息类型") {
+            startActivity(Intent(this, ThreadModelActivity::class.java))
         }
 
         // 实践篇

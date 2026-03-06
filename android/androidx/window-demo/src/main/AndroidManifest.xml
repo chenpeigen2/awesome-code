@@ -125,6 +125,16 @@
             android:label="实践篇：ViewRoot监控"
             android:exported="false" />
 
+        <activity
+            android:name=".viewroot.deep.SurfaceRenderActivity"
+            android:label="深入篇：Surface与渲染"
+            android:exported="false" />
+
+        <activity
+            android:name=".viewroot.deep.ThreadModelActivity"
+            android:label="深入篇：线程模型"
+            android:exported="false" />
+
         <!-- ActivityThread 详解 -->
         <activity
             android:name=".activitythread.ActivityThreadMainActivity"
