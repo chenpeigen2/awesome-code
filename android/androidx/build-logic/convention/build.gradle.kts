@@ -24,7 +24,7 @@ gradlePlugin {
 dependencies {
     implementation(gradleApi())
     implementation(kotlin("stdlib-jdk8"))
-    compileOnly("com.android.tools.build:gradle:8.13.2")
-    implementation("org.ow2.asm:asm:9.9.1")
-    implementation("org.ow2.asm:asm-util:9.9.1")
+    compileOnly("com.android.tools.build:gradle:${libs.versions.agp.get()}")
+    implementation(libs.asm)
+    implementation(libs.asm.util)
 }

@@ -11,6 +11,9 @@ agp = "8.13.2"
 asynclayoutinflater = "1.1.0"
 kotlin = "2.2.21"
 
+# ASM 字节码操作
+asm = "9.9.1"
+
 # AndroidX 库版本
 coreKtx = "1.15.0"
 appcompat = "1.7.0"
@@ -52,6 +55,10 @@ recyclerview = "1.4.0"
 viewpager2 = "1.1.0"
 swiperefreshlayout = "1.1.0"
 [libraries]
+# ASM 字节码操作
+asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
+asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
+
 # AndroidX 核心库
 androidx-asynclayoutinflater = { module = "androidx.asynclayoutinflater:asynclayoutinflater", version.ref = "asynclayoutinflater" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
