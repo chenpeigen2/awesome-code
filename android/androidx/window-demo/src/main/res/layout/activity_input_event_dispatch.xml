@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".viewroot.deep.InputEventDispatchActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="输入事件分发机制"
+            app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnOverview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="概述"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnInputReceiver"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="InputReceiver"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnEnqueueEvent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="enqueueEvent"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnDeliverEvent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="deliverEvent"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnTouchEvent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="触摸事件"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnKeyEvent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="键盘事件"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnInputStage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="InputStage"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnUnhandledEvent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="未处理事件"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:background="#1A000000"
+                android:padding="12dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

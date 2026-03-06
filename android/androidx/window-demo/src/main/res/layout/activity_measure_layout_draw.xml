@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".viewroot.advanced.MeasureLayoutDrawActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="测量/布局/绘制流程"
+            app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnTraversals"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="performTraversals"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnMeasure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Measure测量"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Layout布局"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnDraw"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Draw绘制"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnMeasureSpec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="MeasureSpec"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnForceLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="forceLayout"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnInvalidate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="invalidate"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnRequestLayout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="requestLayout"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:background="#1A000000"
+                android:padding="12dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

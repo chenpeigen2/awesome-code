@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".viewroot.deep.ChoreographerActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:title="Choreographer 与 VSync"
+            app:navigationIcon="@drawable/abc_ic_ab_back_material" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnOverview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="概述"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnVSync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="VSync机制"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnCallbackQueue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CallbackQueue"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnFrameCallback"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="FrameCallback"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnFrameTimeline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="帧时间线"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnViewRootRelation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="与ViewRoot关系"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnPerformance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="性能优化"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    <Button
+                        android:id="@+id/btnPractice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="实践演示"
+                        android:layout_marginStart="8dp"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                </LinearLayout>
+
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="12sp"
+                android:fontFamily="monospace"
+                android:background="#1A000000"
+                android:padding="12dp" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

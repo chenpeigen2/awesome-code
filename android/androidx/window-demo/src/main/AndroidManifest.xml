@@ -94,6 +94,68 @@
             android:name=".practice.FloatingWindowService"
             android:exported="false" />
 
+        <!-- ViewRootImpl 详解 -->
+        <activity
+            android:name=".viewroot.ViewRootMainActivity"
+            android:label="ViewRootImpl 详解"
+            android:exported="false" />
+        
+        <activity
+            android:name=".viewroot.basic.ViewRootBasicActivity"
+            android:label="基础篇：ViewRootImpl概念"
+            android:exported="false" />
+        
+        <activity
+            android:name=".viewroot.advanced.MeasureLayoutDrawActivity"
+            android:label="进阶篇：测量布局绘制"
+            android:exported="false" />
+        
+        <activity
+            android:name=".viewroot.deep.InputEventDispatchActivity"
+            android:label="深入篇：输入事件分发"
+            android:exported="false" />
+        
+        <activity
+            android:name=".viewroot.deep.ChoreographerActivity"
+            android:label="深入篇：Choreographer与VSync"
+            android:exported="false" />
+        
+        <activity
+            android:name=".viewroot.practice.ViewRootMonitorActivity"
+            android:label="实践篇：ViewRoot监控"
+            android:exported="false" />
+
+        <!-- ActivityThread 详解 -->
+        <activity
+            android:name=".activitythread.ActivityThreadMainActivity"
+            android:label="ActivityThread 详解"
+            android:exported="false" />
+        
+        <activity
+            android:name=".activitythread.basic.ActivityThreadBasicActivity"
+            android:label="基础篇：ActivityThread概念"
+            android:exported="false" />
+        
+        <activity
+            android:name=".activitythread.advanced.ActivityLaunchFlowActivity"
+            android:label="进阶篇：Activity启动流程"
+            android:exported="false" />
+        
+        <activity
+            android:name=".activitythread.deep.HandlerMessageActivity"
+            android:label="深入篇：Handler消息机制"
+            android:exported="false" />
+        
+        <activity
+            android:name=".activitythread.deep.InstrumentationActivity"
+            android:label="深入篇：Instrumentation生命周期"
+            android:exported="false" />
+        
+        <activity
+            android:name=".activitythread.practice.ActivityThreadHookActivity"
+            android:label="实践篇：Hook与监控"
+            android:exported="false" />
+
     </application>
 
 </manifest>

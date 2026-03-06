@@ -15,6 +15,8 @@ import com.peter.window.demo.deep.WMSActivity
 import com.peter.window.demo.deep.WindowCreateProcessActivity
 import com.peter.window.demo.practice.CustomWindowActivity
 import com.peter.window.demo.practice.DynamicWindowActivity
+import com.peter.window.demo.viewroot.ViewRootMainActivity
+import com.peter.window.demo.activitythread.ActivityThreadMainActivity
 import com.peter.window.demo.databinding.ActivityMainBinding
 
 /**
@@ -73,6 +75,12 @@ class MainActivity : AppCompatActivity() {
         // 实战篇
         binding.chipCustomWindow.setOnClickListener { startActivity(Intent(this, CustomWindowActivity::class.java)) }
         binding.chipDynamicWindow.setOnClickListener { startActivity(Intent(this, DynamicWindowActivity::class.java)) }
+        
+        // ViewRootImpl 详解
+        binding.chipViewRootImpl.setOnClickListener { startActivity(Intent(this, ViewRootMainActivity::class.java)) }
+        
+        // ActivityThread 详解
+        binding.chipActivityThread.setOnClickListener { startActivity(Intent(this, ActivityThreadMainActivity::class.java)) }
     }
 
     private fun showOverview() {

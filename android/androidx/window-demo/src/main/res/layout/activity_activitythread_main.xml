@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ActivityThread Demo"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary"
+            android:gravity="center" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Android 主线程核心类详解"
+            android:textSize="14sp"
+            android:textColor="@color/gray"
+            android:gravity="center" />
+
+        <!-- 基础篇 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="基础篇"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/primary" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipBasic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ActivityThread 概念"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- 进阶篇 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="进阶篇"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/accent" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipLaunchFlow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Activity 启动流程"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- 深入篇 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="深入篇"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/warning" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHandler"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Handler 消息机制"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipInstrumentation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Instrumentation 生命周期"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- 实践篇 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="实践篇"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/error" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hook 与监控"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- 说明文字 -->
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>
