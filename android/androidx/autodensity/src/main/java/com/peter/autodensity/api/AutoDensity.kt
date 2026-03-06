@@ -5,8 +5,10 @@ package com.peter.autodensity.api
 import android.app.Activity
 import android.app.Application
 import android.content.ComponentCallbacks2
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.DisplayMetrics
 import com.peter.autodensity.core.DensityDebugger
 import com.peter.autodensity.core.DensityManager
 import com.peter.autodensity.core.DisplayInfo
@@ -124,6 +126,43 @@ object AutoDensity {
      */
     fun getLastResult() = DensityManager.getLastResult()
 
+    /**
+     * 手动应用到 Service 或其他 Context
+     *
+     * 使用场景：
+     * - Service 中创建 RemoteViews
+     * - Service 中显示 Toast、Notification
+     * - 自定义 View 中需要适配
+     *
+     * @param context Context（Service、Application 等）
+     */
+    fun applyToContext(context: Context) {
+        val config = DensityManager.getConfig()
+        DensityManager.applyToContext(context, config.forceDesignWidth)
+    }
+
+    /**
+     * 手动应用到 Service 或其他 Context，支持自定义参数
+     *
+     * @param context Context
+     * @param forceDesignWidth 是否强制使用 designWidthDp
+     */
+    fun applyToContext(context: Context, forceDesignWidth: Boolean) {
+        DensityManager.applyToContext(context, forceDesignWidth)
+    }
+
+    /**
+     * 获取适配后的 DisplayMetrics
+     * 用于需要手动计算 dp/px 的场景
+     *
+     * @param context Context
+     * @return 适配后的 DisplayMetrics
+     */
+    fun getAdaptedMetrics(context: Context): DisplayMetrics {
+        val config = DensityManager.getConfig()
+        return DensityManager.getAdaptedMetrics(context, config.forceDesignWidth)
+    }
+
     private fun handleActivityCreate(activity: Activity) {
         val shouldAdapt = resolveShouldAdapt(activity)
 
@@ -178,7 +217,7 @@ object AutoDensity {
 
     private fun applyToActivity(activity: Activity, forceDesignWidth: Boolean) {
         val baseWidthDp = resolveBaseWidthDp(activity)
-        DensityManager.calculate(activity, baseWidthDp, forceDesignWidth)
+        DensityManager.applyToActivity(activity, baseWidthDp, forceDesignWidth)
     }
 
     private fun resolveShouldAdapt(activity: Activity): Boolean {

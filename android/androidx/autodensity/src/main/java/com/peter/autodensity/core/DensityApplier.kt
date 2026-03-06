@@ -44,6 +44,14 @@ internal object DensityApplier {
     }
 
     /**
+     * 应用到任意 Context（Service 等）
+     */
+    fun applyToContext(context: Context, result: DensityCalculator.Result) {
+        applyToResources(context.resources, result)
+        DensityDebugger.printContextUpdated(context.javaClass.simpleName)
+    }
+
+    /**
      * 应用到指定 Resources
      */
     private fun applyToResources(resources: Resources, result: DensityCalculator.Result) {

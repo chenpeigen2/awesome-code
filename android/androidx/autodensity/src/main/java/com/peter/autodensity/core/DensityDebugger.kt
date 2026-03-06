@@ -248,4 +248,13 @@ object DensityDebugger {
         Log.d(TAG, "║  重新计算并应用密度...                                   ║")
         Log.d(TAG, "╚══════════════════════════════════════════════════════════╝")
     }
+
+    /**
+     * 打印 Context 更新
+     */
+    fun printContextUpdated(contextName: String) {
+        Log.d(TAG, "╔══════════════════════════════════════════════════════════╗")
+        Log.d(TAG, "║  Context 密度已应用: $contextName")
+        Log.d(TAG, "╚══════════════════════════════════════════════════════════╝")
+    }
 }

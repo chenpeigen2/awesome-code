@@ -61,7 +61,7 @@ internal object DensityManager {
         lastResult = null
     }
 
-    fun calculate(
+    fun applyToActivity(
         activity: Activity,
         baseWidthDp: Int,
         forceDesignWidth: Boolean
@@ -96,6 +96,47 @@ internal object DensityManager {
         }
 
         return result
+    }
+
+    /**
+     * 应用到任意 Context（Service 等）
+     */
+    fun applyToContext(context: Context, forceDesignWidth: Boolean) {
+        val designWidth = getActualDesignWidth()
+        val fontScale = getActualFontScale()
+        val baseWidthDp = 0  // Service 不需要 baseWidthDp 限制
+
+        val result = DensityCalculator.calculate(
+            context = context,
+            designWidthDp = designWidth,
+            fontScale = fontScale,
+            baseWidthDp = baseWidthDp,
+            forceDesignWidth = forceDesignWidth
+        )
+
+        DensityApplier.applyToContext(context, result)
+    }
+
+    /**
+     * 获取适配后的 DisplayMetrics
+     */
+    fun getAdaptedMetrics(context: Context, forceDesignWidth: Boolean): android.util.DisplayMetrics {
+        val designWidth = getActualDesignWidth()
+        val fontScale = getActualFontScale()
+
+        val result = DensityCalculator.calculate(
+            context = context,
+            designWidthDp = designWidth,
+            fontScale = fontScale,
+            baseWidthDp = 0,
+            forceDesignWidth = forceDesignWidth
+        )
+
+        return android.util.DisplayMetrics().apply {
+            density = result.targetDensity
+            scaledDensity = result.targetScaledDensity
+            densityDpi = result.targetDpi
+        }
     }
 
     fun getDebugInfo(): String {
