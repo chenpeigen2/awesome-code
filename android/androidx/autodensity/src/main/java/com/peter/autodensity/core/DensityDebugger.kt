@@ -257,4 +257,20 @@ object DensityDebugger {
         Log.d(TAG, "║  Context 密度已应用: $contextName")
         Log.d(TAG, "╚══════════════════════════════════════════════════════════╝")
     }
+
+    /**
+     * 打印 Service 密度应用
+     */
+    fun printServiceApply(serviceName: String, designWidth: Int, fontScale: Float?, forceDesignWidth: Boolean) {
+        Log.d(TAG, "")
+        Log.d(TAG, "╔══════════════════════════════════════════════════════════╗")
+        Log.d(TAG, "║  Service 密度应用: $serviceName")
+        Log.d(TAG, "╠══════════════════════════════════════════════════════════╣")
+        Log.d(TAG, "║  designWidth     = $designWidth dp")
+        Log.d(TAG, "║  fontScale       = $fontScale")
+        Log.d(TAG, "║  forceDesignWidth= $forceDesignWidth")
+        Log.d(TAG, "║  baseWidthDp     = 0 (Service 无限制)")
+        Log.d(TAG, "╚══════════════════════════════════════════════════════════╝")
+        Log.d(TAG, "")
+    }
 }

@@ -100,11 +100,18 @@ internal object DensityManager {
 
     /**
      * 应用到任意 Context（Service 等）
+     *
+     * 注意：Service 不使用 baseWidthDp 限制
+     * - Activity 有 baseWidthDp 来限制界面过大
+     * - Service 没有这个限制，直接使用 designWidthDp 计算
      */
     fun applyToContext(context: Context, forceDesignWidth: Boolean) {
         val designWidth = getActualDesignWidth()
         val fontScale = getActualFontScale()
-        val baseWidthDp = 0  // Service 不需要 baseWidthDp 限制
+        // Service 不需要 baseWidthDp 限制，直接使用 0
+        val baseWidthDp = 0
+
+        DensityDebugger.printServiceApply(context.javaClass.simpleName, designWidth, fontScale, forceDesignWidth)
 
         val result = DensityCalculator.calculate(
             context = context,

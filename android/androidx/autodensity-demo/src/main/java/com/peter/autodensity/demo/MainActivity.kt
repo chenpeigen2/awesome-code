@@ -1,10 +1,13 @@
 package com.peter.autodensity.demo
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.DisplayMetrics
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.autodensity.api.ActivityDensityAware
 import com.peter.autodensity.api.AutoDensity
@@ -18,6 +21,8 @@ class MainActivity : AppCompatActivity(), ActivityDensityAware {
     private lateinit var tvDensityInfo: TextView
     private lateinit var tvDeviceInfo: TextView
 
+    private val OVERLAY_PERMISSION_REQUEST_CODE = 1001
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -27,10 +32,41 @@ class MainActivity : AppCompatActivity(), ActivityDensityAware {
 
         // 启动 Service 按钮
         findViewById<Button>(R.id.btn_start_service).setOnClickListener {
-            startService(Intent(this, DemoService::class.java))
+            if (checkOverlayPermission()) {
+                startService(Intent(this, DemoService::class.java))
+            }
         }
 
         updateInfo()
+    }
+
+    /**
+     * 检查悬浮窗权限
+     */
+    private fun checkOverlayPermission(): Boolean {
+        return if (Settings.canDrawOverlays(this)) {
+            true
+        } else {
+            // 请求悬浮窗权限
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:$packageName")
+            )
+            startActivityForResult(intent, OVERLAY_PERMISSION_REQUEST_CODE)
+            false
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == OVERLAY_PERMISSION_REQUEST_CODE) {
+            if (Settings.canDrawOverlays(this)) {
+                // 权限已授予，启动 Service
+                startService(Intent(this, DemoService::class.java))
+            } else {
+                Toast.makeText(this, "需要悬浮窗权限才能显示 Service View", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     // 启用密度适配
