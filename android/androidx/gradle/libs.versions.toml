@@ -1,4 +1,9 @@
 [versions]
+# SDK 版本
+compileSdk = "36"
+targetSdk = "36"
+minSdk = "24"
+
 # Gradle 插件版本
 agp = "8.13.2"
 asynclayoutinflater = "1.1.0"

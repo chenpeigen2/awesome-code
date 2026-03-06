@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.apprenderapp"
-    compileSdk = SdkConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     buildFeatures {
         aidl = true
@@ -23,8 +23,8 @@ android {
 
     defaultConfig {
         applicationId = "com.example.apprenderapp"
-        minSdk = SdkConfig.minSdk
-        targetSdk = SdkConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 

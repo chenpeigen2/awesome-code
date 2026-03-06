@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.aidl_client"
-    compileSdk = SdkConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
         applicationId = "com.example.aidl_client"
-        minSdk = SdkConfig.minSdk
-        targetSdk = SdkConfig.targetSdk
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
 

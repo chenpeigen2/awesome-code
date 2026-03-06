@@ -5,14 +5,14 @@ plugins {
 
 android {
     namespace = "com.example.aidl_common"
-    compileSdk = SdkConfig.compileSdk
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     buildFeatures {
         aidl = true
     }
 
     defaultConfig {
-        minSdk = SdkConfig.minSdk
+        minSdk = libs.versions.minSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
