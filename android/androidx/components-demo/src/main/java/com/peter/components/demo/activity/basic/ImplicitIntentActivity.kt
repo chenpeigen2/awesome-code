@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.components.demo.databinding.ActivityImplicitIntentBinding
+import androidx.core.net.toUri
 
 /**
  * 隐式 Intent 示例
@@ -27,13 +28,13 @@ class ImplicitIntentActivity : AppCompatActivity() {
 
         // 打开网页
         binding.btnOpenWeb.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://developer.android.com"))
+            val intent = Intent(Intent.ACTION_VIEW, "https://developer.android.com".toUri())
             startActivity(intent)
         }
 
         // 拨打电话
         binding.btnDial.setOnClickListener {
-            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:10086"))
+            val intent = Intent(Intent.ACTION_DIAL, "tel:10086".toUri())
             startActivity(intent)
         }
 
@@ -51,7 +52,7 @@ class ImplicitIntentActivity : AppCompatActivity() {
             try {
                 // 对应 AndroidManifest.xml 中的 Intent Filter
                 // <data android:scheme="components" android:host="demo" />
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("components://demo"))
+                val intent = Intent(Intent.ACTION_VIEW, "components://demo".toUri())
                 startActivity(intent)
             } catch (e: Exception) {
                 Toast.makeText(this, "没有找到匹配的 Activity", Toast.LENGTH_SHORT).show()

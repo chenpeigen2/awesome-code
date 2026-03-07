@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -129,7 +130,8 @@
 
         <service
             android:name=".service.bind.RemoteBindService"
-            android:exported="true">
+            android:exported="true"
+            android:process=":remote">
             <intent-filter>
                 <action android:name="com.peter.components.demo.service.IRemoteService" />
             </intent-filter>
@@ -139,7 +141,7 @@
 
         <activity
             android:name=".receiver.SystemBroadcastActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".receiver.OrderedBroadcastActivity"

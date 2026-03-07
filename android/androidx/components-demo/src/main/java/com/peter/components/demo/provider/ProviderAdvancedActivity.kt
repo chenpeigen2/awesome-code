@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.components.demo.databinding.ActivityProviderAdvancedBinding
+import androidx.core.net.toUri
 
 /**
  * 自定义 ContentProvider 操作示例
@@ -23,7 +24,7 @@ class ProviderAdvancedActivity : AppCompatActivity() {
     private val resultBuilder = StringBuilder()
 
     // ContentProvider Uri
-    private val contentUri: Uri = Uri.parse("content://${UserProvider.AUTHORITY}/users")
+    private val contentUri: Uri = "content://${UserProvider.AUTHORITY}/users".toUri()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

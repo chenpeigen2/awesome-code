@@ -129,6 +129,54 @@
                 android:enabled="false"
                 android:text="调用服务方法" />
 
+            <!-- 远程绑定服务 (AIDL) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="远程绑定服务 (AIDL)"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="跨进程通信示例，服务运行在独立进程"
+                android:textSize="12sp"
+                android:textColor="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnBindRemoteService"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="绑定远程服务" />
+
+                <Button
+                    android:id="@+id/btnUnbindRemoteService"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:text="解绑远程服务" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnCallRemoteMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                android:text="调用远程方法" />
+
             <!-- 日志区域 -->
             <TextView
                 android:layout_width="wrap_content"
