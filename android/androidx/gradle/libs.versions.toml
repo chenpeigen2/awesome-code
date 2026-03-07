@@ -56,6 +56,10 @@ recyclerview = "1.4.0"
 cardview = "1.0.0"
 viewpager2 = "1.1.0"
 swiperefreshlayout = "1.1.0"
+
+# Room 版本
+room = "2.6.1"
+
 [libraries]
 # ASM 字节码操作
 androidx-localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
@@ -108,6 +112,11 @@ androidx-work-testing = { group = "androidx.work", name = "work-testing", versio
 
 # Kotlinx Serialization
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+# Room
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 
 # Koin 依赖注入
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }

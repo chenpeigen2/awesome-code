@@ -59,3 +59,6 @@ include(":autodensity-demo")
 
 // Components Demo - 四大组件示例
 include(":components-demo")
+
+// Coroutine Demo - 协程示例
+include(":coroutine-demo")
