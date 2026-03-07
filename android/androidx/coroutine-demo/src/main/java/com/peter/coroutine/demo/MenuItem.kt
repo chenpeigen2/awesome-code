@@ -2,6 +2,11 @@ package com.peter.coroutine.demo
 
 import android.content.Context
 import android.content.Intent
+import com.peter.coroutine.demo.basics.CoroutineScopeActivity
+import com.peter.coroutine.demo.basics.DispatchersActivity
+import com.peter.coroutine.demo.basics.JobActivity
+import com.peter.coroutine.demo.basics.LaunchAsyncActivity
+import com.peter.coroutine.demo.basics.SuspendFunctionActivity
 
 /**
  * 菜单项数据模型
@@ -15,15 +20,14 @@ data class MenuItem(
 
 /**
  * 各 Activity 的 Intent 创建函数
- * 暂时返回 null，后续任务会实现具体的 Activity
  */
 
 // ==================== 协程基础 (01-Basics) ====================
-fun createSuspendFunctionIntent(context: Context) = null // Intent(context, SuspendFunctionActivity::class.java)
-fun createLaunchAsyncIntent(context: Context) = null // Intent(context, LaunchAsyncActivity::class.java)
-fun createDispatchersIntent(context: Context) = null // Intent(context, DispatchersActivity::class.java)
-fun createJobIntent(context: Context) = null // Intent(context, JobActivity::class.java)
-fun createCoroutineScopeIntent(context: Context) = null // Intent(context, CoroutineScopeActivity::class.java)
+fun createSuspendFunctionIntent(context: Context) = Intent(context, SuspendFunctionActivity::class.java)
+fun createLaunchAsyncIntent(context: Context) = Intent(context, LaunchAsyncActivity::class.java)
+fun createDispatchersIntent(context: Context) = Intent(context, DispatchersActivity::class.java)
+fun createJobIntent(context: Context) = Intent(context, JobActivity::class.java)
+fun createCoroutineScopeIntent(context: Context) = Intent(context, CoroutineScopeActivity::class.java)
 
 // ==================== Flow (02-Flow) ====================
 fun createFlowBasicsIntent(context: Context) = null // Intent(context, FlowBasicsActivity::class.java)

@@ -22,6 +22,27 @@
             </intent-filter>
         </activity>
 
+        <!-- 协程基础模块 (01-Basics) -->
+        <activity
+            android:name=".basics.SuspendFunctionActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".basics.LaunchAsyncActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".basics.DispatchersActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".basics.JobActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".basics.CoroutineScopeActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
