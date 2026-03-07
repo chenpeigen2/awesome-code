@@ -20,6 +20,10 @@ import com.peter.coroutine.demo.errorhandling.TryCatchActivity
 import com.peter.coroutine.demo.android.CollectFlowActivity
 import com.peter.coroutine.demo.android.LifecycleScopeActivity
 import com.peter.coroutine.demo.android.ViewModelScopeActivity
+import com.peter.coroutine.demo.advanced.ContinuationActivity
+import com.peter.coroutine.demo.advanced.CustomScopeActivity
+import com.peter.coroutine.demo.advanced.RoomExampleActivity
+import com.peter.coroutine.demo.advanced.StateMachineActivity
 
 /**
  * 菜单项数据模型
@@ -64,10 +68,10 @@ fun createViewModelScopeIntent(context: Context) = Intent(context, ViewModelScop
 fun createCollectFlowIntent(context: Context) = Intent(context, CollectFlowActivity::class.java)
 
 // ==================== 进阶原理 (06-Advanced) ====================
-fun createContinuationIntent(context: Context) = null // Intent(context, ContinuationActivity::class.java)
-fun createStateMachineIntent(context: Context) = null // Intent(context, StateMachineActivity::class.java)
-fun createCustomScopeIntent(context: Context) = null // Intent(context, CustomScopeActivity::class.java)
-fun createRoomExampleIntent(context: Context) = null // Intent(context, RoomExampleActivity::class.java)
+fun createContinuationIntent(context: Context) = Intent(context, ContinuationActivity::class.java)
+fun createStateMachineIntent(context: Context) = Intent(context, StateMachineActivity::class.java)
+fun createCustomScopeIntent(context: Context) = Intent(context, CustomScopeActivity::class.java)
+fun createRoomExampleIntent(context: Context) = Intent(context, RoomExampleActivity::class.java)
 
 // ==================== 测试 (07-Testing) ====================
 fun createTestDispatcherIntent(context: Context) = null // Intent(context, TestDispatcherActivity::class.java)

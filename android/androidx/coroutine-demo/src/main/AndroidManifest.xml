@@ -99,6 +99,23 @@
             android:name=".android.CollectFlowActivity"
             android:exported="false" />
 
+        <!-- 进阶原理模块 (06-Advanced) -->
+        <activity
+            android:name=".advanced.ContinuationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".advanced.StateMachineActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".advanced.CustomScopeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".advanced.RoomExampleActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
