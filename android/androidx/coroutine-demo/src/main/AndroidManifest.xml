@@ -116,6 +116,19 @@
             android:name=".advanced.RoomExampleActivity"
             android:exported="false" />
 
+        <!-- 测试模块 (07-Testing) -->
+        <activity
+            android:name=".testing.TestDispatcherActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".testing.TimeControlActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".testing.FlowTestActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

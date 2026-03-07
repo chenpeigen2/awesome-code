@@ -24,6 +24,9 @@ import com.peter.coroutine.demo.advanced.ContinuationActivity
 import com.peter.coroutine.demo.advanced.CustomScopeActivity
 import com.peter.coroutine.demo.advanced.RoomExampleActivity
 import com.peter.coroutine.demo.advanced.StateMachineActivity
+import com.peter.coroutine.demo.testing.FlowTestActivity
+import com.peter.coroutine.demo.testing.TestDispatcherActivity
+import com.peter.coroutine.demo.testing.TimeControlActivity
 
 /**
  * 菜单项数据模型
@@ -74,6 +77,6 @@ fun createCustomScopeIntent(context: Context) = Intent(context, CustomScopeActiv
 fun createRoomExampleIntent(context: Context) = Intent(context, RoomExampleActivity::class.java)
 
 // ==================== 测试 (07-Testing) ====================
-fun createTestDispatcherIntent(context: Context) = null // Intent(context, TestDispatcherActivity::class.java)
-fun createTimeControlIntent(context: Context) = null // Intent(context, TimeControlActivity::class.java)
-fun createFlowTestIntent(context: Context) = null // Intent(context, FlowTestActivity::class.java)
+fun createTestDispatcherIntent(context: Context) = Intent(context, TestDispatcherActivity::class.java)
+fun createTimeControlIntent(context: Context) = Intent(context, TimeControlActivity::class.java)
+fun createFlowTestIntent(context: Context) = Intent(context, FlowTestActivity::class.java)
