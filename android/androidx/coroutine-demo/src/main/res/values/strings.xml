@@ -1,4 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Coroutine Demo</string>
+
+    <!-- 协程基础 -->
+    <string name="basics_title">一、协程基础</string>
+    <string name="suspend_function">suspend 函数</string>
+    <string name="suspend_function_desc">挂起函数的原理与使用</string>
+    <string name="launch_async">launch 与 async</string>
+    <string name="launch_async_desc">协程启动方式对比</string>
+    <string name="dispatchers">Dispatchers 调度器</string>
+    <string name="dispatchers_desc">四种调度器的使用场景</string>
+    <string name="job">Job 与协程控制</string>
+    <string name="job_desc">Job 状态、取消与等待</string>
+    <string name="coroutine_scope">CoroutineScope 作用域</string>
+    <string name="coroutine_scope_desc">结构化并发与作用域管理</string>
+
+    <!-- Flow -->
+    <string name="flow_title">二、Kotlin Flow</string>
+    <string name="flow_basics">Flow 基础</string>
+    <string name="flow_basics_desc">Flow 构建器与 collect</string>
+    <string name="flow_operators">Flow 操作符</string>
+    <string name="flow_operators_desc">map/filter/transform/combine</string>
+    <string name="state_flow">StateFlow</string>
+    <string name="state_flow_desc">状态流与 UI 状态管理</string>
+    <string name="cold_hot_flow">冷流与热流</string>
+    <string name="cold_hot_flow_desc">Flow、SharedFlow、StateFlow 对比</string>
+
+    <!-- Channel -->
+    <string name="channel_title">三、Channel 通道</string>
+    <string name="channel_basics">Channel 基础</string>
+    <string name="channel_basics_desc">Channel 的创建与使用</string>
+    <string name="produce_consume">produce 与 consume</string>
+    <string name="produce_consume_desc">生产者消费者模式</string>
+    <string name="select_expression">select 表达式</string>
+    <string name="select_expression_desc">多路复用与选择</string>
+
+    <!-- 异常处理 -->
+    <string name="error_title">四、异常处理</string>
+    <string name="try_catch">try/catch 异常捕获</string>
+    <string name="try_catch_desc">协程中的异常捕获</string>
+    <string name="exception_handler">CoroutineExceptionHandler</string>
+    <string name="exception_handler_desc">全局异常处理器</string>
+    <string name="supervisor_job">SupervisorJob</string>
+    <string name="supervisor_job_desc">子协程独立失败</string>
+
+    <!-- Android 集成 -->
+    <string name="android_title">五、Android 集成</string>
+    <string name="lifecycle_scope">lifecycleScope</string>
+    <string name="lifecycle_scope_desc">生命周期感知的协程</string>
+    <string name="viewmodel_scope">viewModelScope</string>
+    <string name="viewmodel_scope_desc">ViewModel 协程作用域</string>
+    <string name="collect_flow">Flow 收集最佳实践</string>
+    <string name="collect_flow_desc">repeatOnLifecycle 与 flowWithLifecycle</string>
+
+    <!-- 进阶原理 -->
+    <string name="advanced_title">六、进阶原理</string>
+    <string name="continuation">Continuation 原理</string>
+    <string name="continuation_desc">挂起与恢复机制</string>
+    <string name="state_machine">状态机原理</string>
+    <string name="state_machine_desc">协程的编译器转换</string>
+    <string name="custom_scope">自定义 CoroutineScope</string>
+    <string name="custom_scope_desc">创建自定义作用域</string>
+    <string name="room_example">Room + 协程</string>
+    <string name="room_example_desc">数据库协程操作</string>
+
+    <!-- 测试 -->
+    <string name="testing_title">七、协程测试</string>
+    <string name="test_dispatcher">TestDispatcher</string>
+    <string name="test_dispatcher_desc">测试调度器</string>
+    <string name="time_control">时间控制</string>
+    <string name="time_control_desc">虚拟时间与 delay 控制</string>
+    <string name="flow_test">Flow 测试</string>
+    <string name="flow_test_desc">测试 Flow 发射与收集</string>
 </resources>
