@@ -43,6 +43,36 @@
             android:name=".basics.CoroutineScopeActivity"
             android:exported="false" />
 
+        <!-- Flow 模块 (02-Flow) -->
+        <activity
+            android:name=".flow.FlowBasicsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".flow.FlowOperatorsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".flow.StateFlowActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".flow.ColdHotFlowActivity"
+            android:exported="false" />
+
+        <!-- Channel 模块 (03-Channel) -->
+        <activity
+            android:name=".channel.ChannelBasicsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".channel.ProduceConsumeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".channel.SelectExpressionActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

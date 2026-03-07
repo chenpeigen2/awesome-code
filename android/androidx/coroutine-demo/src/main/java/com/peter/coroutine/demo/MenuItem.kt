@@ -7,6 +7,13 @@ import com.peter.coroutine.demo.basics.DispatchersActivity
 import com.peter.coroutine.demo.basics.JobActivity
 import com.peter.coroutine.demo.basics.LaunchAsyncActivity
 import com.peter.coroutine.demo.basics.SuspendFunctionActivity
+import com.peter.coroutine.demo.channel.ChannelBasicsActivity
+import com.peter.coroutine.demo.channel.ProduceConsumeActivity
+import com.peter.coroutine.demo.channel.SelectExpressionActivity
+import com.peter.coroutine.demo.flow.ColdHotFlowActivity
+import com.peter.coroutine.demo.flow.FlowBasicsActivity
+import com.peter.coroutine.demo.flow.FlowOperatorsActivity
+import com.peter.coroutine.demo.flow.StateFlowActivity
 
 /**
  * 菜单项数据模型
@@ -30,15 +37,15 @@ fun createJobIntent(context: Context) = Intent(context, JobActivity::class.java)
 fun createCoroutineScopeIntent(context: Context) = Intent(context, CoroutineScopeActivity::class.java)
 
 // ==================== Flow (02-Flow) ====================
-fun createFlowBasicsIntent(context: Context) = null // Intent(context, FlowBasicsActivity::class.java)
-fun createFlowOperatorsIntent(context: Context) = null // Intent(context, FlowOperatorsActivity::class.java)
-fun createStateFlowIntent(context: Context) = null // Intent(context, StateFlowActivity::class.java)
-fun createColdHotFlowIntent(context: Context) = null // Intent(context, ColdHotFlowActivity::class.java)
+fun createFlowBasicsIntent(context: Context) = Intent(context, FlowBasicsActivity::class.java)
+fun createFlowOperatorsIntent(context: Context) = Intent(context, FlowOperatorsActivity::class.java)
+fun createStateFlowIntent(context: Context) = Intent(context, StateFlowActivity::class.java)
+fun createColdHotFlowIntent(context: Context) = Intent(context, ColdHotFlowActivity::class.java)
 
 // ==================== Channel (03-Channel) ====================
-fun createChannelBasicsIntent(context: Context) = null // Intent(context, ChannelBasicsActivity::class.java)
-fun createProduceConsumeIntent(context: Context) = null // Intent(context, ProduceConsumeActivity::class.java)
-fun createSelectExpressionIntent(context: Context) = null // Intent(context, SelectExpressionActivity::class.java)
+fun createChannelBasicsIntent(context: Context) = Intent(context, ChannelBasicsActivity::class.java)
+fun createProduceConsumeIntent(context: Context) = Intent(context, ProduceConsumeActivity::class.java)
+fun createSelectExpressionIntent(context: Context) = Intent(context, SelectExpressionActivity::class.java)
 
 // ==================== 异常处理 (04-ErrorHandling) ====================
 fun createTryCatchIntent(context: Context) = null // Intent(context, TryCatchActivity::class.java)
