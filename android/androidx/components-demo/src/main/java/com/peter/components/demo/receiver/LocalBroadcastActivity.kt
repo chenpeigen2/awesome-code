@@ -5,108 +5,94 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.peter.components.demo.R
+import com.peter.components.demo.databinding.ActivityLocalBroadcastBinding
 
 /**
  * 本地广播示例
- *
- * ═══════════════════════════════════════════════════════════════
- * LocalBroadcastManager 详解
- * ═══════════════════════════════════════════════════════════════
- *
- * LocalBroadcastManager 是 AndroidX 库提供的本地广播管理器
- *
- * 优点：
- * 1. 安全性：只在应用内传递，其他应用无法监听或发送
- * 2. 效率：不需要 IPC，性能更好
- * 3. 简洁：不需要在 Manifest 中注册
- *
- * 使用场景：
- * - Fragment 间通信
- * - Service 与 Activity 通信
- * - 应用内事件通知
- *
- * ═══════════════════════════════════════════════════════════════
- * 使用方式
- * ═══════════════════════════════════════════════════════════════
- *
- * 获取实例：
- * LocalBroadcastManager.getInstance(context)
- *
- * 注册：
- * registerReceiver(receiver, intentFilter)
- *
- * 注销：
- * unregisterReceiver(receiver)
- *
- * 发送：
- * sendBroadcast(intent)
- * sendBroadcastSync(intent) // 同步发送
- *
- * ═══════════════════════════════════════════════════════════════
- * 替代方案
- * ═══════════════════════════════════════════════════════════════
- *
- * 虽然 LocalBroadcastManager 已废弃，但仍然可以使用
- * 推荐替代方案：
- * 1. LiveData / Flow：响应式数据传递
- * 2. EventBus：事件总线
- * 3. RxJava：响应式编程
+ * 
+ * 知识点：
+ * 1. LocalBroadcastManager - 只在应用内部传递广播
+ * 2. 更安全：其他应用无法发送或接收
+ * 3. 更高效：不经过系统广播机制
+ * 4. 无需权限声明
+ * 
+ * 注意：
+ * - LocalBroadcastManager 已被标记为过时
+ * - 推荐使用 LiveData / Flow 替代
+ * - 或者使用其他事件总线框架
  */
 class LocalBroadcastActivity : AppCompatActivity() {
 
     companion object {
-        const val ACTION_LOCAL_BROADCAST = "com.peter.components.demo.LOCAL_BROADCAST"
-        const val EXTRA_MESSAGE = "message"
+        const val ACTION_LOCAL = "com.peter.components.demo.LOCAL_BROADCAST"
     }
 
-    private lateinit var tvResult: TextView
+    private lateinit var binding: ActivityLocalBroadcastBinding
     private lateinit var localBroadcastManager: LocalBroadcastManager
+    private var isRegistered = false
+    private val logBuilder = StringBuilder()
 
     private val localReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            val message = intent?.getStringExtra(EXTRA_MESSAGE) ?: "无消息"
-            tvResult.text = "收到本地广播:\n$message\n\n时间: ${System.currentTimeMillis()}"
+            val data = intent?.getStringExtra("data") ?: "无数据"
+            appendLog("收到本地广播: $data")
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_local_broadcast)
+        binding = ActivityLocalBroadcastBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        tvResult = findViewById(R.id.tvResult)
-
-        // 获取 LocalBroadcastManager 实例
         localBroadcastManager = LocalBroadcastManager.getInstance(this)
 
-        // 注册本地广播接收者
-        val filter = IntentFilter(ACTION_LOCAL_BROADCAST)
-        localBroadcastManager.registerReceiver(localReceiver, filter)
+        binding.btnRegister.setOnClickListener {
+            registerLocalReceiver()
+        }
 
-        findViewById<Button>(R.id.btnSendLocal).setOnClickListener {
+        binding.btnUnregister.setOnClickListener {
+            unregisterLocalReceiver()
+        }
+
+        binding.btnSend.setOnClickListener {
             sendLocalBroadcast()
         }
     }
 
-    private fun sendLocalBroadcast() {
-        val intent = Intent(ACTION_LOCAL_BROADCAST).apply {
-            putExtra(EXTRA_MESSAGE, "这是来自 LocalBroadcastActivity 的消息")
+    private fun registerLocalReceiver() {
+        if (!isRegistered) {
+            val filter = IntentFilter(ACTION_LOCAL)
+            localBroadcastManager.registerReceiver(localReceiver, filter)
+            isRegistered = true
+            appendLog("本地广播接收器已注册")
         }
+    }
 
-        // 发送本地广播
+    private fun unregisterLocalReceiver() {
+        if (isRegistered) {
+            localBroadcastManager.unregisterReceiver(localReceiver)
+            isRegistered = false
+            appendLog("本地广播接收器已注销")
+        }
+    }
+
+    private fun sendLocalBroadcast() {
+        val intent = Intent(ACTION_LOCAL).apply {
+            putExtra("data", "来自本地广播的数据 ${System.currentTimeMillis() % 10000}")
+        }
         localBroadcastManager.sendBroadcast(intent)
+        appendLog("发送本地广播")
+    }
 
-        // 或者同步发送（会等待所有接收者处理完成）
-        // localBroadcastManager.sendBroadcastSync(intent)
+    private fun appendLog(message: String) {
+        logBuilder.append("$message\n")
+        binding.tvLog.text = logBuilder.toString()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        // 注销本地广播接收者
-        localBroadcastManager.unregisterReceiver(localReceiver)
+        unregisterLocalReceiver()
     }
 }

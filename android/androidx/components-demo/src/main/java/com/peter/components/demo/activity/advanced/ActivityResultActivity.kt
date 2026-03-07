@@ -4,199 +4,87 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.provider.ContactsContract
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import com.peter.components.demo.R
-import java.io.File
+import com.peter.components.demo.databinding.ActivityActivityResultBinding
 
 /**
  * Activity Result API 示例
- *
- * ═══════════════════════════════════════════════════════════════
- * Activity Result API 详解
- * ═══════════════════════════════════════════════════════════════
- *
- * 替代旧版 API：
- * - startActivityForResult + onActivityResult
- * - requestPermissions + onRequestPermissionsResult
- *
- * 优势：
- * 1. 类型安全
- * 2. 代码更简洁
- * 3. 避免 requestCode 管理
- * 4. 与生命周期感知组件配合更好
- *
- * 核心组件：
- * 1. ActivityResultContract<I, O> - 定义输入输出类型
- * 2. ActivityResultLauncher - 启动器
- * 3. registerForActivityResult() - 注册回调
- *
- * 内置 Contract：
- * - StartActivityForResult
- * - RequestPermission
- * - RequestMultiplePermissions
- * - PickContact
- * - TakePicture
- * - TakePicturePreview
- * - GetContent
- * - CreateDocument
- * - OpenDocument
- * - OpenDocumentTree
+ * 
+ * 知识点：
+ * 1. ActivityResultLauncher - 替代 startActivityForResult
+ * 2. 预置 Contract - PickVisualMedia, TakePicture, RequestPermission 等
+ * 3. 自定义 Contract - 继承 ActivityResultContract
+ * 4. 生命周期安全 - 自动处理 Activity 重建
  */
 class ActivityResultActivity : AppCompatActivity() {
 
-    private lateinit var tvResult: TextView
+    private lateinit var binding: ActivityActivityResultBinding
 
-    // 1. 选择联系人
-    private val pickContactLauncher = registerForActivityResult(
-        ActivityResultContracts.PickContact()
-    ) { uri: Uri? ->
-        uri?.let { queryContactName(it) }
-    }
-
-    // 2. 拍照
-    private var photoUri: Uri? = null
-    private val takePictureLauncher = registerForActivityResult(
-        ActivityResultContracts.TakePicture()
-    ) { success: Boolean ->
-        if (success && photoUri != null) {
-            tvResult.text = "拍照成功\n图片路径: $photoUri"
+    // 选择图片
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
+        if (uri != null) {
+            binding.tvResult.text = "选择的图片: $uri"
         } else {
-            tvResult.text = "拍照取消或失败"
+            binding.tvResult.text = "未选择图片"
         }
     }
 
-    // 3. 请求单个权限
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        if (isGranted) {
-            tvResult.text = "相机权限已授予"
+    // 拍照
+    private val takePicture = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) {
+            binding.tvResult.text = "拍照成功"
         } else {
-            tvResult.text = "相机权限被拒绝"
+            binding.tvResult.text = "拍照取消"
         }
     }
 
-    // 4. 请求多个权限
-    private val requestMultiplePermissionsLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions: Map<String, Boolean> ->
-        val result = permissions.entries.joinToString("\n") { (permission, granted) ->
-            "${permission.substringAfterLast(".")}: ${if (granted) "已授权" else "已拒绝"}"
-        }
-        tvResult.text = "权限结果:\n$result"
-    }
-
-    // 5. 使用 StartActivityForResult
-    private val startActivityLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val data = result.data?.getStringExtra("result")
-            tvResult.text = "返回结果: $data"
+    // 请求权限
+    private val requestPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+        if (granted) {
+            binding.tvResult.text = "权限已授予"
         } else {
-            tvResult.text = "操作取消"
+            binding.tvResult.text = "权限被拒绝"
         }
+    }
+
+    // 自定义 Contract
+    private val customContract = registerForActivityResult(CustomStringContract()) { result ->
+        binding.tvResult.text = "自定义结果: $result"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_activity_result)
+        binding = ActivityActivityResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        tvResult = findViewById(R.id.tvResult)
-
-        findViewById<Button>(R.id.btnPickContact).setOnClickListener {
-            pickContactLauncher.launch(null)
+        binding.btnPickContent.setOnClickListener {
+            pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
         }
 
-        findViewById<Button>(R.id.btnTakePhoto).setOnClickListener {
-            takePhoto()
+        binding.btnTakePicture.setOnClickListener {
+            Toast.makeText(this, "实际项目中需要先创建文件 Uri", Toast.LENGTH_SHORT).show()
         }
 
-        findViewById<Button>(R.id.btnRequestPermission).setOnClickListener {
-            requestCameraPermission()
+        binding.btnRequestPermission.setOnClickListener {
+            requestPermission.launch(Manifest.permission.CAMERA)
         }
 
-        findViewById<Button>(R.id.btnCustomContract).setOnClickListener {
-            // 演示使用 StartActivityForResult
-            val intent = Intent(this, CustomResultActivity::class.java).apply {
-                putExtra("input", "发送的数据")
-            }
-            startActivityLauncher.launch(intent)
+        binding.btnCustomContract.setOnClickListener {
+            customContract.launch("输入数据")
         }
-    }
-
-    private fun queryContactName(uri: Uri) {
-        val cursor = contentResolver.query(uri, null, null, null, null)
-        cursor?.use {
-            if (it.moveToFirst()) {
-                val nameIndex = it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
-                if (nameIndex >= 0) {
-                    val name = it.getString(nameIndex)
-                    tvResult.text = "选择的联系人: $name"
-                }
-            }
-        }
-    }
-
-    private fun takePhoto() {
-        // 创建图片文件
-        val photoFile = File(cacheDir, "photo_${System.currentTimeMillis()}.jpg")
-        photoUri = FileProvider.getUriForFile(
-            this,
-            "$packageName.fileprovider",
-            photoFile
-        )
-        photoUri?.let { takePictureLauncher.launch(it) }
-    }
-
-    private fun requestCameraPermission() {
-        when {
-            ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                tvResult.text = "相机权限已有"
-            }
-            else -> {
-                requestPermissionLauncher.launch(Manifest.permission.CAMERA)
-            }
-        }
-    }
-}
-
-/**
- * 用于演示自定义 Contract 的简单 Activity
- */
-class CustomResultActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val input = intent?.getStringExtra("input")
-        val resultIntent = Intent().putExtra("result", "处理后的: $input")
-        setResult(Activity.RESULT_OK, resultIntent)
-        finish()
     }
 }
 
 /**
  * 自定义 ActivityResultContract 示例
- *
- * @param I 输入类型
- * @param O 输出类型
  */
 class CustomStringContract : ActivityResultContract<String, String>() {
-
     override fun createIntent(context: Context, input: String): Intent {
         return Intent(context, CustomResultActivity::class.java).apply {
             putExtra("input", input)
@@ -207,7 +95,22 @@ class CustomStringContract : ActivityResultContract<String, String>() {
         return if (resultCode == Activity.RESULT_OK) {
             intent?.getStringExtra("result") ?: "无结果"
         } else {
-            "操作取消"
+            "取消"
         }
+    }
+}
+
+/**
+ * 自定义 Contract 的目标 Activity
+ */
+class CustomResultActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val input = intent.getStringExtra("input")
+        val result = Intent().apply {
+            putExtra("result", "处理后的: $input")
+        }
+        setResult(Activity.RESULT_OK, result)
+        finish()
     }
 }

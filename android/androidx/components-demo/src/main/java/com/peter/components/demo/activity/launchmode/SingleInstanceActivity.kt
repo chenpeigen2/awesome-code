@@ -1,18 +1,20 @@
 package com.peter.components.demo.activity.launchmode
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.components.demo.databinding.ActivityLaunchmodeBinding
 
 /**
- * Standard 启动模式 (默认)
+ * SingleInstance 启动模式
  * 
  * 知识点：
- * 1. 每次启动都创建新实例
- * 2. 实例可以位于不同任务栈
- * 3. 任务栈中可以有多个实例
+ * 1. 创建一个独立的任务栈，全局只有一个实例
+ * 2. 该任务栈中只有这一个 Activity
+ * 3. 从该 Activity 启动其他 Activity，会在另一个任务栈中创建
+ * 4. 适用于：独立的功能模块，如闹钟响铃界面
  */
-class StandardActivity : AppCompatActivity() {
+class SingleInstanceActivity : AppCompatActivity() {
 
     companion object {
         private var launchCount = 0
@@ -26,14 +28,20 @@ class StandardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         launchCount++
-        updateInfo()
+        updateInfo("onCreate")
 
         setupButtons()
     }
 
-    private fun updateInfo() {
-        binding.tvTaskId.text = taskId.toString()
-        binding.tvLaunchCount.text = "Standard 启动次数: $launchCount"
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        updateInfo("onNewIntent - 全局单例")
+        Toast.makeText(this, "全局单例，独立任务栈", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateInfo(status: String) {
+        binding.tvTaskId.text = "$taskId (独立任务栈)"
+        binding.tvLaunchCount.text = "SingleInstance 实例数: $launchCount ($status)"
     }
 
     private fun setupButtons() {

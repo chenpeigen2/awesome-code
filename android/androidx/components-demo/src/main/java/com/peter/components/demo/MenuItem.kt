@@ -33,41 +33,34 @@ data class MenuItem(
     val intent: Intent? = null
 )
 
-// ==================== Activity Intent 工厂方法 ====================
+// ==================== Activity Intent 创建函数 ====================
 
-// Activity 基础
 fun createBasicActivityIntent(context: Context) = Intent(context, BasicActivity::class.java)
 fun createExplicitIntentActivityIntent(context: Context) = Intent(context, ExplicitIntentActivity::class.java)
 fun createImplicitIntentActivityIntent(context: Context) = Intent(context, ImplicitIntentActivity::class.java)
-
-// Activity 生命周期
-fun createLifecycleNormalIntent(context: Context) = Intent(context, LifecycleNormalActivity::class.java)
-fun createLifecycleDialogIntent(context: Context) = Intent(context, LifecycleDialogActivity::class.java)
-fun createLifecycleTranslucentIntent(context: Context) = Intent(context, LifecycleTranslucentActivity::class.java)
-
-// Activity 启动模式
+fun createLifecycleNormalActivityIntent(context: Context) = Intent(context, LifecycleNormalActivity::class.java)
+fun createLifecycleDialogActivityIntent(context: Context) = Intent(context, LifecycleDialogActivity::class.java)
+fun createLifecycleTranslucentActivityIntent(context: Context) = Intent(context, LifecycleTranslucentActivity::class.java)
 fun createStandardActivityIntent(context: Context) = Intent(context, StandardActivity::class.java)
 fun createSingleTopActivityIntent(context: Context) = Intent(context, SingleTopActivity::class.java)
 fun createSingleTaskActivityIntent(context: Context) = Intent(context, SingleTaskActivity::class.java)
 fun createSingleInstanceActivityIntent(context: Context) = Intent(context, SingleInstanceActivity::class.java)
+fun createActivityResultIntent(context: Context) = Intent(context, ActivityResultActivity::class.java)
+fun createFragmentCommunicationIntent(context: Context) = Intent(context, FragmentCommunicationActivity::class.java)
+fun createSharedElementIntent(context: Context) = Intent(context, SharedElementActivity::class.java)
+fun createTaskAffinityIntent(context: Context) = Intent(context, TaskAffinityActivity::class.java)
 
-// Activity 进阶
-fun createTaskAffinityActivityIntent(context: Context) = Intent(context, TaskAffinityActivity::class.java)
-fun createActivityResultActivityIntent(context: Context) = Intent(context, ActivityResultActivity::class.java)
-fun createSharedElementActivityIntent(context: Context) = Intent(context, SharedElementActivity::class.java)
-fun createFragmentCommunicationActivityIntent(context: Context) = Intent(context, FragmentCommunicationActivity::class.java)
+// ==================== Service Intent 创建函数 ====================
 
-// ==================== Service Intent 工厂方法 ====================
+fun createServiceMainIntent(context: Context) = Intent(context, ServiceMainActivity::class.java)
 
-fun createServiceMainActivityIntent(context: Context) = Intent(context, ServiceMainActivity::class.java)
+// ==================== BroadcastReceiver Intent 创建函数 ====================
 
-// ==================== BroadcastReceiver Intent 工厂方法 ====================
+fun createSystemBroadcastIntent(context: Context) = Intent(context, SystemBroadcastActivity::class.java)
+fun createOrderedBroadcastIntent(context: Context) = Intent(context, OrderedBroadcastActivity::class.java)
+fun createLocalBroadcastIntent(context: Context) = Intent(context, LocalBroadcastActivity::class.java)
 
-fun createSystemBroadcastActivityIntent(context: Context) = Intent(context, SystemBroadcastActivity::class.java)
-fun createOrderedBroadcastActivityIntent(context: Context) = Intent(context, OrderedBroadcastActivity::class.java)
-fun createLocalBroadcastActivityIntent(context: Context) = Intent(context, LocalBroadcastActivity::class.java)
+// ==================== ContentProvider Intent 创建函数 ====================
 
-// ==================== ContentProvider Intent 工厂方法 ====================
-
-fun createProviderBasicActivityIntent(context: Context) = Intent(context, ProviderBasicActivity::class.java)
-fun createProviderAdvancedActivityIntent(context: Context) = Intent(context, ProviderAdvancedActivity::class.java)
+fun createProviderBasicIntent(context: Context) = Intent(context, ProviderBasicActivity::class.java)
+fun createProviderAdvancedIntent(context: Context) = Intent(context, ProviderAdvancedActivity::class.java)

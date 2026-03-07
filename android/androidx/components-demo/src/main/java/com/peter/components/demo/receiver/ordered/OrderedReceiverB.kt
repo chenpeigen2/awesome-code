@@ -4,12 +4,13 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 
 /**
- * 有序广播接收者 B（低优先级）
- *
- * 优先级：50（低于 ReceiverA）
- * 会接收到 ReceiverA 修改后的数据
+ * 有序广播接收器 B（优先级 50）
+ * 
+ * 在 AndroidManifest.xml 中配置：
+ * <intent-filter android:priority="50">
  */
 class OrderedReceiverB : BroadcastReceiver() {
 
@@ -18,24 +19,13 @@ class OrderedReceiverB : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d(TAG, "onReceive: ${intent?.action}")
-
-        // 获取原始数据
-        val originalData = intent?.getStringExtra("original_data")
-        Log.d(TAG, "原始数据: $originalData")
-
-        // 获取 ReceiverA 传递的数据
-        val resultCode = resultCode
-        val resultData = resultData
+        Log.d(TAG, "onReceive: 较低优先级接收")
+        
+        // 获取上一个接收者传递的数据
         val extras = getResultExtras(false)
-        val modifiedBy = extras?.getString("modified_by")
-
-        Log.d(TAG, "收到修改后的数据:")
-        Log.d(TAG, "  resultCode: $resultCode")
-        Log.d(TAG, "  resultData: $resultData")
-        Log.d(TAG, "  modified_by: $modifiedBy")
-
-        // 继续传递
-        setResultData("被 B 再次修改的数据")
+        val fromA = extras?.getString("from_A") ?: "无数据"
+        
+        Toast.makeText(context, "ReceiverB 收到广播\n来自A: $fromA", Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "收到来自 A 的数据: $fromA")
     }
 }

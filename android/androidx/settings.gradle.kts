@@ -57,5 +57,5 @@ include(":window-demo")
 include(":autodensity")
 include(":autodensity-demo")
 
-// Components Demo - Android 四大组件示例
+// Components Demo - 四大组件示例
 include(":components-demo")

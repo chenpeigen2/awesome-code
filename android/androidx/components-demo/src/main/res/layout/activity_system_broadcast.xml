@@ -2,93 +2,70 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BroadcastReceiver 示例"
-        android:textColor="@color/text_primary"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <!-- 系统广播 -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="1. 系统广播监听"
-        android:textColor="@color/primary"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="动态注册网络变化广播接收者"
-        android:textColor="@color/text_secondary"
-        android:textSize="13sp" />
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvNetworkStatus"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:title="系统广播与动态注册" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:background="@color/log_bg"
-        android:padding="12dp"
-        android:text="网络状态: 检测中..."
-        android:textColor="@color/text_primary"
-        android:textSize="14sp" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <!-- 自定义广播 -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="2. 发送自定义广播"
-        android:textColor="@color/primary"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="系统广播：\n静态注册在 AndroidManifest.xml 中"
+            android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/btnSendBroadcast"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="发送自定义广播" />
+        <Button
+            android:id="@+id/btnRegisterDynamic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="动态注册网络变化广播" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="3. 静态注册广播"
-        android:textColor="@color/primary"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <Button
+            android:id="@+id/btnUnregisterDynamic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="注销动态广播" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="StaticReceiver 在 Manifest 中注册\n监听开机完成和飞行模式切换\n需要对应权限才能生效"
-        android:textColor="@color/text_secondary"
-        android:textSize="13sp" />
+        <TextView
+            android:id="@+id/tvNetworkStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/gray_light"
+            android:padding="16dp"
+            android:text="网络状态：未知"
+            android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/btnOrdered"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="有序广播示例" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="知识点："
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-    <Button
-        android:id="@+id/btnLocal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="本地广播示例" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="1. 静态注册：开机启动、电量变化等\n2. 动态注册：需要在代码中注册/注销\n3. Android 8.0+ 限制静态注册隐式广播\n4. 动态注册的生命周期要正确管理"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
 </LinearLayout>

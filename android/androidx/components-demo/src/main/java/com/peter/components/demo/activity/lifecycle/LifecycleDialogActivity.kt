@@ -1,27 +1,27 @@
 package com.peter.components.demo.activity.lifecycle
 
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import com.peter.components.demo.R
+import com.peter.components.demo.databinding.ActivityLifecycleDialogBinding
 
 /**
- * 对话框风格 Activity
- *
- * 在 Manifest 中设置 android:theme="@style/Theme.AppCompat.Dialog"
- *
- * 特点：
- * 1. 看起来像对话框，实际上是 Activity
- * 2. 覆盖在原 Activity 上，但原 Activity 仍然可见
- * 3. 原Activity只会执行 onPause，不会执行 onStop
+ * 对话框样式的 Activity
+ * 
+ * 知识点：
+ * 1. 使用 Theme.Material3.DayNight.Dialog 主题
+ * 2. 启动后下方 Activity 执行 onPause
+ * 3. 关闭后下方 Activity 执行 onResume
  */
 class LifecycleDialogActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityLifecycleDialogBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lifecycle_dialog)
+        binding = ActivityLifecycleDialogBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        findViewById<Button>(R.id.btnClose).setOnClickListener {
+        binding.btnClose.setOnClickListener {
             finish()
         }
     }

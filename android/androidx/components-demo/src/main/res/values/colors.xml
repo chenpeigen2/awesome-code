@@ -7,21 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-
-    <!-- 自定义颜色 -->
-    <color name="primary">#2196F3</color>
-    <color name="primary_dark">#1976D2</color>
-    <color name="accent">#FF5722</color>
-    <color name="text_primary">#212121</color>
-    <color name="text_secondary">#757575</color>
-    <color name="divider">#BDBDBD</color>
-    <color name="item_bg">#F5F5F5</color>
-    <color name="header_bg">#E3F2FD</color>
-    <color name="log_bg">#FAFAFA</color>
-    <color name="lifecycle_create">#4CAF50</color>
-    <color name="lifecycle_start">#2196F3</color>
-    <color name="lifecycle_resume">#FF9800</color>
-    <color name="lifecycle_pause">#9C27B0</color>
-    <color name="lifecycle_stop">#F44336</color>
-    <color name="lifecycle_destroy">#795548</color>
+    <color name="gray">#FF666666</color>
+    <color name="gray_light">#FFF5F5F5</color>
+    <color name="divider">#FFE0E0E0</color>
+    
+    <!-- 组件颜色 -->
+    <color name="activity_color">#FF4CAF50</color>
+    <color name="service_color">#FF2196F3</color>
+    <color name="receiver_color">#FFFF9800</color>
+    <color name="provider_color">#FF9C27B0</color>
 </resources>

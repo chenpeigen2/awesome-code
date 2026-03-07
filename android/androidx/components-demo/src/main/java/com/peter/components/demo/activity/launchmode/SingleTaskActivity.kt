@@ -1,18 +1,20 @@
 package com.peter.components.demo.activity.launchmode
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.components.demo.databinding.ActivityLaunchmodeBinding
 
 /**
- * Standard 启动模式 (默认)
+ * SingleTask 启动模式
  * 
  * 知识点：
- * 1. 每次启动都创建新实例
- * 2. 实例可以位于不同任务栈
- * 3. 任务栈中可以有多个实例
+ * 1. 如果目标实例已存在于某个任务栈，则复用该实例，调用 onNewIntent()
+ * 2. 复用时，清除该实例上面的所有 Activity
+ * 3. 如果不存在，则创建新实例
+ * 4. 适用于：应用主页、购物车主页等
  */
-class StandardActivity : AppCompatActivity() {
+class SingleTaskActivity : AppCompatActivity() {
 
     companion object {
         private var launchCount = 0
@@ -26,14 +28,20 @@ class StandardActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         launchCount++
-        updateInfo()
+        updateInfo("onCreate")
 
         setupButtons()
     }
 
-    private fun updateInfo() {
+    override fun onNewIntent(intent: android.content.Intent) {
+        super.onNewIntent(intent)
+        updateInfo("onNewIntent - 栈内复用")
+        Toast.makeText(this, "栈内复用，清除上方所有 Activity", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateInfo(status: String) {
         binding.tvTaskId.text = taskId.toString()
-        binding.tvLaunchCount.text = "Standard 启动次数: $launchCount"
+        binding.tvLaunchCount.text = "SingleTask 实例数: $launchCount ($status)"
     }
 
     private fun setupButtons() {

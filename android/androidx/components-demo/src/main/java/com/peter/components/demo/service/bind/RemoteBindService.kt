@@ -6,32 +6,29 @@ import android.os.IBinder
 import android.util.Log
 
 /**
- * 绑定服务示例 - 远程绑定（AIDL）
- *
- * ═══════════════════════════════════════════════════════════════
- * AIDL (Android Interface Definition Language)
- * ═══════════════════════════════════════════════════════════════
- *
- * AIDL 用于跨进程通信 (IPC)
- *
- * 使用场景：
- * - 多进程应用
- * - 提供服务给其他应用
- *
- * 开发步骤：
- * 1. 创建 .aidl 接口文件
- * 2. 实现接口 Stub
- * 3. 在 onBind 中返回 Stub
- * 4. 客户端绑定服务获取接口
- *
- * ═══════════════════════════════════════════════════════════════
- * 注意事项
- * ═══════════════════════════════════════════════════════════════
- *
- * 1. AIDL 方法是同步的，不要在主线程调用
- * 2. 传递的对象必须实现 Parcelable
- * 3. Binder 事务缓冲区限制 1MB
- * 4. 注意处理 RemoteException
+ * 远程绑定服务示例 (AIDL)
+ * 
+ * 知识点：
+ * 1. 使用 AIDL (Android Interface Definition Language)
+ * 2. 跨进程通信 (IPC)
+ * 3. Stub 类实现接口
+ * 4. 客户端通过 IBinder 调用远程方法
+ * 
+ * 注意：
+ * - 需要创建 .aidl 文件定义接口
+ * - 服务需要设置 android:exported="true"
+ * - 客户端和服务端需要相同的 AIDL 文件
+ * 
+ * AIDL 文件示例 (IRemoteService.aidl):
+ * ```
+ * package com.peter.components.demo.service;
+ * 
+ * interface IRemoteService {
+ *     int getRandomNumber();
+ *     void basicTypes(int anInt, long aLong, boolean aBoolean,
+ *                     float aFloat, double aDouble, String aString);
+ * }
+ * ```
  */
 class RemoteBindService : Service() {
 
@@ -46,14 +43,23 @@ class RemoteBindService : Service() {
 
     override fun onBind(intent: Intent?): IBinder {
         Log.d(TAG, "onBind")
-        // 实际项目中返回 AIDL Stub 实现
-        // return IRemoteService.Stub.asInterface(...)
+        // 实际项目中这里返回 AIDL 生成的 Stub
+        // return object : IRemoteService.Stub() {
+        //     override fun getRandomNumber(): Int = Random().nextInt(100)
+        // }
+        
+        // 由于没有实际的 AIDL 文件，这里返回一个空的 Binder
         return object : android.os.Binder() {
             override fun onTransact(code: Int, data: android.os.Parcel, reply: android.os.Parcel?, flags: Int): Boolean {
                 Log.d(TAG, "onTransact: code=$code")
                 return super.onTransact(code, data, reply, flags)
             }
         }
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        Log.d(TAG, "onUnbind")
+        return super.onUnbind(intent)
     }
 
     override fun onDestroy() {

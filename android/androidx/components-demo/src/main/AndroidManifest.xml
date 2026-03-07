@@ -2,26 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Service 相关权限 -->
+    <!-- 权限声明 -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Components"
+        android:theme="@style/Theme.ComponentsDemo"
         tools:targetApi="31">
 
-        <!-- 主入口 -->
+        <!-- 主入口 Activity -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -31,86 +30,140 @@
             </intent-filter>
         </activity>
 
-        <!-- ==================== Activity 示例 ==================== -->
+        <!-- ==================== Activity 组件示例 ==================== -->
 
-        <!-- 基础 Activity -->
-        <activity android:name=".activity.basic.BasicActivity" />
-        <activity android:name=".activity.basic.ExplicitIntentActivity" />
-        <activity android:name=".activity.basic.ImplicitIntentActivity" />
+        <activity
+            android:name=".activity.basic.BasicActivity"
+            android:exported="false" />
 
-        <!-- 生命周期 -->
-        <activity android:name=".activity.lifecycle.LifecycleNormalActivity" />
-        <activity android:name=".activity.lifecycle.LifecycleDialogActivity"
-            android:theme="@style/Theme.AppCompat.Dialog" />
-        <activity android:name=".activity.lifecycle.LifecycleTranslucentActivity"
-            android:theme="@style/Theme.Components.Translucent" />
+        <activity
+            android:name=".activity.basic.ExplicitIntentActivity"
+            android:exported="false" />
 
-        <!-- 启动模式 -->
-        <activity android:name=".activity.launchmode.StandardActivity" />
+        <activity
+            android:name=".activity.basic.ImplicitIntentActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="components" android:host="demo" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.lifecycle.LifecycleNormalActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.lifecycle.LifecycleDialogActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ComponentsDemo.Dialog" />
+
+        <activity
+            android:name=".activity.lifecycle.LifecycleTranslucentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ComponentsDemo.Translucent" />
+
+        <activity
+            android:name=".activity.launchmode.StandardActivity"
+            android:exported="false" />
+
         <activity
             android:name=".activity.launchmode.SingleTopActivity"
+            android:exported="false"
             android:launchMode="singleTop" />
+
         <activity
             android:name=".activity.launchmode.SingleTaskActivity"
+            android:exported="false"
             android:launchMode="singleTask" />
+
         <activity
             android:name=".activity.launchmode.SingleInstanceActivity"
+            android:exported="false"
             android:launchMode="singleInstance" />
 
-        <!-- Activity 进阶 -->
-        <activity android:name=".activity.advanced.TaskAffinityActivity"
-            android:taskAffinity="com.peter.components.task1" />
-        <activity android:name=".activity.advanced.ActivityResultActivity" />
-        <activity android:name=".activity.advanced.SharedElementActivity" />
-        <activity android:name=".activity.advanced.FragmentCommunicationActivity" />
+        <activity
+            android:name=".activity.advanced.ActivityResultActivity"
+            android:exported="false" />
 
-        <!-- ==================== Service 示例 ==================== -->
+        <activity
+            android:name=".activity.advanced.CustomResultActivity"
+            android:exported="false" />
 
-        <!-- Service 入口 Activity -->
-        <activity android:name=".service.ServiceMainActivity" />
+        <activity
+            android:name=".activity.advanced.FragmentCommunicationActivity"
+            android:exported="false" />
 
-        <!-- 基础 Service -->
-        <service android:name=".service.basic.SimpleService" />
-        <service android:name=".service.basic.IntentServiceDemo" />
+        <activity
+            android:name=".activity.advanced.SharedElementActivity"
+            android:exported="false" />
 
-        <!-- 前台服务 -->
+        <activity
+            android:name=".activity.advanced.TaskAffinityActivity"
+            android:exported="false"
+            android:taskAffinity="com.peter.components.task" />
+
+        <!-- ==================== Service 组件示例 ==================== -->
+
+        <activity
+            android:name=".service.ServiceMainActivity"
+            android:exported="false" />
+
+        <service
+            android:name=".service.basic.SimpleService"
+            android:exported="false" />
+
         <service
             android:name=".service.foreground.DownloadService"
-            android:foregroundServiceType="dataSync" />
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="demo" />
+        </service>
 
-        <!-- 绑定服务 -->
-        <service android:name=".service.bind.LocalBindService" />
+        <service
+            android:name=".service.bind.LocalBindService"
+            android:exported="false" />
+
         <service
             android:name=".service.bind.RemoteBindService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.peter.components.demo.bind.IRemoteService" />
+                <action android:name="com.peter.components.demo.service.IRemoteService" />
             </intent-filter>
         </service>
 
-        <!-- ==================== BroadcastReceiver 示例 ==================== -->
+        <!-- ==================== BroadcastReceiver 组件示例 ==================== -->
 
-        <!-- Receiver 示例 Activity -->
-        <activity android:name=".receiver.SystemBroadcastActivity" />
-        <activity android:name=".receiver.OrderedBroadcastActivity" />
-        <activity android:name=".receiver.LocalBroadcastActivity" />
+        <activity
+            android:name=".receiver.SystemBroadcastActivity"
+            android:exported="false" />
 
-        <!-- 静态注册的广播接收者 -->
+        <activity
+            android:name=".receiver.OrderedBroadcastActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".receiver.LocalBroadcastActivity"
+            android:exported="false" />
+
         <receiver
             android:name=".receiver.StaticReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.AIRPLANE_MODE" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
 
-        <!-- 有序广播接收者 -->
         <receiver
             android:name=".receiver.ordered.OrderedReceiverA"
             android:exported="true">
             <intent-filter android:priority="100">
-                <action android:name="com.peter.components.ORDERED_DEMO" />
+                <action android:name="com.peter.components.demo.ORDERED_BROADCAST" />
             </intent-filter>
         </receiver>
 
@@ -118,17 +171,19 @@
             android:name=".receiver.ordered.OrderedReceiverB"
             android:exported="true">
             <intent-filter android:priority="50">
-                <action android:name="com.peter.components.ORDERED_DEMO" />
+                <action android:name="com.peter.components.demo.ORDERED_BROADCAST" />
             </intent-filter>
         </receiver>
 
-        <!-- 本地广播不需要在 Manifest 中注册 -->
+        <!-- ==================== ContentProvider 组件示例 ==================== -->
 
-        <!-- ==================== ContentProvider 示例 ==================== -->
+        <activity
+            android:name=".provider.ProviderBasicActivity"
+            android:exported="false" />
 
-        <!-- Provider 示例 Activity -->
-        <activity android:name=".provider.ProviderBasicActivity" />
-        <activity android:name=".provider.ProviderAdvancedActivity" />
+        <activity
+            android:name=".provider.ProviderAdvancedActivity"
+            android:exported="false" />
 
         <provider
             android:name=".provider.UserProvider"

@@ -2,25 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:padding="24dp">
+    android:padding="16dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="对话框风格 Activity"
-        android:textColor="@color/text_primary"
+        android:text="对话框样式 Activity"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="这是一个对话框风格的 Activity\n\n当前 Activity 只会触发 onPause\n不会触发 onStop"
-        android:textColor="@color/text_secondary"
+        android:layout_marginTop="16dp"
+        android:text="这是一个对话框样式的 Activity。\n查看后台 Activity 的生命周期变化。"
         android:textSize="14sp" />
 
     <Button

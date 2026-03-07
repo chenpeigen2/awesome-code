@@ -1,20 +1,16 @@
 package com.peter.components.demo.receiver.ordered
 
-import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 
 /**
- * 有序广播接收者 A（高优先级）
- *
- * 优先级在 Manifest 中设置：
+ * 有序广播接收器 A（优先级 100）
+ * 
+ * 在 AndroidManifest.xml 中配置：
  * <intent-filter android:priority="100">
- *
- * 优先级范围：-1000 到 1000
- * 数值越大优先级越高
  */
 class OrderedReceiverA : BroadcastReceiver() {
 
@@ -23,31 +19,20 @@ class OrderedReceiverA : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context?, intent: Intent?) {
-        Log.d(TAG, "onReceive: ${intent?.action}")
-
-        // 获取原始数据
-        val originalData = intent?.getStringExtra("original_data")
-        Log.d(TAG, "原始数据: $originalData")
-
-        // 获取前一个接收者传递的数据
-        val resultCode = resultCode
-        val resultData = resultData
-        Log.d(TAG, "收到: code=$resultCode, data=$resultData")
-
-        // 修改数据传递给下一个接收者
-        setResultCode(Activity.RESULT_OK)
-        setResultData("被 A 修改的数据")
-
-        // 添加额外数据
-        val extras = Bundle().apply {
-            putString("modified_by", "ReceiverA")
+        Log.d(TAG, "onReceive: 最高优先级接收")
+        
+        // 检查是否需要中断
+        if (intent?.getBooleanExtra("abort", false) == true) {
+            // 中断广播传播
+            abortBroadcast()
+            Toast.makeText(context, "ReceiverA 中断了广播", Toast.LENGTH_SHORT).show()
+            Log.d(TAG, "广播已被中断")
+        } else {
+            Toast.makeText(context, "ReceiverA 收到广播", Toast.LENGTH_SHORT).show()
+            
+            // 可以添加数据传递给下一个接收者
+            val extras = getResultExtras(true)
+            extras.putString("from_A", "来自 A 的数据")
         }
-        setResultExtras(extras)
-
-        // 可以调用 abortBroadcast() 拦截广播
-        // abortBroadcast()
-        // Log.d(TAG, "广播已被拦截")
-
-        Log.d(TAG, "已修改数据并传递")
     }
 }
