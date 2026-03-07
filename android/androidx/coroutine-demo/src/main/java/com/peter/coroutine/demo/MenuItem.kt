@@ -14,6 +14,12 @@ import com.peter.coroutine.demo.flow.ColdHotFlowActivity
 import com.peter.coroutine.demo.flow.FlowBasicsActivity
 import com.peter.coroutine.demo.flow.FlowOperatorsActivity
 import com.peter.coroutine.demo.flow.StateFlowActivity
+import com.peter.coroutine.demo.errorhandling.ExceptionHandlerActivity
+import com.peter.coroutine.demo.errorhandling.SupervisorJobActivity
+import com.peter.coroutine.demo.errorhandling.TryCatchActivity
+import com.peter.coroutine.demo.android.CollectFlowActivity
+import com.peter.coroutine.demo.android.LifecycleScopeActivity
+import com.peter.coroutine.demo.android.ViewModelScopeActivity
 
 /**
  * 菜单项数据模型
@@ -48,14 +54,14 @@ fun createProduceConsumeIntent(context: Context) = Intent(context, ProduceConsum
 fun createSelectExpressionIntent(context: Context) = Intent(context, SelectExpressionActivity::class.java)
 
 // ==================== 异常处理 (04-ErrorHandling) ====================
-fun createTryCatchIntent(context: Context) = null // Intent(context, TryCatchActivity::class.java)
-fun createExceptionHandlerIntent(context: Context) = null // Intent(context, ExceptionHandlerActivity::class.java)
-fun createSupervisorJobIntent(context: Context) = null // Intent(context, SupervisorJobActivity::class.java)
+fun createTryCatchIntent(context: Context) = Intent(context, TryCatchActivity::class.java)
+fun createExceptionHandlerIntent(context: Context) = Intent(context, ExceptionHandlerActivity::class.java)
+fun createSupervisorJobIntent(context: Context) = Intent(context, SupervisorJobActivity::class.java)
 
 // ==================== Android 集成 (05-Android) ====================
-fun createLifecycleScopeIntent(context: Context) = null // Intent(context, LifecycleScopeActivity::class.java)
-fun createViewModelScopeIntent(context: Context) = null // Intent(context, ViewModelScopeActivity::class.java)
-fun createCollectFlowIntent(context: Context) = null // Intent(context, CollectFlowActivity::class.java)
+fun createLifecycleScopeIntent(context: Context) = Intent(context, LifecycleScopeActivity::class.java)
+fun createViewModelScopeIntent(context: Context) = Intent(context, ViewModelScopeActivity::class.java)
+fun createCollectFlowIntent(context: Context) = Intent(context, CollectFlowActivity::class.java)
 
 // ==================== 进阶原理 (06-Advanced) ====================
 fun createContinuationIntent(context: Context) = null // Intent(context, ContinuationActivity::class.java)

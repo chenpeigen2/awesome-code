@@ -73,6 +73,32 @@
             android:name=".channel.SelectExpressionActivity"
             android:exported="false" />
 
+        <!-- 异常处理模块 (04-ErrorHandling) -->
+        <activity
+            android:name=".errorhandling.TryCatchActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".errorhandling.ExceptionHandlerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".errorhandling.SupervisorJobActivity"
+            android:exported="false" />
+
+        <!-- Android 集成模块 (05-Android) -->
+        <activity
+            android:name=".android.LifecycleScopeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".android.ViewModelScopeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".android.CollectFlowActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

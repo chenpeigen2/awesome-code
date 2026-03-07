@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- 三种收集方式对比 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Flow 收集方式对比"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <!-- repeatOnLifecycle -->
+        <TextView
+            android:id="@+id/tvRepeatOnLifecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="#4CAF50"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="repeatOnLifecycle: -"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="推荐: 生命周期感知，安全高效"
+            android:textSize="11sp"
+            android:textColor="#4CAF50" />
+
+        <!-- flowWithLifecycle -->
+        <TextView
+            android:id="@+id/tvFlowWithLifecycle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="#2196F3"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="flowWithLifecycle: -"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="推荐: API 简洁，功能同上"
+            android:textSize="11sp"
+            android:textColor="#2196F3" />
+
+        <!-- 直接 collect -->
+        <TextView
+            android:id="@+id/tvDirectCollect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="#F44336"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="直接 collect: -"
+            tools:ignore="HardcodedText" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="不推荐: 后台也收集，浪费资源"
+            android:textSize="11sp"
+            android:textColor="#F44336" />
+
+        <!-- 切换按钮 -->
+        <Button
+            android:id="@+id/btnToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="切换 Flow 激活状态" />
+
+        <!-- 说明 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Lifecycle.State 参数说明:\n- STARTED: onStart 到 onStop (推荐用于 UI)\n- RESUMED: onResume 到 onPause\n- CREATED: onCreate 到 onDestroy"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray" />
+
+        <!-- 日志区域 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="运行日志 (按 Home 键观察差异)"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/darker_gray"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/tvLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textSize="11sp"
+                android:textColor="@android:color/white" />
+
+        </ScrollView>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
