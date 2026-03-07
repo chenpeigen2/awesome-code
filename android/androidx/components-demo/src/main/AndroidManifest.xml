@@ -105,6 +105,16 @@
             android:exported="false"
             android:taskAffinity="com.peter.components.task" />
 
+        <!-- ==================== Activity 启动流程示例 ==================== -->
+
+        <activity
+            android:name=".activity.startup.StartupFlowActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".activity.startup.TargetActivity"
+            android:exported="false" />
+
         <!-- ==================== Service 组件示例 ==================== -->
 
         <activity

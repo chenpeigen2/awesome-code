@@ -16,6 +16,7 @@ import com.peter.components.demo.activity.launchmode.StandardActivity
 import com.peter.components.demo.activity.lifecycle.LifecycleDialogActivity
 import com.peter.components.demo.activity.lifecycle.LifecycleNormalActivity
 import com.peter.components.demo.activity.lifecycle.LifecycleTranslucentActivity
+import com.peter.components.demo.activity.startup.StartupFlowActivity
 import com.peter.components.demo.provider.ProviderAdvancedActivity
 import com.peter.components.demo.provider.ProviderBasicActivity
 import com.peter.components.demo.receiver.LocalBroadcastActivity
@@ -49,6 +50,7 @@ fun createActivityResultIntent(context: Context) = Intent(context, ActivityResul
 fun createFragmentCommunicationIntent(context: Context) = Intent(context, FragmentCommunicationActivity::class.java)
 fun createSharedElementIntent(context: Context) = Intent(context, SharedElementActivity::class.java)
 fun createTaskAffinityIntent(context: Context) = Intent(context, TaskAffinityActivity::class.java)
+fun createStartupFlowIntent(context: Context) = Intent(context, StartupFlowActivity::class.java)
 
 // ==================== Service Intent 创建函数 ====================
 

@@ -103,6 +103,11 @@ class MainActivity : AppCompatActivity() {
                 description = getString(R.string.activity_task_affinity_desc),
                 intent = createTaskAffinityIntent(this)
             ),
+            MenuItem(
+                title = getString(R.string.activity_startup_flow),
+                description = getString(R.string.activity_startup_flow_desc),
+                intent = createStartupFlowIntent(this)
+            ),
 
             // ==================== Service 组件 ====================
             MenuItem(

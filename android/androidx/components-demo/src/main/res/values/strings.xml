@@ -22,6 +22,8 @@
     <string name="activity_shared_element_desc">Activity 转场动画与共享元素</string>
     <string name="activity_task_affinity">TaskAffinity</string>
     <string name="activity_task_affinity_desc">任务栈与亲和性配置</string>
+    <string name="activity_startup_flow">启动流程解析</string>
+    <string name="activity_startup_flow_desc">源码调用链追踪与时间线分析</string>
 
     <!-- Service 示例 -->
     <string name="service_title">Service 组件</string>
