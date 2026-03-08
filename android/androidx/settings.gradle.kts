@@ -62,3 +62,6 @@ include(":components-demo")
 
 // Coroutine Demo - 协程示例
 include(":coroutine-demo")
+
+// Animation Demo - 动画示例
+include(":animation-demo")

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">动画全面解析</string>
+
+    <!-- Categories -->
+    <string name="category_view_animation">View动画</string>
+    <string name="category_property_animation">属性动画</string>
+    <string name="category_transition_animation">转场动画</string>
+    <string name="category_physics_animation">Physics动画</string>
+
+    <!-- View Animation -->
+    <string name="tween_animation">Tween补间动画</string>
+    <string name="tween_animation_desc">Alpha/Scale/Translate/Rotate/AnimationSet</string>
+    <string name="frame_animation">Frame帧动画</string>
+    <string name="frame_animation_desc">AnimationDrawable帧序列播放</string>
+
+    <!-- Property Animation -->
+    <string name="object_animator">ObjectAnimator</string>
+    <string name="object_animator_desc">属性动画核心类演示</string>
+    <string name="value_animator">ValueAnimator</string>
+    <string name="value_animator_desc">数值动画与自定义估值器</string>
+    <string name="animator_set">AnimatorSet</string>
+    <string name="animator_set_desc">动画集合与编排</string>
+
+    <!-- Transition Animation -->
+    <string name="activity_transition">Activity转场</string>
+    <string name="activity_transition_desc">Explode/Slide/Fade转场效果</string>
+    <string name="fragment_transition">Fragment转场</string>
+    <string name="fragment_transition_desc">Fragment切换动画</string>
+    <string name="shared_element">共享元素动画</string>
+    <string name="shared_element_desc">元素共享转场效果</string>
+
+    <!-- Physics Animation -->
+    <string name="spring_animation">Spring弹性动画</string>
+    <string name="spring_animation_desc">Stiffness/DampingRatio调节</string>
+    <string name="fling_animation">Fling投掷动画</string>
+    <string name="fling_animation_desc">Friction摩擦力与边界处理</string>
+
+    <!-- Common -->
+    <string name="play">播放</string>
+    <string name="pause">暂停</string>
+    <string name="reset">重置</string>
+    <string name="duration">时长</string>
+    <string name="interpolator">插值器</string>
+</resources>

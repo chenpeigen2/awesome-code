@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AnimationDemo">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- View Animation -->
+        <activity
+            android:name=".viewanimation.TweenAnimationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".viewanimation.FrameAnimationActivity"
+            android:exported="false" />
+
+        <!-- Property Animation -->
+        <activity
+            android:name=".propertyanimation.ObjectAnimatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".propertyanimation.ValueAnimatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".propertyanimation.AnimatorSetActivity"
+            android:exported="false" />
+
+        <!-- Transition Animation -->
+        <activity
+            android:name=".transitionanimation.ActivityTransitionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transitionanimation.TransitionTargetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transitionanimation.FragmentTransitionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transitionanimation.SharedElementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".transitionanimation.SharedElementDetailActivity"
+            android:exported="false" />
+
+        <!-- Physics Animation -->
+        <activity
+            android:name=".physicsanimation.SpringAnimationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".physicsanimation.FlingAnimationActivity"
+            android:exported="false" />
+
+    </application>
+
+</manifest>
