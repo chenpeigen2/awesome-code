@@ -25,34 +25,38 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- 按钮区域 - 三等分 -->
         <LinearLayout
             android:id="@+id/controlsContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center">
+            android:padding="8dp">
 
             <Button
                 android:id="@+id/btnFragment1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="4dp"
                 android:text="Fragment 1" />
 
             <Button
                 android:id="@+id/btnFragment2"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="4dp"
                 android:text="Fragment 2" />
 
             <Button
                 android:id="@+id/btnFragment3"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="4dp"
                 android:text="Fragment 3" />
 
         </LinearLayout>
@@ -61,20 +65,26 @@
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="16dp" />
+            android:layout_weight="1" />
 
-        <!-- 代码说明 -->
-        <TextView
-            android:id="@+id/tvCodeHint"
+        <!-- 代码说明 - 可滚动 -->
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginTop="16dp"
-            android:padding="12dp"
+            android:fillViewport="true"
             android:background="@drawable/bg_code_block"
-            android:textSize="12sp"
-            android:textColor="#333333"
-            android:fontFamily="monospace" />
+            android:layout_margin="8dp">
+
+            <TextView
+                android:id="@+id/tvCodeHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:textSize="12sp"
+                android:textColor="#333333"
+                android:fontFamily="monospace" />
+
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 

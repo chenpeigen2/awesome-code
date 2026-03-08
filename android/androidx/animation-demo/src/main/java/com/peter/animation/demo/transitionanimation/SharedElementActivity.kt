@@ -1,10 +1,10 @@
 package com.peter.animation.demo.transitionanimation
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import com.peter.animation.demo.databinding.ActivitySharedElementBinding
@@ -27,6 +27,9 @@ class SharedElementActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySharedElementBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 启用Activity转场功能
+        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+
         super.onCreate(savedInstanceState)
         binding = ActivitySharedElementBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -43,7 +46,7 @@ class SharedElementActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
-            finish()
+            finishAfterTransition()
             return true
         }
         return super.onOptionsItemSelected(item)

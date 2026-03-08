@@ -1,6 +1,7 @@
 package com.peter.animation.demo.transitionanimation
 
 import android.os.Bundle
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.animation.demo.databinding.ActivitySharedElementDetailBinding
 
@@ -12,6 +13,9 @@ class SharedElementDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySharedElementDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // 启用Activity转场功能
+        window.requestFeature(Window.FEATURE_ACTIVITY_TRANSITIONS)
+
         super.onCreate(savedInstanceState)
         binding = ActivitySharedElementDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
