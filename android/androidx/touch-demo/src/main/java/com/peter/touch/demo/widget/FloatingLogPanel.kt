@@ -59,7 +59,7 @@ class FloatingLogPanel(private val activity: Activity) {
             leftMargin = 50
             topMargin = 300
         }
-        
+//        activity.addContentView(floatingView, params)
         decorView.addView(floatingView, params)
         isShowing = true
     }
