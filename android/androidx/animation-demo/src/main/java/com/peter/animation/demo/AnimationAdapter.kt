@@ -62,7 +62,8 @@ class AnimationAdapter(
                 binding.tvCategoryHeader.visibility = View.GONE
             }
 
-            binding.root.setOnClickListener { onItemClick(item) }
+            // 点击事件绑定到 CardView
+            binding.cardView.setOnClickListener { onItemClick(item) }
         }
     }
 }

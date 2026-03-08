@@ -1,186 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".physicsanimation.FlingAnimationActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="Fling投掷动画"
-        app:titleTextColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <!-- 动画演示区域 -->
-    <FrameLayout
-        android:id="@+id/animationContainer"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_animation_area"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="Fling投掷动画"
+            app:navigationIconTint="@android:color/white" />
 
-        <View
-            android:id="@+id/animationTarget"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center"
-            android:background="@drawable/shape_animation_target" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-    </FrameLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <!-- Friction (摩擦力) 调节 -->
-    <TextView
-        android:id="@+id/tvFrictionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Friction (摩擦力): 1.0"
-        app:layout_constraintTop_toBottomOf="@id/animationContainer"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <SeekBar
-        android:id="@+id/seekBarFriction"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:max="50"
-        android:progress="10"
-        app:layout_constraintTop_toBottomOf="@id/tvFrictionLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <!-- 动画方向选择 -->
-    <TextView
-        android:id="@+id/tvDirectionLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="投掷方向"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/seekBarFriction"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <RadioGroup
-        android:id="@+id/rgDirection"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@id/tvDirectionLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <RadioButton
-            android:id="@+id/rbX"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:checked="true"
-            android:text="X轴" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <RadioButton
-            android:id="@+id/rbY"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Y轴" />
+            <!-- 动画演示区域 -->
+            <FrameLayout
+                android:id="@+id/animationContainer"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/bg_animation_area">
 
-        <RadioButton
-            android:id="@+id/rbBoth"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="X+Y" />
+                <View
+                    android:id="@+id/animationTarget"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_animation_target" />
 
-    </RadioGroup>
+            </FrameLayout>
 
-    <!-- 边界设置 -->
-    <TextView
-        android:id="@+id/tvBoundaryLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="边界限制"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/rgDirection"
-        app:layout_constraintStart_toStartOf="parent" />
+            <!-- Friction (摩擦力) 调节 -->
+            <TextView
+                android:id="@+id/tvFrictionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Friction (摩擦力): 1.0" />
 
-    <CheckBox
-        android:id="@+id/cbEnableBoundary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:checked="true"
-        android:text="启用边界限制"
-        app:layout_constraintTop_toBottomOf="@id/tvBoundaryLabel"
-        app:layout_constraintStart_toStartOf="parent" />
+            <SeekBar
+                android:id="@+id/seekBarFriction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:max="50"
+                android:progress="10" />
 
-    <!-- 控制按钮 -->
-    <LinearLayout
-        android:id="@+id/controlsContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/cbEnableBoundary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+            <!-- 动画方向选择 -->
+            <TextView
+                android:id="@+id/tvDirectionLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="投掷方向"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnFlingRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="向右投掷" />
+            <RadioGroup
+                android:id="@+id/rgDirection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btnFlingLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="向左投掷" />
+                <RadioButton
+                    android:id="@+id/rbX"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="X轴" />
 
-        <Button
-            android:id="@+id/btnReset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="重置" />
+                <RadioButton
+                    android:id="@+id/rbY"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Y轴" />
 
-    </LinearLayout>
+                <RadioButton
+                    android:id="@+id/rbBoth"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="X+Y" />
 
-    <!-- 代码说明 -->
-    <TextView
-        android:id="@+id/tvCodeHint"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:padding="12dp"
-        android:background="@drawable/bg_code_block"
-        android:textSize="12sp"
-        android:textColor="#333333"
-        android:fontFamily="monospace"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/controlsContainer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <!-- 边界设置 -->
+            <TextView
+                android:id="@+id/tvBoundaryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="边界限制"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbEnableBoundary"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="启用边界限制" />
+
+            <!-- 控制按钮 -->
+            <LinearLayout
+                android:id="@+id/controlsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnFlingRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="向右投掷" />
+
+                <Button
+                    android:id="@+id/btnFlingLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="向左投掷" />
+
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="重置" />
+
+            </LinearLayout>
+
+            <!-- 代码说明 -->
+            <TextView
+                android:id="@+id/tvCodeHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="12dp"
+                android:background="@drawable/bg_code_block"
+                android:textSize="12sp"
+                android:textColor="#333333"
+                android:fontFamily="monospace" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

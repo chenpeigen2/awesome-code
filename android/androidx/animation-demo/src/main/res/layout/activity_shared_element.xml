@@ -1,112 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".transitionanimation.SharedElementActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="共享元素动画"
-        app:titleTextColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tvInstructions"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="点击卡片进入详情页面，观察共享元素转场动画"
-        android:textSize="14sp"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="共享元素动画"
+            app:navigationIconTint="@android:color/white" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card1"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:foreground="?attr/selectableItemBackground"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:layout_constraintTop_toBottomOf="@id/tvInstructions"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- 共享元素：transitionName="shared_image" -->
-            <ImageView
-                android:id="@+id/ivImage"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/shape_animation_target"
-                android:transitionName="shared_image" />
+            <TextView
+                android:id="@+id/tvInstructions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="点击卡片进入详情页面，观察共享元素转场动画"
+                android:textSize="14sp"
+                android:gravity="center" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="16dp">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
 
-                <!-- 共享元素：transitionName="shared_title" -->
-                <TextView
-                    android:id="@+id/tvTitle"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="共享元素演示"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:transitionName="shared_title" />
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-                <!-- 共享元素：transitionName="shared_desc" -->
-                <TextView
-                    android:id="@+id/tvDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:layout_marginTop="8dp"
-                    android:text="点击卡片查看共享元素转场效果。\n图片、标题和描述文字都会有平滑的过渡动画。"
-                    android:textSize="14sp"
-                    android:transitionName="shared_desc" />
+                    <!-- 共享元素：transitionName="shared_image" -->
+                    <ImageView
+                        android:id="@+id/ivImage"
+                        android:layout_width="120dp"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/shape_animation_target"
+                        android:transitionName="shared_image" />
 
-            </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- 共享元素：transitionName="shared_title" -->
+                        <TextView
+                            android:id="@+id/tvTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="共享元素演示"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:transitionName="shared_title" />
+
+                        <!-- 共享元素：transitionName="shared_desc" -->
+                        <TextView
+                            android:id="@+id/tvDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:layout_marginTop="8dp"
+                            android:text="点击卡片查看共享元素转场效果。\n图片、标题和描述文字都会有平滑的过渡动画。"
+                            android:textSize="14sp"
+                            android:transitionName="shared_desc" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- 代码说明 -->
+            <TextView
+                android:id="@+id/tvCodeHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="12dp"
+                android:background="@drawable/bg_code_block"
+                android:textSize="12sp"
+                android:textColor="#333333"
+                android:fontFamily="monospace" />
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </androidx.core.widget.NestedScrollView>
 
-    <!-- 代码说明 -->
-    <TextView
-        android:id="@+id/tvCodeHint"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:padding="12dp"
-        android:background="@drawable/bg_code_block"
-        android:textSize="12sp"
-        android:textColor="#333333"
-        android:fontFamily="monospace"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/card1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

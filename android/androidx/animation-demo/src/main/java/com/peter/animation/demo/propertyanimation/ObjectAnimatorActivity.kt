@@ -78,12 +78,13 @@ class ObjectAnimatorActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerProperty.adapter = adapter
 
-        binding.spinnerProperty.setOnItemSelectedListener(object : android.widget.AdapterView.OnItemSelectedListener {
+        binding.spinnerProperty.onItemSelectedListener = object : android.widget.AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: android.widget.AdapterView<*>, view: View?, position: Int, id: Long) {
                 updateCodeHint()
             }
+
             override fun onNothingSelected(parent: android.widget.AdapterView<*>) {}
-        })
+        }
     }
 
     private fun setupDurationSeekBar() {

@@ -12,6 +12,7 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import com.peter.animation.demo.R
 import com.peter.animation.demo.databinding.ActivityValueAnimatorBinding
+import androidx.core.graphics.toColorInt
 
 /**
  * ValueAnimator演示
@@ -130,10 +131,10 @@ class ValueAnimatorActivity : AppCompatActivity() {
 
     private fun createColorAnimator(): ValueAnimator {
         return ValueAnimator.ofArgb(
-            Color.parseColor("#F44336"),
-            Color.parseColor("#FFEB3B"),
-            Color.parseColor("#4CAF50"),
-            Color.parseColor("#2196F3")
+            "#F44336".toColorInt(),
+            "#FFEB3B".toColorInt(),
+            "#4CAF50".toColorInt(),
+            "#2196F3".toColorInt()
         ).apply {
             addUpdateListener { animator ->
                 val color = animator.animatedValue as Int
@@ -156,7 +157,7 @@ class ValueAnimatorActivity : AppCompatActivity() {
     private fun resetAnimation() {
         currentAnimator?.cancel()
         binding.tvValue.text = "0"
-        binding.tvValue.setTextColor(Color.parseColor("#4CAF50"))
+        binding.tvValue.setTextColor("#4CAF50".toColorInt())
     }
 
     private fun updateCodeHint() {

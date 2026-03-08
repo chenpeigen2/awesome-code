@@ -1,167 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".propertyanimation.AnimatorSetActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="AnimatorSet"
-        app:titleTextColor="@android:color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <!-- 动画演示区域 -->
-    <FrameLayout
-        android:id="@+id/animationContainer"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_margin="16dp"
-        android:background="@drawable/bg_animation_area"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="AnimatorSet"
+            app:navigationIconTint="@android:color/white" />
 
-        <View
-            android:id="@+id/animationTarget1"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center"
-            android:background="@drawable/shape_animation_target" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <View
-            android:id="@+id/animationTarget2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center|start"
-            android:background="@drawable/shape_animation_target_blue" />
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <View
-            android:id="@+id/animationTarget3"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_gravity="center|end"
-            android:background="@drawable/shape_animation_target_orange" />
-
-    </FrameLayout>
-
-    <!-- 播放模式选择 -->
-    <TextView
-        android:id="@+id/tvPlayMode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="播放模式"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/animationContainer"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <RadioGroup
-        android:id="@+id/rgPlayMode"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/tvPlayMode"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <RadioButton
-            android:id="@+id/rbSequentially"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="顺序播放 (playSequentially)" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <RadioButton
-            android:id="@+id/rbTogether"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="同时播放 (playTogether)" />
+            <!-- 动画演示区域 -->
+            <FrameLayout
+                android:id="@+id/animationContainer"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@drawable/bg_animation_area">
 
-        <RadioButton
-            android:id="@+id/rbBuilder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="复杂编排 (Builder)" />
+                <View
+                    android:id="@+id/animationTarget1"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/shape_animation_target" />
 
-    </RadioGroup>
+                <View
+                    android:id="@+id/animationTarget2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center|start"
+                    android:background="@drawable/shape_animation_target_blue" />
 
-    <!-- 时长调节 -->
-    <TextView
-        android:id="@+id/tvDurationLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="单个动画时长: 500ms"
-        app:layout_constraintTop_toBottomOf="@id/rgPlayMode"
-        app:layout_constraintStart_toStartOf="parent" />
+                <View
+                    android:id="@+id/animationTarget3"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center|end"
+                    android:background="@drawable/shape_animation_target_orange" />
 
-    <SeekBar
-        android:id="@+id/seekBarDuration"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:max="2000"
-        android:progress="500"
-        app:layout_constraintTop_toBottomOf="@id/tvDurationLabel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            </FrameLayout>
 
-    <!-- 控制按钮 -->
-    <LinearLayout
-        android:id="@+id/controlsContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/seekBarDuration"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+            <!-- 播放模式选择 -->
+            <TextView
+                android:id="@+id/tvPlayMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="播放模式"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/btnPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="播放" />
+            <RadioGroup
+                android:id="@+id/rgPlayMode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnReset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="重置" />
+                <RadioButton
+                    android:id="@+id/rbSequentially"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="顺序播放 (playSequentially)" />
 
-    </LinearLayout>
+                <RadioButton
+                    android:id="@+id/rbTogether"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="同时播放 (playTogether)" />
 
-    <!-- 代码说明 -->
-    <TextView
-        android:id="@+id/tvCodeHint"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="16dp"
-        android:padding="12dp"
-        android:background="@drawable/bg_code_block"
-        android:textSize="12sp"
-        android:textColor="#333333"
-        android:fontFamily="monospace"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/controlsContainer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+                <RadioButton
+                    android:id="@+id/rbBuilder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="复杂编排 (Builder)" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </RadioGroup>
+
+            <!-- 时长调节 -->
+            <TextView
+                android:id="@+id/tvDurationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="单个动画时长: 500ms" />
+
+            <SeekBar
+                android:id="@+id/seekBarDuration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:max="2000"
+                android:progress="500" />
+
+            <!-- 控制按钮 -->
+            <LinearLayout
+                android:id="@+id/controlsContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="播放" />
+
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="重置" />
+
+            </LinearLayout>
+
+            <!-- 代码说明 -->
+            <TextView
+                android:id="@+id/tvCodeHint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:padding="12dp"
+                android:background="@drawable/bg_code_block"
+                android:textSize="12sp"
+                android:textColor="#333333"
+                android:fontFamily="monospace" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
