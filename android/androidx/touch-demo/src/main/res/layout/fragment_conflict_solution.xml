@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="滑动冲突解决方案对比"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#1976D2" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="两种解决方案："
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <!-- 外部拦截法 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="外部拦截法"
+                    android:textStyle="bold"
+                    android:textColor="#4CAF50" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="父View根据条件决定是否拦截\n\n适用场景：同向滑动"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/darker_gray" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <!-- 内部拦截法 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="2dp"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="12dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="内部拦截法"
+                    android:textStyle="bold"
+                    android:textColor="#2196F3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="子View通过requestDisallow控制\n\n适用场景：子View需要优先响应"
+                    android:textSize="12sp"
+                    android:textColor="@android:color/darker_gray" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:background="#E0E0E0" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="代码示例："
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:background="#263238"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textColor="#ECEFF1"
+            android:textSize="11sp"
+            android:text="// 外部拦截法示例\n@Override\npublic boolean onInterceptTouchEvent(MotionEvent ev) {\n    boolean intercepted = false;\n    switch (ev.getAction()) {\n        case MotionEvent.ACTION_DOWN:\n            intercepted = false;\n            break;\n        case MotionEvent.ACTION_MOVE:\n            // 根据滑动距离或角度判断\n            if (needIntercept(ev)) {\n                intercepted = true;\n            }\n            break;\n        case MotionEvent.ACTION_UP:\n            intercepted = false;\n            break;\n    }\n    return intercepted;\n}\n\n// 内部拦截法示例\n// 子View中:\n@Override\npublic boolean dispatchTouchEvent(MotionEvent ev) {\n    switch (ev.getAction()) {\n        case MotionEvent.ACTION_DOWN:\n            // 请求父View不要拦截\n            getParent().requestDisallowInterceptTouchEvent(true);\n            break;\n        case MotionEvent.ACTION_MOVE:\n            if (shouldParentHandle(ev)) {\n                // 允许父View拦截\n                getParent().requestDisallowInterceptTouchEvent(false);\n            }\n            break;\n    }\n    return super.dispatchTouchEvent(ev);\n}" />
+
+    </ScrollView>
+
+</LinearLayout>

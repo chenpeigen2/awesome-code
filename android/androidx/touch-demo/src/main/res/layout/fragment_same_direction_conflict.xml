@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="同向滑动冲突演示"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="#1976D2" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="场景：垂直 ScrollView 嵌套垂直 RecyclerView
+问题：内外滑动冲突，无法正常滑动"
+        android:textSize="14sp"
+        android:textColor="@android:color/darker_gray" />
+
+    <!-- 外层 ScrollView -->
+    <ScrollView
+        android:id="@+id/outerScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="16dp"
+        android:background="#E3F2FD"
+        android:padding="8dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="外层 ScrollView 内容区域"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:background="#BBDEFB" />
+
+            <!-- 内层 RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/innerRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:background="#FFF3E0"
+                android:padding="4dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="外层 ScrollView 底部内容"
+                android:padding="16dp"
+                android:textSize="14sp"
+                android:background="#BBDEFB" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

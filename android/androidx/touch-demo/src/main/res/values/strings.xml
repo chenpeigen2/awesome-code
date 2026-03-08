@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">触摸事件分发Demo</string>
+    
+    <!-- Level titles -->
+    <string name="level1_title">Level 1: 基础分发流程</string>
+    <string name="level1_desc">理解Android事件分发的三级结构：Activity → ViewGroup → View</string>
+    
+    <string name="level2_title">Level 2: 拦截与消费</string>
+    <string name="level2_desc">理解事件拦截机制和消费逻辑，掌握控制事件流向的方法</string>
+    
+    <string name="level3_title">Level 3: 滑动冲突</string>
+    <string name="level3_desc">理解并掌握常见滑动冲突的解决方案</string>
+    
+    <string name="level4_multi_title">Level 4.1: 多指触控</string>
+    <string name="level4_multi_desc">pointerId概念、ACTION_POINTER_DOWN/UP、多点触控场景</string>
+    
+    <string name="level4_gesture_title">Level 4.2: 手势检测</string>
+    <string name="level4_gesture_desc">GestureDetector、ScaleGestureDetector、手势识别</string>
+    
+    <string name="level4_nested_title">Level 4.3: 嵌套滚动</string>
+    <string name="level4_nested_desc">NestedScrolling机制、CoordinatorLayout联动</string>
+    
+    <!-- Category names -->
+    <string name="category_basic">基础</string>
+    <string name="category_intermediate">进阶</string>
+    <string name="category_advanced">高级</string>
+    
+    <!-- Level 1 -->
+    <string name="touch_activity">Activity</string>
+    <string name="touch_viewgroup">ViewGroup</string>
+    <string name="touch_view">View</string>
+    <string name="dispatch">dispatchTouchEvent</string>
+    <string name="intercept">onInterceptTouchEvent</string>
+    <string name="touch_event">onTouchEvent</string>
+    <string name="action_down">ACTION_DOWN</string>
+    <string name="action_move">ACTION_MOVE</string>
+    <string name="action_up">ACTION_UP</string>
+    <string name="action_cancel">ACTION_CANCEL</string>
+    
+    <!-- Level 2 -->
+    <string name="intercept_down">拦截 DOWN</string>
+    <string name="intercept_move">拦截 MOVE</string>
+    <string name="intercept_up">拦截 UP</string>
+    <string name="consume_event">消费事件</string>
+    <string name="disallow_intercept">禁止父View拦截</string>
+    <string name="reset">重置</string>
+    <string name="clear_log">清空日志</string>
+    
+    <!-- Level 3 -->
+    <string name="same_direction">同向滑动</string>
+    <string name="diff_direction">异向滑动</string>
+    <string name="enable_solution">启用解决方案</string>
+    <string name="scroll_angle">滑动角度</string>
+    <string name="scroll_distance">滑动距离</string>
+    
+    <!-- Level 4 -->
+    <string name="pointer_count">当前手指数</string>
+    <string name="pointer_id">Pointer ID</string>
+    <string name="gesture_type">识别手势</string>
+    <string name="scale_factor">缩放比例</string>
+    
+    <!-- Common -->
+    <string name="log_panel">日志面板</string>
+    <string name="visual_panel">可视化面板</string>
+    <string name="return_true">return true</string>
+    <string name="return_false">return false</string>
+    <string name="super_method">调用 super</string>
+</resources>

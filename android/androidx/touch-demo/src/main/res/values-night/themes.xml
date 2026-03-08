@@ -1,0 +1,11 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.TouchDemo" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- 状态栏颜色 -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!-- 允许内容绘制到状态栏后面 -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!-- 导航栏颜色 -->
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+</resources>

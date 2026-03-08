@@ -65,3 +65,6 @@ include(":coroutine-demo")
 
 // Animation Demo - 动画示例
 include(":animation-demo")
+
+// Touch Demo - 触摸事件分发示例
+include(":touch-demo")
