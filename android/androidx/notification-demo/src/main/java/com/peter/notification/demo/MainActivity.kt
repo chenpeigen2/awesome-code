@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -33,9 +32,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // 设置 Toolbar
-        setSupportActionBar(binding.toolbar)
 
         // 初始化 Channel
         channelManager = ChannelManager(this)
@@ -74,24 +70,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePermissionIndicator(isGranted: Boolean) {
+        val context = this
         if (isGranted) {
-            binding.permissionIndicator.apply {
-                setBackgroundColor(
-                    ContextCompat.getColor(this@MainActivity, R.color.permission_granted)
-                )
-                text = "✓ 通知权限：已授权"
-                setOnClickListener(null)
-            }
+            binding.viewPermissionDot.setBackgroundResource(R.drawable.bg_permission_granted)
+            binding.tvPermissionStatus.text = "通知权限：已授权"
         } else {
-            binding.permissionIndicator.apply {
-                setBackgroundColor(
-                    ContextCompat.getColor(this@MainActivity, R.color.permission_denied)
-                )
-                text = "⚠ 通知权限：未授权 [点击开启]"
-                setOnClickListener {
-                    requestNotificationPermission()
-                }
-            }
+            binding.viewPermissionDot.setBackgroundResource(R.drawable.bg_permission_denied)
+            binding.tvPermissionStatus.text = "通知权限：未授权"
         }
     }
 

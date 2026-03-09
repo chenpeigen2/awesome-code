@@ -4,44 +4,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/primary_container"
+        app:elevation="0dp">
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="@string/app_name" />
-
-        <!-- 权限指示器 -->
-        <TextView
-            android:id="@+id/permissionIndicator"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="✓ 通知权限：已授权"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:gravity="center"
-            android:background="@color/permission_granted" />
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingTop="24dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="8dp">
 
+            <!-- 标题 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:textColor="@color/primary" />
+
+            <!-- 副标题 -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Android 通知系统示例"
+                android:textSize="14sp"
+                android:textColor="@color/on_primary_container" />
+
+            <!-- 权限状态指示器 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <View
+                    android:id="@+id/viewPermissionDot"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/bg_permission_granted" />
+
+                <TextView
+                    android:id="@+id/tvPermissionStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:textSize="12sp"
+                    android:textColor="@color/on_primary_container"
+                    tools:text="通知权限：已授权" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- TabLayout -->
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:tabIndicatorColor="@color/blue_500"
+            android:layout_marginTop="8dp"
+            android:background="@android:color/transparent"
+            app:tabMode="scrollable"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@color/primary"
+            app:tabTextColor="@color/on_primary_container"
+            app:tabSelectedTextColor="@color/primary"
+            app:tabTextAppearance="@style/TabTextStyle"
+            app:tabIndicatorFullWidth="false"
             app:tabIndicatorHeight="3dp"
-            app:tabSelectedTextColor="@color/blue_500"
-            app:tabTextColor="@color/gray_700"
-            app:tabMode="scrollable" />
+            app:tabPaddingStart="16dp"
+            app:tabPaddingEnd="16dp"
+            app:tabRippleColor="@android:color/transparent" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!-- ViewPager2 -->
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
         android:layout_width="match_parent"

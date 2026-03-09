@@ -12,50 +12,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="12dp"
         android:textSize="14sp"
         android:textStyle="bold"
-        android:textColor="@color/gray_700"
+        android:textColor="@color/primary"
         android:visibility="gone"
         tools:text="基础通知"
         tools:visibility="visible" />
 
-    <!-- 卡片容器 -->
-    <androidx.cardview.widget.CardView
+    <!-- 卡片 -->
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="8dp"
-        android:foreground="?attr/selectableItemBackground"
         android:clickable="true"
         android:focusable="true"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="2dp"
-        app:cardUseCompatPadding="true">
+        android:foreground="?attr/selectableItemBackground"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="1dp"
+        app:cardBackgroundColor="@color/surface"
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-            <!-- 分类颜色指示条 -->
+            <!-- 颜色指示点 -->
             <View
                 android:id="@+id/viewCategoryColor"
-                android:layout_width="4dp"
-                android:layout_height="match_parent"
-                android:background="@color/category_basic" />
+                android:layout_width="6dp"
+                android:layout_height="6dp"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/bg_category_tag" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:padding="16dp">
+                android:layout_marginStart="12dp"
+                android:orientation="vertical">
 
+                <!-- 标题行 -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -69,46 +72,45 @@
                         android:layout_weight="1"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/on_surface"
                         tools:text="普通通知" />
 
+                    <!-- 分类标签 -->
                     <TextView
                         android:id="@+id/tvCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingStart="8dp"
-                        android:paddingEnd="8dp"
-                        android:paddingTop="4dp"
-                        android:paddingBottom="4dp"
-                        android:textSize="12sp"
-                        android:textColor="@color/white"
+                        style="@style/CategoryTagStyle"
                         android:background="@drawable/bg_category_tag"
                         tools:text="基础" />
 
                 </LinearLayout>
 
+                <!-- 描述 -->
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textSize="14sp"
-                    android:textColor="@color/gray_700"
+                    android:textColor="@color/on_surface_variant"
                     tools:text="简单的标题和内容通知" />
 
-                <Button
+                <!-- 发送按钮 -->
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSend"
                     style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="36dp"
                     android:layout_marginTop="12dp"
                     android:text="@string/action_send"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp" />
 
             </LinearLayout>
 
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

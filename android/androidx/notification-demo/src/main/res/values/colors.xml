@@ -1,45 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 主色调 -->
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
+    <!-- Material 3 风格配色 -->
+    <color name="primary">#6750A4</color>
+    <color name="primary_container">#EADDFF</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_primary_container">#21005D</color>
+    <color name="on_primary_container_alpha">#9921005D</color>
     
-    <!-- 蓝色系 -->
-    <color name="blue_200">#FF90CAF9</color>
-    <color name="blue_500">#FF2196F3</color>
-    <color name="blue_700">#FF1976D2</color>
+    <color name="secondary">#625B71</color>
+    <color name="secondary_container">#E8DEF8</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_secondary_container">#1D192B</color>
     
-    <!-- 其他颜色 -->
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="green_500">#FF4CAF50</color>
-    <color name="orange_500">#FFFF9800</color>
-    <color name="red_500">#FFF44336</color>
+    <color name="tertiary">#7D5260</color>
+    <color name="tertiary_container">#FFD8E4</color>
     
-    <!-- 基础色 -->
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="gray_200">#FFEEEEEE</color>
-    <color name="gray_500">#FF9E9E9E</color>
-    <color name="gray_700">#FF616161</color>
+    <color name="surface">#FFFBFE</color>
+    <color name="surface_variant">#E7E0EC</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="on_surface_variant">#49454F</color>
     
-    <!-- 分类颜色 -->
-    <color name="category_basic">#2196F3</color>
-    <color name="category_message">#4CAF50</color>
-    <color name="category_progress">#FF9800</color>
-    <color name="category_media">#9C27B0</color>
-    <color name="category_advanced">#F44336</color>
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#CAC4D0</color>
+    
+    <color name="background">#FFFBFE</color>
+    <color name="on_background">#1C1B1F</color>
+    
+    <!-- 分类颜色 - 渐变色系 -->
+    <color name="category_basic">#6750A4</color>
+    <color name="category_basic_light">#EADDFF</color>
+    
+    <color name="category_message">#386A20</color>
+    <color name="category_message_light">#E8F5E9</color>
+    
+    <color name="category_progress">#BA1A1A</color>
+    <color name="category_progress_light">#FFDAD6</color>
+    
+    <color name="category_media">#0061A4</color>
+    <color name="category_media_light">#D1E4FF</color>
+    
+    <color name="category_advanced">#7D5260</color>
+    <color name="category_advanced_light">#FFD8E4</color>
     
     <!-- 分组颜色 -->
-    <color name="group_chat">#2196F3</color>
-    <color name="group_email">#4CAF50</color>
-    <color name="group_social">#FF9800</color>
-    <color name="group_system">#9E9E9E</color>
+    <color name="group_chat">#6750A4</color>
+    <color name="group_email">#386A20</color>
+    <color name="group_social">#7D5260</color>
+    <color name="group_system">#49454F</color>
     
     <!-- 权限状态 -->
-    <color name="permission_granted">#4CAF50</color>
-    <color name="permission_denied">#F44336</color>
+    <color name="permission_granted">#386A20</color>
+    <color name="permission_denied">#BA1A1A</color>
     <color name="permission_background">#E8F5E9</color>
     <color name="permission_denied_background">#FFEBEE</color>
+    
+    <!-- 灰色系 -->
+    <color name="gray_200">#E5E7EB</color>
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_500">#6B7280</color>
+    <color name="gray_700">#374151</color>
+    
+    <!-- 绿色/红色系 -->
+    <color name="green_500">#22C55E</color>
+    <color name="red_500">#EF4444</color>
+    
+    <!-- 基础色 -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
 </resources>

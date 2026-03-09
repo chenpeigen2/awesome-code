@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="#FAFAFA">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,27 +14,27 @@
         android:padding="16dp">
 
         <!-- 说明卡片 -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            app:cardBackgroundColor="@color/blue_200">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/secondary_container">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Channel 管理"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black" />
+                    android:textColor="@color/on_secondary_container" />
 
                 <TextView
                     android:id="@+id/tvInfo"
@@ -42,14 +43,14 @@
                     android:layout_marginTop="8dp"
                     android:text="管理通知渠道，Android 8.0+ 支持"
                     android:textSize="14sp"
-                    android:textColor="@color/gray_700"
-                    android:visibility="visible" />
+                    android:textColor="@color/on_secondary_container"
+                    android:alpha="0.8" />
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Channel Groups 和 Channels 容器 -->
+        <!-- Channel Groups 容器 -->
         <LinearLayout
             android:id="@+id/containerGroups"
             android:layout_width="match_parent"
@@ -57,13 +58,14 @@
             android:orientation="vertical" />
 
         <!-- 操作按钮 -->
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnReset"
-            style="@style/Widget.Material3.Button.TonalButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="重置所有 Channel" />
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:text="重置所有 Channel"
+            app:cornerRadius="24dp" />
 
     </LinearLayout>
 

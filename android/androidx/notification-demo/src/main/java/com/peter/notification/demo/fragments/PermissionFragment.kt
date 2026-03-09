@@ -79,7 +79,7 @@ class PermissionFragment : Fragment() {
             // 更新权限状态卡片
             if (isGranted) {
                 binding.cardPermission.setCardBackgroundColor(
-                    ContextCompat.getColor(context, R.color.permission_background)
+                    ContextCompat.getColor(context, R.color.secondary_container)
                 )
                 binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_info)
                 binding.ivPermissionIcon.setColorFilter(
@@ -93,11 +93,11 @@ class PermissionFragment : Fragment() {
 
                 binding.tvPermissionState.text = "已授权"
                 binding.tvPermissionState.setTextColor(
-                    ContextCompat.getColor(context, R.color.green_500)
+                    ContextCompat.getColor(context, R.color.permission_granted)
                 )
             } else {
                 binding.cardPermission.setCardBackgroundColor(
-                    ContextCompat.getColor(context, R.color.permission_denied_background)
+                    ContextCompat.getColor(context, R.color.tertiary_container)
                 )
                 binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_alert)
                 binding.ivPermissionIcon.setColorFilter(
@@ -121,13 +121,13 @@ class PermissionFragment : Fragment() {
 
                 binding.tvPermissionState.text = "未授权"
                 binding.tvPermissionState.setTextColor(
-                    ContextCompat.getColor(context, R.color.red_500)
+                    ContextCompat.getColor(context, R.color.permission_denied)
                 )
             }
         } else {
             // Android 13 以下不需要通知权限
             binding.cardPermission.setCardBackgroundColor(
-                ContextCompat.getColor(context, R.color.permission_background)
+                ContextCompat.getColor(context, R.color.secondary_container)
             )
             binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_info)
             binding.ivPermissionIcon.setColorFilter(
@@ -142,7 +142,7 @@ class PermissionFragment : Fragment() {
 
             binding.tvPermissionState.text = "无需请求"
             binding.tvPermissionState.setTextColor(
-                ContextCompat.getColor(context, R.color.green_500)
+                ContextCompat.getColor(context, R.color.permission_granted)
             )
         }
     }

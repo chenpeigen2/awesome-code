@@ -105,14 +105,14 @@ class ChannelFragment : Fragment() {
 
         val countTextView = TextView(context)
         countTextView.text = "${channels.size} 个 Channel"
-        countTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_500))
+        countTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant))
         linearLayout.addView(countTextView)
 
         channels.forEach { channel ->
             val channelTextView = TextView(context)
             channelTextView.text = "• ${channel.name} (${channel.id})"
             channelTextView.setPadding(dpToPx(16), dpToPx(4), 0, dpToPx(4))
-            channelTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_700))
+            channelTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant))
             linearLayout.addView(channelTextView)
         }
 
@@ -147,7 +147,7 @@ class ChannelFragment : Fragment() {
             val channelTextView = TextView(context)
             channelTextView.text = "• ${channel.name} (${channel.id})"
             channelTextView.setPadding(dpToPx(16), dpToPx(4), 0, dpToPx(4))
-            channelTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray_700))
+            channelTextView.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant))
             linearLayout.addView(channelTextView)
         }
 
