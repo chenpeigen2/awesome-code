@@ -71,3 +71,6 @@ include(":touch-demo")
 
 // Compose Demo - Jetpack Compose 学习示例
 include(":compose-demo")
+
+// Notification Demo - 通知系统示例
+include(":notification-demo")

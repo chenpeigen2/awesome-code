@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">通知演示</string>
+
+    <!-- Tab titles -->
+    <string name="tab_types">通知类型</string>
+    <string name="tab_channel">Channel管理</string>
+    <string name="tab_group">分组通知</string>
+    <string name="tab_sound">铃声设置</string>
+    <string name="tab_permission">权限管理</string>
+
+    <!-- Permission -->
+    <string name="permission_granted">通知权限：已授权</string>
+    <string name="permission_denied">通知权限：未授权</string>
+    <string name="permission_go_settings">去开启</string>
+    <string name="permission_request">请求通知权限</string>
+    <string name="permission_open_settings">打开系统设置</string>
+    <string name="permission_check">检查权限状态</string>
+    <string name="permission_required">需要通知权限才能发送通知</string>
+    <string name="permission_android_version">Android版本: %s</string>
+    <string name="permission_api_level">API级别: %d</string>
+    <string name="permission_post_notifications">POST_NOTIFICATIONS 权限状态: %s</string>
+
+    <!-- Notification Types Categories -->
+    <string name="type_basic_title">基础通知</string>
+    <string name="type_message_title">消息通知</string>
+    <string name="type_progress_title">进度与状态</string>
+    <string name="type_media_title">媒体通知</string>
+    <string name="type_advanced_title">高级功能</string>
+
+    <!-- Notification Types -->
+    <string name="type_normal">普通通知</string>
+    <string name="type_normal_desc">标题+内容+小图标</string>
+    <string name="type_big_text">大文本通知</string>
+    <string name="type_big_text_desc">展开显示长文本</string>
+    <string name="type_big_picture">大图片通知</string>
+    <string name="type_big_picture_desc">展开显示大图</string>
+    <string name="type_inbox">收件箱样式</string>
+    <string name="type_inbox_desc">多行消息列表</string>
+
+    <string name="type_messaging">MessagingStyle</string>
+    <string name="type_messaging_desc">模拟聊天消息，支持多人对话</string>
+    <string name="type_conversation">Conversation通知</string>
+    <string name="type_conversation_desc">Android 11+ 对话通知</string>
+    <string name="type_bubble">Bubble通知</string>
+    <string name="type_bubble_desc">气泡形式悬浮显示</string>
+
+    <string name="type_progress">进度条通知</string>
+    <string name="type_progress_desc">确定/不确定进度，可更新</string>
+    <string name="type_ongoing">持续活动通知</string>
+    <string name="type_ongoing_desc">Android 11+ 健身/导航场景</string>
+    <string name="type_foreground">前台服务通知</string>
+    <string name="type_foreground_desc">带进度的前台服务</string>
+
+    <string name="type_media">媒体播放通知</string>
+    <string name="type_media_desc">播放控制按钮，专辑封面</string>
+
+    <string name="type_custom">自定义布局</string>
+    <string name="type_custom_desc">RemoteViews自定义通知UI</string>
+    <string name="type_scheduled">定时通知</string>
+    <string name="type_scheduled_desc">延迟5秒后触发</string>
+    <string name="type_action">按钮操作通知</string>
+    <string name="type_action_desc">Action按钮点击响应</string>
+
+    <!-- Channel Management -->
+    <string name="channel_group_title">ChannelGroup管理</string>
+    <string name="channel_new_group">新建Group</string>
+    <string name="channel_new_channel">新建Channel</string>
+    <string name="channel_reset">重置所有Channel</string>
+    <string name="channel_delete">删除</string>
+    <string name="channel_edit">编辑</string>
+    <string name="channel_name">Channel名称</string>
+    <string name="channel_id">Channel ID</string>
+    <string name="channel_importance">重要性</string>
+    <string name="channel_group_select">所属Group</string>
+    <string name="channel_sound">启用声音</string>
+    <string name="channel_vibration">启用震动</string>
+    <string name="channel_lights">启用指示灯</string>
+    <string name="channel_ringtone">通知音</string>
+    <string name="channel_save">保存</string>
+    <string name="channel_cancel">取消</string>
+
+    <!-- Importance levels -->
+    <string name="importance_urgent">紧急</string>
+    <string name="importance_high">高</string>
+    <string name="importance_medium">中</string>
+    <string name="importance_low">低</string>
+    <string name="importance_min">最小</string>
+
+    <!-- Default Groups and Channels -->
+    <string name="group_work">工作</string>
+    <string name="group_social">社交</string>
+    <string name="group_system">系统</string>
+    <string name="channel_email">邮件</string>
+    <string name="channel_schedule">日程</string>
+    <string name="channel_message">消息</string>
+    <string name="channel_comment">评论</string>
+    <string name="channel_download">下载</string>
+    <string name="channel_update">更新</string>
+
+    <!-- Group Notifications -->
+    <string name="group_count_label">分组数量</string>
+    <string name="group_generate">生成测试分组</string>
+    <string name="group_send_one">发送一条</string>
+    <string name="group_send_five">发送5条</string>
+    <string name="group_clear">清除</string>
+    <string name="group_send_all">发送所有分组通知</string>
+    <string name="group_clear_all">清除所有通知</string>
+
+    <string name="group_chat">聊天消息</string>
+    <string name="group_email_label">邮件</string>
+    <string name="group_social_label">社交动态</string>
+    <string name="group_system_label">系统提醒</string>
+
+    <!-- Sound Settings -->
+    <string name="sound_current">当前铃声</string>
+    <string name="sound_preview">播放预览</string>
+    <string name="sound_system_title">系统铃声</string>
+    <string name="sound_custom_title">自定义铃声</string>
+    <string name="sound_add_custom">添加自定义铃声</string>
+    <string name="sound_default">默认铃声</string>
+    <string name="sound_silent">静音</string>
+
+    <!-- Actions -->
+    <string name="action_send">发送</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_confirm">确认</string>
+
+    <!-- Notification Content -->
+    <string name="notification_title">通知标题</string>
+    <string name="notification_content">这是通知内容，用于演示Android通知系统的各种功能。</string>
+    <string name="notification_big_text">这是一段很长的大文本内容，用于展示大文本通知样式。当通知展开时，可以看到完整的内容。Android通知系统支持多种样式，包括大文本、大图片、收件箱等，开发者可以根据需求选择合适的样式来展示通知内容。</string>
+    <string name="notification_action_reply">回复</string>
+    <string name="notification_action_dismiss">忽略</string>
+    <string name="notification_action_archive">归档</string>
+    <string name="notification_progress_downloading">正在下载…</string>
+    <string name="notification_progress_complete">下载完成</string>
+    <string name="notification_media_playing">正在播放</string>
+    <string name="notification_media_pause">暂停</string>
+    <string name="notification_media_play">播放</string>
+    <string name="notification_media_next">下一首</string>
+    <string name="notification_media_prev">上一首</string>
+
+    <!-- Messages -->
+    <string name="msg_channel_created">Channel创建成功</string>
+    <string name="msg_channel_deleted">Channel已删除</string>
+    <string name="msg_group_created">Group创建成功</string>
+    <string name="msg_group_deleted">Group已删除</string>
+    <string name="msg_notification_sent">通知已发送</string>
+    <string name="msg_notifications_cleared">通知已清除</string>
+    <string name="msg_input_required">请填写所有必填项</string>
+
+    <!-- Dialog -->
+    <string name="dialog_title_new_group">新建ChannelGroup</string>
+    <string name="dialog_title_edit_channel">编辑Channel</string>
+    <string name="dialog_group_name">Group名称</string>
+    <string name="dialog_group_id">Group ID</string>
+</resources>
