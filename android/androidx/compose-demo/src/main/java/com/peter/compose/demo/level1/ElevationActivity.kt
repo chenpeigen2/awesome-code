@@ -4,8 +4,18 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.repeatable
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -97,13 +107,19 @@ fun ElevationScreen(modifier: Modifier = Modifier) {
         // 4. 动态 elevation 变化
         DynamicElevationExample()
 
-        // 5. 传统 View elevation 示例
+        // 5. 彩色阴影示例
+        ColoredShadowExamples()
+
+        // 6. 阴影动画示例
+        ShadowAnimationExamples()
+
+        // 7. 传统 View elevation 示例
         TraditionalViewElevationExamples()
 
-        // 6. 传统 View translationZ 示例
+        // 8. 传统 View translationZ 示例
         TraditionalViewTranslationZExamples()
 
-        // 7. 实际应用场景
+        // 9. 实际应用场景
         PracticalExamples()
     }
 }
@@ -668,7 +684,691 @@ Box(
 }
 
 /**
- * 5. 传统 View elevation 示例
+ * 5. 彩色阴影示例
+ */
+@Composable
+fun ColoredShadowExamples() {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = "5. 彩色阴影 (Colored Shadow)",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Text(
+                text = "使用 graphicsLayer 的 ambientColor 和 spotColor 创建彩色阴影。",
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            // 不同颜色的阴影
+            Text(
+                text = "不同颜色的阴影:",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // 红色阴影
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .graphicsLayer {
+                                shadowElevation = 16.dp.toPx()
+                                shape = RoundedCornerShape(16.dp)
+                                clip = false
+                                ambientShadowColor = Color.Red
+                                spotShadowColor = Color.Red.copy(alpha = 0.5f)
+                            }
+                            .size(60.dp)
+                            .background(Color.White, RoundedCornerShape(16.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("红色", style = MaterialTheme.typography.labelSmall)
+                    }
+                }
+
+                // 蓝色阴影
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .graphicsLayer {
+                                shadowElevation = 16.dp.toPx()
+                                shape = RoundedCornerShape(16.dp)
+                                clip = false
+                                ambientShadowColor = Color.Blue
+                                spotShadowColor = Color.Blue.copy(alpha = 0.5f)
+                            }
+                            .size(60.dp)
+                            .background(Color.White, RoundedCornerShape(16.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("蓝色", style = MaterialTheme.typography.labelSmall)
+                    }
+                }
+
+                // 绿色阴影
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .graphicsLayer {
+                                shadowElevation = 16.dp.toPx()
+                                shape = RoundedCornerShape(16.dp)
+                                clip = false
+                                ambientShadowColor = Color(0xFF4CAF50)
+                                spotShadowColor = Color(0xFF4CAF50).copy(alpha = 0.5f)
+                            }
+                            .size(60.dp)
+                            .background(Color.White, RoundedCornerShape(16.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("绿色", style = MaterialTheme.typography.labelSmall)
+                    }
+                }
+
+                // 紫色阴影
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .graphicsLayer {
+                                shadowElevation = 16.dp.toPx()
+                                shape = RoundedCornerShape(16.dp)
+                                clip = false
+                                ambientShadowColor = Color(0xFF9C27B0)
+                                spotShadowColor = Color(0xFF9C27B0).copy(alpha = 0.5f)
+                            }
+                            .size(60.dp)
+                            .background(Color.White, RoundedCornerShape(16.dp)),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text("紫色", style = MaterialTheme.typography.labelSmall)
+                    }
+                }
+            }
+
+            // 彩色卡片效果
+            Text(
+                text = "彩色卡片效果:",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                // 粉红卡片
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(80.dp)
+                        .graphicsLayer {
+                            shadowElevation = 12.dp.toPx()
+                            shape = RoundedCornerShape(12.dp)
+                            ambientShadowColor = Color(0xFFE91E63)
+                            spotShadowColor = Color(0xFFE91E63).copy(alpha = 0.6f)
+                        }
+                        .background(Color(0xFFFCE4EC), RoundedCornerShape(12.dp))
+                        .padding(8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            "❤️",
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                        Text(
+                            "喜欢",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color(0xFFE91E63)
+                        )
+                    }
+                }
+
+                // 橙色卡片
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(80.dp)
+                        .graphicsLayer {
+                            shadowElevation = 12.dp.toPx()
+                            shape = RoundedCornerShape(12.dp)
+                            ambientShadowColor = Color(0xFFFF9800)
+                            spotShadowColor = Color(0xFFFF9800).copy(alpha = 0.6f)
+                        }
+                        .background(Color(0xFFFFF3E0), RoundedCornerShape(12.dp))
+                        .padding(8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            "⭐",
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                        Text(
+                            "收藏",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color(0xFFFF9800)
+                        )
+                    }
+                }
+
+                // 青色卡片
+                Box(
+                    modifier = Modifier
+                        .weight(1f)
+                        .height(80.dp)
+                        .graphicsLayer {
+                            shadowElevation = 12.dp.toPx()
+                            shape = RoundedCornerShape(12.dp)
+                            ambientShadowColor = Color(0xFF00BCD4)
+                            spotShadowColor = Color(0xFF00BCD4).copy(alpha = 0.6f)
+                        }
+                        .background(Color(0xFFE0F7FA), RoundedCornerShape(12.dp))
+                        .padding(8.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            "💬",
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                        Text(
+                            "评论",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color(0xFF00BCD4)
+                        )
+                    }
+                }
+            }
+
+            // 传统 View 彩色阴影
+            Text(
+                text = "传统 View 彩色阴影 (需要 API 28+):",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            AndroidView(
+                factory = { context ->
+                    android.widget.LinearLayout(context).apply {
+                        orientation = android.widget.LinearLayout.HORIZONTAL
+                        setPadding(32, 32, 32, 32)
+                        gravity = android.view.Gravity.CENTER
+
+                        // 红色阴影 View
+                        val redView = android.view.View(context).apply {
+                            setBackgroundResource(android.R.color.white)
+                            elevation = 16f
+                            outlineAmbientShadowColor = android.graphics.Color.RED
+                            outlineSpotShadowColor = android.graphics.Color.RED
+                        }
+                        val redParams = android.widget.LinearLayout.LayoutParams(100, 100).apply {
+                            marginEnd = 32
+                        }
+                        addView(redView, redParams)
+
+                        // 蓝色阴影 View
+                        val blueView = android.view.View(context).apply {
+                            setBackgroundResource(android.R.color.white)
+                            elevation = 16f
+                            outlineAmbientShadowColor = android.graphics.Color.BLUE
+                            outlineSpotShadowColor = android.graphics.Color.BLUE
+                        }
+                        val blueParams = android.widget.LinearLayout.LayoutParams(100, 100).apply {
+                            marginEnd = 32
+                        }
+                        addView(blueView, blueParams)
+
+                        // 绿色阴影 View
+                        val greenView = android.view.View(context).apply {
+                            setBackgroundResource(android.R.color.white)
+                            elevation = 16f
+                            outlineAmbientShadowColor = android.graphics.Color.parseColor("#4CAF50")
+                            outlineSpotShadowColor = android.graphics.Color.parseColor("#4CAF50")
+                        }
+                        val greenParams = android.widget.LinearLayout.LayoutParams(100, 100)
+                        addView(greenView, greenParams)
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(Color(0xFFF5F5F5))
+            )
+
+            // 代码示例
+            Text(
+                text = "代码示例:",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            Text(
+                text = """// Compose 彩色阴影
+Box(
+    modifier = Modifier.graphicsLayer {
+        shadowElevation = 16.dp.toPx()
+        shape = RoundedCornerShape(16.dp)
+        ambientShadowColor = Color.Red      // 环境光颜色
+        spotShadowColor = Color.Red.copy(alpha = 0.5f)  // 聚光灯颜色
+    }
+)
+
+// 传统 View 彩色阴影 (API 28+)
+view.elevation = 16f
+view.outlineAmbientShadowColor = Color.RED
+view.outlineSpotShadowColor = Color.RED""",
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .padding(8.dp)
+            )
+        }
+    }
+}
+
+/**
+ * 6. 阴影动画示例
+ */
+@Composable
+fun ShadowAnimationExamples() {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Text(
+                text = "6. 阴影动画效果",
+                style = MaterialTheme.typography.titleMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+
+            Text(
+                text = "通过动画改变 elevation 创造丰富的交互效果。",
+                style = MaterialTheme.typography.bodyMedium
+            )
+
+            // 动画1: 脉冲阴影
+            Text(
+                text = "动画1: 脉冲阴影 (Pulsing Shadow)",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            var isPulsing by remember { mutableStateOf(false) }
+            val pulseElevation by animateDpAsState(
+                targetValue = if (isPulsing) 24.dp else 4.dp,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(800, easing = FastOutSlowInEasing),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "pulse"
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .shadow(pulseElevation, CircleShape)
+                        .size(60.dp)
+                        .background(
+                            if (isPulsing) Color(0xFFE91E63) else Color(0xFF9E9E9E),
+                            CircleShape
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("🔔", style = MaterialTheme.typography.headlineMedium)
+                }
+
+                androidx.compose.material3.Button(
+                    onClick = { isPulsing = !isPulsing }
+                ) {
+                    Text(if (isPulsing) "停止" else "开始脉冲")
+                }
+            }
+
+            // 动画2: 弹跳阴影
+            Text(
+                text = "动画2: 弹跳效果 (Bounce)",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            var bounceCount by remember { mutableStateOf(0) }
+            var isBouncing by remember { mutableStateOf(false) }
+            val bounceElevation by animateDpAsState(
+                targetValue = if (isBouncing) 20.dp else 4.dp,
+                animationSpec = androidx.compose.animation.core.spring(
+                    dampingRatio = androidx.compose.animation.core.Spring.DampingRatioHighBouncy,
+                    stiffness = androidx.compose.animation.core.Spring.StiffnessLow
+                ),
+                label = "bounce"
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .graphicsLayer {
+                            shadowElevation = bounceElevation.toPx()
+                            shape = RoundedCornerShape(16.dp)
+                            translationY = if (isBouncing) -10f else 0f
+                        }
+                        .size(60.dp)
+                        .background(
+                            Brush.linearGradient(
+                                colors = listOf(Color(0xFF6200EE), Color(0xFF03DAC5))
+                            ),
+                            RoundedCornerShape(16.dp)
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "🚀",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
+
+                androidx.compose.material3.Button(
+                    onClick = {
+                        bounceCount++
+                        isBouncing = true
+                        // 延迟恢复
+                        android.os.Handler(android.os.Looper.getMainLooper()).postDelayed({
+                            isBouncing = false
+                        }, 500)
+                    }
+                ) {
+                    Text("弹跳 $bounceCount")
+                }
+            }
+
+            // 动画3: 心跳阴影
+            Text(
+                text = "动画3: 心跳效果 (Heartbeat)",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            var isHeartbeating by remember { mutableStateOf(false) }
+            val heartScale by animateFloatAsState(
+                targetValue = if (isHeartbeating) 1.2f else 1f,
+                animationSpec = if (isHeartbeating) infiniteRepeatable(
+                    animation = keyframes {
+                        durationMillis = 600
+                        1f at 0
+                        1.3f at 150
+                        1f at 300
+                        1.2f at 450
+                        1f at 600
+                    },
+                    repeatMode = RepeatMode.Restart
+                ) else keyframes {
+                    durationMillis = 600
+                    1f at 0
+                    1.3f at 150
+                    1f at 300
+                    1.2f at 450
+                    1f at 600
+                },
+                label = "heart"
+            )
+            val heartElevation by animateDpAsState(
+                targetValue = if (isHeartbeating) 16.dp else 4.dp,
+                animationSpec = if (isHeartbeating) infiniteRepeatable(
+                    animation = keyframes {
+                        durationMillis = 600
+                        4.dp at 0
+                        20.dp at 150
+                        8.dp at 300
+                        16.dp at 450
+                        4.dp at 600
+                    },
+                    repeatMode = RepeatMode.Restart
+                ) else keyframes {
+                    durationMillis = 600
+                    4.dp at 0
+                    20.dp at 150
+                    8.dp at 300
+                    16.dp at 450
+                    4.dp at 600
+                },
+                label = "heartElevation"
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(
+                    modifier = Modifier
+                        .graphicsLayer {
+                            scaleX = heartScale
+                            scaleY = heartScale
+                            shadowElevation = heartElevation.toPx()
+                            shape = RoundedCornerShape(16.dp)
+                            ambientShadowColor = Color(0xFFE91E63)
+                            spotShadowColor = Color(0xFFE91E63).copy(alpha = 0.6f)
+                        }
+                        .size(60.dp)
+                        .background(Color(0xFFFCE4EC), RoundedCornerShape(16.dp)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        "❤️",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
+
+                androidx.compose.material3.Button(
+                    onClick = { isHeartbeating = !isHeartbeating },
+                    colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFE91E63)
+                    )
+                ) {
+                    Text(if (isHeartbeating) "停止" else "心跳")
+                }
+            }
+
+            // 动画4: 波浪阴影
+            Text(
+                text = "动画4: 彩色波浪阴影",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            var waveProgress by remember { mutableFloatStateOf(0f) }
+            var isWaving by remember { mutableStateOf(false) }
+
+            LaunchedEffect(isWaving) {
+                if (isWaving) {
+                    animate(
+                        initialValue = 0f,
+                        targetValue = 1f,
+                        animationSpec = tween(2000)
+                    ) { value, _ ->
+                        waveProgress = value
+                    }
+                    isWaving = false
+                }
+            }
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                val colors = listOf(
+                    Color(0xFFFF5722),
+                    Color(0xFFFF9800),
+                    Color(0xFFFFEB3B),
+                    Color(0xFF4CAF50),
+                    Color(0xFF2196F3)
+                )
+
+                colors.forEachIndexed { index, color ->
+                    val delay = index * 0.1f
+                    val progress = ((waveProgress - delay) / 0.2f).coerceIn(0f, 1f)
+                    val elevation = (progress * 20).dp
+                    val scale = 0.8f + progress * 0.4f
+
+                    Box(
+                        modifier = Modifier
+                            .graphicsLayer {
+                                scaleX = scale
+                                scaleY = scale
+                                shadowElevation = elevation.toPx()
+                                shape = CircleShape
+                                ambientShadowColor = color
+                                spotShadowColor = color.copy(alpha = 0.5f)
+                            }
+                            .size(40.dp)
+                            .background(color, CircleShape)
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                androidx.compose.material3.Button(
+                    onClick = { isWaving = true }
+                ) {
+                    Text("波浪")
+                }
+            }
+
+            // 动画5: 悬浮卡片
+            Text(
+                text = "动画5: 悬浮卡片 (Hover Effect)",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            val hoverInteractionSource = remember { MutableInteractionSource() }
+            val isHovered by hoverInteractionSource.collectIsPressedAsState()
+
+            val hoverElevation by animateDpAsState(
+                targetValue = if (isHovered) 16.dp else 4.dp,
+                animationSpec = androidx.compose.animation.core.spring(
+                    dampingRatio = androidx.compose.animation.core.Spring.DampingRatioMediumBouncy
+                ),
+                label = "hover"
+            )
+            val hoverScale by animateFloatAsState(
+                targetValue = if (isHovered) 1.05f else 1f,
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioMediumBouncy
+                ),
+                label = "hoverScale"
+            )
+
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                Box(
+                    modifier = Modifier
+                        .graphicsLayer {
+                            scaleX = hoverScale
+                            scaleY = hoverScale
+                            shadowElevation = hoverElevation.toPx()
+                            shape = RoundedCornerShape(16.dp)
+                        }
+                        .clickable(
+                            interactionSource = hoverInteractionSource,
+                            indication = null
+                        ) { }
+                        .width(200.dp)
+                        .height(100.dp)
+                        .background(
+                            Brush.linearGradient(
+                                colors = listOf(Color(0xFF667EEA), Color(0xFF764BA2))
+                            ),
+                            RoundedCornerShape(16.dp)
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            "点击或长按",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = Color.White
+                        )
+                        Text(
+                            "${if (isHovered) "16dp" else "4dp"} elevation",
+                            style = MaterialTheme.typography.labelSmall,
+                            color = Color.White.copy(alpha = 0.8f)
+                        )
+                    }
+                }
+            }
+
+            // 代码示例
+            Text(
+                text = "代码示例:",
+                style = MaterialTheme.typography.labelMedium
+            )
+
+            Text(
+                text = """// 脉冲动画
+val elevation by animateDpAsState(
+    targetValue = if (pulsing) 24.dp else 4.dp,
+    animationSpec = repeatable(
+        iterations = Infinite,
+        animation = tween(800),
+        repeatMode = RepeatMode.Reverse
+    )
+)
+
+// 弹跳动画
+val elevation by animateDpAsState(
+    targetValue = target,
+    animationSpec = spring(
+        dampingRatio = Spring.DampingRatioHighBouncy,
+        stiffness = Spring.StiffnessLow
+    )
+)
+
+// 关键帧动画
+val elevation by animateDpAsState(
+    targetValue = target,
+    animationSpec = keyframes {
+        durationMillis = 600
+        4.dp at 0
+        20.dp at 150
+        4.dp at 300
+    }
+)""",
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .padding(8.dp)
+            )
+        }
+    }
+}
+
+/**
+ * 7. 传统 View elevation 示例
  */
 @Composable
 fun TraditionalViewElevationExamples() {
@@ -681,7 +1381,7 @@ fun TraditionalViewElevationExamples() {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "5. 传统 View Elevation",
+                text = "7. 传统 View Elevation",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -768,7 +1468,7 @@ view.background = GradientDrawable().apply {
 }
 
 /**
- * 6. 传统 View translationZ 示例
+ * 8. 传统 View translationZ 示例
  */
 @Composable
 fun TraditionalViewTranslationZExamples() {
@@ -781,7 +1481,7 @@ fun TraditionalViewTranslationZExamples() {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "6. 传统 View translationZ",
+                text = "8. 传统 View translationZ",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -931,7 +1631,7 @@ view.animate()
 }
 
 /**
- * 7. 实际应用场景
+ * 9. 实际应用场景
  */
 @Composable
 fun PracticalExamples() {
@@ -944,7 +1644,7 @@ fun PracticalExamples() {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "7. 实际应用场景",
+                text = "9. 实际应用场景",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
             )
