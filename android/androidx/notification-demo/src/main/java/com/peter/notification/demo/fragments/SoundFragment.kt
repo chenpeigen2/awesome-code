@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.peter.notification.demo.R
@@ -49,14 +49,25 @@ class SoundFragment : Fragment() {
             playDefaultNotificationSound()
         }
 
+        // 设置卡片阴影颜色
+        val mediaColor = ContextCompat.getColor(requireContext(), R.color.category_media)
+        binding.cardHeader.outlineAmbientShadowColor = mediaColor
+        binding.cardHeader.outlineSpotShadowColor = mediaColor
+        
+        val grayColor = ContextCompat.getColor(requireContext(), R.color.gray_500)
+        binding.cardCurrentRingtone.outlineAmbientShadowColor = grayColor
+        binding.cardCurrentRingtone.outlineSpotShadowColor = grayColor
+
         setupRingtoneList()
     }
 
     private fun setupRingtoneList() {
         val ringtones = getSystemRingtones()
+        val mediaColor = ContextCompat.getColor(requireContext(), R.color.category_media)
+        
         binding.recyclerView.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = RingtoneAdapter(ringtones) { ringtone ->
+            adapter = RingtoneAdapter(ringtones, mediaColor) { ringtone ->
                 currentRingtoneName = ringtone
                 binding.tvCurrentRingtone.text = ringtone
                 playDefaultNotificationSound()
@@ -76,7 +87,6 @@ class SoundFragment : Fragment() {
                 ringtones.add(title)
             }
         } catch (e: Exception) {
-            // Fallback to default list
             ringtones.addAll(listOf(
                 "默认铃声",
                 "Chime",
@@ -120,24 +130,31 @@ class SoundFragment : Fragment() {
 
     inner class RingtoneAdapter(
         private val items: List<String>,
+        private val shadowColor: Int,
         private val onItemClick: (String) -> Unit
     ) : androidx.recyclerview.widget.RecyclerView.Adapter<RingtoneAdapter.ViewHolder>() {
 
-        inner class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
-            val name: TextView = view.findViewById(R.id.tvRingtoneName)
-            val type: TextView = view.findViewById(R.id.tvRingtoneType)
-        }
+        inner class ViewHolder(val binding: com.peter.notification.demo.databinding.ItemRingtoneBinding) : 
+            androidx.recyclerview.widget.RecyclerView.ViewHolder(binding.root)
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_ringtone, parent, false)
-            return ViewHolder(view)
+            val binding = com.peter.notification.demo.databinding.ItemRingtoneBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+            return ViewHolder(binding)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.name.text = items[position]
-            holder.type.text = "系统铃声"
-            holder.itemView.setOnClickListener {
+            holder.binding.tvRingtoneName.text = items[position]
+            holder.binding.tvRingtoneType.text = "系统铃声"
+            
+            // 设置阴影颜色
+            holder.binding.cardView.outlineAmbientShadowColor = shadowColor
+            holder.binding.cardView.outlineSpotShadowColor = shadowColor
+            
+            holder.binding.root.setOnClickListener {
                 onItemClick(items[position])
             }
         }

@@ -1,5 +1,6 @@
 package com.peter.notification.demo
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -106,22 +107,25 @@ class NotificationAdapter(
                 tvTitle.text = item.title
                 tvDescription.text = item.description
 
-                // 根据分类设置颜色圆点和阴影
-                val (dotRes, shadowRes) = when (item.category) {
+                // 根据分类设置颜色圆点和阴影颜色
+                val (dotRes, shadowColor) = when (item.category) {
                     NotificationCategory.BASIC -> 
-                        R.drawable.bg_dot_basic to R.drawable.bg_card_shadow_basic
+                        R.drawable.bg_dot_basic to ContextCompat.getColor(context, R.color.category_basic)
                     NotificationCategory.MESSAGE -> 
-                        R.drawable.bg_dot_message to R.drawable.bg_card_shadow_message
+                        R.drawable.bg_dot_message to ContextCompat.getColor(context, R.color.category_message)
                     NotificationCategory.PROGRESS -> 
-                        R.drawable.bg_dot_progress to R.drawable.bg_card_shadow_progress
+                        R.drawable.bg_dot_progress to ContextCompat.getColor(context, R.color.category_progress)
                     NotificationCategory.MEDIA -> 
-                        R.drawable.bg_dot_media to R.drawable.bg_card_shadow_media
+                        R.drawable.bg_dot_media to ContextCompat.getColor(context, R.color.category_media)
                     NotificationCategory.ADVANCED -> 
-                        R.drawable.bg_dot_advanced to R.drawable.bg_card_shadow_advanced
+                        R.drawable.bg_dot_advanced to ContextCompat.getColor(context, R.color.category_advanced)
                 }
                 
                 viewColorDot.setBackgroundResource(dotRes)
-                viewColorShadow.setBackgroundResource(shadowRes)
+                
+                // 设置带颜色的阴影 (API 28+)
+                cardView.outlineAmbientShadowColor = shadowColor
+                cardView.outlineSpotShadowColor = shadowColor
 
                 // 点击整个卡片发送通知
                 cardView.setOnClickListener {

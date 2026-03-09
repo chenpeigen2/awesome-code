@@ -13,222 +13,196 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 权限状态卡片 - 带颜色阴影 -->
-        <FrameLayout
+        <!-- 权限状态卡片 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardPermission"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:elevation="4dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/secondary_container">
 
-            <View
-                android:id="@+id/viewPermissionShadow"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="3dp"
-                android:layout_marginStart="3dp"
-                android:background="@drawable/bg_card_shadow_green"
-                android:alpha="0.5" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardPermission"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/secondary_container">
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/ivPermissionIcon"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@android:drawable/ic_dialog_info"
+                    android:tint="@color/permission_granted" />
+
+                <TextView
+                    android:id="@+id/tvPermissionStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="通知权限：已授权"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_secondary_container" />
+
+                <TextView
+                    android:id="@+id/tvPermissionDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:text="应用可以发送通知"
+                    android:textSize="13sp"
+                    android:textColor="@color/on_secondary_container"
+                    android:alpha="0.8"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- 设备信息卡片 -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardDeviceInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:elevation="3dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="@color/white">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="设备信息"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_surface" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginBottom="14dp"
+                    android:background="@color/outline_variant"
+                    android:alpha="0.5" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="24dp"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/ivPermissionIcon"
-                        android:layout_width="56dp"
-                        android:layout_height="56dp"
-                        android:src="@android:drawable/ic_dialog_info"
-                        android:tint="@color/permission_granted" />
-
-                    <TextView
-                        android:id="@+id/tvPermissionStatus"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="通知权限：已授权"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/on_secondary_container" />
-
-                    <TextView
-                        android:id="@+id/tvPermissionDesc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="应用可以发送通知"
-                        android:textSize="13sp"
-                        android:textColor="@color/on_secondary_container"
-                        android:alpha="0.8"
-                        android:visibility="gone" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-        </FrameLayout>
-
-        <!-- 设备信息卡片 - 带颜色阴影 -->
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="3dp"
-                android:layout_marginStart="3dp"
-                android:background="@drawable/bg_card_shadow_gray"
-                android:alpha="0.5" />
-
-            <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/white">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="设备信息"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/on_surface" />
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
                     <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="14dp"
-                        android:layout_marginBottom="14dp"
-                        android:background="@color/outline_variant"
-                        android:alpha="0.5" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <View
-                            android:layout_width="6dp"
-                            android:layout_height="6dp"
-                            android:background="@drawable/bg_dot_basic" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="10dp"
-                            android:text="Android 版本"
-                            android:textSize="13sp"
-                            android:textColor="@color/on_surface_variant" />
-
-                        <TextView
-                            android:id="@+id/tvAndroidVersion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="14"
-                            android:textSize="14sp"
-                            android:textColor="@color/on_surface"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <View
-                            android:layout_width="6dp"
-                            android:layout_height="6dp"
-                            android:background="@drawable/bg_dot_message" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="10dp"
-                            android:text="API 级别"
-                            android:textSize="13sp"
-                            android:textColor="@color/on_surface_variant" />
-
-                        <TextView
-                            android:id="@+id/tvApiLevel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="34"
-                            android:textSize="14sp"
-                            android:textColor="@color/on_surface"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <View
-                            android:layout_width="6dp"
-                            android:layout_height="6dp"
-                            android:background="@drawable/bg_color_dot" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_marginStart="10dp"
-                            android:text="通知权限"
-                            android:textSize="13sp"
-                            android:textColor="@color/on_surface_variant" />
-
-                        <TextView
-                            android:id="@+id/tvPermissionState"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="已授权"
-                            android:textSize="14sp"
-                            android:textColor="@color/permission_granted"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/bg_dot_basic" />
 
                     <TextView
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:text="Android 13+ 需要请求通知权限"
-                        android:textSize="12sp"
-                        android:textColor="@color/on_surface_variant"
-                        android:alpha="0.7" />
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:text="Android 版本"
+                        android:textSize="13sp"
+                        android:textColor="@color/on_surface_variant" />
+
+                    <TextView
+                        android:id="@+id/tvAndroidVersion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="14"
+                        android:textSize="14sp"
+                        android:textColor="@color/on_surface"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
-            </com.google.android.material.card.MaterialCardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
 
-        </FrameLayout>
+                    <View
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/bg_dot_message" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:text="API 级别"
+                        android:textSize="13sp"
+                        android:textColor="@color/on_surface_variant" />
+
+                    <TextView
+                        android:id="@+id/tvApiLevel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="34"
+                        android:textSize="14sp"
+                        android:textColor="@color/on_surface"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <View
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/bg_color_dot" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="10dp"
+                        android:text="通知权限"
+                        android:textSize="13sp"
+                        android:textColor="@color/on_surface_variant" />
+
+                    <TextView
+                        android:id="@+id/tvPermissionState"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="已授权"
+                        android:textSize="14sp"
+                        android:textColor="@color/permission_granted"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:text="Android 13+ 需要请求通知权限"
+                    android:textSize="12sp"
+                    android:textColor="@color/on_surface_variant"
+                    android:alpha="0.7" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
         <!-- 操作按钮 -->
         <com.google.android.material.button.MaterialButton

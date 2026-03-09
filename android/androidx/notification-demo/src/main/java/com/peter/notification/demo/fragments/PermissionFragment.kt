@@ -70,6 +70,11 @@ class PermissionFragment : Fragment() {
         binding.tvAndroidVersion.text = Build.VERSION.RELEASE
         binding.tvApiLevel.text = Build.VERSION.SDK_INT.toString()
 
+        // 设置设备信息卡片阴影颜色
+        val grayColor = ContextCompat.getColor(context, R.color.gray_500)
+        binding.cardDeviceInfo.outlineAmbientShadowColor = grayColor
+        binding.cardDeviceInfo.outlineSpotShadowColor = grayColor
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val isGranted = ContextCompat.checkSelfPermission(
                 context,
@@ -97,7 +102,9 @@ class PermissionFragment : Fragment() {
                 )
                 
                 // 设置绿色阴影
-                binding.viewPermissionShadow.setBackgroundResource(R.drawable.bg_card_shadow_green)
+                val greenColor = ContextCompat.getColor(context, R.color.permission_granted)
+                binding.cardPermission.outlineAmbientShadowColor = greenColor
+                binding.cardPermission.outlineSpotShadowColor = greenColor
             } else {
                 binding.cardPermission.setCardBackgroundColor(
                     ContextCompat.getColor(context, R.color.tertiary_container)
@@ -128,7 +135,9 @@ class PermissionFragment : Fragment() {
                 )
                 
                 // 设置红色阴影
-                binding.viewPermissionShadow.setBackgroundResource(R.drawable.bg_card_shadow_progress)
+                val redColor = ContextCompat.getColor(context, R.color.permission_denied)
+                binding.cardPermission.outlineAmbientShadowColor = redColor
+                binding.cardPermission.outlineSpotShadowColor = redColor
             }
         } else {
             // Android 13 以下不需要通知权限
@@ -152,7 +161,9 @@ class PermissionFragment : Fragment() {
             )
             
             // 设置绿色阴影
-            binding.viewPermissionShadow.setBackgroundResource(R.drawable.bg_card_shadow_green)
+            val greenColor = ContextCompat.getColor(context, R.color.permission_granted)
+            binding.cardPermission.outlineAmbientShadowColor = greenColor
+            binding.cardPermission.outlineSpotShadowColor = greenColor
         }
     }
 

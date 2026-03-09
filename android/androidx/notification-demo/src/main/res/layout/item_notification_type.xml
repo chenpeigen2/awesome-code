@@ -24,94 +24,78 @@
         tools:text="基础通知"
         tools:visibility="visible" />
 
-    <!-- 带颜色阴影的卡片容器 -->
-    <FrameLayout
+    <!-- 卡片 - 使用 elevation + outlineSpotShadowColor 设置带颜色阴影 -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="12dp">
+        android:layout_marginBottom="10dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="4dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/white"
+        app:strokeWidth="0dp"
+        app:rippleColor="#15000000">
 
-        <!-- 底部颜色阴影层 -->
-        <View
-            android:id="@+id/viewColorShadow"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="4dp"
-            android:layout_marginStart="4dp"
-            android:background="@drawable/bg_card_shadow_basic"
-            android:alpha="0.6" />
-
-        <!-- 主卡片 -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/white"
-            app:strokeWidth="0dp"
-            app:rippleColor="#15000000">
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
 
+            <!-- 颜色指示圆点 -->
+            <View
+                android:id="@+id/viewColorDot"
+                android:layout_width="8dp"
+                android:layout_height="8dp"
+                android:background="@drawable/bg_color_dot" />
+
+            <!-- 文本内容 -->
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="16dp">
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
 
-                <!-- 颜色指示圆点 -->
-                <View
-                    android:id="@+id/viewColorDot"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:background="@drawable/bg_color_dot" />
-
-                <!-- 文本内容 -->
-                <LinearLayout
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="14dp"
-                    android:orientation="vertical">
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/on_surface"
+                    tools:text="普通通知" />
 
-                    <TextView
-                        android:id="@+id/tvTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/on_surface"
-                        tools:text="普通通知" />
-
-                    <TextView
-                        android:id="@+id/tvDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="3dp"
-                        android:textSize="13sp"
-                        android:textColor="@color/on_surface_variant"
-                        android:maxLines="2"
-                        android:ellipsize="end"
-                        tools:text="简单的标题和内容通知" />
-
-                </LinearLayout>
-
-                <!-- 箭头 -->
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="8dp"
-                    android:src="@drawable/ic_arrow_right"
-                    android:alpha="0.3"
-                    android:tint="@color/on_surface_variant"
-                    tools:ignore="ContentDescription" />
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:textSize="13sp"
+                    android:textColor="@color/on_surface_variant"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    tools:text="简单的标题和内容通知" />
 
             </LinearLayout>
 
-        </com.google.android.material.card.MaterialCardView>
+            <!-- 箭头 -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_arrow_right"
+                android:alpha="0.3"
+                android:tint="@color/on_surface_variant"
+                tools:ignore="ContentDescription" />
 
-    </FrameLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -29,10 +28,10 @@ class GroupFragment : Fragment() {
     private lateinit var notificationHelper: NotificationHelper
 
     private val groups = listOf(
-        GroupData(NotificationHelper.GROUP_KEY_CHAT, "聊天消息", "💬", "#6750A4", R.drawable.bg_card_shadow_basic),
-        GroupData(NotificationHelper.GROUP_KEY_EMAIL, "邮件", "📧", "#386A20", R.drawable.bg_card_shadow_message),
-        GroupData(NotificationHelper.GROUP_KEY_SOCIAL, "社交动态", "👥", "#7D5260", R.drawable.bg_card_shadow_advanced),
-        GroupData(NotificationHelper.GROUP_KEY_SYSTEM, "系统提醒", "🔔", "#49454F", R.drawable.bg_card_shadow_gray)
+        GroupData(NotificationHelper.GROUP_KEY_CHAT, "聊天消息", "#6750A4", R.color.category_basic),
+        GroupData(NotificationHelper.GROUP_KEY_EMAIL, "邮件", "#386A20", R.color.category_message),
+        GroupData(NotificationHelper.GROUP_KEY_SOCIAL, "社交动态", "#7D5260", R.color.category_advanced),
+        GroupData(NotificationHelper.GROUP_KEY_SYSTEM, "系统提醒", "#49454F", R.color.gray_500)
     )
 
     private var notificationCounters = mutableMapOf<String, Int>()
@@ -40,9 +39,8 @@ class GroupFragment : Fragment() {
     data class GroupData(
         val key: String,
         val name: String,
-        val icon: String,
         val color: String,
-        val shadowRes: Int
+        val shadowColorRes: Int
     )
 
     companion object {
@@ -65,6 +63,11 @@ class GroupFragment : Fragment() {
     }
 
     private fun setupViews() {
+        // 设置头部卡片阴影颜色
+        val mediaColor = ContextCompat.getColor(requireContext(), R.color.category_media)
+        binding.cardHeader.outlineAmbientShadowColor = mediaColor
+        binding.cardHeader.outlineSpotShadowColor = mediaColor
+        
         groups.forEach { group ->
             val cardView = createGroupCard(group)
             binding.containerGroups.addView(cardView)
@@ -94,40 +97,26 @@ class GroupFragment : Fragment() {
         }
     }
 
-    private fun createGroupCard(group: GroupData): FrameLayout {
+    private fun createGroupCard(group: GroupData): MaterialCardView {
         val context = requireContext()
         
-        // 容器
-        val container = FrameLayout(context)
-        container.layoutParams = LinearLayout.LayoutParams(
+        val cardView = MaterialCardView(context)
+        cardView.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             setMargins(0, 0, 0, dpToPx(10))
         }
-
-        // 颜色阴影层
-        val shadowView = View(context)
-        shadowView.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.MATCH_PARENT
-        ).apply {
-            setMargins(dpToPx(3), dpToPx(3), 0, 0)
-        }
-        shadowView.setBackgroundResource(group.shadowRes)
-        shadowView.alpha = 0.5f
-        container.addView(shadowView)
-
-        // 主卡片
-        val cardView = MaterialCardView(context)
-        cardView.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
         cardView.radius = dpToPx(16).toFloat()
         cardView.cardElevation = 0f
+        cardView.elevation = 4f
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
         cardView.strokeWidth = 0
+        
+        // 设置阴影颜色
+        val shadowColor = ContextCompat.getColor(context, group.shadowColorRes)
+        cardView.outlineAmbientShadowColor = shadowColor
+        cardView.outlineSpotShadowColor = shadowColor
 
         // 内容布局
         val contentLayout = LinearLayout(context)
@@ -244,9 +233,8 @@ class GroupFragment : Fragment() {
 
         contentLayout.addView(buttonContainer)
         cardView.addView(contentLayout)
-        container.addView(cardView)
 
-        return container
+        return cardView
     }
 
     private fun sendGroupNotification(group: GroupData) {

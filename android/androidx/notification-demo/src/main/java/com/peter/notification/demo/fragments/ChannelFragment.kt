@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -52,6 +51,11 @@ class ChannelFragment : Fragment() {
     }
 
     private fun setupViews() {
+        // 设置头部卡片阴影颜色
+        val messageColor = ContextCompat.getColor(requireContext(), R.color.category_message)
+        binding.cardHeader.outlineAmbientShadowColor = messageColor
+        binding.cardHeader.outlineSpotShadowColor = messageColor
+        
         setupGroupsList()
         setupClickListeners()
     }
@@ -81,40 +85,26 @@ class ChannelFragment : Fragment() {
         }
     }
 
-    private fun createGroupCard(groupName: String, channels: List<NotificationChannel>): FrameLayout {
+    private fun createGroupCard(groupName: String, channels: List<NotificationChannel>): MaterialCardView {
         val context = requireContext()
         
-        // 容器
-        val container = FrameLayout(context)
-        container.layoutParams = LinearLayout.LayoutParams(
+        val cardView = MaterialCardView(context)
+        cardView.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             setMargins(0, 0, 0, dpToPx(10))
         }
-
-        // 颜色阴影层
-        val shadowView = View(context)
-        shadowView.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.MATCH_PARENT
-        ).apply {
-            setMargins(dpToPx(3), dpToPx(3), 0, 0)
-        }
-        shadowView.setBackgroundResource(R.drawable.bg_card_shadow_message)
-        shadowView.alpha = 0.5f
-        container.addView(shadowView)
-
-        // 主卡片
-        val cardView = MaterialCardView(context)
-        cardView.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
         cardView.radius = dpToPx(16).toFloat()
         cardView.cardElevation = 0f
+        cardView.elevation = 4f
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
         cardView.strokeWidth = 0
+        
+        // 设置阴影颜色
+        val messageColor = ContextCompat.getColor(context, R.color.category_message)
+        cardView.outlineAmbientShadowColor = messageColor
+        cardView.outlineSpotShadowColor = messageColor
 
         val contentLayout = LinearLayout(context)
         contentLayout.orientation = LinearLayout.VERTICAL
@@ -131,7 +121,7 @@ class ChannelFragment : Fragment() {
         colorDot.layoutParams = LinearLayout.LayoutParams(dotSize, dotSize)
         val dotDrawable = GradientDrawable()
         dotDrawable.shape = GradientDrawable.OVAL
-        dotDrawable.setColor(ContextCompat.getColor(context, R.color.category_message))
+        dotDrawable.setColor(messageColor)
         colorDot.background = dotDrawable
         headerRow.addView(colorDot)
 
@@ -159,7 +149,7 @@ class ChannelFragment : Fragment() {
         }
         countTextView.text = "${channels.size} 个"
         countTextView.textSize = 12f
-        countTextView.setTextColor(ContextCompat.getColor(context, R.color.category_message))
+        countTextView.setTextColor(messageColor)
         headerRow.addView(countTextView)
 
         contentLayout.addView(headerRow)
@@ -175,45 +165,29 @@ class ChannelFragment : Fragment() {
         }
 
         cardView.addView(contentLayout)
-        container.addView(cardView)
-
-        return container
+        return cardView
     }
 
-    private fun createUngroupedChannelsCard(channels: List<NotificationChannel>): FrameLayout {
+    private fun createUngroupedChannelsCard(channels: List<NotificationChannel>): MaterialCardView {
         val context = requireContext()
         
-        // 容器
-        val container = FrameLayout(context)
-        container.layoutParams = LinearLayout.LayoutParams(
+        val cardView = MaterialCardView(context)
+        cardView.layoutParams = LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
             setMargins(0, 0, 0, dpToPx(10))
         }
-
-        // 颜色阴影层
-        val shadowView = View(context)
-        shadowView.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.MATCH_PARENT
-        ).apply {
-            setMargins(dpToPx(3), dpToPx(3), 0, 0)
-        }
-        shadowView.setBackgroundResource(R.drawable.bg_card_shadow_gray)
-        shadowView.alpha = 0.5f
-        container.addView(shadowView)
-
-        // 主卡片
-        val cardView = MaterialCardView(context)
-        cardView.layoutParams = FrameLayout.LayoutParams(
-            FrameLayout.LayoutParams.MATCH_PARENT,
-            FrameLayout.LayoutParams.WRAP_CONTENT
-        )
         cardView.radius = dpToPx(16).toFloat()
         cardView.cardElevation = 0f
+        cardView.elevation = 4f
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
         cardView.strokeWidth = 0
+        
+        // 设置灰色阴影
+        val grayColor = ContextCompat.getColor(context, R.color.gray_500)
+        cardView.outlineAmbientShadowColor = grayColor
+        cardView.outlineSpotShadowColor = grayColor
 
         val contentLayout = LinearLayout(context)
         contentLayout.orientation = LinearLayout.VERTICAL
@@ -229,7 +203,7 @@ class ChannelFragment : Fragment() {
         colorDot.layoutParams = LinearLayout.LayoutParams(dotSize, dotSize)
         val dotDrawable = GradientDrawable()
         dotDrawable.shape = GradientDrawable.OVAL
-        dotDrawable.setColor(ContextCompat.getColor(context, R.color.gray_500))
+        dotDrawable.setColor(grayColor)
         colorDot.background = dotDrawable
         headerRow.addView(colorDot)
 
@@ -255,7 +229,7 @@ class ChannelFragment : Fragment() {
         }
         countTextView.text = "${channels.size} 个"
         countTextView.textSize = 12f
-        countTextView.setTextColor(ContextCompat.getColor(context, R.color.gray_500))
+        countTextView.setTextColor(grayColor)
         headerRow.addView(countTextView)
 
         contentLayout.addView(headerRow)
@@ -270,9 +244,7 @@ class ChannelFragment : Fragment() {
         }
 
         cardView.addView(contentLayout)
-        container.addView(cardView)
-
-        return container
+        return cardView
     }
 
     private fun setupClickListeners() {
