@@ -116,6 +116,12 @@ fun getDemoLevels(): List<DemoLevel> {
                     description = "padding, size, background, border",
                     activityClass = com.peter.compose.demo.level1.ModifiersActivity::class.java,
                     color = Color(0xFF018786)
+                ),
+                DemoItem(
+                    title = "Elevation 详解",
+                    description = "shadow, translationZ, 传统View方式",
+                    activityClass = com.peter.compose.demo.level1.ElevationActivity::class.java,
+                    color = Color(0xFF7B1FA2)
                 )
             )
         ),

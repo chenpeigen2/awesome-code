@@ -5,7 +5,7 @@ compileSdk = "36"
 javapoet = "1.13.0"
 localbroadcastmanager = "1.1.0"
 targetSdk = "36"
-minSdk = "24"
+minSdk = "35"
 
 # Compose BOM 版本
 composeBom = "2024.12.01"
