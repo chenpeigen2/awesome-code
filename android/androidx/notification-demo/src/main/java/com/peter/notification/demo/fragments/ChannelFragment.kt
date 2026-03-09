@@ -268,10 +268,6 @@ class ChannelFragment : Fragment() {
         }
     }
 
-    private fun dpToPx(dp: Int, context: android.content.Context): Int {
-        return (dp * context.resources.displayMetrics.density).toInt()
-    }
-
     override fun onResume() {
         super.onResume()
         setupRecyclerView()
