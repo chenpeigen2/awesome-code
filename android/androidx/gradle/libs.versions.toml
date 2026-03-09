@@ -7,6 +7,9 @@ localbroadcastmanager = "1.1.0"
 targetSdk = "36"
 minSdk = "24"
 
+# Compose BOM 版本
+composeBom = "2024.12.01"
+
 # Gradle 插件版本
 agp = "8.13.2"
 asynclayoutinflater = "1.1.0"
@@ -40,8 +43,9 @@ workmanager = "2.10.0"
 # Kotlinx Serialization 版本
 kotlinxSerializationJson = "1.6.3"
 
-# Koin 依赖注入版本
+# Koin 依赖注入
 koin = "4.1.1"
+koinCompose = "4.1.1"
 
 # 测试库版本
 junit = "4.13.2"
@@ -65,6 +69,16 @@ room = "2.6.1"
 androidx-localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
 asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
 asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
+
+# Compose BOM
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 
 # AndroidX 核心库
 androidx-asynclayoutinflater = { module = "androidx.asynclayoutinflater:asynclayoutinflater", version.ref = "asynclayoutinflater" }
@@ -121,6 +135,7 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 # Koin 依赖注入
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koinCompose" }
 
 # 测试库
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -139,3 +154,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+jetbrains-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

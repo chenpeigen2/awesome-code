@@ -68,3 +68,6 @@ include(":animation-demo")
 
 // Touch Demo - 触摸事件分发示例
 include(":touch-demo")
+
+// Compose Demo - Jetpack Compose 学习示例
+include(":compose-demo")
