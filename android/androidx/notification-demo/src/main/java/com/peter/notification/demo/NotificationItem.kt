@@ -4,29 +4,10 @@ package com.peter.notification.demo
  * 通知类型枚举
  */
 enum class NotificationType {
-    // 基础通知
-    NORMAL,
-    BIG_TEXT,
-    BIG_PICTURE,
-    INBOX,
-
-    // 消息通知
-    MESSAGING,
-    CONVERSATION,
-    BUBBLE,
-
-    // 进度与状态
-    PROGRESS,
-    ONGOING,
-    FOREGROUND,
-
-    // 媒体通知
-    MEDIA,
-
-    // 高级功能
-    CUSTOM,
-    SCHEDULED,
-    ACTION
+    NORMAL, BIG_TEXT, BIG_PICTURE, INBOX,
+    MESSAGING, CONVERSATION, BUBBLE,
+    PROGRESS, ONGOING, FOREGROUND,
+    MEDIA, CUSTOM, SCHEDULED, ACTION
 }
 
 /**
@@ -47,7 +28,8 @@ data class NotificationItem(
     val type: NotificationType,
     val title: String,
     val description: String,
-    val category: NotificationCategory
+    val category: NotificationCategory,
+    val action: () -> Unit = {}
 )
 
 /**
@@ -70,16 +52,6 @@ data class ChannelGroupItem(
     val id: String,
     val name: String,
     val channelCount: Int = 0
-)
-
-/**
- * 分组通知数据模型
- */
-data class GroupNotificationItem(
-    val groupId: String,
-    val groupName: String,
-    val colorRes: Int,
-    val notificationCount: Int = 0
 )
 
 /**

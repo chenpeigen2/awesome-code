@@ -1,18 +1,17 @@
 package com.peter.notification.demo.fragments
 
-import android.media.RingtoneManager
-import android.net.Uri
+import android.media.AudioAttributes
+import android.media.MediaPlayer
+import android.media.RingtoneManager as SystemRingtoneManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.peter.notification.demo.R
 import com.peter.notification.demo.databinding.FragmentSoundBinding
-import com.peter.notification.demo.databinding.ItemRingtoneBinding
-import com.peter.notification.demo.sound.RingtoneManager as AppRingtoneManager
 
 /**
  * 铃声设置 Fragment
@@ -22,9 +21,8 @@ class SoundFragment : Fragment() {
     private var _binding: FragmentSoundBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var ringtoneManager: AppRingtoneManager
-    private var selectedUri: Uri? = null
-    private lateinit var adapter: RingtoneAdapter
+    private var mediaPlayer: MediaPlayer? = null
+    private var currentRingtoneName: String = "默认铃声"
 
     companion object {
         fun newInstance() = SoundFragment()
@@ -41,110 +39,109 @@ class SoundFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ringtoneManager = AppRingtoneManager(requireContext())
-        
-        setupUI()
-        loadRingtones()
+        setupViews()
     }
 
-    private fun setupUI() {
-        binding.btnPlayPreview.setOnClickListener {
-            selectedUri?.let { uri ->
-                ringtoneManager.playRingtone(uri)
-                Toast.makeText(requireContext(), "正在播放预览", Toast.LENGTH_SHORT).show()
-            } ?: run {
-                Toast.makeText(requireContext(), "请先选择铃声", Toast.LENGTH_SHORT).show()
+    private fun setupViews() {
+        binding.tvCurrentRingtone.text = currentRingtoneName
+
+        binding.btnPreview.setOnClickListener {
+            playDefaultNotificationSound()
+        }
+
+        setupRingtoneList()
+    }
+
+    private fun setupRingtoneList() {
+        val ringtones = getSystemRingtones()
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = RingtoneAdapter(ringtones) { ringtone ->
+                currentRingtoneName = ringtone
+                binding.tvCurrentRingtone.text = ringtone
+                playDefaultNotificationSound()
             }
         }
-
-        binding.btnStop.setOnClickListener {
-            ringtoneManager.stopCurrentRingtone()
-        }
     }
 
-    private fun loadRingtones() {
-        val ringtones = ringtoneManager.getAllRingtones()
-        
-        // 设置默认选中
-        selectedUri = ringtoneManager.getDefaultNotificationUri()
-        
-        adapter = RingtoneAdapter(ringtones, selectedUri) { ringtoneInfo ->
-            selectedUri = ringtoneInfo.uri
-            binding.tvCurrentRingtone.text = "当前铃声: ${ringtoneInfo.name}"
-            adapter.updateSelected(ringtoneInfo.uri)
+    private fun getSystemRingtones(): List<String> {
+        val ringtones = mutableListOf<String>()
+        try {
+            val manager = SystemRingtoneManager(requireContext())
+            val cursor = manager.cursor
+            while (cursor.moveToNext()) {
+                val title = cursor.getString(
+                    SystemRingtoneManager.TITLE_COLUMN_INDEX
+                )
+                ringtones.add(title)
+            }
+        } catch (e: Exception) {
+            // Fallback to default list
+            ringtones.addAll(listOf(
+                "默认铃声",
+                "Chime",
+                "Ding",
+                "Notify",
+                "Pebble",
+                "Popcorn"
+            ))
         }
+        return ringtones
+    }
 
-        binding.recyclerView.apply {
-            this.adapter = this@SoundFragment.adapter
-            layoutManager = LinearLayoutManager(requireContext())
+    private fun playDefaultNotificationSound() {
+        try {
+            mediaPlayer?.release()
+            mediaPlayer = MediaPlayer().apply {
+                setAudioAttributes(
+                    AudioAttributes.Builder()
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .build()
+                )
+                setDataSource(
+                    requireContext(),
+                    SystemRingtoneManager.getDefaultUri(SystemRingtoneManager.TYPE_NOTIFICATION)
+                )
+                prepare()
+                start()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-
-        // 显示当前铃声
-        val defaultName = ringtones.find { it.uri == selectedUri }?.name ?: "默认铃声"
-        binding.tvCurrentRingtone.text = "当前铃声: $defaultName"
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        ringtoneManager.release()
+        mediaPlayer?.release()
+        mediaPlayer = null
         _binding = null
     }
 
-    /**
-     * 铃声列表适配器
-     */
     inner class RingtoneAdapter(
-        private var items: List<AppRingtoneManager.RingtoneInfo>,
-        private var selectedUri: Uri?,
-        private val onSelected: (AppRingtoneManager.RingtoneInfo) -> Unit
-    ) : RecyclerView.Adapter<RingtoneAdapter.ViewHolder>() {
+        private val items: List<String>,
+        private val onItemClick: (String) -> Unit
+    ) : androidx.recyclerview.widget.RecyclerView.Adapter<RingtoneAdapter.ViewHolder>() {
 
-        inner class ViewHolder(
-            private val binding: ItemRingtoneBinding
-        ) : RecyclerView.ViewHolder(binding.root) {
-
-            fun bind(item: AppRingtoneManager.RingtoneInfo) {
-                binding.apply {
-                    tvRingtoneName.text = item.name
-                    if (item.isCustom) {
-                        tvRingtoneName.text = "${item.name} (自定义)"
-                    }
-                    
-                    radioButton.isChecked = item.uri == selectedUri
-
-                    radioButton.setOnClickListener {
-                        onSelected(item)
-                    }
-
-                    root.setOnClickListener {
-                        onSelected(item)
-                    }
-
-                    btnPlay.setOnClickListener {
-                        ringtoneManager.playRingtone(item.uri)
-                    }
-                }
-            }
+        inner class ViewHolder(view: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(view) {
+            val name: TextView = view.findViewById(R.id.tvRingtoneName)
+            val type: TextView = view.findViewById(R.id.tvRingtoneType)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val binding = ItemRingtoneBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-            return ViewHolder(binding)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_ringtone, parent, false)
+            return ViewHolder(view)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            holder.bind(items[position])
+            holder.name.text = items[position]
+            holder.type.text = "系统铃声"
+            holder.itemView.setOnClickListener {
+                onItemClick(items[position])
+            }
         }
 
         override fun getItemCount(): Int = items.size
-
-        fun updateSelected(uri: Uri) {
-            selectedUri = uri
-            notifyDataSetChanged()
-        }
     }
 }

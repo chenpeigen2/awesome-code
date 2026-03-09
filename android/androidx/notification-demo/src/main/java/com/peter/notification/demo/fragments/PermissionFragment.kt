@@ -7,7 +7,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.peter.notification.demo.MainActivity
@@ -17,15 +19,26 @@ import com.peter.notification.demo.databinding.FragmentPermissionBinding
 /**
  * 权限管理 Fragment
  */
-class PermissionFragment : Fragment(R.layout.fragment_permission) {
+class PermissionFragment : Fragment() {
 
     private var _binding: FragmentPermissionBinding? = null
     private val binding get() = _binding!!
 
+    companion object {
+        fun newInstance() = PermissionFragment()
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentPermissionBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentPermissionBinding.bind(view)
-
         setupViews()
         updatePermissionStatus()
     }
@@ -44,7 +57,7 @@ class PermissionFragment : Fragment(R.layout.fragment_permission) {
             openAppSettings()
         }
 
-        binding.btnCheckStatus.setOnClickListener {
+        binding.btnCheckPermission.setOnClickListener {
             updatePermissionStatus()
             (requireActivity() as MainActivity).showSnackbar("权限状态已更新")
         }
@@ -54,9 +67,8 @@ class PermissionFragment : Fragment(R.layout.fragment_permission) {
         val context = requireContext()
 
         // 更新设备信息
-        val deviceInfo = "Android ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})\n" +
-                "设备: ${Build.MANUFACTURER} ${Build.MODEL}"
-        binding.tvDeviceInfo.text = deviceInfo
+        binding.tvAndroidVersion.text = Build.VERSION.RELEASE
+        binding.tvApiLevel.text = Build.VERSION.SDK_INT.toString()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val isGranted = ContextCompat.checkSelfPermission(
@@ -66,30 +78,35 @@ class PermissionFragment : Fragment(R.layout.fragment_permission) {
 
             // 更新权限状态卡片
             if (isGranted) {
-                binding.ivStatus.setImageResource(android.R.drawable.presence_online)
-                binding.ivStatus.setColorFilter(
-                    ContextCompat.getColor(context, android.R.color.holo_green_dark)
+                binding.cardPermission.setCardBackgroundColor(
+                    ContextCompat.getColor(context, R.color.permission_background)
                 )
-                binding.tvStatus.text = "已授权"
-                binding.tvStatus.setTextColor(
-                    ContextCompat.getColor(context, android.R.color.holo_green_dark)
+                binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_info)
+                binding.ivPermissionIcon.setColorFilter(
+                    ContextCompat.getColor(context, R.color.permission_granted)
                 )
-                binding.tvDescription.text = "应用已获得通知权限，可以正常发送通知。"
+                binding.tvPermissionStatus.text = "通知权限：已授权"
+                binding.tvPermissionDesc.visibility = View.GONE
 
                 binding.btnRequestPermission.visibility = View.GONE
                 binding.btnOpenSettings.visibility = View.GONE
-            } else {
-                binding.ivStatus.setImageResource(android.R.drawable.presence_busy)
-                binding.ivStatus.setColorFilter(
-                    ContextCompat.getColor(context, android.R.color.holo_red_dark)
-                )
-                binding.tvStatus.text = "未授权"
-                binding.tvStatus.setTextColor(
-                    ContextCompat.getColor(context, android.R.color.holo_red_dark)
-                )
-                binding.tvDescription.text = "应用未获得通知权限，无法发送通知。"
 
-                // 检查是否可以请求权限
+                binding.tvPermissionState.text = "已授权"
+                binding.tvPermissionState.setTextColor(
+                    ContextCompat.getColor(context, R.color.green_500)
+                )
+            } else {
+                binding.cardPermission.setCardBackgroundColor(
+                    ContextCompat.getColor(context, R.color.permission_denied_background)
+                )
+                binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_alert)
+                binding.ivPermissionIcon.setColorFilter(
+                    ContextCompat.getColor(context, R.color.permission_denied)
+                )
+                binding.tvPermissionStatus.text = "通知权限：未授权"
+                binding.tvPermissionDesc.visibility = View.VISIBLE
+                binding.tvPermissionDesc.text = "需要通知权限才能发送通知"
+
                 val shouldShowRationale = shouldShowRequestPermissionRationale(
                     Manifest.permission.POST_NOTIFICATIONS
                 )
@@ -97,31 +114,36 @@ class PermissionFragment : Fragment(R.layout.fragment_permission) {
                 if (shouldShowRationale) {
                     binding.btnRequestPermission.visibility = View.VISIBLE
                     binding.btnOpenSettings.visibility = View.GONE
-                    binding.tvRationale.visibility = View.VISIBLE
-                    binding.tvRationale.text = "通知权限用于发送各种类型的通知演示。请授权以体验完整功能。"
                 } else {
-                    // 用户选择了"不再询问"
                     binding.btnRequestPermission.visibility = View.GONE
                     binding.btnOpenSettings.visibility = View.VISIBLE
-                    binding.tvRationale.visibility = View.VISIBLE
-                    binding.tvRationale.text = "您已禁止通知权限请求，请前往系统设置手动开启。"
                 }
+
+                binding.tvPermissionState.text = "未授权"
+                binding.tvPermissionState.setTextColor(
+                    ContextCompat.getColor(context, R.color.red_500)
+                )
             }
         } else {
             // Android 13 以下不需要通知权限
-            binding.ivStatus.setImageResource(android.R.drawable.presence_online)
-            binding.ivStatus.setColorFilter(
-                ContextCompat.getColor(context, android.R.color.holo_green_dark)
+            binding.cardPermission.setCardBackgroundColor(
+                ContextCompat.getColor(context, R.color.permission_background)
             )
-            binding.tvStatus.text = "无需请求"
-            binding.tvStatus.setTextColor(
-                ContextCompat.getColor(context, android.R.color.holo_green_dark)
+            binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_info)
+            binding.ivPermissionIcon.setColorFilter(
+                ContextCompat.getColor(context, R.color.permission_granted)
             )
-            binding.tvDescription.text = "Android 13 以下版本默认拥有通知权限。"
+            binding.tvPermissionStatus.text = "通知权限：无需请求"
+            binding.tvPermissionDesc.visibility = View.VISIBLE
+            binding.tvPermissionDesc.text = "Android 13 以下版本默认拥有通知权限"
 
             binding.btnRequestPermission.visibility = View.GONE
             binding.btnOpenSettings.visibility = View.GONE
-            binding.tvRationale.visibility = View.GONE
+
+            binding.tvPermissionState.text = "无需请求"
+            binding.tvPermissionState.setTextColor(
+                ContextCompat.getColor(context, R.color.green_500)
+            )
         }
     }
 

@@ -8,16 +8,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.peter.notification.demo.channel.ChannelManager
 import com.peter.notification.demo.databinding.ActivityMainBinding
-import com.peter.notification.demo.fragments.ChannelFragment
-import com.peter.notification.demo.fragments.GroupFragment
-import com.peter.notification.demo.fragments.PermissionFragment
-import com.peter.notification.demo.fragments.SoundFragment
-import com.peter.notification.demo.fragments.TypeFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,9 +34,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 设置 Toolbar
+        setSupportActionBar(binding.toolbar)
+
         // 初始化 Channel
         channelManager = ChannelManager(this)
-        channelManager.initializeDefaultChannels()
 
         // 设置 ViewPager
         setupViewPager()
@@ -73,7 +69,6 @@ class MainActivity : AppCompatActivity() {
             ) == PackageManager.PERMISSION_GRANTED
             updatePermissionIndicator(isGranted)
         } else {
-            // Android 13 以下不需要运行时权限
             updatePermissionIndicator(true)
         }
     }
@@ -114,12 +109,7 @@ class MainActivity : AppCompatActivity() {
     fun requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
-                // 用户之前拒绝过，解释为什么需要权限
-                Toast.makeText(
-                    this,
-                    "需要通知权限才能发送通知演示",
-                    Toast.LENGTH_LONG
-                ).show()
+                showSnackbar("需要通知权限才能发送通知演示")
             }
             requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
@@ -130,22 +120,25 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-class ViewPagerAdapter(activity: AppCompatActivity) : FragmentStateAdapter(activity) {
+class ViewPagerAdapter(
+    private val activity: AppCompatActivity
+) : androidx.viewpager2.adapter.FragmentStateAdapter(activity) {
 
-    private val titles = listOf("通知类型", "Channel", "分组", "铃声", "权限")
+    private val fragments = listOf(
+        com.peter.notification.demo.fragments.TypeFragment.newInstance(),
+        com.peter.notification.demo.fragments.ChannelFragment.newInstance(),
+        com.peter.notification.demo.fragments.GroupFragment.newInstance(),
+        com.peter.notification.demo.fragments.SoundFragment.newInstance(),
+        com.peter.notification.demo.fragments.PermissionFragment.newInstance()
+    )
 
-    override fun getItemCount(): Int = titles.size
+    private val titles = listOf(
+        "类型", "Channel", "分组", "铃声", "权限"
+    )
 
-    override fun createFragment(position: Int): androidx.fragment.app.Fragment {
-        return when (position) {
-            0 -> TypeFragment()
-            1 -> ChannelFragment()
-            2 -> GroupFragment()
-            3 -> SoundFragment()
-            4 -> PermissionFragment()
-            else -> TypeFragment()
-        }
-    }
+    override fun getItemCount(): Int = fragments.size
+
+    override fun createFragment(position: Int) = fragments[position]
 
     fun getTitle(position: Int): String = titles[position]
 }
