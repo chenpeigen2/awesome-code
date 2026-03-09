@@ -93,10 +93,7 @@ class PermissionFragment : Fragment() {
                 binding.cardPermission.setCardBackgroundColor(
                     ContextCompat.getColor(context, R.color.secondary_container)
                 )
-                binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_info)
-                binding.ivPermissionIcon.setColorFilter(
-                    ContextCompat.getColor(context, R.color.permission_granted)
-                )
+                binding.ivPermissionIcon.setImageResource(R.drawable.ic_permission_granted)
                 binding.tvPermissionStatus.text = "通知权限：已授权"
                 binding.tvPermissionDesc.visibility = View.GONE
 
@@ -121,10 +118,7 @@ class PermissionFragment : Fragment() {
                 binding.cardPermission.setCardBackgroundColor(
                     ContextCompat.getColor(context, R.color.tertiary_container)
                 )
-                binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_alert)
-                binding.ivPermissionIcon.setColorFilter(
-                    ContextCompat.getColor(context, R.color.permission_denied)
-                )
+                binding.ivPermissionIcon.setImageResource(R.drawable.ic_permission_denied)
                 binding.tvPermissionStatus.text = "通知权限：未授权"
                 binding.tvPermissionDesc.visibility = View.VISIBLE
                 binding.tvPermissionDesc.text = "需要通知权限才能发送通知"
@@ -161,10 +155,7 @@ class PermissionFragment : Fragment() {
             binding.cardPermission.setCardBackgroundColor(
                 ContextCompat.getColor(context, R.color.secondary_container)
             )
-            binding.ivPermissionIcon.setImageResource(android.R.drawable.ic_dialog_info)
-            binding.ivPermissionIcon.setColorFilter(
-                ContextCompat.getColor(context, R.color.permission_granted)
-            )
+            binding.ivPermissionIcon.setImageResource(R.drawable.ic_permission_granted)
             binding.tvPermissionStatus.text = "通知权限：无需请求"
             binding.tvPermissionDesc.visibility = View.VISIBLE
             binding.tvPermissionDesc.text = "Android 13 以下版本默认拥有通知权限"
