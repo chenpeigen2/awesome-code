@@ -140,7 +140,10 @@ class GroupFragment : Fragment() {
         // 图标和名称容器
         val textContainer = LinearLayout(context)
         textContainer.orientation = LinearLayout.VERTICAL
-        (textContainer.layoutParams as LinearLayout.LayoutParams).apply {
+        textContainer.layoutParams = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
             setMargins(dpToPx(14), 0, 0, 0)
         }
         
