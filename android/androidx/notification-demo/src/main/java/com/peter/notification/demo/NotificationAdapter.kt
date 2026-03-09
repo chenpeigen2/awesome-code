@@ -106,16 +106,22 @@ class NotificationAdapter(
                 tvTitle.text = item.title
                 tvDescription.text = item.description
 
-                // 根据分类设置颜色圆点
-                val dotRes = when (item.category) {
-                    NotificationCategory.BASIC -> R.drawable.bg_dot_basic
-                    NotificationCategory.MESSAGE -> R.drawable.bg_dot_message
-                    NotificationCategory.PROGRESS -> R.drawable.bg_dot_progress
-                    NotificationCategory.MEDIA -> R.drawable.bg_dot_media
-                    NotificationCategory.ADVANCED -> R.drawable.bg_dot_advanced
+                // 根据分类设置颜色圆点和阴影
+                val (dotRes, shadowRes) = when (item.category) {
+                    NotificationCategory.BASIC -> 
+                        R.drawable.bg_dot_basic to R.drawable.bg_card_shadow_basic
+                    NotificationCategory.MESSAGE -> 
+                        R.drawable.bg_dot_message to R.drawable.bg_card_shadow_message
+                    NotificationCategory.PROGRESS -> 
+                        R.drawable.bg_dot_progress to R.drawable.bg_card_shadow_progress
+                    NotificationCategory.MEDIA -> 
+                        R.drawable.bg_dot_media to R.drawable.bg_card_shadow_media
+                    NotificationCategory.ADVANCED -> 
+                        R.drawable.bg_dot_advanced to R.drawable.bg_card_shadow_advanced
                 }
                 
                 viewColorDot.setBackgroundResource(dotRes)
+                viewColorShadow.setBackgroundResource(shadowRes)
 
                 // 点击整个卡片发送通知
                 cardView.setOnClickListener {
