@@ -57,7 +57,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
 
     // Media for notification
-    implementation("androidx.media:media:1.7.0")
+    implementation(libs.androidx.media)
 
     // Testing
     testImplementation(libs.junit)

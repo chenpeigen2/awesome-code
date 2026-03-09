@@ -20,6 +20,25 @@
             </intent-filter>
         </activity>
 
+        <!-- 通知Action接收器 -->
+        <receiver
+            android:name=".receiver.NotificationActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.peter.notification.demo.ACTION_REPLY" />
+                <action android:name="com.peter.notification.demo.ACTION_LIKE" />
+                <action android:name="com.peter.notification.demo.ACTION_SHARE" />
+                <action android:name="com.peter.notification.demo.ACTION_DELETE" />
+                <action android:name="com.peter.notification.demo.ACTION_CONFIRM" />
+                <action android:name="com.peter.notification.demo.ACTION_CANCEL" />
+                <action android:name="com.peter.notification.demo.ACTION_DOWNLOAD" />
+                <action android:name="com.peter.notification.demo.ACTION_PAUSE" />
+                <action android:name="com.peter.notification.demo.ACTION_PLAY" />
+                <action android:name="com.peter.notification.demo.ACTION_PREV" />
+                <action android:name="com.peter.notification.demo.ACTION_NEXT" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

@@ -4,6 +4,7 @@ autoService = "1.1.1"
 compileSdk = "36"
 javapoet = "1.13.0"
 localbroadcastmanager = "1.1.0"
+media = "1.7.0"
 targetSdk = "36"
 minSdk = "33"
 
@@ -67,6 +68,7 @@ room = "2.6.1"
 [libraries]
 # ASM 字节码操作
 androidx-localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
+androidx-media = { module = "androidx.media:media", version.ref = "media" }
 asm = { module = "org.ow2.asm:asm", version.ref = "asm" }
 asm-util = { module = "org.ow2.asm:asm-util", version.ref = "asm" }
 

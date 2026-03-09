@@ -61,6 +61,14 @@
     <string name="type_scheduled_desc">延迟5秒后触发</string>
     <string name="type_action">按钮操作通知</string>
     <string name="type_action_desc">Action按钮点击响应</string>
+    <string name="type_reply">直接回复通知</string>
+    <string name="type_reply_desc">支持在通知栏直接输入回复</string>
+    <string name="type_social">社交互动通知</string>
+    <string name="type_social_desc">点赞、分享等社交操作</string>
+    <string name="type_confirm">确认对话框通知</string>
+    <string name="type_confirm_desc">确认/取消操作按钮</string>
+    <string name="type_download">下载任务通知</string>
+    <string name="type_download_desc">下载、稍后提醒按钮</string>
 
     <!-- Channel Management -->
     <string name="channel_group_title">ChannelGroup管理</string>

@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -190,7 +191,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showSnackbar(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT).show()
+        Toast.makeText(binding.root.context, message, Toast.LENGTH_SHORT).show()
     }
 }
 

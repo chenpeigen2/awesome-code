@@ -100,6 +100,18 @@ class TypeFragment : Fragment() {
                 description = getString(R.string.type_bubble_desc),
                 category = NotificationCategory.MESSAGE
             ),
+            NotificationItem(
+                type = NotificationType.REPLY,
+                title = getString(R.string.type_reply),
+                description = getString(R.string.type_reply_desc),
+                category = NotificationCategory.MESSAGE
+            ),
+            NotificationItem(
+                type = NotificationType.SOCIAL,
+                title = getString(R.string.type_social),
+                description = getString(R.string.type_social_desc),
+                category = NotificationCategory.MESSAGE
+            ),
             // 进度与状态
             NotificationItem(
                 type = NotificationType.PROGRESS,
@@ -143,6 +155,18 @@ class TypeFragment : Fragment() {
                 type = NotificationType.ACTION,
                 title = getString(R.string.type_action),
                 description = getString(R.string.type_action_desc),
+                category = NotificationCategory.ADVANCED
+            ),
+            NotificationItem(
+                type = NotificationType.CONFIRM,
+                title = getString(R.string.type_confirm),
+                description = getString(R.string.type_confirm_desc),
+                category = NotificationCategory.ADVANCED
+            ),
+            NotificationItem(
+                type = NotificationType.DOWNLOAD,
+                title = getString(R.string.type_download),
+                description = getString(R.string.type_download_desc),
                 category = NotificationCategory.ADVANCED
             )
         )
