@@ -90,9 +90,9 @@ class PermissionFragment : Fragment() {
 
             // 更新权限状态卡片
             if (isGranted) {
-                binding.cardPermission.setCardBackgroundColor(
-                    ContextCompat.getColor(context, R.color.secondary_container)
-                )
+//                binding.cardPermission.setCardBackgroundColor(
+//                    ContextCompat.getColor(context, R.color.secondary_container)
+//                )
                 binding.ivPermissionIcon.setImageResource(R.drawable.ic_permission_granted)
                 binding.tvPermissionStatus.text = "通知权限：已授权"
                 binding.tvPermissionDesc.visibility = View.GONE
@@ -115,9 +115,9 @@ class PermissionFragment : Fragment() {
                 binding.cardPermission.outlineAmbientShadowColor = greenColor
                 binding.cardPermission.outlineSpotShadowColor = greenColor
             } else {
-                binding.cardPermission.setCardBackgroundColor(
-                    ContextCompat.getColor(context, R.color.tertiary_container)
-                )
+//                binding.cardPermission.setCardBackgroundColor(
+//                    ContextCompat.getColor(context, R.color.tertiary_container)
+//                )
                 binding.ivPermissionIcon.setImageResource(R.drawable.ic_permission_denied)
                 binding.tvPermissionStatus.text = "通知权限：未授权"
                 binding.tvPermissionDesc.visibility = View.VISIBLE
@@ -152,9 +152,9 @@ class PermissionFragment : Fragment() {
             }
         } else {
             // Android 13 以下不需要通知权限
-            binding.cardPermission.setCardBackgroundColor(
-                ContextCompat.getColor(context, R.color.secondary_container)
-            )
+//            binding.cardPermission.setCardBackgroundColor(
+//                ContextCompat.getColor(context, R.color.secondary_container)
+//            )
             binding.ivPermissionIcon.setImageResource(R.drawable.ic_permission_granted)
             binding.tvPermissionStatus.text = "通知权限：无需请求"
             binding.tvPermissionDesc.visibility = View.VISIBLE

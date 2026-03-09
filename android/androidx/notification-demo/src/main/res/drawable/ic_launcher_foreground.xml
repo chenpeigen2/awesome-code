@@ -4,13 +4,41 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M54,54m-40,0a40,40 0,1 1,80 0a40,40 0,1 1,-80 0"/>
-    <path
-        android:fillColor="#6200EE"
-        android:pathData="M54,28L54,28A4,4 0,0 1,58 32L58,58A4,4 0,0 1,54 62L54,62A4,4 0,0 1,50 58L50,32A4,4 0,0 1,54 28z"/>
-    <path
-        android:fillColor="#6200EE"
-        android:pathData="M54,72m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    
+    <!-- 铃铛 - 居中在108x108画布中，主体在中心72dp安全区内 -->
+    <group
+        android:translateX="54"
+        android:translateY="56">
+        
+        <!-- 铃铛钟体 -->
+        <path
+            android:pathData="M-22,10C-22,10 -22,-14 -22,-20C-22,-30 -12,-38 0,-38C12,-38 22,-30 22,-20C22,-14 22,10 22,10L-22,10Z"
+            android:fillColor="#FFFFFF"/>
+        
+        <!-- 铃铛底部横条 -->
+        <path
+            android:pathData="M-24,10L24,10C24,10 24,18 16,18L-16,18C-24,18 -24,10 -24,10Z"
+            android:fillColor="#FFFFFF"/>
+        
+        <!-- 铃铛顶部圆钮 -->
+        <path
+            android:pathData="M0,-38m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"
+            android:fillColor="#FFFFFF"/>
+        
+        <!-- 铃铛底部圆球 -->
+        <path
+            android:pathData="M0,24m-9,0a9,9 0,1 1,18 0a9,9 0,1 1,-18 0"
+            android:fillColor="#FFFFFF"/>
+        
+        <!-- 通知小红点 -->
+        <path
+            android:pathData="M20,-30m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0"
+            android:fillColor="#FF5252"/>
+        
+        <!-- 小红点内的高光 -->
+        <path
+            android:pathData="M20,-30m-5,0a5,5 0,1 1,10 0a5,5 0,1 1,-10 0"
+            android:fillColor="#FF8A80"
+            android:fillAlpha="0.6"/>
+    </group>
 </vector>
