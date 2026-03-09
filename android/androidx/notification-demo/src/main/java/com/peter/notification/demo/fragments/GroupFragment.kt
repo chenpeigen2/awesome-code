@@ -171,8 +171,14 @@ class GroupFragment : Fragment() {
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             when (holder) {
                 is HeaderViewHolder -> {
-                    val mediaColor = ContextCompat.getColor(holder.itemView.context, R.color.category_media)
-                    val elevation = 4f * holder.itemView.context.resources.displayMetrics.density
+                    val context = holder.itemView.context
+                    val mediaColor = ContextCompat.getColor(context, R.color.category_media)
+                    val elevation = 6f * context.resources.displayMetrics.density
+                    val cornerRadius = 16f * context.resources.displayMetrics.density
+                    holder.cardView.shapeAppearanceModel = 
+                        com.google.android.material.shape.ShapeAppearanceModel.builder()
+                            .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, cornerRadius)
+                            .build()
                     holder.cardView.elevation = elevation
                     holder.cardView.outlineAmbientShadowColor = mediaColor
                     holder.cardView.outlineSpotShadowColor = mediaColor
@@ -215,7 +221,7 @@ class GroupFragment : Fragment() {
                 .setAllCorners(CornerFamily.ROUNDED, cornerRadius)
                 .build()
             
-            cardView.elevation = dpToPx(4, context).toFloat()
+            cardView.elevation = dpToPx(6, context).toFloat()
             cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
             cardView.strokeWidth = 0
             

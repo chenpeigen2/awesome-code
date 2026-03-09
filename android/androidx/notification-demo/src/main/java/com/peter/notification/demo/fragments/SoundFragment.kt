@@ -50,13 +50,23 @@ class SoundFragment : Fragment() {
         }
 
         // 设置卡片 elevation 和阴影颜色
-        val elevation = 4f * resources.displayMetrics.density
+        val elevation = 6f * resources.displayMetrics.density
+        val cornerRadius = 16f * resources.displayMetrics.density
+        
         val mediaColor = ContextCompat.getColor(requireContext(), R.color.category_media)
+        binding.cardHeader.shapeAppearanceModel = 
+            com.google.android.material.shape.ShapeAppearanceModel.builder()
+                .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, cornerRadius)
+                .build()
         binding.cardHeader.elevation = elevation
         binding.cardHeader.outlineAmbientShadowColor = mediaColor
         binding.cardHeader.outlineSpotShadowColor = mediaColor
         
         val grayColor = ContextCompat.getColor(requireContext(), R.color.gray_500)
+        binding.cardCurrentRingtone.shapeAppearanceModel = 
+            com.google.android.material.shape.ShapeAppearanceModel.builder()
+                .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, cornerRadius)
+                .build()
         binding.cardCurrentRingtone.elevation = elevation
         binding.cardCurrentRingtone.outlineAmbientShadowColor = grayColor
         binding.cardCurrentRingtone.outlineSpotShadowColor = grayColor
@@ -153,8 +163,16 @@ class SoundFragment : Fragment() {
             holder.binding.tvRingtoneName.text = items[position]
             holder.binding.tvRingtoneType.text = "系统铃声"
             
+            // 设置圆角形状（确保阴影形状正确）
+            val context = holder.itemView.context
+            val cornerRadius = 16f * context.resources.displayMetrics.density
+            holder.binding.cardView.shapeAppearanceModel = 
+                com.google.android.material.shape.ShapeAppearanceModel.builder()
+                    .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, cornerRadius)
+                    .build()
+            
             // 设置 elevation 和阴影颜色
-            holder.binding.cardView.elevation = 4f * holder.itemView.context.resources.displayMetrics.density
+            holder.binding.cardView.elevation = 6f * context.resources.displayMetrics.density
             holder.binding.cardView.outlineAmbientShadowColor = shadowColor
             holder.binding.cardView.outlineSpotShadowColor = shadowColor
             

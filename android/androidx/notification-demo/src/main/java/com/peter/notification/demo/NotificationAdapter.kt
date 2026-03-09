@@ -124,8 +124,14 @@ class NotificationAdapter(
                 
                 viewColorDot.setBackgroundResource(dotRes)
                 
+                // 设置圆角形状（确保阴影形状正确）
+                val cornerRadius = dpToPx(16, context).toFloat()
+                cardView.shapeAppearanceModel = com.google.android.material.shape.ShapeAppearanceModel.builder()
+                    .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, cornerRadius)
+                    .build()
+                
                 // 设置 elevation 和带颜色的阴影 (API 28+)
-                cardView.elevation = dpToPx(4, context).toFloat()
+                cardView.elevation = dpToPx(6, context).toFloat()
                 cardView.outlineAmbientShadowColor = shadowColor
                 cardView.outlineSpotShadowColor = shadowColor
 
