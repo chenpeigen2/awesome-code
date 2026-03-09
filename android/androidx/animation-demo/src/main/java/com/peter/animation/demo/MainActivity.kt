@@ -10,6 +10,7 @@ import com.peter.animation.demo.propertyanimation.ObjectAnimatorActivity
 import com.peter.animation.demo.propertyanimation.ValueAnimatorActivity
 import com.peter.animation.demo.physicsanimation.FlingAnimationActivity
 import com.peter.animation.demo.physicsanimation.SpringAnimationActivity
+import com.peter.animation.demo.materialshape.MaterialShapeDrawableActivity
 import com.peter.animation.demo.transitionanimation.ActivityTransitionActivity
 import com.peter.animation.demo.transitionanimation.FragmentTransitionActivity
 import com.peter.animation.demo.transitionanimation.SharedElementActivity
@@ -113,6 +114,14 @@ class MainActivity : AppCompatActivity() {
                 description = getString(R.string.fling_animation_desc),
                 category = AnimationCategory.PHYSICS_ANIMATION,
                 targetClass = FlingAnimationActivity::class.java
+            ),
+
+            // Material Shape
+            AnimationItem(
+                title = getString(R.string.material_shape_drawable),
+                description = getString(R.string.material_shape_drawable_desc),
+                category = AnimationCategory.MATERIAL_SHAPE,
+                targetClass = MaterialShapeDrawableActivity::class.java
             )
         )
 

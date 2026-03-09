@@ -36,6 +36,10 @@
     <string name="fling_animation">Fling投掷动画</string>
     <string name="fling_animation_desc">Friction摩擦力与边界处理</string>
 
+    <!-- Material Shape -->
+    <string name="material_shape_drawable">MaterialShapeDrawable</string>
+    <string name="material_shape_drawable_desc">自定义形状/阴影/描边</string>
+
     <!-- Common -->
     <string name="play">播放</string>
     <string name="pause">暂停</string>

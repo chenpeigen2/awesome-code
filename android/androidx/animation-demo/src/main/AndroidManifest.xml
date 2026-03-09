@@ -62,6 +62,11 @@
             android:name=".physicsanimation.FlingAnimationActivity"
             android:exported="false" />
 
+        <!-- Material Shape -->
+        <activity
+            android:name=".materialshape.MaterialShapeDrawableActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
