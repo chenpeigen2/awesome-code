@@ -1,79 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:clipToPadding="false"
-    android:paddingBottom="24dp"
-    android:background="#FAFAFA">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:paddingBottom="16dp">
-
-        <!-- 说明卡片 -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="16dp"
-            android:elevation="4dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/category_message_light">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Channel 管理"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/category_message" />
-
-                <TextView
-                    android:id="@+id/tvInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="管理通知渠道，Android 8.0+ 支持"
-                    android:textSize="14sp"
-                    android:textColor="@color/category_message"
-                    android:alpha="0.8" />
-
-            </LinearLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Channel Groups 容器 -->
-        <LinearLayout
-            android:id="@+id/containerGroups"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-        <!-- 操作按钮 -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnReset"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:text="重置所有 Channel"
-            app:cornerRadius="24dp" />
-
-    </LinearLayout>
-
-</androidx.core.widget.NestedScrollView>
+    android:paddingTop="8dp"
+    android:paddingBottom="80dp"
+    android:background="#FAFAFA"
+    tools:listitem="@layout/item_notification_type" />

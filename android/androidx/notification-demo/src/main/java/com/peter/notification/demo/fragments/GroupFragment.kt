@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.shape.CornerFamily
@@ -47,6 +49,10 @@ class GroupFragment : Fragment() {
 
     companion object {
         fun newInstance() = GroupFragment()
+        
+        fun dpToPx(dp: Int, context: android.content.Context): Int {
+            return (dp * context.resources.displayMetrics.density).toInt()
+        }
     }
 
     override fun onCreateView(
@@ -61,193 +67,31 @@ class GroupFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         notificationHelper = NotificationHelper(requireContext())
-        setupViews()
+        setupRecyclerView()
     }
 
-    private fun setupViews() {
-        // 设置头部卡片阴影颜色
-        val mediaColor = ContextCompat.getColor(requireContext(), R.color.category_media)
-        binding.cardHeader.outlineAmbientShadowColor = mediaColor
-        binding.cardHeader.outlineSpotShadowColor = mediaColor
-        
-        groups.forEach { group ->
-            val cardView = createGroupCard(group)
-            binding.containerGroups.addView(cardView)
-        }
-
-        binding.btnSendAll.setOnClickListener {
-            if ((requireActivity() as MainActivity).hasNotificationPermission()) {
-                sendAllGroupNotifications()
-            } else {
-                (requireActivity() as MainActivity).showSnackbar(getString(R.string.permission_required))
-            }
-        }
-
-        binding.btnClearAll.setOnClickListener {
-            notificationHelper.clearAllNotifications()
-            notificationCounters.clear()
-            refreshAllCards()
-            (requireActivity() as MainActivity).showSnackbar(getString(R.string.msg_notifications_cleared))
-        }
-    }
-
-    private fun refreshAllCards() {
-        binding.containerGroups.removeAllViews()
-        groups.forEach { group ->
-            val cardView = createGroupCard(group)
-            binding.containerGroups.addView(cardView)
-        }
-    }
-
-    private fun createGroupCard(group: GroupData): MaterialCardView {
-        val context = requireContext()
-        
-        val cardView = MaterialCardView(context)
-        cardView.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            setMargins(dpToPx(16), 0, dpToPx(16), dpToPx(10))
-        }
-        
-        // 使用 ShapeAppearanceModel 设置圆角，这样阴影才能正确跟随
-        val cornerRadius = dpToPx(16).toFloat()
-        cardView.shapeAppearanceModel = ShapeAppearanceModel.builder()
-            .setAllCorners(CornerFamily.ROUNDED, cornerRadius)
-            .build()
-        
-        cardView.elevation = dpToPx(4).toFloat()
-        cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
-        cardView.strokeWidth = 0
-        
-        // 设置阴影颜色
-        val shadowColor = ContextCompat.getColor(context, group.shadowColorRes)
-        cardView.outlineAmbientShadowColor = shadowColor
-        cardView.outlineSpotShadowColor = shadowColor
-
-        // 内容布局
-        val contentLayout = LinearLayout(context)
-        contentLayout.orientation = LinearLayout.VERTICAL
-        contentLayout.setPadding(dpToPx(16), dpToPx(16), dpToPx(16), dpToPx(12))
-
-        // 顶部：图标和名称
-        val headerRow = LinearLayout(context)
-        headerRow.orientation = LinearLayout.HORIZONTAL
-        headerRow.gravity = android.view.Gravity.CENTER_VERTICAL
-
-        // 颜色圆点
-        val colorDot = View(context)
-        val dotSize = dpToPx(8)
-        colorDot.layoutParams = LinearLayout.LayoutParams(dotSize, dotSize)
-        val dotDrawable = GradientDrawable()
-        dotDrawable.shape = GradientDrawable.OVAL
-        dotDrawable.setColor(Color.parseColor(group.color))
-        colorDot.background = dotDrawable
-        headerRow.addView(colorDot)
-
-        // 名称
-        val nameTextView = TextView(context)
-        nameTextView.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            setMargins(dpToPx(12), 0, 0, 0)
-        }
-        nameTextView.text = group.name
-        nameTextView.textSize = 15f
-        nameTextView.setTextColor(ContextCompat.getColor(context, R.color.on_surface))
-        nameTextView.setTypeface(null, android.graphics.Typeface.BOLD)
-        headerRow.addView(nameTextView)
-
-        // 计数
-        val countTextView = TextView(context)
-        countTextView.layoutParams = LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
-        ).apply {
-            setMargins(dpToPx(8), 0, 0, 0)
-        }
-        countTextView.text = "${notificationCounters[group.key] ?: 0} 条"
-        countTextView.textSize = 12f
-        countTextView.setTextColor(Color.parseColor(group.color))
-        countTextView.tag = "count_${group.key}"
-        headerRow.addView(countTextView)
-
-        contentLayout.addView(headerRow)
-
-        // 按钮行
-        val buttonContainer = LinearLayout(context)
-        buttonContainer.orientation = LinearLayout.HORIZONTAL
-        buttonContainer.setPadding(0, dpToPx(12), 0, 0)
-        buttonContainer.gravity = android.view.Gravity.CENTER
-
-        // +1 按钮
-        val btnSendOne = MaterialButton(context, null, com.google.android.material.R.attr.materialButtonStyle)
-        btnSendOne.apply {
-            text = "+1"
-            textSize = 13f
-            layoutParams = LinearLayout.LayoutParams(0, dpToPx(36), 1f).apply {
-                setMargins(0, 0, dpToPx(6), 0)
-            }
-            shapeAppearanceModel = shapeAppearanceModel.toBuilder()
-                .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, dpToPx(10).toFloat())
-                .build()
-            setOnClickListener {
-                if ((requireActivity() as MainActivity).hasNotificationPermission()) {
-                    sendGroupNotification(group)
-                    refreshAllCards()
-                } else {
-                    (requireActivity() as MainActivity).showSnackbar(getString(R.string.permission_required))
-                }
-            }
-        }
-        buttonContainer.addView(btnSendOne)
-
-        // +5 按钮
-        val btnSendFive = MaterialButton(context, null, com.google.android.material.R.attr.materialButtonStyle)
-        btnSendFive.apply {
-            text = "+5"
-            textSize = 13f
-            layoutParams = LinearLayout.LayoutParams(0, dpToPx(36), 1f).apply {
-                setMargins(dpToPx(6), 0, dpToPx(6), 0)
-            }
-            shapeAppearanceModel = shapeAppearanceModel.toBuilder()
-                .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, dpToPx(10).toFloat())
-                .build()
-            setOnClickListener {
-                if ((requireActivity() as MainActivity).hasNotificationPermission()) {
-                    repeat(5) { sendGroupNotification(group) }
-                    refreshAllCards()
-                } else {
-                    (requireActivity() as MainActivity).showSnackbar(getString(R.string.permission_required))
-                }
-            }
-        }
-        buttonContainer.addView(btnSendFive)
-
-        // 清除按钮
-        val btnClear = MaterialButton(context, null, com.google.android.material.R.attr.materialButtonOutlinedStyle)
-        btnClear.apply {
-            text = "清除"
-            textSize = 13f
-            layoutParams = LinearLayout.LayoutParams(0, dpToPx(36), 1f).apply {
-                setMargins(dpToPx(6), 0, 0, 0)
-            }
-            shapeAppearanceModel = shapeAppearanceModel.toBuilder()
-                .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, dpToPx(10).toFloat())
-                .build()
-            setOnClickListener {
+    private fun setupRecyclerView() {
+        val adapter = GroupAdapter(
+            groups = groups,
+            counters = notificationCounters,
+            onSendOne = { group -> sendGroupNotification(group) },
+            onSendFive = { group -> repeat(5) { sendGroupNotification(group) } },
+            onClear = { group ->
                 notificationHelper.clearGroupNotifications(group.key)
                 notificationCounters[group.key] = 0
-                refreshAllCards()
-            }
+            },
+            onSendAll = { sendAllGroupNotifications() },
+            onClearAll = {
+                notificationHelper.clearAllNotifications()
+                notificationCounters.clear()
+            },
+            hasPermission = { (requireActivity() as MainActivity).hasNotificationPermission() },
+            showSnackbar = { msg -> (requireActivity() as MainActivity).showSnackbar(msg) }
+        )
+        binding.recyclerView.apply {
+            this.adapter = adapter
+            layoutManager = LinearLayoutManager(requireContext())
         }
-        buttonContainer.addView(btnClear)
-
-        contentLayout.addView(buttonContainer)
-        cardView.addView(contentLayout)
-
-        return cardView
     }
 
     private fun sendGroupNotification(group: GroupData) {
@@ -274,16 +118,241 @@ class GroupFragment : Fragment() {
         groups.forEach { group ->
             sendGroupNotification(group)
         }
-        refreshAllCards()
         (requireActivity() as MainActivity).showSnackbar(getString(R.string.msg_notification_sent))
-    }
-
-    private fun dpToPx(dp: Int): Int {
-        return (dp * resources.displayMetrics.density).toInt()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private class GroupAdapter(
+        private val groups: List<GroupData>,
+        private val counters: MutableMap<String, Int>,
+        private val onSendOne: (GroupData) -> Unit,
+        private val onSendFive: (GroupData) -> Unit,
+        private val onClear: (GroupData) -> Unit,
+        private val onSendAll: () -> Unit,
+        private val onClearAll: () -> Unit,
+        private val hasPermission: () -> Boolean,
+        private val showSnackbar: (String) -> Unit
+    ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+        companion object {
+            private const val TYPE_HEADER = 0
+            private const val TYPE_GROUP = 1
+            private const val TYPE_FOOTER = 2
+        }
+
+        override fun getItemViewType(position: Int): Int {
+            return when (position) {
+                0 -> TYPE_HEADER
+                itemCount - 1 -> TYPE_FOOTER
+                else -> TYPE_GROUP
+            }
+        }
+
+        override fun getItemCount(): Int = groups.size + 2
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+            return when (viewType) {
+                TYPE_HEADER -> HeaderViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_group_header, parent, false)
+                )
+                TYPE_FOOTER -> FooterViewHolder(
+                    LayoutInflater.from(parent.context)
+                        .inflate(R.layout.item_group_footer, parent, false)
+                )
+                else -> GroupViewHolder(createGroupCard(parent))
+            }
+        }
+
+        override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+            when (holder) {
+                is HeaderViewHolder -> {
+                    val mediaColor = ContextCompat.getColor(holder.itemView.context, R.color.category_media)
+                    holder.cardView.outlineAmbientShadowColor = mediaColor
+                    holder.cardView.outlineSpotShadowColor = mediaColor
+                }
+                is FooterViewHolder -> {
+                    holder.btnSendAll.setOnClickListener {
+                        if (hasPermission()) {
+                            onSendAll()
+                            notifyDataSetChanged()
+                        } else {
+                            showSnackbar("需要通知权限")
+                        }
+                    }
+                    holder.btnClearAll.setOnClickListener {
+                        onClearAll()
+                        notifyDataSetChanged()
+                        showSnackbar("已清除所有通知")
+                    }
+                }
+                is GroupViewHolder -> {
+                    val group = groups[position - 1]
+                    holder.bind(group, counters[group.key] ?: 0)
+                }
+            }
+        }
+
+        private fun createGroupCard(parent: ViewGroup): MaterialCardView {
+            val context = parent.context
+            
+            val cardView = MaterialCardView(context)
+            cardView.layoutParams = RecyclerView.LayoutParams(
+                RecyclerView.LayoutParams.MATCH_PARENT,
+                RecyclerView.LayoutParams.WRAP_CONTENT
+            ).apply {
+                setMargins(dpToPx(16, context), 0, dpToPx(16, context), dpToPx(10, context))
+            }
+            
+            val cornerRadius = dpToPx(16, context).toFloat()
+            cardView.shapeAppearanceModel = ShapeAppearanceModel.builder()
+                .setAllCorners(CornerFamily.ROUNDED, cornerRadius)
+                .build()
+            
+            cardView.elevation = dpToPx(4, context).toFloat()
+            cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
+            cardView.strokeWidth = 0
+            
+            return cardView
+        }
+
+        private inner class HeaderViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val cardView: MaterialCardView = itemView.findViewById(R.id.cardView)
+        }
+
+        private inner class FooterViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            val btnSendAll: MaterialButton = itemView.findViewById(R.id.btnSendAll)
+            val btnClearAll: MaterialButton = itemView.findViewById(R.id.btnClearAll)
+        }
+
+        private inner class GroupViewHolder(private val cardView: MaterialCardView) : RecyclerView.ViewHolder(cardView) {
+            
+            fun bind(group: GroupData, count: Int) {
+                val context = cardView.context
+                val shadowColor = ContextCompat.getColor(context, group.shadowColorRes)
+                
+                cardView.outlineAmbientShadowColor = shadowColor
+                cardView.outlineSpotShadowColor = shadowColor
+                
+                cardView.removeAllViews()
+                
+                val contentLayout = LinearLayout(context)
+                contentLayout.orientation = LinearLayout.VERTICAL
+                contentLayout.setPadding(dpToPx(16, context), dpToPx(16, context), dpToPx(16, context), dpToPx(12, context))
+
+                // 标题行
+                val headerRow = LinearLayout(context)
+                headerRow.orientation = LinearLayout.HORIZONTAL
+                headerRow.gravity = android.view.Gravity.CENTER_VERTICAL
+
+                val colorDot = View(context)
+                val dotSize = dpToPx(8, context)
+                colorDot.layoutParams = LinearLayout.LayoutParams(dotSize, dotSize)
+                val dotDrawable = GradientDrawable()
+                dotDrawable.shape = GradientDrawable.OVAL
+                dotDrawable.setColor(Color.parseColor(group.color))
+                colorDot.background = dotDrawable
+                headerRow.addView(colorDot)
+
+                val nameTextView = TextView(context)
+                nameTextView.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(dpToPx(12, context), 0, 0, 0)
+                }
+                nameTextView.text = group.name
+                nameTextView.textSize = 15f
+                nameTextView.setTextColor(ContextCompat.getColor(context, R.color.on_surface))
+                nameTextView.setTypeface(null, android.graphics.Typeface.BOLD)
+                headerRow.addView(nameTextView)
+
+                val countTextView = TextView(context)
+                countTextView.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(dpToPx(8, context), 0, 0, 0)
+                }
+                countTextView.text = "$count 条"
+                countTextView.textSize = 12f
+                countTextView.setTextColor(Color.parseColor(group.color))
+                headerRow.addView(countTextView)
+
+                contentLayout.addView(headerRow)
+
+                // 按钮行
+                val buttonContainer = LinearLayout(context)
+                buttonContainer.orientation = LinearLayout.HORIZONTAL
+                buttonContainer.setPadding(0, dpToPx(12, context), 0, 0)
+                buttonContainer.gravity = android.view.Gravity.CENTER
+
+                val btnSendOne = MaterialButton(context, null, com.google.android.material.R.attr.materialButtonStyle)
+                btnSendOne.apply {
+                    text = "+1"
+                    textSize = 13f
+                    layoutParams = LinearLayout.LayoutParams(0, dpToPx(36, context), 1f).apply {
+                        setMargins(0, 0, dpToPx(6, context), 0)
+                    }
+                    shapeAppearanceModel = shapeAppearanceModel.toBuilder()
+                        .setAllCorners(CornerFamily.ROUNDED, dpToPx(10, context).toFloat())
+                        .build()
+                    setOnClickListener {
+                        if (hasPermission()) {
+                            onSendOne(group)
+                            notifyDataSetChanged()
+                        } else {
+                            showSnackbar("需要通知权限")
+                        }
+                    }
+                }
+                buttonContainer.addView(btnSendOne)
+
+                val btnSendFive = MaterialButton(context, null, com.google.android.material.R.attr.materialButtonStyle)
+                btnSendFive.apply {
+                    text = "+5"
+                    textSize = 13f
+                    layoutParams = LinearLayout.LayoutParams(0, dpToPx(36, context), 1f).apply {
+                        setMargins(dpToPx(6, context), 0, dpToPx(6, context), 0)
+                    }
+                    shapeAppearanceModel = shapeAppearanceModel.toBuilder()
+                        .setAllCorners(CornerFamily.ROUNDED, dpToPx(10, context).toFloat())
+                        .build()
+                    setOnClickListener {
+                        if (hasPermission()) {
+                            onSendFive(group)
+                            notifyDataSetChanged()
+                        } else {
+                            showSnackbar("需要通知权限")
+                        }
+                    }
+                }
+                buttonContainer.addView(btnSendFive)
+
+                val btnClear = MaterialButton(context, null, com.google.android.material.R.attr.materialButtonOutlinedStyle)
+                btnClear.apply {
+                    text = "清除"
+                    textSize = 13f
+                    layoutParams = LinearLayout.LayoutParams(0, dpToPx(36, context), 1f).apply {
+                        setMargins(dpToPx(6, context), 0, 0, 0)
+                    }
+                    shapeAppearanceModel = shapeAppearanceModel.toBuilder()
+                        .setAllCorners(CornerFamily.ROUNDED, dpToPx(10, context).toFloat())
+                        .build()
+                    setOnClickListener {
+                        onClear(group)
+                        notifyDataSetChanged()
+                    }
+                }
+                buttonContainer.addView(btnClear)
+
+                contentLayout.addView(buttonContainer)
+                cardView.addView(contentLayout)
+            }
+        }
     }
 }
