@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Compose"
+        tools:targetApi="31">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Compose">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Level 1 - 入门基础 -->
+        <activity
+            android:name=".level1.PreviewActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level1.BasicComponentsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level1.LayoutComponentsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level1.ModifiersActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <!-- Level 2 - 状态与交互 -->
+        <activity
+            android:name=".level2.StateBasicsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level2.StateHoistingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level2.SideEffectsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level2.GesturesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <!-- Level 3 - 架构与数据流 -->
+        <activity
+            android:name=".level3.ViewModelIntegrationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level3.FlowLiveDataActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level3.MviPatternActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level3.DependencyInjectionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <!-- Level 4 - 列表与动画 -->
+        <activity
+            android:name=".level4.LazyListsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level4.AnimationsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level4.ContentTransformActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level4.CanvasDrawingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <!-- Level 5 - 高级进阶 -->
+        <activity
+            android:name=".level5.CustomLayoutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level5.CompositionLocalActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level5.PerformanceActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level5.InteropActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+    </application>
+
+</manifest>
