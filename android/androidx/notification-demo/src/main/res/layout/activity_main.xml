@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
-    android:fitsSystemWindows="true">
+    android:background="@color/background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary_container"
+        android:fitsSystemWindows="true"
         app:elevation="0dp"
         app:liftOnScroll="true">
 
@@ -20,7 +20,8 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="20dp"
-            android:paddingTop="16dp">
+            android:paddingTop="16dp"
+            android:paddingBottom="4dp">
 
             <!-- 标题行 -->
             <LinearLayout
@@ -87,7 +88,6 @@
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginTop="12dp"
             android:background="@android:color/transparent"
             app:tabMode="scrollable"
             app:tabGravity="start"

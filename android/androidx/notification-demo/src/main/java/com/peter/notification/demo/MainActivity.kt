@@ -7,10 +7,14 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -46,8 +50,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        
+        // 设置沉浸式状态栏（需要在 setContentView 之后）
+        setupImmersiveStatusBar()
 
         // 初始化 Channel
         channelManager = ChannelManager(this)
@@ -60,6 +68,21 @@ class MainActivity : AppCompatActivity() {
 
         // 检查权限状态
         checkPermissionStatus()
+    }
+
+    private fun setupImmersiveStatusBar() {
+        // 让内容延伸到状态栏和导航栏后面
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        
+        // 设置状态栏和导航栏为浅色按钮（因为背景是浅色的）
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.setSystemBarsAppearance(
+                android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or
+                android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+            )
+        }
     }
 
     override fun onResume() {
@@ -90,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         val containerColor = ContextCompat.getColor(this, containerColorRes)
         val currentContainerColor = ContextCompat.getColor(this, tabColors[currentTabPosition].second)
 
-        // 动画过渡背景色
+        // 动画过渡背景色（AppBarLayout 背景会自动延伸到状态栏）
         val colorAnimator = ValueAnimator.ofObject(
             ArgbEvaluator(),
             currentContainerColor,
@@ -100,10 +123,6 @@ class MainActivity : AppCompatActivity() {
         colorAnimator.addUpdateListener { animator ->
             val color = animator.animatedValue as Int
             binding.appBarLayout.setBackgroundColor(color)
-            // 更新状态栏颜色
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                window.statusBarColor = color
-            }
         }
         colorAnimator.start()
 

@@ -13,6 +13,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.peter.notification.demo.R
 import com.peter.notification.demo.channel.ChannelGroupManager
 import com.peter.notification.demo.channel.ChannelManager
@@ -93,11 +95,16 @@ class ChannelFragment : Fragment() {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
-            setMargins(0, 0, 0, dpToPx(10))
+            setMargins(dpToPx(16), 0, dpToPx(16), dpToPx(10))
         }
-        cardView.radius = dpToPx(16).toFloat()
-        cardView.cardElevation = 0f
-        cardView.elevation = 4f
+        
+        // 使用 ShapeAppearanceModel 设置圆角
+        val cornerRadius = dpToPx(16).toFloat()
+        cardView.shapeAppearanceModel = ShapeAppearanceModel.builder()
+            .setAllCorners(CornerFamily.ROUNDED, cornerRadius)
+            .build()
+        
+        cardView.elevation = dpToPx(4).toFloat()
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
         cardView.strokeWidth = 0
         
@@ -176,11 +183,16 @@ class ChannelFragment : Fragment() {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
-            setMargins(0, 0, 0, dpToPx(10))
+            setMargins(dpToPx(16), 0, dpToPx(16), dpToPx(10))
         }
-        cardView.radius = dpToPx(16).toFloat()
-        cardView.cardElevation = 0f
-        cardView.elevation = 4f
+        
+        // 使用 ShapeAppearanceModel 设置圆角
+        val cornerRadius = dpToPx(16).toFloat()
+        cardView.shapeAppearanceModel = ShapeAppearanceModel.builder()
+            .setAllCorners(CornerFamily.ROUNDED, cornerRadius)
+            .build()
+        
+        cardView.elevation = dpToPx(4).toFloat()
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
         cardView.strokeWidth = 0
         

@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.shape.CornerFamily
+import com.google.android.material.shape.ShapeAppearanceModel
 import com.peter.notification.demo.MainActivity
 import com.peter.notification.demo.NotificationHelper
 import com.peter.notification.demo.R
@@ -105,11 +107,16 @@ class GroupFragment : Fragment() {
             LinearLayout.LayoutParams.MATCH_PARENT,
             LinearLayout.LayoutParams.WRAP_CONTENT
         ).apply {
-            setMargins(0, 0, 0, dpToPx(10))
+            setMargins(dpToPx(16), 0, dpToPx(16), dpToPx(10))
         }
-        cardView.radius = dpToPx(16).toFloat()
-        cardView.cardElevation = 0f
-        cardView.elevation = 4f
+        
+        // 使用 ShapeAppearanceModel 设置圆角，这样阴影才能正确跟随
+        val cornerRadius = dpToPx(16).toFloat()
+        cardView.shapeAppearanceModel = ShapeAppearanceModel.builder()
+            .setAllCorners(CornerFamily.ROUNDED, cornerRadius)
+            .build()
+        
+        cardView.elevation = dpToPx(4).toFloat()
         cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.white))
         cardView.strokeWidth = 0
         
@@ -182,7 +189,9 @@ class GroupFragment : Fragment() {
             layoutParams = LinearLayout.LayoutParams(0, dpToPx(36), 1f).apply {
                 setMargins(0, 0, dpToPx(6), 0)
             }
-            cornerRadius = dpToPx(10)
+            shapeAppearanceModel = shapeAppearanceModel.toBuilder()
+                .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, dpToPx(10).toFloat())
+                .build()
             setOnClickListener {
                 if ((requireActivity() as MainActivity).hasNotificationPermission()) {
                     sendGroupNotification(group)
@@ -202,7 +211,9 @@ class GroupFragment : Fragment() {
             layoutParams = LinearLayout.LayoutParams(0, dpToPx(36), 1f).apply {
                 setMargins(dpToPx(6), 0, dpToPx(6), 0)
             }
-            cornerRadius = dpToPx(10)
+            shapeAppearanceModel = shapeAppearanceModel.toBuilder()
+                .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, dpToPx(10).toFloat())
+                .build()
             setOnClickListener {
                 if ((requireActivity() as MainActivity).hasNotificationPermission()) {
                     repeat(5) { sendGroupNotification(group) }
@@ -222,7 +233,9 @@ class GroupFragment : Fragment() {
             layoutParams = LinearLayout.LayoutParams(0, dpToPx(36), 1f).apply {
                 setMargins(dpToPx(6), 0, 0, 0)
             }
-            cornerRadius = dpToPx(10)
+            shapeAppearanceModel = shapeAppearanceModel.toBuilder()
+                .setAllCorners(com.google.android.material.shape.CornerFamily.ROUNDED, dpToPx(10).toFloat())
+                .build()
             setOnClickListener {
                 notificationHelper.clearGroupNotifications(group.key)
                 notificationCounters[group.key] = 0
