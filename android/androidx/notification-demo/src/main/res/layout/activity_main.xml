@@ -30,6 +30,7 @@
                 android:gravity="center_vertical">
 
                 <TextView
+                    android:id="@+id/tvTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -39,32 +40,43 @@
                     android:textColor="@color/primary" />
 
                 <!-- 权限状态徽章 -->
-                <LinearLayout
+                <com.google.android.material.card.MaterialCardView
                     android:id="@+id/permissionBadge"
                     android:layout_width="wrap_content"
                     android:layout_height="28dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:background="@drawable/bg_permission_badge"
-                    android:paddingHorizontal="10dp">
+                    app:cardCornerRadius="14dp"
+                    app:cardElevation="0dp"
+                    app:cardBackgroundColor="@color/primary_container"
+                    app:strokeWidth="1dp"
+                    app:strokeColor="@color/primary"
+                    app:rippleColor="@android:color/transparent">
 
-                    <View
-                        android:id="@+id/viewPermissionDot"
-                        android:layout_width="6dp"
-                        android:layout_height="6dp"
-                        android:background="@drawable/bg_permission_granted" />
-
-                    <TextView
-                        android:id="@+id/tvPermissionStatus"
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="6dp"
-                        android:textSize="11sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/primary"
-                        tools:text="已授权" />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:paddingHorizontal="10dp">
 
-                </LinearLayout>
+                        <View
+                            android:id="@+id/viewPermissionDot"
+                            android:layout_width="6dp"
+                            android:layout_height="6dp"
+                            android:background="@drawable/bg_permission_granted" />
+
+                        <TextView
+                            android:id="@+id/tvPermissionStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="6dp"
+                            android:textSize="11sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/primary"
+                            tools:text="已授权" />
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 
@@ -80,7 +92,7 @@
             app:tabMode="scrollable"
             app:tabGravity="start"
             app:tabIndicatorColor="@color/primary"
-            app:tabTextColor="@color/on_primary_container"
+            app:tabTextColor="@color/on_surface_variant"
             app:tabSelectedTextColor="@color/primary"
             app:tabTextAppearance="@style/TabTextStyle"
             app:tabIndicatorFullWidth="false"

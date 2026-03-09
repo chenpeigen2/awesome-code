@@ -64,6 +64,27 @@
     <color name="green_500">#22C55E</color>
     <color name="red_500">#EF4444</color>
     
+    <!-- Tab 主题色 -->
+    <!-- 类型 Tab - 紫色 -->
+    <color name="tab_type">#6750A4</color>
+    <color name="tab_type_container">#EADDFF</color>
+    
+    <!-- Channel Tab - 绿色 -->
+    <color name="tab_channel">#386A20</color>
+    <color name="tab_channel_container">#E8F5E9</color>
+    
+    <!-- 分组 Tab - 蓝色 -->
+    <color name="tab_group">#0061A4</color>
+    <color name="tab_group_container">#D1E4FF</color>
+    
+    <!-- 铃声 Tab - 橙色 -->
+    <color name="tab_sound">#B3261E</color>
+    <color name="tab_sound_container">#FFDAD6</color>
+    
+    <!-- 权限 Tab - 粉色 -->
+    <color name="tab_permission">#7D5260</color>
+    <color name="tab_permission_container">#FFD8E4</color>
+    
     <!-- 基础色 -->
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
