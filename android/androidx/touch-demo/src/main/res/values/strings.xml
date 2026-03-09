@@ -20,6 +20,9 @@
     
     <string name="level4_nested_title">Level 4.3: 嵌套滚动</string>
     <string name="level4_nested_desc">NestedScrolling机制、CoordinatorLayout联动</string>
+
+    <string name="level4_fling_title">Level 4.4: 惯性滑动</string>
+    <string name="level4_fling_desc">VelocityTracker速度追踪、Scroller惯性计算</string>
     
     <!-- Category names -->
     <string name="category_basic">基础</string>

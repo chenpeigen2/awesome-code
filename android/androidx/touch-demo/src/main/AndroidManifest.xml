@@ -33,6 +33,7 @@
         <activity android:name=".level4.MultiTouchActivity" />
         <activity android:name=".level4.GestureDetectActivity" />
         <activity android:name=".level4.NestedScrollingActivity" />
+        <activity android:name=".level4.FlingActivity" />
         
     </application>
 

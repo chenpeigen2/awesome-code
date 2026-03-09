@@ -99,7 +99,10 @@ class FloatingLogPanel(private val activity: Activity) {
             setBackgroundResource(R.drawable.bg_floating_log)
             layoutParams = FrameLayout.LayoutParams(dp(320), dp(400))
             visibility = View.GONE
-            
+            // 防止触摸事件穿透到底层
+            isClickable = true
+            isFocusable = true
+
             // 标题栏
             addView(createHeaderView())
             // 日志列表

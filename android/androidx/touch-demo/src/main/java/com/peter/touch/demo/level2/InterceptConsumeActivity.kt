@@ -6,6 +6,7 @@ import com.google.android.material.chip.Chip
 import com.peter.touch.demo.BaseTouchActivity
 import com.peter.touch.demo.R
 import com.peter.touch.demo.databinding.ActivityInterceptConsumeBinding
+import androidx.core.graphics.toColorInt
 
 /**
  * Level 2: 拦截与消费
@@ -92,7 +93,7 @@ class InterceptConsumeActivity : BaseTouchActivity() {
         // 配置外层 ViewGroup
         binding.outerViewGroup.apply {
             tagName = "Outer"
-            bgColor = android.graphics.Color.parseColor("#E8F5E9")
+            bgColor = "#E8F5E9".toColorInt()
             
             logCallback = { tag, method, action, result ->
                 log(tag, method, action, result)
@@ -102,7 +103,7 @@ class InterceptConsumeActivity : BaseTouchActivity() {
         // 配置内层 View
         binding.innerView.apply {
             tagName = "Inner"
-            bgColor = android.graphics.Color.parseColor("#FFF8E1")
+            bgColor = "#FFF8E1".toColorInt()
             
             logCallback = { tag, method, action, result ->
                 log(tag, method, action, result)

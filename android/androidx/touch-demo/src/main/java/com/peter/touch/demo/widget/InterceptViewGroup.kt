@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import androidx.core.graphics.toColorInt
 
 /**
  * 可配置拦截策略的自定义ViewGroup
@@ -35,7 +36,7 @@ class InterceptViewGroup @JvmOverloads constructor(
     var tagName: String = "ViewGroup"
     
     // 背景色
-    var bgColor: Int = Color.parseColor("#E3F2FD")
+    var bgColor: Int = "#E3F2FD".toColorInt()
         set(value) {
             field = value
             invalidate()
@@ -50,7 +51,7 @@ class InterceptViewGroup @JvmOverloads constructor(
     private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 4f
-        color = Color.parseColor("#2196F3")
+        color = "#2196F3".toColorInt()
     }
     
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -111,7 +112,7 @@ class InterceptViewGroup @JvmOverloads constructor(
         
         // 绘制背景
         bgPaint.color = if (isPressed) {
-            Color.parseColor("#BBDEFB")
+            "#BBDEFB".toColorInt()
         } else {
             bgColor
         }
@@ -157,7 +158,7 @@ class TouchTestView @JvmOverloads constructor(
     var tagName: String = "View"
     
     // 背景色
-    var bgColor: Int = Color.parseColor("#FFF3E0")
+    var bgColor: Int = "#FFF3E0".toColorInt()
         set(value) {
             field = value
             invalidate()
@@ -172,7 +173,7 @@ class TouchTestView @JvmOverloads constructor(
     private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.STROKE
         strokeWidth = 4f
-        color = Color.parseColor("#FF9800")
+        color = "#FF9800".toColorInt()
     }
     
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -218,7 +219,7 @@ class TouchTestView @JvmOverloads constructor(
         
         // 绘制背景
         bgPaint.color = if (isPressed) {
-            Color.parseColor("#FFE0B2")
+            "#FFE0B2".toColorInt()
         } else {
             bgColor
         }

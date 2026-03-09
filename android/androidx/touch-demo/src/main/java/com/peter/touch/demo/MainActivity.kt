@@ -11,6 +11,7 @@ import com.peter.touch.demo.level3.ScrollConflictActivity
 import com.peter.touch.demo.level4.GestureDetectActivity
 import com.peter.touch.demo.level4.MultiTouchActivity
 import com.peter.touch.demo.level4.NestedScrollingActivity
+import com.peter.touch.demo.level4.FlingActivity
 
 /**
  * 入口列表页
@@ -99,6 +100,13 @@ class MainActivity : AppCompatActivity() {
             description = getString(R.string.level4_nested_desc),
             category = TouchItem.Category.ADVANCED,
             activityClass = NestedScrollingActivity::class.java
+        ),
+        TouchItem(
+            id = "level4_fling",
+            title = getString(R.string.level4_fling_title),
+            description = getString(R.string.level4_fling_desc),
+            category = TouchItem.Category.ADVANCED,
+            activityClass = FlingActivity::class.java
         )
     )
 }

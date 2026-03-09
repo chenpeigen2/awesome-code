@@ -20,15 +20,8 @@ abstract class BaseTouchActivity : AppCompatActivity() {
 
     override fun onPostResume() {
         super.onPostResume()
-        // 确保视图已经准备好
-        window.decorView.post {
-            floatingLogPanel?.show()
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        floatingLogPanel?.hide()
+        // 只在首次创建时显示，避免重复添加
+        floatingLogPanel?.show()
     }
 
     override fun onDestroy() {

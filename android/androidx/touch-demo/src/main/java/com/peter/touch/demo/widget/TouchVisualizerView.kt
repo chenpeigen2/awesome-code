@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import kotlin.math.sqrt
+import androidx.core.graphics.toColorInt
 
 /**
  * 触摸可视化视图
@@ -59,16 +60,16 @@ class TouchVisualizerView @JvmOverloads constructor(
 
     // 颜色数组
     private val colors = intArrayOf(
-        Color.parseColor("#FF6B6B"),  // 红
-        Color.parseColor("#4ECDC4"),  // 青
-        Color.parseColor("#45B7D1"),  // 蓝
-        Color.parseColor("#96CEB4"),  // 绿
-        Color.parseColor("#FFEAA7"),  // 黄
-        Color.parseColor("#DDA0DD"),  // 紫
-        Color.parseColor("#FF8C00"),  // 橙
-        Color.parseColor("#00CED1"),  // 深青
-        Color.parseColor("#FF69B4"),  // 粉
-        Color.parseColor("#32CD32")   // 酸橙
+        "#FF6B6B".toColorInt(),  // 红
+        "#4ECDC4".toColorInt(),  // 青
+        "#45B7D1".toColorInt(),  // 蓝
+        "#96CEB4".toColorInt(),  // 绿
+        "#FFEAA7".toColorInt(),  // 黄
+        "#DDA0DD".toColorInt(),  // 紫
+        "#FF8C00".toColorInt(),  // 橙
+        "#00CED1".toColorInt(),  // 深青
+        "#FF69B4".toColorInt(),  // 粉
+        "#32CD32".toColorInt()   // 酸橙
     )
 
     // 是否显示轨迹
