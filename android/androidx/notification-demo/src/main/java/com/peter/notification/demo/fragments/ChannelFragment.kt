@@ -147,6 +147,8 @@ class ChannelFragment : Fragment() {
             when (holder) {
                 is HeaderViewHolder -> {
                     val messageColor = ContextCompat.getColor(holder.itemView.context, R.color.category_message)
+                    val elevation = 4f * holder.itemView.context.resources.displayMetrics.density
+                    holder.cardView.elevation = elevation
                     holder.cardView.outlineAmbientShadowColor = messageColor
                     holder.cardView.outlineSpotShadowColor = messageColor
                 }

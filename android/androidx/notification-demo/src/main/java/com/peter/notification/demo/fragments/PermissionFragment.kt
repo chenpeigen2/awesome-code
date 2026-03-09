@@ -70,8 +70,10 @@ class PermissionFragment : Fragment() {
         binding.tvAndroidVersion.text = Build.VERSION.RELEASE
         binding.tvApiLevel.text = Build.VERSION.SDK_INT.toString()
 
-        // 设置设备信息卡片阴影颜色
+        // 设置卡片 elevation 和阴影颜色
+        val elevation = 4f * resources.displayMetrics.density
         val grayColor = ContextCompat.getColor(context, R.color.gray_500)
+        binding.cardDeviceInfo.elevation = elevation
         binding.cardDeviceInfo.outlineAmbientShadowColor = grayColor
         binding.cardDeviceInfo.outlineSpotShadowColor = grayColor
 
@@ -103,6 +105,7 @@ class PermissionFragment : Fragment() {
                 
                 // 设置绿色阴影
                 val greenColor = ContextCompat.getColor(context, R.color.permission_granted)
+                binding.cardPermission.elevation = elevation
                 binding.cardPermission.outlineAmbientShadowColor = greenColor
                 binding.cardPermission.outlineSpotShadowColor = greenColor
             } else {
@@ -136,6 +139,7 @@ class PermissionFragment : Fragment() {
                 
                 // 设置红色阴影
                 val redColor = ContextCompat.getColor(context, R.color.permission_denied)
+                binding.cardPermission.elevation = elevation
                 binding.cardPermission.outlineAmbientShadowColor = redColor
                 binding.cardPermission.outlineSpotShadowColor = redColor
             }
@@ -162,6 +166,7 @@ class PermissionFragment : Fragment() {
             
             // 设置绿色阴影
             val greenColor = ContextCompat.getColor(context, R.color.permission_granted)
+            binding.cardPermission.elevation = elevation
             binding.cardPermission.outlineAmbientShadowColor = greenColor
             binding.cardPermission.outlineSpotShadowColor = greenColor
         }

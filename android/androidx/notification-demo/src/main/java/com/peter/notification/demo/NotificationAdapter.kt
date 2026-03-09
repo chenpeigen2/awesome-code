@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.peter.notification.demo.databinding.ItemCategoryHeaderBinding
 import com.peter.notification.demo.databinding.ItemNotificationTypeBinding
+import com.peter.notification.demo.fragments.ChannelFragment.Companion.dpToPx
 
 /**
  * 通知类型列表适配器
@@ -123,7 +124,8 @@ class NotificationAdapter(
                 
                 viewColorDot.setBackgroundResource(dotRes)
                 
-                // 设置带颜色的阴影 (API 28+)
+                // 设置 elevation 和带颜色的阴影 (API 28+)
+                cardView.elevation = dpToPx(4, context).toFloat()
                 cardView.outlineAmbientShadowColor = shadowColor
                 cardView.outlineSpotShadowColor = shadowColor
 

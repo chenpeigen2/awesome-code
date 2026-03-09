@@ -172,6 +172,8 @@ class GroupFragment : Fragment() {
             when (holder) {
                 is HeaderViewHolder -> {
                     val mediaColor = ContextCompat.getColor(holder.itemView.context, R.color.category_media)
+                    val elevation = 4f * holder.itemView.context.resources.displayMetrics.density
+                    holder.cardView.elevation = elevation
                     holder.cardView.outlineAmbientShadowColor = mediaColor
                     holder.cardView.outlineSpotShadowColor = mediaColor
                 }

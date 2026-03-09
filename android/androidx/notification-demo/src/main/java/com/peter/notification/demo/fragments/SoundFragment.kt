@@ -49,12 +49,15 @@ class SoundFragment : Fragment() {
             playDefaultNotificationSound()
         }
 
-        // 设置卡片阴影颜色
+        // 设置卡片 elevation 和阴影颜色
+        val elevation = 4f * resources.displayMetrics.density
         val mediaColor = ContextCompat.getColor(requireContext(), R.color.category_media)
+        binding.cardHeader.elevation = elevation
         binding.cardHeader.outlineAmbientShadowColor = mediaColor
         binding.cardHeader.outlineSpotShadowColor = mediaColor
         
         val grayColor = ContextCompat.getColor(requireContext(), R.color.gray_500)
+        binding.cardCurrentRingtone.elevation = elevation
         binding.cardCurrentRingtone.outlineAmbientShadowColor = grayColor
         binding.cardCurrentRingtone.outlineSpotShadowColor = grayColor
 
@@ -150,7 +153,8 @@ class SoundFragment : Fragment() {
             holder.binding.tvRingtoneName.text = items[position]
             holder.binding.tvRingtoneType.text = "系统铃声"
             
-            // 设置阴影颜色
+            // 设置 elevation 和阴影颜色
+            holder.binding.cardView.elevation = 4f * holder.itemView.context.resources.displayMetrics.density
             holder.binding.cardView.outlineAmbientShadowColor = shadowColor
             holder.binding.cardView.outlineSpotShadowColor = shadowColor
             
