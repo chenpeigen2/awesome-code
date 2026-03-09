@@ -95,6 +95,9 @@ class PermissionFragment : Fragment() {
                 binding.tvPermissionState.setTextColor(
                     ContextCompat.getColor(context, R.color.permission_granted)
                 )
+                
+                // 设置绿色阴影
+                binding.viewPermissionShadow.setBackgroundResource(R.drawable.bg_card_shadow_green)
             } else {
                 binding.cardPermission.setCardBackgroundColor(
                     ContextCompat.getColor(context, R.color.tertiary_container)
@@ -123,6 +126,9 @@ class PermissionFragment : Fragment() {
                 binding.tvPermissionState.setTextColor(
                     ContextCompat.getColor(context, R.color.permission_denied)
                 )
+                
+                // 设置红色阴影
+                binding.viewPermissionShadow.setBackgroundResource(R.drawable.bg_card_shadow_progress)
             }
         } else {
             // Android 13 以下不需要通知权限
@@ -144,6 +150,9 @@ class PermissionFragment : Fragment() {
             binding.tvPermissionState.setTextColor(
                 ContextCompat.getColor(context, R.color.permission_granted)
             )
+            
+            // 设置绿色阴影
+            binding.viewPermissionShadow.setBackgroundResource(R.drawable.bg_card_shadow_green)
         }
     }
 

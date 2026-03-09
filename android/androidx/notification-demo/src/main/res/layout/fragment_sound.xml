@@ -13,103 +13,131 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 说明卡片 -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- 说明卡片 - 带颜色阴影 -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/category_media_light">
+            android:layout_marginBottom="16dp">
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="3dp"
+                android:background="@drawable/bg_card_shadow_blue"
+                android:alpha="0.5" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/category_media_light">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="铃声设置"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/category_media" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="选择通知铃声"
-                    android:textSize="14sp"
-                    android:textColor="@color/category_media"
-                    android:alpha="0.8" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="铃声设置"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/category_media" />
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="选择通知铃声"
+                        android:textSize="14sp"
+                        android:textColor="@color/category_media"
+                        android:alpha="0.8" />
 
-        </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
 
-        <!-- 当前铃声卡片 -->
-        <com.google.android.material.card.MaterialCardView
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
+
+        <!-- 当前铃声卡片 - 带颜色阴影 -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="1dp"
-            app:cardBackgroundColor="@color/surface">
+            android:layout_marginBottom="16dp">
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="3dp"
+                android:background="@drawable/bg_card_shadow_gray"
+                android:alpha="0.5" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/white">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="当前铃声"
-                    android:textSize="14sp"
-                    android:textColor="@color/on_surface_variant" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <TextView
-                    android:id="@+id/tvCurrentRingtone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="默认铃声"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/on_surface" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="当前铃声"
+                        android:textSize="13sp"
+                        android:textColor="@color/on_surface_variant" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnPreview"
-                    style="@style/Widget.Material3.Button.TonalButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="12dp"
-                    android:text="播放预览"
-                    android:textSize="13sp"
-                    app:cornerRadius="20dp" />
+                    <TextView
+                        android:id="@+id/tvCurrentRingtone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="默认铃声"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/on_surface" />
 
-            </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPreview"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginTop="12dp"
+                        android:text="播放预览"
+                        android:textSize="13sp"
+                        app:cornerRadius="18dp" />
 
-        </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
 
         <!-- 铃声列表标题 -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="系统铃声"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold"
-            android:textColor="@color/primary"
-            android:layout_marginBottom="12dp" />
+            android:textColor="@color/category_media"
+            android:layout_marginBottom="10dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:itemCount="5"
+            tools:itemCount="3"
             tools:listitem="@layout/item_ringtone" />
 
     </LinearLayout>

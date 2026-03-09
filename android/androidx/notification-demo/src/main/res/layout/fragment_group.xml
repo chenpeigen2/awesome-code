@@ -13,41 +13,55 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 说明卡片 -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- 说明卡片 - 带颜色阴影 -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:cardCornerRadius="20dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/tertiary_container">
+            android:layout_marginBottom="16dp">
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="3dp"
+                android:background="@drawable/bg_card_shadow_blue"
+                android:alpha="0.5" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/category_media_light">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="分组通知"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#7D5260" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="点击卡片发送分组通知，多条通知会自动堆叠"
-                    android:textSize="13sp"
-                    android:textColor="#7D5260"
-                    android:alpha="0.8" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="分组通知"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/category_media" />
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="点击卡片发送分组通知"
+                        android:textSize="14sp"
+                        android:textColor="@color/category_media"
+                        android:alpha="0.8" />
 
-        </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
 
         <!-- 分组卡片容器 -->
         <LinearLayout
@@ -60,14 +74,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <!-- 分隔线 -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/outline_variant"
                 android:alpha="0.5" />
 
@@ -75,7 +89,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSendAll"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="48dp"
                 android:text="发送所有分组通知"
                 android:textSize="14sp"
                 android:textStyle="bold"

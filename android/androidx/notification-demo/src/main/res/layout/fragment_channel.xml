@@ -13,42 +13,56 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 说明卡片 -->
-        <com.google.android.material.card.MaterialCardView
+        <!-- 说明卡片 - 带颜色阴影 -->
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="0dp"
-            app:cardBackgroundColor="@color/secondary_container">
+            android:layout_marginBottom="16dp">
 
-            <LinearLayout
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dp"
+                android:layout_marginStart="3dp"
+                android:background="@drawable/bg_card_shadow_green"
+                android:alpha="0.5" />
+
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp"
+                app:cardBackgroundColor="@color/category_message_light">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Channel 管理"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/on_secondary_container" />
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-                <TextView
-                    android:id="@+id/tvInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="管理通知渠道，Android 8.0+ 支持"
-                    android:textSize="14sp"
-                    android:textColor="@color/on_secondary_container"
-                    android:alpha="0.8" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Channel 管理"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/category_message" />
 
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/tvInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="管理通知渠道，Android 8.0+ 支持"
+                        android:textSize="14sp"
+                        android:textColor="@color/category_message"
+                        android:alpha="0.8" />
 
-        </com.google.android.material.card.MaterialCardView>
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </FrameLayout>
 
         <!-- Channel Groups 容器 -->
         <LinearLayout
