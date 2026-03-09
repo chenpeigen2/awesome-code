@@ -79,6 +79,18 @@ class NotificationAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(category: NotificationCategory) {
             binding.tvCategoryHeader.text = category.displayName
+            
+            // 设置分类标题颜色
+            val colorRes = when (category) {
+                NotificationCategory.BASIC -> R.color.category_basic
+                NotificationCategory.MESSAGE -> R.color.category_message
+                NotificationCategory.PROGRESS -> R.color.category_progress
+                NotificationCategory.MEDIA -> R.color.category_media
+                NotificationCategory.ADVANCED -> R.color.category_advanced
+            }
+            binding.tvCategoryHeader.setTextColor(
+                ContextCompat.getColor(binding.root.context, colorRes)
+            )
         }
     }
 
@@ -94,112 +106,16 @@ class NotificationAdapter(
                 tvTitle.text = item.title
                 tvDescription.text = item.description
 
-                // 根据分类设置图标、背景和阴影
-                val iconRes: Int
-                val bgRes: Int
-                val iconTint: Int
-                val shadowRes: Int
-                
-                when (item.type) {
-                    NotificationType.NORMAL -> {
-                        iconRes = R.drawable.ic_notification_normal
-                        bgRes = R.drawable.bg_icon_basic
-                        iconTint = R.color.category_basic
-                        shadowRes = R.drawable.shadow_basic
-                    }
-                    NotificationType.BIG_TEXT -> {
-                        iconRes = R.drawable.ic_notification_big_text
-                        bgRes = R.drawable.bg_icon_basic
-                        iconTint = R.color.category_basic
-                        shadowRes = R.drawable.shadow_basic
-                    }
-                    NotificationType.BIG_PICTURE -> {
-                        iconRes = R.drawable.ic_notification_big_picture
-                        bgRes = R.drawable.bg_icon_basic
-                        iconTint = R.color.category_basic
-                        shadowRes = R.drawable.shadow_basic
-                    }
-                    NotificationType.INBOX -> {
-                        iconRes = R.drawable.ic_notification_inbox
-                        bgRes = R.drawable.bg_icon_basic
-                        iconTint = R.color.category_basic
-                        shadowRes = R.drawable.shadow_basic
-                    }
-                    
-                    NotificationType.MESSAGING -> {
-                        iconRes = R.drawable.ic_notification_messaging
-                        bgRes = R.drawable.bg_icon_message
-                        iconTint = R.color.category_message
-                        shadowRes = R.drawable.shadow_message
-                    }
-                    NotificationType.CONVERSATION -> {
-                        iconRes = R.drawable.ic_notification_conversation
-                        bgRes = R.drawable.bg_icon_message
-                        iconTint = R.color.category_message
-                        shadowRes = R.drawable.shadow_message
-                    }
-                    NotificationType.BUBBLE -> {
-                        iconRes = R.drawable.ic_notification_bubble
-                        bgRes = R.drawable.bg_icon_message
-                        iconTint = R.color.category_message
-                        shadowRes = R.drawable.shadow_message
-                    }
-                    
-                    NotificationType.PROGRESS -> {
-                        iconRes = R.drawable.ic_notification_progress
-                        bgRes = R.drawable.bg_icon_progress
-                        iconTint = R.color.category_progress
-                        shadowRes = R.drawable.shadow_progress
-                    }
-                    NotificationType.ONGOING -> {
-                        iconRes = R.drawable.ic_notification_ongoing
-                        bgRes = R.drawable.bg_icon_progress
-                        iconTint = R.color.category_progress
-                        shadowRes = R.drawable.shadow_progress
-                    }
-                    NotificationType.FOREGROUND -> {
-                        iconRes = R.drawable.ic_notification_foreground
-                        bgRes = R.drawable.bg_icon_progress
-                        iconTint = R.color.category_progress
-                        shadowRes = R.drawable.shadow_progress
-                    }
-                    
-                    NotificationType.MEDIA -> {
-                        iconRes = R.drawable.ic_notification_media
-                        bgRes = R.drawable.bg_icon_media
-                        iconTint = R.color.category_media
-                        shadowRes = R.drawable.shadow_media
-                    }
-                    
-                    NotificationType.CUSTOM -> {
-                        iconRes = R.drawable.ic_notification_custom
-                        bgRes = R.drawable.bg_icon_advanced
-                        iconTint = R.color.category_advanced
-                        shadowRes = R.drawable.shadow_advanced
-                    }
-                    NotificationType.SCHEDULED -> {
-                        iconRes = R.drawable.ic_notification_scheduled
-                        bgRes = R.drawable.bg_icon_advanced
-                        iconTint = R.color.category_advanced
-                        shadowRes = R.drawable.shadow_advanced
-                    }
-                    NotificationType.ACTION -> {
-                        iconRes = R.drawable.ic_notification_action
-                        bgRes = R.drawable.bg_icon_advanced
-                        iconTint = R.color.category_advanced
-                        shadowRes = R.drawable.shadow_advanced
-                    }
+                // 根据分类设置颜色圆点
+                val dotRes = when (item.category) {
+                    NotificationCategory.BASIC -> R.drawable.bg_dot_basic
+                    NotificationCategory.MESSAGE -> R.drawable.bg_dot_message
+                    NotificationCategory.PROGRESS -> R.drawable.bg_dot_progress
+                    NotificationCategory.MEDIA -> R.drawable.bg_dot_media
+                    NotificationCategory.ADVANCED -> R.drawable.bg_dot_advanced
                 }
-
-                // 设置图标
-                ivIcon.setImageResource(iconRes)
-                ivIcon.setColorFilter(ContextCompat.getColor(context, iconTint))
                 
-                // 设置图标背景
-                viewIconBg.setBackgroundResource(bgRes)
-                
-                // 设置底部阴影
-                viewColorShadow.setBackgroundResource(shadowRes)
+                viewColorDot.setBackgroundResource(dotRes)
 
                 // 点击整个卡片发送通知
                 cardView.setOnClickListener {
