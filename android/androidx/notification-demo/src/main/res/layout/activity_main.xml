@@ -12,57 +12,59 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/primary_container"
-        app:elevation="0dp">
+        app:elevation="0dp"
+        app:liftOnScroll="true">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingStart="20dp"
-            android:paddingTop="24dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="8dp">
+            android:paddingHorizontal="20dp"
+            android:paddingTop="16dp">
 
-            <!-- 标题 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="28sp"
-                android:textStyle="bold"
-                android:textColor="@color/primary" />
-
-            <!-- 副标题 -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Android 通知系统示例"
-                android:textSize="14sp"
-                android:textColor="@color/on_primary_container" />
-
-            <!-- 权限状态指示器 -->
+            <!-- 标题行 -->
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <View
-                    android:id="@+id/viewPermissionDot"
-                    android:layout_width="8dp"
-                    android:layout_height="8dp"
-                    android:background="@drawable/bg_permission_granted" />
-
                 <TextView
-                    android:id="@+id/tvPermissionStatus"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:textSize="12sp"
-                    android:textColor="@color/on_primary_container"
-                    tools:text="通知权限：已授权" />
+                    android:layout_weight="1"
+                    android:text="@string/app_name"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/primary" />
+
+                <!-- 权限状态徽章 -->
+                <LinearLayout
+                    android:id="@+id/permissionBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="28dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:background="@drawable/bg_permission_badge"
+                    android:paddingHorizontal="10dp">
+
+                    <View
+                        android:id="@+id/viewPermissionDot"
+                        android:layout_width="6dp"
+                        android:layout_height="6dp"
+                        android:background="@drawable/bg_permission_granted" />
+
+                    <TextView
+                        android:id="@+id/tvPermissionStatus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/primary"
+                        tools:text="已授权" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -72,8 +74,8 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="12dp"
             android:background="@android:color/transparent"
             app:tabMode="scrollable"
             app:tabGravity="start"
@@ -82,7 +84,7 @@
             app:tabSelectedTextColor="@color/primary"
             app:tabTextAppearance="@style/TabTextStyle"
             app:tabIndicatorFullWidth="false"
-            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorHeight="2.5dp"
             app:tabPaddingStart="16dp"
             app:tabPaddingEnd="16dp"
             app:tabRippleColor="@android:color/transparent" />

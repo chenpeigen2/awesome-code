@@ -70,13 +70,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePermissionIndicator(isGranted: Boolean) {
-        val context = this
         if (isGranted) {
             binding.viewPermissionDot.setBackgroundResource(R.drawable.bg_permission_granted)
-            binding.tvPermissionStatus.text = "通知权限：已授权"
+            binding.tvPermissionStatus.text = "已授权"
         } else {
             binding.viewPermissionDot.setBackgroundResource(R.drawable.bg_permission_denied)
-            binding.tvPermissionStatus.text = "通知权限：未授权"
+            binding.tvPermissionStatus.text = "未授权"
         }
     }
 

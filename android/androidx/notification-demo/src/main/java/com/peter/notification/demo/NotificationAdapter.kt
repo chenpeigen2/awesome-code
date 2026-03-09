@@ -1,7 +1,6 @@
 package com.peter.notification.demo
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -95,26 +94,101 @@ class NotificationAdapter(
                 tvTitle.text = item.title
                 tvDescription.text = item.description
 
-                // 根据分类设置图标和背景
-                val (iconRes, bgRes, iconTint) = when (item.type) {
-                    NotificationType.NORMAL -> Triple(R.drawable.ic_notification_normal, R.drawable.bg_icon_basic, R.color.category_basic)
-                    NotificationType.BIG_TEXT -> Triple(R.drawable.ic_notification_big_text, R.drawable.bg_icon_basic, R.color.category_basic)
-                    NotificationType.BIG_PICTURE -> Triple(R.drawable.ic_notification_big_picture, R.drawable.bg_icon_basic, R.color.category_basic)
-                    NotificationType.INBOX -> Triple(R.drawable.ic_notification_inbox, R.drawable.bg_icon_basic, R.color.category_basic)
+                // 根据分类设置图标、背景和阴影
+                val iconRes: Int
+                val bgRes: Int
+                val iconTint: Int
+                val shadowRes: Int
+                
+                when (item.type) {
+                    NotificationType.NORMAL -> {
+                        iconRes = R.drawable.ic_notification_normal
+                        bgRes = R.drawable.bg_icon_basic
+                        iconTint = R.color.category_basic
+                        shadowRes = R.drawable.shadow_basic
+                    }
+                    NotificationType.BIG_TEXT -> {
+                        iconRes = R.drawable.ic_notification_big_text
+                        bgRes = R.drawable.bg_icon_basic
+                        iconTint = R.color.category_basic
+                        shadowRes = R.drawable.shadow_basic
+                    }
+                    NotificationType.BIG_PICTURE -> {
+                        iconRes = R.drawable.ic_notification_big_picture
+                        bgRes = R.drawable.bg_icon_basic
+                        iconTint = R.color.category_basic
+                        shadowRes = R.drawable.shadow_basic
+                    }
+                    NotificationType.INBOX -> {
+                        iconRes = R.drawable.ic_notification_inbox
+                        bgRes = R.drawable.bg_icon_basic
+                        iconTint = R.color.category_basic
+                        shadowRes = R.drawable.shadow_basic
+                    }
                     
-                    NotificationType.MESSAGING -> Triple(R.drawable.ic_notification_messaging, R.drawable.bg_icon_message, R.color.category_message)
-                    NotificationType.CONVERSATION -> Triple(R.drawable.ic_notification_conversation, R.drawable.bg_icon_message, R.color.category_message)
-                    NotificationType.BUBBLE -> Triple(R.drawable.ic_notification_bubble, R.drawable.bg_icon_message, R.color.category_message)
+                    NotificationType.MESSAGING -> {
+                        iconRes = R.drawable.ic_notification_messaging
+                        bgRes = R.drawable.bg_icon_message
+                        iconTint = R.color.category_message
+                        shadowRes = R.drawable.shadow_message
+                    }
+                    NotificationType.CONVERSATION -> {
+                        iconRes = R.drawable.ic_notification_conversation
+                        bgRes = R.drawable.bg_icon_message
+                        iconTint = R.color.category_message
+                        shadowRes = R.drawable.shadow_message
+                    }
+                    NotificationType.BUBBLE -> {
+                        iconRes = R.drawable.ic_notification_bubble
+                        bgRes = R.drawable.bg_icon_message
+                        iconTint = R.color.category_message
+                        shadowRes = R.drawable.shadow_message
+                    }
                     
-                    NotificationType.PROGRESS -> Triple(R.drawable.ic_notification_progress, R.drawable.bg_icon_progress, R.color.category_progress)
-                    NotificationType.ONGOING -> Triple(R.drawable.ic_notification_ongoing, R.drawable.bg_icon_progress, R.color.category_progress)
-                    NotificationType.FOREGROUND -> Triple(R.drawable.ic_notification_foreground, R.drawable.bg_icon_progress, R.color.category_progress)
+                    NotificationType.PROGRESS -> {
+                        iconRes = R.drawable.ic_notification_progress
+                        bgRes = R.drawable.bg_icon_progress
+                        iconTint = R.color.category_progress
+                        shadowRes = R.drawable.shadow_progress
+                    }
+                    NotificationType.ONGOING -> {
+                        iconRes = R.drawable.ic_notification_ongoing
+                        bgRes = R.drawable.bg_icon_progress
+                        iconTint = R.color.category_progress
+                        shadowRes = R.drawable.shadow_progress
+                    }
+                    NotificationType.FOREGROUND -> {
+                        iconRes = R.drawable.ic_notification_foreground
+                        bgRes = R.drawable.bg_icon_progress
+                        iconTint = R.color.category_progress
+                        shadowRes = R.drawable.shadow_progress
+                    }
                     
-                    NotificationType.MEDIA -> Triple(R.drawable.ic_notification_media, R.drawable.bg_icon_media, R.color.category_media)
+                    NotificationType.MEDIA -> {
+                        iconRes = R.drawable.ic_notification_media
+                        bgRes = R.drawable.bg_icon_media
+                        iconTint = R.color.category_media
+                        shadowRes = R.drawable.shadow_media
+                    }
                     
-                    NotificationType.CUSTOM -> Triple(R.drawable.ic_notification_custom, R.drawable.bg_icon_advanced, R.color.category_advanced)
-                    NotificationType.SCHEDULED -> Triple(R.drawable.ic_notification_scheduled, R.drawable.bg_icon_advanced, R.color.category_advanced)
-                    NotificationType.ACTION -> Triple(R.drawable.ic_notification_action, R.drawable.bg_icon_advanced, R.color.category_advanced)
+                    NotificationType.CUSTOM -> {
+                        iconRes = R.drawable.ic_notification_custom
+                        bgRes = R.drawable.bg_icon_advanced
+                        iconTint = R.color.category_advanced
+                        shadowRes = R.drawable.shadow_advanced
+                    }
+                    NotificationType.SCHEDULED -> {
+                        iconRes = R.drawable.ic_notification_scheduled
+                        bgRes = R.drawable.bg_icon_advanced
+                        iconTint = R.color.category_advanced
+                        shadowRes = R.drawable.shadow_advanced
+                    }
+                    NotificationType.ACTION -> {
+                        iconRes = R.drawable.ic_notification_action
+                        bgRes = R.drawable.bg_icon_advanced
+                        iconTint = R.color.category_advanced
+                        shadowRes = R.drawable.shadow_advanced
+                    }
                 }
 
                 // 设置图标
@@ -123,6 +197,9 @@ class NotificationAdapter(
                 
                 // 设置图标背景
                 viewIconBg.setBackgroundResource(bgRes)
+                
+                // 设置底部阴影
+                viewColorShadow.setBackgroundResource(shadowRes)
 
                 // 点击整个卡片发送通知
                 cardView.setOnClickListener {
