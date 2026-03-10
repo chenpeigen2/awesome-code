@@ -1,3 +1,65 @@
 <resources>
-    <string name="app_name">koin</string>
+    <string name="app_name">Koin Demo</string>
+
+    <!-- Tab Titles -->
+    <string name="tab_definitions">定义</string>
+    <string name="tab_scopes">作用域</string>
+    <string name="tab_advanced">高级功能</string>
+    <string name="tab_viewmodels">ViewModel</string>
+    <string name="tab_testing">测试</string>
+
+    <!-- Definition Items -->
+    <string name="def_single_title">single - 单例</string>
+    <string name="def_single_desc">整个应用生命周期只创建一次实例</string>
+    <string name="def_factory_title">factory - 工厂</string>
+    <string name="def_factory_desc">每次获取都创建新实例</string>
+    <string name="def_scoped_title">scoped - 作用域单例</string>
+    <string name="def_scoped_desc">在作用域内是单例</string>
+    <string name="def_viewmodel_title">viewModel - ViewModel集成</string>
+    <string name="def_viewmodel_desc">Koin与Android ViewModel集成</string>
+
+    <!-- Scope Items -->
+    <string name="scope_activity_title">Activity Scope</string>
+    <string name="scope_activity_desc">Activity级别的Koin作用域</string>
+    <string name="scope_link_title">Scope Linking</string>
+    <string name="scope_link_desc">链接两个作用域共享依赖</string>
+    <string name="scope_source_title">Scope Source</string>
+    <string name="scope_source_desc">获取作用域的源对象</string>
+    <string name="scope_close_title">Close Scope</string>
+    <string name="scope_close_desc">关闭并释放作用域</string>
+
+    <!-- Advanced Items -->
+    <string name="adv_named_title">Named - 命名限定符</string>
+    <string name="adv_named_desc">使用名称区分同一类型的不同实例</string>
+    <string name="adv_params_title">Injected Parameters</string>
+    <string name="adv_params_desc">注入时传递参数</string>
+    <string name="adv_property_title">Property Injection</string>
+    <string name="adv_property_desc">从Koin属性中获取值</string>
+    <string name="adv_lazy_title">Lazy Injection</string>
+    <string name="adv_lazy_desc">延迟获取依赖</string>
+    <string name="adv_binding_title">Interface Binding</string>
+    <string name="adv_binding_desc">通过接口类型获取实现类</string>
+
+    <!-- ViewModel Items -->
+    <string name="vm_basic_title">Basic ViewModel</string>
+    <string name="vm_basic_desc">基础的ViewModel注入</string>
+    <string name="vm_savedstate_title">SavedState ViewModel</string>
+    <string name="vm_savedstate_desc">带SavedStateHandle的ViewModel</string>
+    <string name="vm_factory_title">Factory ViewModel</string>
+    <string name="vm_factory_desc">带参数的ViewModel工厂</string>
+    <string name="vm_shared_title">Shared ViewModel</string>
+    <string name="vm_shared_desc">多个Fragment共享ViewModel</string>
+
+    <!-- Test Items -->
+    <string name="test_verify_title">Module Verification</string>
+    <string name="test_verify_desc">验证模块定义的正确性</string>
+    <string name="test_rule_title">KoinTestRule</string>
+    <string name="test_rule_desc">JUnit测试规则集成</string>
+    <string name="test_mock_title">Mock Replacement</string>
+    <string name="test_mock_desc">用Mock替换真实依赖</string>
+    <string name="test_check_title">Check Modules</string>
+    <string name="test_check_desc">检查所有模块配置</string>
+
+    <!-- Actions -->
+    <string name="action_demo">演示</string>
 </resources>

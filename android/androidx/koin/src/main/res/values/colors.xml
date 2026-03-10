@@ -2,4 +2,30 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Tab Theme Colors - Definitions (Purple) -->
+    <color name="tab_definition">#9C27B0</color>
+    <color name="tab_definition_container">#F3E5F5</color>
+
+    <!-- Tab Theme Colors - Scopes (Blue) -->
+    <color name="tab_scope">#2196F3</color>
+    <color name="tab_scope_container">#E3F2FD</color>
+
+    <!-- Tab Theme Colors - Advanced (Orange) -->
+    <color name="tab_advanced">#FF9800</color>
+    <color name="tab_advanced_container">#FFF3E0</color>
+
+    <!-- Tab Theme Colors - ViewModel (Teal) -->
+    <color name="tab_viewmodel">#009688</color>
+    <color name="tab_viewmodel_container">#E0F2F1</color>
+
+    <!-- Tab Theme Colors - Testing (Red) -->
+    <color name="tab_test">#F44336</color>
+    <color name="tab_test_container">#FFEBEE</color>
+
+    <!-- Common Colors -->
+    <color name="on_surface_variant">#49454F</color>
+    <color name="surface">#FFFBFE</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="code_background">#F5F5F5</color>
 </resources>

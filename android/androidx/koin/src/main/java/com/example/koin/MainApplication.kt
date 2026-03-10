@@ -4,18 +4,33 @@ import android.app.Application
 import android.util.Log
 import dalvik.system.BaseDexClassLoader
 import dalvik.system.PathClassLoader
+import com.example.koin.di.advancedModule
+import com.example.koin.di.definitionModule
+import com.example.koin.di.scopeModule
+import com.example.koin.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
-import org.koin.core.context.GlobalContext.startKoin
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
-            androidLogger()
+            androidLogger(Level.ERROR)
             androidContext(this@MainApplication)
-            modules(sampleModule)
+
+            // 加载属性配置
+            properties(mapOf("app.config" to "Koin Demo Config Value"))
+
+            modules(
+                definitionModule,
+                scopeModule,
+                advancedModule,
+                viewModelModule,
+                sampleModule
+            )
         }
         hook(this)
     }
@@ -45,6 +60,4 @@ class MainApplication : Application() {
             Log.e("Hook", "Hook failed", e)
         }
     }
-
 }
-

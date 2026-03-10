@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/spacing_md"
+    android:layout_marginVertical="@dimen/spacing_sm"
+    app:cardBackgroundColor="@color/card_background"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_title"
+            android:textStyle="bold" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:textColor="@color/on_surface_variant"
+            android:textSize="@dimen/text_body" />
+
+        <!-- Code Snippet -->
+        <TextView
+            android:id="@+id/tvCodeSnippet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:background="@color/code_background"
+            android:fontFamily="monospace"
+            android:padding="@dimen/code_padding"
+            android:textColor="#37474F"
+            android:textSize="@dimen/text_code" />
+
+        <!-- Demo Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDemo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="@dimen/spacing_md"
+            android:text="@string/action_demo"
+            style="@style/Widget.Material3.Button.TonalButton" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
