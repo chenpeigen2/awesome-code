@@ -36,6 +36,8 @@ findProject(":nacos:simple-nacos-demo")?.name = "simple-nacos-demo"
 include("jwt")
 include("web:simple-webflux")
 findProject(":web:simple-webflux")?.name = "simple-webflux"
+include("web:kotlin-spring-coroutines")
+findProject(":web:kotlin-spring-coroutines")?.name = "kotlin-spring-coroutines"
 include("spi:autoservice")
 findProject(":spi:autoservice")?.name = "autoservice"
 include("spi:serviceprovider")
