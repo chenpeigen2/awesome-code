@@ -1,13 +1,18 @@
 package com.peter.dagger.demo.di
 
+import com.peter.dagger.demo.android.DemoViewModelFactory
 import com.peter.dagger.demo.model.CoffeeMaker
 import com.peter.dagger.demo.model.ElectricHeater
 import com.peter.dagger.demo.model.Heater
 import com.peter.dagger.demo.model.Pump
 import com.peter.dagger.demo.model.Thermosiphon
+import com.peter.dagger.demo.qualifier.DataSource
+import com.peter.dagger.demo.qualifier.LocalDataSourceImpl
+import com.peter.dagger.demo.qualifier.RemoteDataSourceImpl
 import com.peter.dagger.demo.scope.DatabaseService
 import com.peter.dagger.demo.scope.RequestService
 import com.peter.dagger.demo.scope.UserService
+import com.peter.dagger.demo.subcomponent.LoginComponent
 
 /**
  * AppContainer - 应用级依赖容器
@@ -45,6 +50,36 @@ class AppContainer {
 
     // 创建 Activity 级别的容器
     fun createActivityContainer(): ActivityContainer = ActivityContainer(this)
+
+    // ============== 限定符示例 ==============
+
+    // @LocalDataSource - 本地数据源单例
+    // 对应 Dagger2: @Provides @LocalDataSource fun provideLocalDataSource(): DataSource
+    private val _localDataSource: DataSource by lazy { LocalDataSourceImpl() }
+    val localDataSource: DataSource get() = _localDataSource
+
+    // @RemoteDataSource - 远程数据源单例
+    // 对应 Dagger2: @Provides @RemoteDataSource fun provideRemoteDataSource(): DataSource
+    private val _remoteDataSource: DataSource by lazy { RemoteDataSourceImpl() }
+    val remoteDataSource: DataSource get() = _remoteDataSource
+
+    // ============== 子组件示例 ==============
+
+    // 创建 LoginComponent 子组件
+    // 对应 Dagger2: appComponent.loginComponent().create()
+    // 子组件可以访问父组件的依赖 (databaseService)
+    fun createLoginComponent(): LoginComponent {
+        return LoginComponent(databaseService.instanceId)
+    }
+
+    // ============== Android 集成示例 ==============
+
+    // ViewModel Factory - 单例
+    // 对应 Dagger2: @Provides fun provideDemoViewModelFactory(...): DemoViewModelFactory
+    private val _demoViewModelFactory: DemoViewModelFactory by lazy {
+        DemoViewModelFactory(localDataSource, remoteDataSource)
+    }
+    val demoViewModelFactory: DemoViewModelFactory get() = _demoViewModelFactory
 }
 
 /**

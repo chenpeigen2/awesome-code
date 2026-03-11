@@ -2,6 +2,66 @@
 
 ## Session: 2026-03-11
 
+### Phase 6: Android 集成 (AndroidFragment)
+- [x] 创建 DemoViewModel
+- [x] 创建 DemoViewModelFactory
+- [x] 更新 AppContainer 添加 ViewModelFactory
+- [x] 更新 AndroidFragment 实现 ViewModel 注入演示
+
+- **Completed:** 2026-03-11
+
+- Files created:
+  - android/DemoViewModel.kt
+  - android/DemoViewModelFactory.kt
+
+- Files modified:
+  - di/AppContainer.kt
+  - ui/fragment/AndroidFragment.kt
+
+---
+
+### Phase 5: 子组件 (SubcomponentFragment)
+- [x] 创建 AuthService 类
+- [x] 创建 UserRepository 类
+- [x] 创建 LoginComponent 子组件
+- [x] 更新 AppContainer 添加 createLoginComponent 方法
+- [x] 更新 SubcomponentFragment 实现子组件演示
+
+- **Completed:** 2026-03-11
+
+- Files created:
+  - subcomponent/AuthService.kt
+  - subcomponent/UserRepository.kt
+  - subcomponent/LoginComponent.kt
+
+- Files modified:
+  - di/AppContainer.kt
+  - ui/fragment/SubcomponentFragment.kt
+
+---
+
+### Phase 4: 限定符 (QualifierFragment)
+- [x] 创建 DataSource 接口
+- [x] 创建 LocalDataSourceImpl 实现
+- [x] 创建 RemoteDataSourceImpl 实现
+- [x] 创建 QualifierAnnotations.kt (文档说明)
+- [x] 更新 AppContainer 添加限定符数据源
+- [x] 更新 QualifierFragment 实现限定符演示
+
+- **Completed:** 2026-03-11
+
+- Files created:
+  - qualifier/DataSource.kt
+  - qualifier/LocalDataSourceImpl.kt
+  - qualifier/RemoteDataSourceImpl.kt
+  - qualifier/QualifierAnnotations.kt
+
+- Files modified:
+  - di/AppContainer.kt
+  - ui/fragment/QualifierFragment.kt
+
+---
+
 ### Phase 3: 作用域管理 (ScopeFragment)
 - [x] 创建 ScopeFragment
     [x] 创建 @ActivityScope 自定义注解
@@ -131,11 +191,11 @@ dagger-demo/
 ## 5-Question Reboot Check
 | Question | Answer |
 |----------|--------|
-| Where am I? | Phase 0 完成，准备开始 Phase 1 |
-| Where am I going? | Phase 1-6: 基础设施 → 基础注入 → 作用域 → 限定符 → 子组件 → Android集成 |
+| Where am I? | ✅ All Phases 1-6 Complete |
+| Where am I going? | Project finished - ready for commit |
 | What's the goal? | 构建渐进式学习 Dagger2 的 Android Demo |
-| What have I learned? | Dagger2 核心注解、作用域、限定符、子组件 |
-| What have I done? | 设计文档已创建，规划文件已更新 |
+| What have I learned? | Dagger2 核心注解、作用域、限定符、子组件、ViewModel 注入 |
+| What have I done? | 所有 6 个阶段完成，APK 构建成功 |
 
 ---
 
