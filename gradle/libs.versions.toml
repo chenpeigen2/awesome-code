@@ -154,6 +154,8 @@ vertx-config-yaml = { module = "io.vertx:vertx-config-yaml", version.ref = "vert
 vertx-service-discovery = { module = "io.vertx:vertx-service-discovery", version.ref = "vertx" }
 vertx-grpc-server = { module = "io.vertx:vertx-grpc-server", version.ref = "vertx" }
 vertx-grpc-client = { module = "io.vertx:vertx-grpc-client", version.ref = "vertx" }
+vertx-lang-kotlin = { module = "io.vertx:vertx-lang-kotlin", version.ref = "vertx" }
+vertx-lang-kotlin-coroutines = { module = "io.vertx:vertx-lang-kotlin-coroutines", version.ref = "vertx" }
 
 # ========== Spring 生态 ==========
 spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }

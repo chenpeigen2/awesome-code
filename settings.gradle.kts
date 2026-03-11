@@ -76,6 +76,8 @@ include("vertx:service-discovery")
 findProject(":vertx:service-discovery")?.name = "service-discovery"
 include("vertx:vertx-web")
 findProject(":vertx:vertx-web")?.name = "vertx-web"
+include("vertx:vertx-coroutines-web")
+findProject(":vertx:vertx-coroutines-web")?.name = "vertx-coroutines-web"
 include("explore:jsqlparser")
 findProject(":explore:jsqlparser")?.name = "jsqlparser"
 include("explore:snappy")
