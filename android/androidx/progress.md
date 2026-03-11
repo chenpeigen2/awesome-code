@@ -2,8 +2,68 @@
 
 ## Session: 2026-03-11
 
-### Phase 0: 项目准备
-- **Status:** complete
+### Phase 3: 作用域管理 (ScopeFragment)
+- [x] 创建 ScopeFragment
+    [x] 创建 @ActivityScope 自定义注解
+    [x] 创建 @Singleton 自定义注解
+    [x] 创建 DatabaseService (@Singleton)
+    [x] 创建 UserService (@ActivityScoped)
+    [x] 创建 RequestService (无作用域)
+    [x] 创建 ScopeModule 和 ScopeComponent
+    [x] UI 展示实例 ID 对比
+            | 服务 | 作用域 | 生命周期 |
+            |------|--------|----------|
+            | DatabaseService | @Singleton | 应用级单例 |
+            | UserService | @ActivityScoped | Activity 内单例 |
+            | RequestService | 无作用域 | 每次新建 |""")
+    [x] 创建 ScopeComponent 时， 鰴自动更新 ScopeFragment 的 ScopeComponent
+    private val scopeComponent: ScopeComponent? = null
+    private set(scopeComponent(scopeComponent: ScopeComponent(appContainer))
+
+    // 创建 @ActivityScoped 实例
+    private val activityContainer: ActivityContainer? = null
+        activityContainer = appContainer.createActivityContainer()
+
+    // 无作用域 - 每次创建新实例
+    private val requestService1: RequestService = appContainer.createRequestService()
+    private val requestService2: RequestService = appContainer.createRequestService()
+
+    // 多次获取验证单例效果
+    private fun checkScope() {
+        val sb = StringBuilder()
+        sb.appendLine()
+        sb.appendLine("DatabaseService (@Singleton)")
+        sb.appendLine("  - 实例ID: ${db1.instanceId}")
+        sb.appendLine("UserService (@ActivityScoped)")
+        sb.appendLine("  - 实例ID: ${activityContainer!!.userService}")
+        sb.appendLine("RequestService (无作用域)")
+            sb.appendLine("  - 实例ID: ${requestService1?.hashCode()}")
+            sb.appendLine("  - 实例ID: ${requestService2?.hashCode()}")
+        sb.appendLine()
+
+        // 对比不同作用域的生命周期
+        val result = StringBuilder()
+        result.appendLine()
+
+        binding.tvResult.text = sb.toString()
+    }
+
+    private fun checkScope() {
+        // 获取 Activity 容器
+        val activityContainer = (requireActivity() as DemoActivity).appContainer.createActivityContainer()
+        val db1 = activityContainer!!.databaseService
+        val db2 = activityContainer!!.userService
+        val db3 = activityContainer!!.databaseService
+
+        // RequestService 每次都是新的
+        val req1 = appContainer.createRequestService()
+        val req2 = appContainer.createRequestService()
+
+        binding.tvResult.text = sb.toString()
+    }
+
+}
+
 - **Completed:** 2026-03-11
 
 - Actions taken:
