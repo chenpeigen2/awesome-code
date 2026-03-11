@@ -20,11 +20,11 @@ This is a multi-module Android project focused on learning and demonstrating And
 ./gradlew :app:installDebug
 ./gradlew :window-demo:installDebug
 
-# Run unit tests
-./gradlew test
+# Run unit tests for a specific module
+./gradlew :datastore:test
 
-# Run Android instrumented tests
-./gradlew connectedAndroidTest
+# Run Android instrumented tests for a specific module
+./gradlew :app:connectedAndroidTest
 
 # Clean build
 ./gradlew clean
@@ -37,6 +37,7 @@ This is a multi-module Android project focused on learning and demonstrating And
 - **`datastore`** - DataStore wrapper with JSON serialization and transaction support
 - **`apt-annotation`** / **`apt-compiler`** - Annotation processing for view binding (similar to ButterKnife pattern)
 - **`aidl-common`** - Shared AIDL interfaces for IPC demos
+- **`autodensity`** - Screen density adaptation library for multi-device UI consistency
 
 ### Application Modules (Demos)
 - **`app`** - Main app using custom APT plugins and lifecycle components
@@ -49,6 +50,13 @@ This is a multi-module Android project focused on learning and demonstrating And
 - **`context-demo`** - Android Context exploration
 - **`datastore-demo`** - DataStore usage examples
 - **`koin`** - Koin dependency injection demo
+- **`coroutine-demo`** - Kotlin coroutines and Flow examples
+- **`animation-demo`** - Android animation examples
+- **`touch-demo`** - Touch event dispatch examples
+- **`compose-demo`** - Jetpack Compose learning examples
+- **`notification-demo`** - Android notification system examples
+- **`components-demo`** - Android four major components examples
+- **`autodensity-demo`** - Screen density adaptation demo
 - **`aidl_server`** / **`aidl_client`** - AIDL IPC client-server demo
 - **`appdisplayapp`** / **`apprenderapp`** - Multi-process rendering demo
 
@@ -57,21 +65,15 @@ This is a multi-module Android project focused on learning and demonstrating And
   - `MethodStatsPlugin` - Logs method calls at runtime
   - `OnClickPlugin` - Tracks click events
 
+### Documentation
+- **`docs/plans/`** - Design documents and implementation plans for demo modules
+
 ## Configuration
 
-- **SDK Versions**: compileSdk=36, targetSdk=36, minSdk=24
+- **SDK Versions**: compileSdk=36, targetSdk=36, minSdk=33
 - **Java**: VERSION_11 (source and target compatibility)
 - **Kotlin**: JVM target JVM_11
 - **Version Catalog**: `gradle/libs.versions.toml` manages all dependency versions
-
-## Key Dependencies
-
-- AndroidX Lifecycle (runtime, viewmodel, livedata, compose)
-- Kotlin Coroutines
-- DataStore (Preferences and Core)
-- Koin for DI
-- WorkManager
-- ASM for bytecode manipulation in build plugins
 
 ## Custom Gradle Plugins
 
