@@ -4,6 +4,8 @@ import 面试题目.NeedDeepLearn;
 
 import java.util.*;
 
+// 动态规划 4个题目
+// 多纬动态规划 3个题目 ，两层for循环
 public class 动态规划 {
 
     // 动态规划
@@ -68,28 +70,25 @@ public class 动态规划 {
     public List<List<Integer>> generate(int numRows) {
         // 创建结果列表，用于存储杨辉三角的所有行
         List<List<Integer>> ret = new ArrayList<>();
-
         // 外层循环：逐行生成杨辉三角
         for (int i = 0; i < numRows; i++) {
             // 创建当前行的列表
             List<Integer> row = new ArrayList<>();
-
             // 内层循环：生成当前行的所有元素
             for (int j = 0; j <= i; j++) {
                 // 判断是否为首尾元素
                 if (j == 0 || j == i) {
                     // 首尾元素都为1
                     row.add(1);
-                } else {
-                    // 中间元素等于上一行相邻两个元素的和
-                    // 即：当前行第j个元素 = 上一行第(j-1)个元素 + 上一行第j个元素
-                    row.add(ret.get(i - 1).get(j - 1) + ret.get(i - 1).get(j));
+                    continue;
                 }
+                // 中间元素等于上一行相邻两个元素的和
+                // 即：当前行第j个元素 = 上一行第(j-1)个元素 + 上一行第j个元素
+                row.add(ret.get(i - 1).get(j - 1) + ret.get(i - 1).get(j));
             }
             // 将生成的行添加到结果列表中
             ret.add(row);
         }
-
         // 返回完整的杨辉三角
         return ret;
     }
@@ -124,16 +123,13 @@ public class 动态规划 {
     public int rob(int[] nums) {
         // 创建dp数组，f[i]表示偷窃前i+1间房屋能获得的最高金额
         int[] f = new int[nums.length];
-
         // 特殊情况处理：如果只有一间房屋，直接返回该房屋的金额
         if (f.length == 1) {
             return nums[0];
         }
-
         // 初始化前两个状态
         f[0] = nums[0];                           // 第一间房屋的最大金额就是它本身
         f[1] = Math.max(nums[0], nums[1]);        // 前两间房屋选择金额较大的那一间
-
         // 从第三间房屋开始，按照状态转移方程计算每个位置的最优解
         for (int i = 2; i < nums.length; i++) {
             // 对于第i间房屋，选择偷或不偷的最大值：
@@ -141,7 +137,6 @@ public class 动态规划 {
             // 不偷：前一间房屋的最大金额
             f[i] = Math.max(nums[i] + f[i - 2], f[i - 1]);
         }
-
         // 返回偷窃所有房屋能获得的最高金额
         return f[nums.length - 1];
     }
@@ -290,13 +285,10 @@ public class 动态规划 {
     public boolean wordBreak(String s, List<String> wordDict) {
         // 将字典转换为 HashSet，提高查找效率
         Set<String> wordDictSet = new HashSet<>(wordDict);
-
         // 创建 dp 数组，dp[i] 表示 s 的前 i 个字符是否可以被拼接
         boolean[] dp = new boolean[s.length() + 1];
-
         // 初始条件：空字符串可以被拼接
         dp[0] = true;
-
         // 从小到大计算每个 dp[i]
         for (int i = 1; i <= s.length(); i++) {
             // 遍历所有可能的 j 值，检查是否存在一个 j 使得 dp[j] 为 true
@@ -311,7 +303,6 @@ public class 动态规划 {
                 }
             }
         }
-
         // 返回 dp[s.length()]，即整个字符串是否可以被拼接
         return dp[s.length()];
     }
@@ -346,16 +337,13 @@ public class 动态规划 {
     public int uniquePaths(int m, int n) {
         // 创建二维数组存储每个位置的路径数
         int[][] grid = new int[m][n];
-
         // 初始化起点路径数为1
         grid[0][0] = 1;
-
         // 遍历网格中的每个位置
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 // 跳过起点位置
                 if (i == 0 && j == 0) continue;
-
                 // 处理第一行：只能从左边来
                 if (i == 0) {
                     grid[i][j] = grid[i][j - 1];
@@ -370,7 +358,6 @@ public class 动态规划 {
                 }
             }
         }
-
         // 返回右下角位置的路径数
         return grid[m - 1][n - 1];
     }
@@ -413,7 +400,6 @@ public class 动态规划 {
             for (int j = 0; j < grid[0].length; j++) {
                 // 跳过起点位置，因为起点的路径和就是它本身的值
                 if (i == 0 && j == 0) continue;
-
                 // 处理第一行：只能从左边来，累加左边位置的路径和
                 if (i == 0) {
                     grid[i][j] += grid[i][j - 1];
@@ -428,7 +414,6 @@ public class 动态规划 {
                 }
             }
         }
-
         // 返回右下角位置存储的最小路径和
         return grid[grid.length - 1][grid[0].length - 1];
     }
@@ -466,10 +451,10 @@ public class 动态规划 {
      * @param text2 第二个字符串
      * @return 两个字符串的最长公共子序列长度
      */
+    // dp[i][j] 表示 text1 的前 i 个字符和 text2 的前 j 个字符的最长公共子序列长度
     public int longestCommonSubsequence(String text1, String text2) {
         // 获取两个字符串的长度
         int m = text1.length(), n = text2.length();
-
         // 创建二维dp数组，dp[i][j]表示text1前i个字符和text2前j个字符的LCS长度
         int[][] dp = new int[m + 1][n + 1];
 
@@ -477,11 +462,9 @@ public class 动态规划 {
         for (int i = 1; i <= m; i++) {
             // 获取text1的第i个字符（注意索引从0开始）
             char c1 = text1.charAt(i - 1);
-
             for (int j = 1; j <= n; j++) {
                 // 获取text2的第j个字符（注意索引从0开始）
                 char c2 = text2.charAt(j - 1);
-
                 // 如果当前字符相同
                 if (c1 == c2) {
                     // LCS长度等于左上角的值加1
@@ -492,7 +475,6 @@ public class 动态规划 {
                 }
             }
         }
-
         // 返回右下角的值，即两个完整字符串的LCS长度
         return dp[m][n];
     }
