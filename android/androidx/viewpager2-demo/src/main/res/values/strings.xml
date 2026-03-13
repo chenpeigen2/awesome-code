@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ViewPager2 Demo</string>
+    
+    <!-- Demo titles -->
+    <string name="demo_simple">基础用法</string>
+    <string name="demo_tab">Tab + ViewPager2</string>
+    <string name="demo_lifecycle">生命周期</string>
+    <string name="demo_communication">Fragment通信</string>
+    <string name="demo_nested">嵌套ViewPager</string>
+    <string name="demo_dynamic">动态页面</string>
+    
+    <!-- Simple Demo -->
+    <string name="simple_page">第 %d 页</string>
+    <string name="simple_description">最基础的 ViewPager2 用法\n左右滑动切换页面</string>
+    
+    <!-- Tab Demo -->
+    <string name="tab_home">首页</string>
+    <string name="tab_discover">发现</string>
+    <string name="tab_message">消息</string>
+    <string name="tab_profile">我的</string>
+    
+    <!-- Lifecycle Demo -->
+    <string name="lifecycle_description">观察 Fragment 生命周期\n切换页面查看日志输出</string>
+    <string name="lifecycle_state">当前状态: %s</string>
+    <string name="lifecycle_log">生命周期日志</string>
+    <string name="lifecycle_clear">清除日志</string>
+    
+    <!-- Communication Demo -->
+    <string name="communication_title">Fragment 通信演示</string>
+    <string name="communication_shared_vm">共享 ViewModel</string>
+    <string name="communication_result_api">Result API</string>
+    <string name="communication_callback">回调接口</string>
+    <string name="communication_send">发送消息</string>
+    <string name="communication_received">收到消息: %s</string>
+    <string name="communication_input_hint">输入要发送的消息</string>
+    
+    <!-- Nested Demo -->
+    <string name="nested_description">ViewPager2 嵌套演示\n外层垂直滑动，内层水平滑动</string>
+    
+    <!-- Dynamic Demo -->
+    <string name="dynamic_add">添加页面</string>
+    <string name="dynamic_remove">删除当前页</string>
+    <string name="dynamic_page_count">当前页面数: %d</string>
+    
+    <!-- Common -->
+    <string name="previous">上一页</string>
+    <string name="next">下一页</string>
+    <string name="page_indicator">第 %1$d 页 / 共 %2$d 页</string>
+</resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="80dp" />
+
+    <!-- 底部指示器 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:background="@color/surface"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp">
+
+        <TextView
+            android:id="@+id/tvPageIndicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/page_indicator"
+            android:textColor="@color/on_surface"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPrevious"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:text="@string/previous"
+                app:cornerRadius="12dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnNext"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="@string/next"
+                app:cornerRadius="12dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
