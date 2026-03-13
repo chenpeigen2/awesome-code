@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.viewpager2.widget.ViewPager2
+import kotlin.math.abs
 
 /**
  * ViewPager2 容器，用于处理嵌套滑动冲突
@@ -33,8 +34,8 @@ class NestedViewPagerContainer @JvmOverloads constructor(
 
                 // 找到内部的 ViewPager2
                 val viewPager = findViewPager2()
-                
-                if (Math.abs(dx) > Math.abs(dy)) {
+
+                if (abs(dx) > abs(dy)) {
                     // 水平滑动
                     viewPager?.let { vp ->
                         val canScrollLeft = vp.canScrollHorizontally(-1)
