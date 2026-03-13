@@ -8,6 +8,7 @@ plugins {
 android {
     namespace = "com.peter.androidx"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdkMinor = libs.versions.compileSdkMinor.get().toInt()
 
     defaultConfig {
         applicationId = "com.peter.androidx"

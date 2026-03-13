@@ -2,6 +2,7 @@
 # SDK 版本
 autoService = "1.1.1"
 compileSdk = "36"
+compileSdkMinor = "1"
 javapoet = "1.13.0"
 localbroadcastmanager = "1.1.0"
 media = "1.7.0"

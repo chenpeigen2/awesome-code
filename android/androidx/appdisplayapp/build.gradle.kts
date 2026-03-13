@@ -6,6 +6,7 @@ plugins {
 android {
     namespace = "com.example.appdisplayapp"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdkMinor = libs.versions.compileSdkMinor.get().toInt()
 
     buildFeatures {
         aidl = true

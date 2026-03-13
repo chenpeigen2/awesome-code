@@ -7,6 +7,7 @@ plugins {
 android {
     namespace = "com.peter.compose.demo"
     compileSdk = libs.versions.compileSdk.get().toInt()
+    compileSdkMinor = libs.versions.compileSdkMinor.get().toInt()
 
     defaultConfig {
         applicationId = "com.peter.compose.demo"
