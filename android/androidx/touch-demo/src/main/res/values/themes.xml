@@ -7,6 +7,9 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <!-- 导航栏颜色 -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <!-- 状态栏和导航栏图标颜色（深色图标适合浅色背景） -->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
     </style>
 
     <style name="Theme.TouchDemo" parent="Base.Theme.TouchDemo" />
