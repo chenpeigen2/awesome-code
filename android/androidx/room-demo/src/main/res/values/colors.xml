@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary -->
+    <color name="primary">#1976D2</color>
+    <color name="primary_container">#D1E4FF</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_primary_container">#001D36</color>
+    
+    <!-- Secondary -->
+    <color name="secondary">#535F70</color>
+    <color name="secondary_container">#D7E3F7</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_secondary_container">#101C2B</color>
+    
+    <!-- Tertiary -->
+    <color name="tertiary">#5B5F71</color>
+    <color name="tertiary_container">#E1DFF6</color>
+    
+    <!-- Surface -->
+    <color name="surface">#FDFCFF</color>
+    <color name="surface_variant">#DFE2EB</color>
+    <color name="on_surface">#1A1C1E</color>
+    <color name="on_surface_variant">#43474E</color>
+    <color name="outline">#73777F</color>
+    <color name="background">#FDFCFF</color>
+    <color name="white">#FFFFFF</color>
+    
+    <!-- Tab Colors -->
+    <color name="tab_basic">#1976D2</color>
+    <color name="tab_basic_container">#E3F2FD</color>
+    <color name="tab_relation">#388E3C</color>
+    <color name="tab_relation_container">#E8F5E9</color>
+    <color name="tab_migration">#F57C00</color>
+    <color name="tab_migration_container">#FFF3E0</color>
+    <color name="tab_converter">#7B1FA2</color>
+    <color name="tab_converter_container">#F3E5F5</color>
+    <color name="tab_advanced">#C62828</color>
+    <color name="tab_advanced_container">#FFEBEE</color>
+    
+    <!-- Page Colors -->
+    <color name="page_color_1">#E3F2FD</color>
+    <color name="page_color_2">#E8F5E9</color>
+    <color name="page_color_3">#FFF3E0</color>
+    <color name="page_color_4">#F3E5F5</color>
+    <color name="page_color_5">#FFEBEE</color>
+    <color name="page_color_6">#E0F7FA</color>
+</resources>

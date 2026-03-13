@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Room Demo</string>
+    
+    <!-- Tabs -->
+    <string name="tab_basic">基础用法</string>
+    <string name="tab_relation">关系映射</string>
+    <string name="tab_migration">迁移</string>
+    <string name="tab_converter">类型转换</string>
+    <string name="tab_advanced">高级查询</string>
+    
+    <!-- Basic -->
+    <string name="basic_title">Room 基础用法</string>
+    <string name="basic_description">演示 Entity、DAO、Database 的基本 CRUD 操作</string>
+    <string name="basic_add_user">添加用户</string>
+    <string name="basic_delete_all">删除全部</string>
+    <string name="basic_user_list">用户列表</string>
+    <string name="basic_empty_list">暂无用户数据</string>
+    
+    <!-- Relation -->
+    <string name="relation_title">关系映射</string>
+    <string name="relation_description">演示一对多、多对多关系</string>
+    <string name="relation_one_to_many">一对多关系</string>
+    <string name="relation_many_to_many">多对多关系</string>
+    
+    <!-- Migration -->
+    <string name="migration_title">数据库迁移</string>
+    <string name="migration_description">演示数据库版本升级和数据保留</string>
+    <string name="migration_current_version">当前版本: %d</string>
+    <string name="migration_upgrade">升级数据库</string>
+    <string name="migration_downgrade">降级数据库</string>
+    
+    <!-- Converter -->
+    <string name="converter_title">类型转换器</string>
+    <string name="converter_description">演示自定义类型的存储和读取</string>
+    <string name="converter_date">日期类型</string>
+    <string name="converter_list">列表类型</string>
+    <string name="converter_enum">枚举类型</string>
+    
+    <!-- Advanced -->
+    <string name="advanced_title">高级查询</string>
+    <string name="advanced_description">演示 Flow、事务、复杂查询</string>
+    <string name="advanced_flow">Flow 观察者</string>
+    <string name="advanced_transaction">事务操作</string>
+    <string name="advanced_full_text">全文搜索</string>
+    
+    <!-- Common -->
+    <string name="add">添加</string>
+    <string name="delete">删除</string>
+    <string name="update">更新</string>
+    <string name="query">查询</string>
+    <string name="success">操作成功</string>
+    <string name="error">操作失败</string>
+    <string name="confirm">确认</string>
+    <string name="cancel">取消</string>
+    <string name="name">姓名</string>
+    <string name="age">年龄</string>
+    <string name="email">邮箱</string>
+</resources>

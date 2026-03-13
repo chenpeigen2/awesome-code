@@ -78,5 +78,8 @@ include(":notification-demo")
 // Dagger Demo - Dagger2 依赖注入示例
 include(":dagger-demo")
 
+// Room Demo - Room 数据库示例
+include(":room-demo")
+
 // ViewPager2 Demo - ViewPager2 和 Fragment 学习示例
 include(":viewpager2-demo")
