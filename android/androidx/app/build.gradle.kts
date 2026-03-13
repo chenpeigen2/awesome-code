@@ -32,6 +32,13 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            // 定义一个字符串资源
+            resValue("string", "app_name_debug", "MyApp Debug")
+            resValue("string", "api_endpoint", "https://debug.api.example.com")
+        }
+
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -51,16 +58,21 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11)
         }
     }
+
+    buildFeatures {
+        // 显式启用 resValues 功能
+        resValues = true
+    }
 }
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "../libs", "include" to listOf("*.aar"))))
     implementation(project(":dynamicanimation"))
-    
+
     // APT dependencies
     implementation(project(":apt-annotation"))
     annotationProcessor(project(":apt-compiler"))
-    
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
