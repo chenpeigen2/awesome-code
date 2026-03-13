@@ -15,11 +15,17 @@
         android:textColor="@color/on_surface_variant"
         android:textSize="14sp" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
+    <com.peter.viewpager2.demo.widget.NestedViewPagerContainer
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.peter.viewpager2.demo.widget.NestedViewPagerContainer>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
