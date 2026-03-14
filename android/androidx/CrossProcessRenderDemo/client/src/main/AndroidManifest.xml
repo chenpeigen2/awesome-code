@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <queries>
+        <package android:name="com.example.server" />
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.Client">
+        
+        <activity
+            android:name=".ClientActivity"
+            android:exported="true"
+            android:label="渲染客户端">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- 新架构：Client 的 RenderService，供 Server 绑定 -->
+        <service
+            android:name=".ClientRenderService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.client.RENDER_SERVICE" />
+            </intent-filter>
+        </service>
+
+    </application>
+
+</manifest>
