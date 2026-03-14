@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- 数据库/存储图标 -->
+    <group android:translateX="27" android:translateY="27">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M27,3C12.04,3 0,7.48 0,13v34c0,5.52 12.04,10 27,10s27,-4.48 27,-10V13C54,7.48 41.96,3 27,3zM27,8c14.36,0 22,4.29 22,5s-7.64,5 -22,5 -22,-4.29 -22,-5 7.64,-5 22,-5zM5,19.47C9.42,22.33 17.42,24 27,24s17.58,-1.67 22,-4.53V27c0,0.71 -7.64,5 -22,5S5,27.71 5,27V19.47zM27,57c-14.36,0 -22,-4.29 -22,-5V44.47C9.42,47.33 17.42,49 27,49s17.58,-1.67 22,-4.53V52C49,52.71 41.36,57 27,57z"/>
+    </group>
+</vector>

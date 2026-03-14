@@ -78,6 +78,10 @@ include(":notification-demo")
 // MMKV Demo - MMKV 键值存储示例
 include(":mmkv-demo")
 
+// ClassLoader Demo - 自定义类加载器示例
+include(":classloader-demo")
+include(":plugin-module")
+
 // Dagger Demo - Dagger2 依赖注入示例
 include(":dagger-demo")
 

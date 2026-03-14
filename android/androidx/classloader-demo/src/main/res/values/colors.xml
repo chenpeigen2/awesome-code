@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 风格配色 - 橙色主题 -->
+    <color name="primary">#9C4146</color>
+    <color name="primary_container">#FFDAD6</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_primary_container">#400009</color>
+    
+    <color name="secondary">#775656</color>
+    <color name="secondary_container">#FFDAD6</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_secondary_container">#2C1516</color>
+    
+    <color name="tertiary">#745930</color>
+    <color name="tertiary_container">#FFE0A2</color>
+    
+    <color name="surface">#FFFBFF</color>
+    <color name="surface_variant">#F5DDDA</color>
+    <color name="on_surface">#201A19</color>
+    <color name="on_surface_variant">#534341</color>
+    
+    <color name="outline">#857370</color>
+    <color name="outline_variant">#D8C2BE</color>
+    
+    <color name="background">#FFFBFF</color>
+    <color name="on_background">#201A19</color>
+    
+    <!-- 分类颜色 -->
+    <color name="category_concept">#7D5260</color>
+    <color name="category_concept_light">#FFD8E4</color>
+    
+    <color name="category_custom">#0061A4</color>
+    <color name="category_custom_light">#D1E4FF</color>
+    
+    <color name="category_advanced">#386A20</color>
+    <color name="category_advanced_light">#C8F6C0</color>
+    
+    <!-- Tab 主题色 -->
+    <color name="tab_concept">#7D5260</color>
+    <color name="tab_concept_container">#FFD8E4</color>
+    
+    <color name="tab_custom">#0061A4</color>
+    <color name="tab_custom_container">#D1E4FF</color>
+    
+    <color name="tab_advanced">#386A20</color>
+    <color name="tab_advanced_container">#C8F6C0</color>
+    
+    <!-- 基础色 -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+</resources>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- ClassLoader 图标：层叠的盒子表示类加载 -->
+    <group android:translateX="27" android:translateY="27">
+        <!-- 底层盒子 -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M27,0L0,13.5v27L27,54l27,-13.5v-27L27,0zM27,6l21,10.5v21L27,48L6,37.5v-21L27,6z"/>
+        <!-- 中间层 -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:fillAlpha="0.7"
+            android:pathData="M27,12l-15,7.5v15L27,42l15,-7.5v-15L27,12zM27,18l9,4.5v9L27,36l-9,-4.5v-9L27,18z"/>
+        <!-- 中心点 -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M27,24m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0"/>
+    </group>
+</vector>
