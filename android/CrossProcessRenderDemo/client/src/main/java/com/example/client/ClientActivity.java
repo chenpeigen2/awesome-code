@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,17 +12,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * 客户端Activity
+ * 客户端Activity（新架构）
+ * 
+ * 新架构说明：
+ * - Client 提供 ClientRenderService
+ * - Server 绑定此 Service
+ * - Server 传递 HostToken
+ * - Client 创建 SurfacePackage 并通过回调返回
+ * 
+ * 使用方式：
+ * 1. 启动 Client 应用（此 Activity）
+ * 2. 启动 Server 应用
+ * 3. Server 会自动绑定 Client 的 Service
+ * 4. Server 点击按钮请求渲染
  */
 public class ClientActivity extends AppCompatActivity {
     private static final String TAG = "ClientActivity";
-
-    private ClientManager mClientManager;
-    private TextView mStatusText;
-    private EditText mPosXEdit;
-    private EditText mPosYEdit;
-    private EditText mWidthEdit;
-    private EditText mHeightEdit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,6 @@ public class ClientActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: PID=" + android.os.Process.myPid());
 
         setupUI();
-        setupClientManager();
     }
 
     private void setupUI() {
@@ -41,7 +44,7 @@ public class ClientActivity extends AppCompatActivity {
         rootLayout.setPadding(32, 32, 32, 32);
 
         TextView titleText = new TextView(this);
-        titleText.setText("跨进程渲染 - 客户端");
+        titleText.setText("跨进程渲染 - 客户端（新架构）");
         titleText.setTextColor(Color.WHITE);
         titleText.setTextSize(22);
         titleText.setGravity(Gravity.CENTER);
@@ -56,197 +59,65 @@ public class ClientActivity extends AppCompatActivity {
         processText.setPadding(0, 0, 0, 16);
         rootLayout.addView(processText);
 
-        mStatusText = new TextView(this);
-        mStatusText.setText("状态: 连接服务中...");
-        mStatusText.setTextColor(Color.parseColor("#AAAAAA"));
-        mStatusText.setTextSize(14);
-        mStatusText.setPadding(0, 0, 0, 16);
-        rootLayout.addView(mStatusText);
+        TextView statusText = new TextView(this);
+        statusText.setText("状态: 已就绪，等待服务端连接...");
+        statusText.setTextColor(Color.parseColor("#4ECDC4"));
+        statusText.setTextSize(14);
+        statusText.setGravity(Gravity.CENTER);
+        statusText.setPadding(0, 0, 0, 16);
+        rootLayout.addView(statusText);
 
-        TextView configTitle = new TextView(this);
-        configTitle.setText("渲染位置配置:");
-        configTitle.setTextColor(Color.WHITE);
-        configTitle.setTextSize(14);
-        configTitle.setPadding(0, 0, 0, 8);
-        rootLayout.addView(configTitle);
-
-        LinearLayout posLayout = new LinearLayout(this);
-        posLayout.setOrientation(LinearLayout.HORIZONTAL);
-        posLayout.setPadding(0, 0, 0, 8);
-
-        TextView posXLabel = new TextView(this);
-        posXLabel.setText("X:");
-        posXLabel.setTextColor(Color.WHITE);
-        posLayout.addView(posXLabel);
-
-        mPosXEdit = new EditText(this);
-        mPosXEdit.setText("50");
-        mPosXEdit.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
-        mPosXEdit.setBackgroundColor(Color.parseColor("#2A2A4A"));
-        mPosXEdit.setTextColor(Color.WHITE);
-        mPosXEdit.setPadding(16, 8, 16, 8);
-        posLayout.addView(mPosXEdit, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-
-        TextView posYLabel = new TextView(this);
-        posYLabel.setText(" Y:");
-        posYLabel.setTextColor(Color.WHITE);
-        posLayout.addView(posYLabel);
-
-        mPosYEdit = new EditText(this);
-        mPosYEdit.setText("50");
-        mPosYEdit.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
-        mPosYEdit.setBackgroundColor(Color.parseColor("#2A2A4A"));
-        mPosYEdit.setTextColor(Color.WHITE);
-        mPosYEdit.setPadding(16, 8, 16, 8);
-        posLayout.addView(mPosYEdit, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-
-        rootLayout.addView(posLayout);
-
-        LinearLayout sizeLayout = new LinearLayout(this);
-        sizeLayout.setOrientation(LinearLayout.HORIZONTAL);
-        sizeLayout.setPadding(0, 0, 0, 16);
-
-        TextView widthLabel = new TextView(this);
-        widthLabel.setText("宽:");
-        widthLabel.setTextColor(Color.WHITE);
-        sizeLayout.addView(widthLabel);
-
-        mWidthEdit = new EditText(this);
-        mWidthEdit.setText("300");
-        mWidthEdit.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
-        mWidthEdit.setBackgroundColor(Color.parseColor("#2A2A4A"));
-        mWidthEdit.setTextColor(Color.WHITE);
-        mWidthEdit.setPadding(16, 8, 16, 8);
-        sizeLayout.addView(mWidthEdit, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-
-        TextView heightLabel = new TextView(this);
-        heightLabel.setText(" 高:");
-        heightLabel.setTextColor(Color.WHITE);
-        sizeLayout.addView(heightLabel);
-
-        mHeightEdit = new EditText(this);
-        mHeightEdit.setText("300");
-        mHeightEdit.setInputType(android.text.InputType.TYPE_CLASS_NUMBER);
-        mHeightEdit.setBackgroundColor(Color.parseColor("#2A2A4A"));
-        mHeightEdit.setTextColor(Color.WHITE);
-        mHeightEdit.setPadding(16, 8, 16, 8);
-        sizeLayout.addView(mHeightEdit, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-
-        rootLayout.addView(sizeLayout);
-
-        Button showButton = new Button(this);
-        showButton.setText("发送SurfacePackage到服务端");
-        showButton.setBackgroundColor(Color.parseColor("#4ECDC4"));
-        showButton.setTextColor(Color.WHITE);
-        showButton.setOnClickListener(v -> showWindow());
-        rootLayout.addView(showButton);
-
-        LinearLayout buttonLayout = new LinearLayout(this);
-        buttonLayout.setOrientation(LinearLayout.HORIZONTAL);
-        buttonLayout.setPadding(0, 8, 0, 0);
-
-        Button hideLastButton = new Button(this);
-        hideLastButton.setText("隐藏最后窗口");
-        hideLastButton.setBackgroundColor(Color.parseColor("#666666"));
-        hideLastButton.setTextColor(Color.WHITE);
-        hideLastButton.setOnClickListener(v -> hideLastWindow());
-        buttonLayout.addView(hideLastButton, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-
-        Button hideAllButton = new Button(this);
-        hideAllButton.setText("隐藏所有窗口");
-        hideAllButton.setBackgroundColor(Color.parseColor("#FF6B6B"));
-        hideAllButton.setTextColor(Color.WHITE);
-        hideAllButton.setOnClickListener(v -> hideAllWindows());
-        buttonLayout.addView(hideAllButton, new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1));
-
-        rootLayout.addView(buttonLayout);
+        TextView infoTitle = new TextView(this);
+        infoTitle.setText("新架构说明:");
+        infoTitle.setTextColor(Color.WHITE);
+        infoTitle.setTextSize(16);
+        infoTitle.setPadding(0, 16, 0, 8);
+        rootLayout.addView(infoTitle);
 
         TextView infoText = new TextView(this);
-        infoText.setText("\n说明:\n" +
-                "• 点击按钮将SurfacePackage发送到服务端\n" +
-                "• 服务端会在指定位置显示渲染内容\n" +
-                "• 可自定义X/Y坐标和宽高");
-        infoText.setTextColor(Color.parseColor("#666666"));
-        infoText.setTextSize(11);
+        infoText.setText("• Client 定义 ClientRenderService\n" +
+                "• Server 绑定 Client 的 Service\n" +
+                "• Server 传递 HostToken 给 Client\n" +
+                "• Client 创建 SurfacePackage\n" +
+                "• Client 通过回调返回给 Server\n" +
+                "• Server 渲染 Client 的内容");
+        infoText.setTextColor(Color.parseColor("#AAAAAA"));
+        infoText.setTextSize(13);
+        infoText.setPadding(16, 0, 0, 16);
         rootLayout.addView(infoText);
 
+        TextView usageTitle = new TextView(this);
+        usageTitle.setText("使用步骤:");
+        usageTitle.setTextColor(Color.WHITE);
+        usageTitle.setTextSize(16);
+        usageTitle.setPadding(0, 16, 0, 8);
+        rootLayout.addView(usageTitle);
+
+        TextView usageText = new TextView(this);
+        usageText.setText("1. 保持此页面打开\n" +
+                "2. 打开服务端应用\n" +
+                "3. 服务端会自动连接此客户端\n" +
+                "4. 在服务端点击按钮请求渲染\n" +
+                "5. 查看服务端容器中的渲染内容");
+        usageText.setTextColor(Color.parseColor("#AAAAAA"));
+        usageText.setTextSize(13);
+        usageText.setPadding(16, 0, 0, 16);
+        rootLayout.addView(usageText);
+
+        Button hintButton = new Button(this);
+        hintButton.setText("提示：此应用提供渲染服务，无需操作");
+        hintButton.setBackgroundColor(Color.parseColor("#666666"));
+        hintButton.setTextColor(Color.WHITE);
+        hintButton.setClickable(false);
+        rootLayout.addView(hintButton);
+
         setContentView(rootLayout);
-    }
-
-    private void setupClientManager() {
-        mClientManager = ClientManager.getInstance(this);
-        mClientManager.setWindowOffset(5);
-        mClientManager.setCallback(new ClientManager.ClientCallback() {
-            @Override
-            public void onServiceConnected() {
-                updateStatus("已连接服务端，可以渲染");
-            }
-
-            @Override
-            public void onServiceDisconnected() {
-                updateStatus("服务端已断开");
-            }
-
-            @Override
-            public void onWindowCreated(String windowId, int windowCount) {
-                updateStatus("已发送窗口 #" + windowCount);
-                Toast.makeText(ClientActivity.this, "SurfacePackage已发送", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onWindowRemoved(String windowId, int windowCount) {
-                updateStatus("窗口数: " + windowCount);
-            }
-
-            @Override
-            public void onError(String error) {
-                updateStatus("错误: " + error);
-            }
-        });
-        mClientManager.connectService();
-    }
-
-    private void showWindow() {
-        if (!mClientManager.isServiceConnected()) {
-            updateStatus("服务未连接");
-            return;
-        }
-
-        try {
-            int x = Integer.parseInt(mPosXEdit.getText().toString());
-            int y = Integer.parseInt(mPosYEdit.getText().toString());
-            int width = Integer.parseInt(mWidthEdit.getText().toString());
-            int height = Integer.parseInt(mHeightEdit.getText().toString());
-
-            DemoRenderView demoView = new DemoRenderView(this);
-            demoView.setLabel("窗口 #" + (mClientManager.getWindowCount() + 1));
-
-            mClientManager.showWindow(demoView, width, height, x, y);
-
-        } catch (NumberFormatException e) {
-            updateStatus("错误: 请输入有效数字");
-        }
-    }
-
-    private void hideLastWindow() {
-        if (!mClientManager.hideLastWindow()) {
-            updateStatus("没有窗口可隐藏");
-        }
-    }
-
-    private void hideAllWindows() {
-        mClientManager.hideAllWindows();
-        updateStatus("已隐藏所有窗口");
-    }
-
-    private void updateStatus(String status) {
-        runOnUiThread(() -> mStatusText.setText("状态: " + status));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        mClientManager.disconnectService();
     }
 }
+

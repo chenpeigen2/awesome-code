@@ -22,6 +22,16 @@
             </intent-filter>
         </activity>
 
+        <!-- 新架构：Client 的 RenderService，供 Server 绑定 -->
+        <service
+            android:name=".ClientRenderService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.client.RENDER_SERVICE" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

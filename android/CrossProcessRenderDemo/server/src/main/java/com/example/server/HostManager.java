@@ -36,10 +36,19 @@ public class HostManager {
     private IBinder mHostToken;
     private final Map<String, SurfaceView> mWindows = new HashMap<>();
     private HostCallback mCallback;
+    private TokenCallback mTokenCallback;
 
     public interface HostCallback {
         void onTokenReady(IBinder token);
         void onWindowCountChanged(int count);
+    }
+    
+    /**
+     * HostToken 准备好的回调
+     * 用于通知 ServerConnectionManager 更新 Client
+     */
+    public interface TokenCallback {
+        void onTokenReady(IBinder token);
     }
 
     private HostManager(Context context) {
@@ -68,6 +77,13 @@ public class HostManager {
      */
     public void setCallback(HostCallback callback) {
         mCallback = callback;
+    }
+    
+    /**
+     * 设置 Token 回调
+     */
+    public void setTokenCallback(TokenCallback callback) {
+        mTokenCallback = callback;
     }
 
     /**
@@ -213,6 +229,7 @@ public class HostManager {
         mHostToken = null;
         mContainer = null;
         mCallback = null;
+        mTokenCallback = null;
     }
 
     private void setupTokenSurfaceView() {
@@ -228,6 +245,10 @@ public class HostManager {
                 Log.d(TAG, "HostToken: " + mHostToken);
                 if (mCallback != null) {
                     mCallback.onTokenReady(mHostToken);
+                }
+                // 通知 TokenCallback（用于更新 Client）
+                if (mTokenCallback != null) {
+                    mTokenCallback.onTokenReady(mHostToken);
                 }
             }
 
