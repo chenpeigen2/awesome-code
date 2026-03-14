@@ -1,4 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Dagger Demo</string>
+
+    <!-- Tab titles -->
+    <string name="tab_basic">基础注入</string>
+    <string name="tab_scope">作用域</string>
+    <string name="tab_qualifier">限定符</string>
+    <string name="tab_subcomponent">子组件</string>
+    <string name="tab_android">Android</string>
+
+    <!-- Basic Fragment -->
+    <string name="basic_title">@Inject 构造器注入</string>
+    <string name="basic_description">Dagger2 的核心是三个注解：\n\n1. @Inject - 标记需要注入的依赖\n2. @Module - 定义如何提供依赖\n3. @Component - 连接注入点和依赖提供者</string>
+    <string name="basic_brew">制作咖啡</string>
+    <string name="basic_check_instance">检查实例</string>
+
+    <!-- Scope Fragment -->
+    <string name="scope_title">作用域 (Scope)</string>
+    <string name="scope_description">Dagger2 通过作用域控制依赖的生命周期：\n\n@Singleton - 应用级单例\n无作用域 - 每次创建新实例</string>
+    <string name="scope_singleton">@Singleton 测试</string>
+    <string name="scope_no_scope">无作用域测试</string>
+    <string name="scope_get_singleton">获取 Singleton</string>
+    <string name="scope_get_request">获取 RequestService</string>
+
+    <!-- Qualifier Fragment -->
+    <string name="qualifier_title">限定符 (Qualifier)</string>
+    <string name="qualifier_description">当同一接口有多个实现时，使用限定符区分：\n\n@LocalDataSource - 本地数据源\n@RemoteDataSource - 远程数据源</string>
+    <string name="qualifier_local">本地数据源</string>
+    <string name="qualifier_remote">远程数据源</string>
+    <string name="qualifier_get_local">获取 Local</string>
+    <string name="qualifier_get_remote">获取 Remote</string>
+
+    <!-- Subcomponent Fragment -->
+    <string name="subcomponent_title">子组件 (Subcomponent)</string>
+    <string name="subcomponent_description">子组件可以继承父组件的依赖图：\n\n• 访问父组件的所有依赖\n• 拥有独立的作用域\n• 适合特定流程（如登录）</string>
+    <string name="subcomponent_create">创建 LoginComponent</string>
+    <string name="subcomponent_get_auth">获取 AuthService</string>
+    <string name="subcomponent_get_repo">获取 UserRepository</string>
+
+    <!-- Android Fragment -->
+    <string name="android_title">Android 集成</string>
+    <string name="android_description">在 Android 中使用 Dagger2：\n\n• Application 持有 AppComponent\n• Activity/Fragment 通过注入获取依赖\n• ViewModel 需要 Factory</string>
+    <string name="android_viewmodel">ViewModel 注入</string>
+    <string name="android_get_viewmodel">获取 ViewModel</string>
 </resources>

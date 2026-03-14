@@ -1,14 +1,15 @@
 package com.peter.dagger.demo.scope
 
 import java.util.UUID
+import javax.inject.Inject
 
 /**
  * UserService - 用户服务
  *
- * 模拟 Dagger2 的 @ActivityScoped 作用域
- * 在 Activity 生命周期内只有一个实例
+ * 无作用域 - 每次注入都创建新实例
+ * 可以配合 ActivityScoped 使用
  */
-class UserService {
+class UserService @Inject constructor() {
 
     val instanceId: String = UUID.randomUUID().toString()
     private var userId: String? = null
@@ -21,9 +22,7 @@ class UserService {
         this.userId = id
     }
 
-    fun getUserId(): String {
-        return userId ?: "unknown"
-    }
+    fun getUserId(): String = userId ?: "unknown"
 
     override fun toString(): String {
         return "UserService(hashCode=${hashCode()}, instanceId=$instanceId)"

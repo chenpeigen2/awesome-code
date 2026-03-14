@@ -1,14 +1,14 @@
 package com.peter.dagger.demo.scope
 
 import java.util.UUID
+import javax.inject.Inject
 
 /**
  * RequestService - 请求服务
  *
- * 无作用域示例
- * 每次请求都创建新实例
+ * 无作用域 - 每次注入都创建新实例
  */
-class RequestService {
+class RequestService @Inject constructor() {
 
     val instanceId: String = UUID.randomUUID().toString()
 

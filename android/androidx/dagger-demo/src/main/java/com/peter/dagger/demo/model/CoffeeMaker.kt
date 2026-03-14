@@ -3,14 +3,7 @@ package com.peter.dagger.demo.model
 /**
  * CoffeeMaker - 咖啡机制作器
  *
- * Dagger2 @Inject 示例:
- * class CoffeeMaker @Inject constructor(
- *     private val heater: Heater,
- *     private val pump: Pump
- * )
- *
- * 这是 Dagger2 官方教程的经典示例
- * 演示了构造器注入的核心概念
+ * Dagger2 官方教程的经典示例
  */
 class CoffeeMaker(
     private val heater: Heater,

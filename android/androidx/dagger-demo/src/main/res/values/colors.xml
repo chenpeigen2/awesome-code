@@ -1,10 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <!-- Material 3 风格配色 -->
+    <color name="primary">#1976D2</color>
+    <color name="primary_container">#D1E4FF</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_primary_container">#001D36</color>
+    
+    <color name="secondary">#535F70</color>
+    <color name="secondary_container">#D7E3F7</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_secondary_container">#101C2B</color>
+    
+    <color name="tertiary">#6B5778</color>
+    <color name="tertiary_container">#F2DAFF</color>
+    
+    <color name="surface">#FDFCFF</color>
+    <color name="surface_variant">#E1E2EC</color>
+    <color name="on_surface">#1A1C1E</color>
+    <color name="on_surface_variant">#43474E</color>
+    
+    <color name="outline">#73777F</color>
+    <color name="outline_variant">#C4C6D0</color>
+    
+    <color name="background">#FDFCFF</color>
+    <color name="on_background">#1A1C1E</color>
+    
+    <!-- Tab 主题色 -->
+    <!-- 基础 Tab - 蓝色 -->
+    <color name="tab_basic">#1976D2</color>
+    <color name="tab_basic_container">#D1E4FF</color>
+    
+    <!-- 作用域 Tab - 绿色 -->
+    <color name="tab_scope">#386A20</color>
+    <color name="tab_scope_container">#E8F5E9</color>
+    
+    <!-- 限定符 Tab - 橙色 -->
+    <color name="tab_qualifier">#B3261E</color>
+    <color name="tab_qualifier_container">#FFDAD6</color>
+    
+    <!-- 子组件 Tab - 紫色 -->
+    <color name="tab_subcomponent">#6750A4</color>
+    <color name="tab_subcomponent_container">#EADDFF</color>
+    
+    <!-- Android Tab - 青色 -->
+    <color name="tab_android">#006A6A</color>
+    <color name="tab_android_container">#9DF1F0</color>
+    
+    <!-- 基础色 -->
     <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+    
+    <!-- 代码背景色 -->
+    <color name="code_background">#F5F5F5</color>
+    <color name="code_text">#37474F</color>
 </resources>

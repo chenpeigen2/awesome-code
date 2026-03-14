@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.peter.dagger.demo.DemoApplication
 import com.peter.dagger.demo.databinding.FragmentSubcomponentBinding
-import com.peter.dagger.demo.di.AppContainer
+import com.peter.dagger.demo.scope.DatabaseService
 import com.peter.dagger.demo.subcomponent.LoginComponent
+import javax.inject.Inject
 
 /**
  * SubcomponentFragment - 子组件演示
@@ -23,13 +24,11 @@ class SubcomponentFragment : Fragment() {
     private var _binding: FragmentSubcomponentBinding? = null
     private val binding get() = _binding!!
 
-    // 从 Application 获取依赖容器
-    private val appContainer: AppContainer by lazy {
-        (requireActivity().application as DemoApplication).appContainer
-    }
+    // 通过 Dagger2 注入父组件的依赖
+    @Inject
+    lateinit var databaseService: DatabaseService
 
-    // 创建 LoginComponent 子组件
-    // 对应 Dagger2: val loginComponent = appComponent.loginComponent().create()
+    // 子组件实例
     private var loginComponent: LoginComponent? = null
 
     companion object {
@@ -48,75 +47,85 @@ class SubcomponentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvTitle.text = "Step 4: 子组件"
-        binding.tvDescription.text = """
-            |学习 Dagger2 的子组件机制：
-            |
-            |1. @Subcomponent - 子组件定义
-            |2. 继承父组件的依赖
-            |3. 封装特定功能的依赖图
-            |
-            |示例：登录流程子组件
-        """.trimMargin()
+        // Dagger2 注入
+        (requireActivity().application as DemoApplication)
+            .appComponent.inject(this)
 
-        binding.btnShowSubcomponent.setOnClickListener {
-            showSubcomponent()
+        binding.btnCreateComponent.setOnClickListener {
+            createSubcomponent()
+        }
+
+        binding.btnGetAuth.setOnClickListener {
+            showAuthService()
+        }
+
+        binding.btnGetRepo.setOnClickListener {
+            showUserRepository()
         }
     }
 
-    private fun showSubcomponent() {
-        // 创建子组件（每次点击创建新的子组件实例）
-        loginComponent = appContainer.createLoginComponent()
+    private fun createSubcomponent() {
+        // 通过 Dagger2 创建子组件
+        val appComponent = (requireActivity().application as DemoApplication).appComponent
+        loginComponent = appComponent.loginComponent().create()
 
         val sb = StringBuilder()
 
-        sb.appendLine("===== 子组件 (Subcomponent) 演示 =====")
+        sb.appendLine("===== 子组件创建成功 =====")
         sb.appendLine()
-
-        sb.appendLine("📦 父组件 (AppContainer)")
-        sb.appendLine("  - DatabaseService ID: ${appContainer.databaseService.instanceId}")
+        sb.appendLine("父组件依赖:")
+        sb.appendLine("  DatabaseService ID: ${databaseService.instanceId}")
         sb.appendLine()
+        sb.appendLine("子组件可以访问父组件的所有依赖")
+        sb.appendLine()
+        sb.appendLine("点击下方按钮获取子组件中的服务")
 
-        sb.appendLine("🔧 子组件 (LoginComponent)")
-        sb.appendLine("  - 可访问父组件的 DatabaseService")
+        binding.tvResult.text = sb.toString()
+    }
 
-        // 获取子组件中的依赖
+    private fun showAuthService() {
+        if (loginComponent == null) {
+            binding.tvResult.text = "请先创建 LoginComponent"
+            return
+        }
+
         val authService = loginComponent!!.authService
+
+        val sb = StringBuilder()
+
+        sb.appendLine("===== AuthService =====")
+        sb.appendLine()
+        sb.appendLine("实例ID: ${authService.getInstanceId()}")
+        sb.appendLine("hashCode: ${authService.hashCode()}")
+        sb.appendLine()
+
+        // 模拟登录
+        val result = authService.login("user", "password")
+        sb.appendLine("模拟登录: ${if (result) "成功" else "失败"}")
+        sb.appendLine("当前用户: ${authService.getCurrentUser()}")
+        sb.appendLine("认证状态: ${authService.isAuthenticated()}")
+
+        binding.tvResult.text = sb.toString()
+    }
+
+    private fun showUserRepository() {
+        if (loginComponent == null) {
+            binding.tvResult.text = "请先创建 LoginComponent"
+            return
+        }
+
         val userRepository = loginComponent!!.userRepository
 
-        sb.appendLine("  - AuthService ID: ${authService.getInstanceId()}")
-        sb.appendLine("  - UserRepository ID: ${userRepository.getInstanceId()}")
-        sb.appendLine()
+        val sb = StringBuilder()
 
-        sb.appendLine("===== 模拟登录流程 =====")
+        sb.appendLine("===== UserRepository =====")
         sb.appendLine()
-
-        // 使用 AuthService 进行登录
-        val loginResult = authService.login("test_user", "password123")
-        sb.appendLine("登录结果: ${if (loginResult) "成功 ✓" else "失败 ✗"}")
-        sb.appendLine("当前用户: ${authService.getCurrentUser()}")
-        sb.appendLine("认证状态: ${if (authService.isAuthenticated()) "已认证" else "未认证"}")
+        sb.appendLine("实例ID: ${userRepository.getInstanceId()}")
+        sb.appendLine("hashCode: ${userRepository.hashCode()}")
         sb.appendLine()
-
-        // 使用 UserRepository
-        val userInfo = userRepository.getUserInfo("1001")
-        sb.appendLine("用户信息: $userInfo")
+        sb.appendLine("用户信息: ${userRepository.getUserInfo("1001")}")
         sb.appendLine()
-
-        sb.appendLine("===== Dagger2 中的用法 =====")
-        sb.appendLine()
-        sb.appendLine("// 定义子组件")
-        sb.appendLine("@Subcomponent @LoginScope")
-        sb.appendLine("interface LoginComponent { ... }")
-        sb.appendLine()
-        sb.appendLine("// 在父组件中声明工厂")
-        sb.appendLine("@Component interface AppComponent {")
-        sb.appendLine("  fun loginComponent(): LoginComponent.Factory")
-        sb.appendLine("}")
-        sb.appendLine()
-        sb.appendLine("// 创建子组件")
-        sb.appendLine("val loginComponent = appComponent")
-        sb.appendLine("    .loginComponent().create()")
+        sb.appendLine("子组件可以访问父组件的 DatabaseService")
 
         binding.tvResult.text = sb.toString()
     }
