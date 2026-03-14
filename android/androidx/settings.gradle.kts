@@ -75,6 +75,9 @@ include(":compose-demo")
 // Notification Demo - 通知系统示例
 include(":notification-demo")
 
+// MMKV Demo - MMKV 键值存储示例
+include(":mmkv-demo")
+
 // Dagger Demo - Dagger2 依赖注入示例
 include(":dagger-demo")
 

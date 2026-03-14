@@ -18,7 +18,7 @@ This is a multi-module Android project focused on learning and demonstrating And
 
 # Install a specific app module on connected device
 ./gradlew :app:installDebug
-./gradlew :window-demo:installDebug
+./gradlew :room-demo:installDebug
 
 # Run unit tests for a specific module
 ./gradlew :datastore:test
@@ -48,8 +48,9 @@ This is a multi-module Android project focused on learning and demonstrating And
 - **`workmanager-demo`** - WorkManager chains, constraints, periodic work
 - **`layoutinflater-demo`** - LayoutInflater customization
 - **`context-demo`** - Android Context exploration
-- **`datastore-demo`** - DataStore usage examples
+- **`datastore-demo`** - DataStore usage examples with fragment-based UI
 - **`koin`** - Koin dependency injection demo
+- **`dagger-demo`** - Dagger2 dependency injection with KSP (basic, scope, qualifier, subcomponent, Android integration)
 - **`coroutine-demo`** - Kotlin coroutines and Flow examples
 - **`animation-demo`** - Android animation examples
 - **`touch-demo`** - Touch event dispatch examples
@@ -57,6 +58,14 @@ This is a multi-module Android project focused on learning and demonstrating And
 - **`notification-demo`** - Android notification system examples
 - **`components-demo`** - Android four major components examples
 - **`autodensity-demo`** - Screen density adaptation demo
+- **`room-demo`** - Room database with TypeConverters, relations (one-to-many, many-to-many)
+- **`mmkv-demo`** - MMKV key-value storage demo
+- **`viewpager2-demo`** - ViewPager2 and Fragment learning examples
+
+### Multi-Module IPC Demos
+These demos have client/server/common submodules demonstrating cross-process communication:
+- **`CrossProcessRenderDemo`** - SurfaceControlViewHost.SurfacePackage for cross-process Surface rendering
+- **`RemoteViewsDemo`** - RemoteViews for cross-process UI rendering with PendingIntent
 - **`aidl_server`** / **`aidl_client`** - AIDL IPC client-server demo
 - **`appdisplayapp`** / **`apprenderapp`** - Multi-process rendering demo
 
@@ -105,3 +114,24 @@ javaCompileOptions {
     }
 }
 ```
+
+## Architecture Patterns
+
+### Demo Module Structure
+Most demo modules follow a single Activity + multiple Fragments pattern with bottom navigation:
+- Each Fragment demonstrates a specific concept
+- ViewModels with LiveData/Flow for reactive UI
+- Repository pattern for data access
+
+### Cross-Process Demos Architecture
+Multi-module IPC demos share a common structure:
+```
+DemoName/
+├── common/    # AIDL interfaces and Parcelable data classes
+├── server/    # Service provider (publishes content)
+└── client/    # Service consumer (displays content)
+```
+
+Communication flows:
+- **CrossProcessRenderDemo**: Server provides SurfaceView host token → Client creates SurfacePackage → Server embeds it
+- **RemoteViewsDemo**: Server creates RemoteViews → Client applies them via AIDL callback
