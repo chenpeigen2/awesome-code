@@ -88,3 +88,8 @@ include(":viewpager2-demo")
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")
 include(":CrossProcessRenderDemo:server")
+
+// RemoteViewsDemo - 跨进程 RemoteViews 示例
+include(":RemoteViewsDemo:common")
+include(":RemoteViewsDemo:client")
+include(":RemoteViewsDemo:server")
