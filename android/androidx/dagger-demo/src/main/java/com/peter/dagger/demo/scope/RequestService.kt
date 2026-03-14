@@ -6,7 +6,7 @@ import javax.inject.Inject
 /**
  * RequestService - 请求服务
  *
- * 无作用域 - 每次注入都创建新实例
+ * 无作用域 - 每次创建新实例
  */
 class RequestService @Inject constructor() {
 

@@ -10,13 +10,13 @@
     <string name="tab_android">Android</string>
 
     <!-- Basic Fragment -->
-    <string name="basic_title">@Inject 构造器注入</string>
-    <string name="basic_description">Dagger2 的核心是三个注解：\n\n1. @Inject - 标记需要注入的依赖\n2. @Module - 定义如何提供依赖\n3. @Component - 连接注入点和依赖提供者</string>
+    <string name="basic_title">依赖注入核心注解</string>
+    <string name="basic_description">Dagger2 三种提供依赖的方式：\n\n1. @Inject constructor() - 自动注入\n2. @Binds - 接口到实现的绑定\n3. @Provides - 带逻辑的依赖提供\n\n@Component 连接注入点和依赖提供者</string>
     <string name="basic_brew">制作咖啡</string>
-    <string name="basic_check_instance">检查实例</string>
+    <string name="basic_check_instance">查看注入方式</string>
 
     <!-- Scope Fragment -->
-    <string name="scope_title">作用域 (Scope)</string>
+    <string name="scope_title">作用域</string>
     <string name="scope_description">Dagger2 通过作用域控制依赖的生命周期：\n\n@Singleton - 应用级单例\n无作用域 - 每次创建新实例</string>
     <string name="scope_singleton">@Singleton 测试</string>
     <string name="scope_no_scope">无作用域测试</string>
@@ -24,19 +24,26 @@
     <string name="scope_get_request">获取 RequestService</string>
 
     <!-- Qualifier Fragment -->
-    <string name="qualifier_title">限定符 (Qualifier)</string>
-    <string name="qualifier_description">当同一接口有多个实现时，使用限定符区分：\n\n@LocalDataSource - 本地数据源\n@RemoteDataSource - 远程数据源</string>
+    <string name="qualifier_title">限定符</string>
+    <string name="qualifier_description">当同一接口有多个实现时，使用限定符区分：\n\n@Named(\"local\") - 本地数据源\n@Named(\"remote\") - 远程数据源</string>
     <string name="qualifier_local">本地数据源</string>
     <string name="qualifier_remote">远程数据源</string>
     <string name="qualifier_get_local">获取 Local</string>
     <string name="qualifier_get_remote">获取 Remote</string>
 
     <!-- Subcomponent Fragment -->
-    <string name="subcomponent_title">子组件 (Subcomponent)</string>
+    <string name="subcomponent_title">子组件</string>
     <string name="subcomponent_description">子组件可以继承父组件的依赖图：\n\n• 访问父组件的所有依赖\n• 拥有独立的作用域\n• 适合特定流程（如登录）</string>
     <string name="subcomponent_create">创建 LoginComponent</string>
     <string name="subcomponent_get_auth">获取 AuthService</string>
     <string name="subcomponent_get_repo">获取 UserRepository</string>
+
+    <!-- Multibinding Fragment -->
+    <string name="multibinding_title">多绑定与工厂</string>
+    <string name="multibinding_description">Dagger2 高级特性：\n\n1. @IntoSet/@StringKey - 集合注入\n2. @AssistedInject - 运行时参数注入</string>
+    <string name="multibinding_set">Set 注入</string>
+    <string name="multibinding_map">Map 注入</string>
+    <string name="multibinding_assisted">AssistedInject</string>
 
     <!-- Android Fragment -->
     <string name="android_title">Android 集成</string>

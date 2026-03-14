@@ -1,11 +1,12 @@
 package com.peter.dagger.demo.qualifier
 
 import java.util.UUID
+import javax.inject.Inject
 
 /**
  * LocalDataSourceImpl - 本地数据源实现
  */
-class LocalDataSourceImpl : DataSource {
+class LocalDataSourceImpl @Inject constructor() : DataSource {
 
     private val instanceId = UUID.randomUUID().toString().substring(0, 8)
     private var cachedData: String = "初始本地数据"

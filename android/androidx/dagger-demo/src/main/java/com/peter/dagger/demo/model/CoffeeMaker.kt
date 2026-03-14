@@ -1,36 +1,31 @@
 package com.peter.dagger.demo.model
 
+import javax.inject.Inject
+
 /**
  * CoffeeMaker - 咖啡机制作器
  *
- * Dagger2 官方教程的经典示例
+ * 使用 @Inject 标记构造器
  */
-class CoffeeMaker(
+class CoffeeMaker @Inject constructor(
     private val heater: Heater,
     private val pump: Pump
 ) {
 
-    /**
-     * 制作咖啡
-     */
     fun brew(): String {
         val result = StringBuilder()
 
         result.appendLine("===== 开始制作咖啡 =====")
 
-        // 1. 加热
         heater.on()
         result.appendLine("1. 加热器已启动")
 
-        // 2. 等待加热
         Thread.sleep(500)
         result.appendLine("2. 水温已达到")
 
-        // 3. 泵水
         pump.pump()
         result.appendLine("3. 泵水完成")
 
-        // 4. 完成
         heater.off()
         result.appendLine("4. 咖啡制作完成!")
 

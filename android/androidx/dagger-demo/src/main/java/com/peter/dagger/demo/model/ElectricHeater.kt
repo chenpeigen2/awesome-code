@@ -1,9 +1,13 @@
 package com.peter.dagger.demo.model
 
+import javax.inject.Inject
+
 /**
  * ElectricHeater - 电加热器实现
+ *
+ * 使用 @Inject 标记构造器，配合 @Binds 使用
  */
-class ElectricHeater : Heater {
+class ElectricHeater @Inject constructor() : Heater {
 
     private var heating: Boolean = false
 

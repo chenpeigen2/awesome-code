@@ -42,6 +42,10 @@
     <color name="tab_subcomponent">#6750A4</color>
     <color name="tab_subcomponent_container">#EADDFF</color>
     
+    <!-- 多绑定 Tab - 粉色 -->
+    <color name="tab_multibinding">#7D5260</color>
+    <color name="tab_multibinding_container">#FFD8E4</color>
+    
     <!-- Android Tab - 青色 -->
     <color name="tab_android">#006A6A</color>
     <color name="tab_android_container">#9DF1F0</color>

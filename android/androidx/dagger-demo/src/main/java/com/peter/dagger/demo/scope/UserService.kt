@@ -6,8 +6,7 @@ import javax.inject.Inject
 /**
  * UserService - 用户服务
  *
- * 无作用域 - 每次注入都创建新实例
- * 可以配合 ActivityScoped 使用
+ * 无作用域 - 每次创建新实例
  */
 class UserService @Inject constructor() {
 

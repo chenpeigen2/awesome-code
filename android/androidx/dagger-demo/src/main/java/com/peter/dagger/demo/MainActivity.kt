@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.peter.dagger.demo.databinding.ActivityMainBinding
 import com.peter.dagger.demo.ui.fragment.AndroidFragment
 import com.peter.dagger.demo.ui.fragment.BasicFragment
+import com.peter.dagger.demo.ui.fragment.MultibindingFragment
 import com.peter.dagger.demo.ui.fragment.QualifierFragment
 import com.peter.dagger.demo.ui.fragment.ScopeFragment
 import com.peter.dagger.demo.ui.fragment.SubcomponentFragment
@@ -32,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         Pair(R.color.tab_scope, R.color.tab_scope_container),
         Pair(R.color.tab_qualifier, R.color.tab_qualifier_container),
         Pair(R.color.tab_subcomponent, R.color.tab_subcomponent_container),
+        Pair(R.color.tab_multibinding, R.color.tab_multibinding_container),
         Pair(R.color.tab_android, R.color.tab_android_container)
     )
 
@@ -114,11 +116,12 @@ class ViewPagerAdapter(
         ScopeFragment.newInstance(),
         QualifierFragment.newInstance(),
         SubcomponentFragment.newInstance(),
+        MultibindingFragment.newInstance(),
         AndroidFragment.newInstance()
     )
 
     private val titles = listOf(
-        "基础", "作用域", "限定符", "子组件", "Android"
+        "基础", "作用域", "限定符", "子组件", "多绑定", "Android"
     )
 
     override fun getItemCount(): Int = fragments.size

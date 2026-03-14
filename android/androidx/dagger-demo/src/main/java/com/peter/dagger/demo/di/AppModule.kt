@@ -2,7 +2,6 @@ package com.peter.dagger.demo.di
 
 import android.app.Application
 import android.content.Context
-import com.peter.dagger.demo.model.CoffeeMaker
 import com.peter.dagger.demo.model.ElectricHeater
 import com.peter.dagger.demo.model.Heater
 import com.peter.dagger.demo.model.Pump
@@ -13,6 +12,7 @@ import com.peter.dagger.demo.qualifier.RemoteDataSourceImpl
 import com.peter.dagger.demo.scope.DatabaseService
 import com.peter.dagger.demo.scope.RequestService
 import com.peter.dagger.demo.scope.UserService
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import javax.inject.Named
@@ -20,61 +20,80 @@ import javax.inject.Singleton
 
 /**
  * AppModule - 应用级 Dagger 模块
+ *
+ * 演示 @Binds 和 @Provides 两种提供依赖的方式：
+ *
+ * @Binds:
+ * - 更简洁，适用于接口到实现的绑定
+ * - 只能用于 abstract 方法
+ * - 参数是实现类，返回值是接口
+ * - 比 @Provides 更高效（生成更少代码）
+ *
+ * @Provides:
+ * - 更灵活，适用于需要额外逻辑的场景
+ * - 可以用于 object 中的方法
+ * - 可以使用限定符 (@Named, @Qualifier)
  */
 @Module
-object AppModule {
+interface AppModule {
 
-    @Provides
+    // ============== @Binds 示例 ==============
+
+    /**
+     * @Binds 绑定 Heater 接口到 ElectricHeater 实现
+     * 等价于 @Provides fun provideHeater(): Heater = ElectricHeater()
+     */
+    @Binds
     @Singleton
-    fun provideContext(application: Application): Context {
-        return application.applicationContext
-    }
+    fun bindHeater(heater: ElectricHeater): Heater
 
-    @Provides
+    /**
+     * @Binds 绑定 Pump 接口到 Thermosiphon 实现
+     * Thermosiphon 的依赖 (Heater) 会自动注入
+     */
+    @Binds
     @Singleton
-    fun provideHeater(): Heater {
-        return ElectricHeater()
-    }
+    fun bindPump(pump: Thermosiphon): Pump
 
-    @Provides
-    @Singleton
-    fun providePump(heater: Heater): Pump {
-        return Thermosiphon(heater)
-    }
+    // ============== @Provides 示例 (companion object) ==============
 
-    @Provides
-    @Singleton
-    fun provideCoffeeMaker(heater: Heater, pump: Pump): CoffeeMaker {
-        return CoffeeMaker(heater, pump)
-    }
+    companion object {
 
-    @Provides
-    @Singleton
-    @Named("local")
-    fun provideLocalDataSource(): DataSource {
-        return LocalDataSourceImpl()
-    }
+        /**
+         * @Provides 提供带限定符的依赖
+         * 对于同一接口的多个实现，需要使用 @Named 或自定义 @Qualifier
+         */
+        @Provides
+        @Singleton
+        @Named("local")
+        fun provideLocalDataSource(impl: LocalDataSourceImpl): DataSource = impl
 
-    @Provides
-    @Singleton
-    @Named("remote")
-    fun provideRemoteDataSource(): DataSource {
-        return RemoteDataSourceImpl()
-    }
+        @Provides
+        @Singleton
+        @Named("remote")
+        fun provideRemoteDataSource(impl: RemoteDataSourceImpl): DataSource = impl
 
-    @Provides
-    @Singleton
-    fun provideDatabaseService(): DatabaseService {
-        return DatabaseService()
-    }
+        /**
+         * @Provides 提供需要额外逻辑的依赖
+         */
+        @Provides
+        @Singleton
+        fun provideContext(application: Application): Context {
+            return application.applicationContext
+        }
 
-    @Provides
-    fun provideRequestService(): RequestService {
-        return RequestService()
-    }
+        /**
+         * @Provides 提供无作用域依赖
+         * 每次注入都会创建新实例
+         */
+        @Provides
+        fun provideRequestService(): RequestService {
+            return RequestService()
+        }
 
-    @Provides
-    fun provideUserService(): UserService {
-        return UserService()
+        @Provides
+        fun provideUserService(): UserService {
+            return UserService()
+        }
     }
 }

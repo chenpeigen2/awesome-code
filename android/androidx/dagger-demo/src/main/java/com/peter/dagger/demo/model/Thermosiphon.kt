@@ -1,11 +1,13 @@
 package com.peter.dagger.demo.model
 
+import javax.inject.Inject
+
 /**
  * Thermosiphon - 热虹吸泵实现
  *
- * 构造器注入演示：Thermosiphon 需要 Heater 作为依赖
+ * 使用 @Inject 标记构造器，配合 @Binds 使用
  */
-class Thermosiphon(
+class Thermosiphon @Inject constructor(
     private val heater: Heater
 ) : Pump {
 

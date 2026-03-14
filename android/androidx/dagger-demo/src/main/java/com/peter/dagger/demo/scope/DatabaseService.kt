@@ -1,11 +1,16 @@
 package com.peter.dagger.demo.scope
 
 import java.util.UUID
+import javax.inject.Inject
+import javax.inject.Singleton
 
 /**
  * DatabaseService - 数据库服务
+ *
+ * @Singleton 单例作用域
  */
-class DatabaseService {
+@Singleton
+class DatabaseService @Inject constructor() {
 
     val instanceId: String = UUID.randomUUID().toString()
 

@@ -1,11 +1,12 @@
 package com.peter.dagger.demo.qualifier
 
 import java.util.UUID
+import javax.inject.Inject
 
 /**
  * RemoteDataSourceImpl - 远程数据源实现
  */
-class RemoteDataSourceImpl : DataSource {
+class RemoteDataSourceImpl @Inject constructor() : DataSource {
 
     private val instanceId = UUID.randomUUID().toString().substring(0, 8)
     private var remoteData: String = "来自服务器的数据"
