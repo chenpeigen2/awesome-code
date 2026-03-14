@@ -1,6 +1,6 @@
 package com.peter.classloader.demo.fragments
 
-import android.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -342,7 +342,7 @@ val loader = InMemoryDexClassLoader(
     }
 
     private fun showResultDialog(title: String, message: String) {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("确定", null)

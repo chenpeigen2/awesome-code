@@ -1,6 +1,6 @@
 package com.peter.classloader.demo.fragments
 
-import android.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -107,6 +107,7 @@ class AdvancedFragment : Fragment() {
                     input.copyTo(output)
                 }
             }
+            dexFile.setReadOnly() // Android 8.0+ 要求 DEX 文件只读
             
             val optDir = File(context.codeCacheDir, "plugin_isolation_opt")
             if (!optDir.exists()) optDir.mkdirs()
@@ -311,6 +312,7 @@ class IsolatedClassLoader(
                     input.copyTo(output)
                 }
             }
+            dexFile.setReadOnly() // Android 8.0+ 要求 DEX 文件只读
             
             val optDir = File(context.codeCacheDir, "plugin_demo_opt")
             if (!optDir.exists()) optDir.mkdirs()
@@ -430,6 +432,7 @@ val resources = Resources(assetManager, metrics, config)
                     input.copyTo(output)
                 }
             }
+            dexFile.setReadOnly() // Android 8.0+ 要求 DEX 文件只读
             
             val optDir = File(context.codeCacheDir, "plugin_compare_opt")
             if (!optDir.exists()) optDir.mkdirs()
@@ -504,7 +507,7 @@ fun canCast(from: Class<*>, to: Class<*>): Boolean {
     }
 
     private fun showResultDialog(title: String, message: String) {
-        AlertDialog.Builder(requireContext())
+        MaterialAlertDialogBuilder(requireContext())
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("确定", null)
