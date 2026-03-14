@@ -29,7 +29,7 @@ class BasicFragment : Fragment() {
     private lateinit var adapter: UserAdapter
     
     private val repository by lazy { 
-        UserRepository(AppDatabase.userDao()) 
+        UserRepository(AppDatabase.getDatabase(requireContext()).userDao()) 
     }
     
     private val viewModel: BasicViewModel by viewModels {

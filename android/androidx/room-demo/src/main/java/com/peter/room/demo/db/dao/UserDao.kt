@@ -1,48 +1,41 @@
 package com.peter.room.demo.db.dao
 
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
+import androidx.room.Update
 import com.peter.room.demo.db.entity.User
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 /**
- * 用户数据访问对象（模拟 Room DAO）
- * 
- * 由于 Kotlin 2.2.21 和 Room 2.6.1 的 KSP 兼容性问题，
- * 这里使用内存存储模拟 Room 的行为
+ * 用户数据访问对象
  */
-class UserDao {
+@Dao
+interface UserDao {
     
-    private val users = mutableListOf<User>()
-    private val usersFlow = MutableStateFlow<List<User>>(emptyList())
-    private var nextId = 1L
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(user: User): Long
     
-    suspend fun insert(user: User): Long {
-        val newUser = user.copy(id = nextId++)
-        users.add(0, newUser)
-        usersFlow.value = users.toList()
-        return newUser.id
-    }
+    @Update
+    suspend fun update(user: User)
     
-    suspend fun update(user: User) {
-        val index = users.indexOfFirst { it.id == user.id }
-        if (index >= 0) {
-            users[index] = user
-            usersFlow.value = users.toList()
-        }
-    }
+    @Delete
+    suspend fun delete(user: User)
     
-    suspend fun delete(user: User) {
-        users.removeAll { it.id == user.id }
-        usersFlow.value = users.toList()
-    }
+    @Query("DELETE FROM users")
+    suspend fun deleteAll()
     
-    suspend fun deleteAll() {
-        users.clear()
-        usersFlow.value = emptyList()
-    }
+    @Query("SELECT * FROM users ORDER BY createdAt DESC")
+    suspend fun getAll(): List<User>
     
-    suspend fun getAll(): List<User> = users.toList()
+    @Query("SELECT * FROM users ORDER BY createdAt DESC")
+    fun observeAll(): Flow<List<User>>
     
-    fun observeAll(): Flow<List<User>> = usersFlow.asStateFlow()
+    @Query("SELECT * FROM users WHERE id = :id")
+    suspend fun getById(id: Long): User?
+    
+    @Query("SELECT * FROM users WHERE name LIKE :name")
+    suspend fun findByName(name: String): List<User>
 }
