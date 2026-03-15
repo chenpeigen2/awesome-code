@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 风格配色 -->
+    <color name="primary">#006C4C</color>
+    <color name="primary_container">#8AF7C2</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_primary_container">#002114</color>
+    
+    <color name="secondary">#4C6358</color>
+    <color name="secondary_container">#CEE9D9</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_secondary_container">#092016</color>
+    
+    <color name="tertiary">#3D6373</color>
+    <color name="tertiary_container">#C0E8FB</color>
+    
+    <color name="surface">#FBFDF8</color>
+    <color name="surface_variant">#DCE5DD</color>
+    <color name="on_surface">#191C1A</color>
+    <color name="on_surface_variant">#414942</color>
+    
+    <color name="outline">#717971</color>
+    <color name="outline_variant">#C1C9C1</color>
+    
+    <color name="background">#FBFDF8</color>
+    <color name="on_background">#191C1A</color>
+    
+    <!-- Tab 主题色 -->
+    <!-- Handler Tab - 绿色 -->
+    <color name="tab_handler">#006C4C</color>
+    <color name="tab_handler_container">#8AF7C2</color>
+    
+    <!-- FileObserver Tab - 蓝色 -->
+    <color name="tab_file_observer">#0061A4</color>
+    <color name="tab_file_observer_container">#D1E4FF</color>
+    
+    <!-- Storage Tab - 橙色 -->
+    <color name="tab_storage">#7D5800</color>
+    <color name="tab_storage_container">#FFDEA6</color>
+    
+    <!-- Timer Tab - 紫色 -->
+    <color name="tab_timer">#6750A4</color>
+    <color name="tab_timer_container">#EADDFF</color>
+    
+    <!-- Device Tab - 红色 -->
+    <color name="tab_device">#BA1A1A</color>
+    <color name="tab_device_container">#FFDAD6</color>
+    
+    <!-- 状态颜色 -->
+    <color name="status_success">#006C4C</color>
+    <color name="status_error">#BA1A1A</color>
+    <color name="status_warning">#7D5800</color>
+    <color name="status_info">#0061A4</color>
+    
+    <!-- 基础色 -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+    
+    <!-- 灰色系 -->
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_200">#E5E7EB</color>
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_500">#6B7280</color>
+    <color name="gray_700">#374151</color>
+</resources>

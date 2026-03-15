@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OS 演示</string>
+
+    <!-- Tab titles -->
+    <string name="tab_handler">Handler</string>
+    <string name="tab_file_observer">FileObserver</string>
+    <string name="tab_storage">Storage</string>
+    <string name="tab_timer">Timer</string>
+    <string name="tab_device">Device</string>
+
+    <!-- Handler -->
+    <string name="handler_title">Handler/Looper/Message</string>
+    <string name="handler_desc">Android 消息机制核心组件</string>
+    <string name="handler_send_message">发送消息</string>
+    <string name="handler_send_delayed">延迟发送 (1秒)</string>
+    <string name="handler_send_runnable">发送 Runnable</string>
+    <string name="handler_remove_callbacks">移除回调</string>
+    <string name="handler_thread_info">线程信息</string>
+    <string name="handler_looper_info">Looper 信息</string>
+    <string name="handler_message_queue">MessageQueue</string>
+    <string name="handler_post_delayed">Post Delayed</string>
+    <string name="handler_message_count">消息计数</string>
+    
+    <!-- FileObserver -->
+    <string name="file_observer_title">FileObserver 文件观察</string>
+    <string name="file_observer_desc">监听文件/目录变化</string>
+    <string name="file_observer_start">开始监听</string>
+    <string name="file_observer_stop">停止监听</string>
+    <string name="file_observer_select_path">选择路径</string>
+    <string name="file_observer_events">事件日志</string>
+    <string name="file_observer_clear_log">清除日志</string>
+    <string name="file_observer_watching">正在监听:</string>
+    <string name="file_observer_not_watching">未监听</string>
+    <string name="file_observer_event_access">访问</string>
+    <string name="file_observer_event_modify">修改</string>
+    <string name="file_observer_event_create">创建</string>
+    <string name="file_observer_event_delete">删除</string>
+    <string name="file_observer_event_open">打开</string>
+    <string name="file_observer_event_close">关闭</string>
+    <string name="file_observer_event_moved">移动</string>
+    
+    <!-- Storage/Environment -->
+    <string name="storage_title">Environment 存储</string>
+    <string name="storage_desc">获取系统存储路径</string>
+    <string name="storage_external_storage">外部存储</string>
+    <string name="storage_internal_storage">内部存储</string>
+    <string name="storage_data_directory">数据目录</string>
+    <string name="storage_download_cache">下载缓存</string>
+    <string name="storage_root_directory">根目录</string>
+    <string name="storage_directory_type">目录类型</string>
+    <string name="storage_directory_path">路径</string>
+    <string name="storage_directory_state">状态</string>
+    <string name="storage_available_space">可用空间</string>
+    <string name="storage_total_space">总空间</string>
+    <string name="storage_refresh">刷新</string>
+    <string name="storage_state_mounted">已挂载</string>
+    <string name="storage_state_unmounted">未挂载</string>
+    <string name="storage_state_removed">已移除</string>
+    
+    <!-- Timer/SystemClock -->
+    <string name="timer_title">CountDownTimer/SystemClock</string>
+    <string name="timer_desc">计时器与系统时钟</string>
+    <string name="timer_countdown">倒计时</string>
+    <string name="timer_start">开始</string>
+    <string name="timer_pause">暂停</string>
+    <string name="timer_reset">重置</string>
+    <string name="timer_elapsed_realtime">系统运行时间</string>
+    <string name="timer_uptime_millis">开机时间</string>
+    <string name="timer_current_thread_time">当前线程时间</string>
+    <string name="timer_current_time_millis">当前时间戳</string>
+    <string name="timer_set_countdown">设置倒计时 (秒)</string>
+    <string name="timer_remaining">剩余时间</string>
+    <string name="timer_finished">倒计时结束!</string>
+    <string name="timer_running">运行中</string>
+    <string name="timer_paused">已暂停</string>
+    <string name="timer_stopped">已停止</string>
+    
+    <!-- Device Hardware -->
+    <string name="device_title">Vibrator/PowerManager</string>
+    <string name="device_desc">设备硬件控制</string>
+    <string name="device_vibrator">震动器</string>
+    <string name="device_vibrate_short">短震动</string>
+    <string name="device_vibrate_long">长震动</string>
+    <string name="device_vibrate_pattern">震动模式</string>
+    <string name="device_vibrate_cancel">取消震动</string>
+    <string name="device_vibrator_info">震动器信息</string>
+    <string name="device_has_vibrator">支持震动</string>
+    <string name="device_has_amplitude">支持振幅控制</string>
+    <string name="device_power_manager">电源管理</string>
+    <string name="device_wake_lock_acquire">获取 WakeLock</string>
+    <string name="device_wake_lock_release">释放 WakeLock</string>
+    <string name="device_wake_lock_info">WakeLock 信息</string>
+    <string name="device_screen_timeout">屏幕超时</string>
+    <string name="device_is_screen_on">屏幕状态</string>
+    <string name="device_wake_lock_held">WakeLock 持有中</string>
+    <string name="device_wake_lock_released">WakeLock 已释放</string>
+    <string name="device_battery_optimizations">电池优化</string>
+    <string name="device_is_power_save">省电模式</string>
+    
+    <!-- Common -->
+    <string name="common_start">开始</string>
+    <string name="common_stop">停止</string>
+    <string name="common_clear">清除</string>
+    <string name="common_refresh">刷新</string>
+    <string name="common_copy">复制</string>
+    <string name="common_enabled">已启用</string>
+    <string name="common_disabled">已禁用</string>
+    <string name="common_yes">是</string>
+    <string name="common_no">否</string>
+    <string name="common_on">开</string>
+    <string name="common_off">关</string>
+    <string name="common_success">成功</string>
+    <string name="common_failed">失败</string>
+    <string name="common_copy_to_clipboard">已复制到剪贴板</string>
+</resources>

@@ -82,6 +82,9 @@ include(":mmkv-demo")
 include(":classloader-demo")
 include(":plugin-module")
 
+// OS Demo - android.os 包类使用示例
+include(":os-demo")
+
 // Dagger Demo - Dagger2 依赖注入示例
 include(":dagger-demo")
 
