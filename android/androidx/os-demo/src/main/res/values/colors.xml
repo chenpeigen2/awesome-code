@@ -46,6 +46,38 @@
     <color name="tab_device">#BA1A1A</color>
     <color name="tab_device_container">#FFDAD6</color>
     
+    <!-- SystemInfo Tab - 青色 -->
+    <color name="tab_system_info">#006A6A</color>
+    <color name="tab_system_info_container">#9CF1F0</color>
+    
+    <!-- HandlerThread Tab - 深绿 -->
+    <color name="tab_handler_thread">#386A20</color>
+    <color name="tab_handler_thread_container">#D7E8C5</color>
+    
+    <!-- Parcelable Tab - 靛蓝 -->
+    <color name="tab_parcelable">#4758A9</color>
+    <color name="tab_parcelable_container">#DDE1FF</color>
+    
+    <!-- Battery Tab - 黄绿 -->
+    <color name="tab_battery">#606300</color>
+    <color name="tab_battery_container">#E6E974</color>
+    
+    <!-- User Tab - 粉紫 -->
+    <color name="tab_user">#7D5260</color>
+    <color name="tab_user_container">#FFD8E4</color>
+    
+    <!-- StrictMode Tab - 深红 -->
+    <color name="tab_strict_mode">#9C4146</color>
+    <color name="tab_strict_mode_container">#FFDAD8</color>
+    
+    <!-- Debug Tab - 深蓝灰 -->
+    <color name="tab_debug">#475D72</color>
+    <color name="tab_debug_container">#CFE1F0</color>
+    
+    <!-- Async Tab - 深橙 -->
+    <color name="tab_async">#8B5000</color>
+    <color name="tab_async_container">#FFDCBA</color>
+    
     <!-- 状态颜色 -->
     <color name="status_success">#006C4C</color>
     <color name="status_error">#BA1A1A</color>
