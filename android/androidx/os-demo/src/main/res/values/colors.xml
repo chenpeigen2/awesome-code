@@ -82,6 +82,14 @@
     <color name="tab_async">#8B5000</color>
     <color name="tab_async_container">#FFDCBA</color>
     
+    <!-- SurfaceView Tab - 蓝绿色 -->
+    <color name="tab_surface_view">#006B5F</color>
+    <color name="tab_surface_view_container">#9CF2E4</color>
+    
+    <!-- TextureView Tab - 深紫色 -->
+    <color name="tab_texture_view">#5B4F9E</color>
+    <color name="tab_texture_view_container">#E4DFF8</color>
+    
     <!-- 状态颜色 -->
     <color name="status_success">#006C4C</color>
     <color name="status_error">#BA1A1A</color>

@@ -21,7 +21,9 @@ import com.peter.os.demo.fragments.HandlerThreadFragment
 import com.peter.os.demo.fragments.ParcelableFragment
 import com.peter.os.demo.fragments.StrictModeFragment
 import com.peter.os.demo.fragments.StorageFragment
+import com.peter.os.demo.fragments.SurfaceViewFragment
 import com.peter.os.demo.fragments.SystemInfoFragment
+import com.peter.os.demo.fragments.TextureViewFragment
 import com.peter.os.demo.fragments.TimerFragment
 import com.peter.os.demo.fragments.UserFragment
 
@@ -44,7 +46,9 @@ class MainActivity : AppCompatActivity() {
         Pair(R.color.tab_strict_mode, R.color.tab_strict_mode_container),
         Pair(R.color.tab_choreographer, R.color.tab_choreographer_container),
         Pair(R.color.tab_debug, R.color.tab_debug_container),
-        Pair(R.color.tab_async, R.color.tab_async_container)
+        Pair(R.color.tab_async, R.color.tab_async_container),
+        Pair(R.color.tab_surface_view, R.color.tab_surface_view_container),
+        Pair(R.color.tab_texture_view, R.color.tab_texture_view_container)
     )
 
     private var currentTabPosition = 0
@@ -128,7 +132,9 @@ class ViewPagerAdapter(private val activity: AppCompatActivity) : androidx.viewp
         StrictModeFragment.newInstance(),
         ChoreographerFragment.newInstance(),
         DebugFragment.newInstance(),
-        AsyncFragment.newInstance()
+        AsyncFragment.newInstance(),
+        SurfaceViewFragment.newInstance(),
+        TextureViewFragment.newInstance()
     )
 
     private val titles = listOf(
@@ -145,7 +151,9 @@ class ViewPagerAdapter(private val activity: AppCompatActivity) : androidx.viewp
         activity.getString(R.string.tab_strict_mode),
         activity.getString(R.string.tab_choreographer),
         activity.getString(R.string.tab_debug),
-        activity.getString(R.string.tab_async)
+        activity.getString(R.string.tab_async),
+        activity.getString(R.string.tab_surface_view),
+        activity.getString(R.string.tab_texture_view)
     )
 
     override fun getItemCount(): Int = fragments.size

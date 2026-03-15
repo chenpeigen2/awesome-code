@@ -17,6 +17,8 @@
     <string name="tab_choreographer">Choreographer</string>
     <string name="tab_debug">Debug</string>
     <string name="tab_async">Async</string>
+    <string name="tab_surface_view">SurfaceView</string>
+    <string name="tab_texture_view">TextureView</string>
 
     <!-- Handler -->
     <string name="handler_title">Handler/Looper/Message</string>
