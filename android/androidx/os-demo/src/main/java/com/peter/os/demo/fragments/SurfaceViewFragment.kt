@@ -121,6 +121,9 @@ class SurfaceViewFragment : Fragment() {
 
         var drawCount = 0
         
+        // 设置 Z-Order 让 SurfaceView 显示在上层
+        dialogBinding.surfaceView.setZOrderOnTop(true)
+        
         dialogBinding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
                 // 初始绘制
@@ -223,6 +226,9 @@ class SurfaceViewFragment : Fragment() {
             .create()
 
         var balls = mutableListOf<Ball>()
+        
+        // 设置 Z-Order 让 SurfaceView 显示在上层
+        dialogBinding.surfaceView.setZOrderOnTop(true)
         
         dialogBinding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
@@ -455,6 +461,9 @@ class SurfaceViewFragment : Fragment() {
             .create()
 
         val paths = mutableListOf<Pair<Path, Int>>()
+        
+        // 设置 Z-Order 让 SurfaceView 显示在上层
+        dialogBinding.surfaceView.setZOrderOnTop(true)
         
         dialogBinding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
