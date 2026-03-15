@@ -14,6 +14,7 @@
     <string name="tab_battery">Battery</string>
     <string name="tab_user">User</string>
     <string name="tab_strict_mode">StrictMode</string>
+    <string name="tab_choreographer">Choreographer</string>
     <string name="tab_debug">Debug</string>
     <string name="tab_async">Async</string>
 

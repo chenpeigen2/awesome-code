@@ -12,6 +12,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.peter.os.demo.databinding.ActivityMainBinding
 import com.peter.os.demo.fragments.AsyncFragment
 import com.peter.os.demo.fragments.BatteryFragment
+import com.peter.os.demo.fragments.ChoreographerFragment
 import com.peter.os.demo.fragments.DebugFragment
 import com.peter.os.demo.fragments.DeviceFragment
 import com.peter.os.demo.fragments.FileObserverFragment
@@ -30,19 +31,20 @@ class MainActivity : AppCompatActivity() {
 
     // Tab 主题色
     private val tabColors = listOf(
-        Pair(R.color.tab_handler, R.color.tab_handler_container),           // Handler
-        Pair(R.color.tab_file_observer, R.color.tab_file_observer_container), // FileObserver
-        Pair(R.color.tab_storage, R.color.tab_storage_container),           // Storage
-        Pair(R.color.tab_timer, R.color.tab_timer_container),               // Timer
-        Pair(R.color.tab_device, R.color.tab_device_container),             // Device
-        Pair(R.color.tab_system_info, R.color.tab_system_info_container),   // SystemInfo
-        Pair(R.color.tab_handler_thread, R.color.tab_handler_thread_container), // HandlerThread
-        Pair(R.color.tab_parcelable, R.color.tab_parcelable_container),     // Parcelable
-        Pair(R.color.tab_battery, R.color.tab_battery_container),           // Battery
-        Pair(R.color.tab_user, R.color.tab_user_container),                 // User
-        Pair(R.color.tab_strict_mode, R.color.tab_strict_mode_container),   // StrictMode
-        Pair(R.color.tab_debug, R.color.tab_debug_container),               // Debug
-        Pair(R.color.tab_async, R.color.tab_async_container)                // Async
+        Pair(R.color.tab_handler, R.color.tab_handler_container),
+        Pair(R.color.tab_file_observer, R.color.tab_file_observer_container),
+        Pair(R.color.tab_storage, R.color.tab_storage_container),
+        Pair(R.color.tab_timer, R.color.tab_timer_container),
+        Pair(R.color.tab_device, R.color.tab_device_container),
+        Pair(R.color.tab_system_info, R.color.tab_system_info_container),
+        Pair(R.color.tab_handler_thread, R.color.tab_handler_thread_container),
+        Pair(R.color.tab_parcelable, R.color.tab_parcelable_container),
+        Pair(R.color.tab_battery, R.color.tab_battery_container),
+        Pair(R.color.tab_user, R.color.tab_user_container),
+        Pair(R.color.tab_strict_mode, R.color.tab_strict_mode_container),
+        Pair(R.color.tab_choreographer, R.color.tab_choreographer_container),
+        Pair(R.color.tab_debug, R.color.tab_debug_container),
+        Pair(R.color.tab_async, R.color.tab_async_container)
     )
 
     private var currentTabPosition = 0
@@ -53,16 +55,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
-        // 设置沉浸式状态栏
         setupImmersiveStatusBar()
-
-        // 设置 ViewPager
         setupViewPager()
-
-        // 设置初始主题色
         applyTabTheme(0)
-
-        // 显示 API Level
         binding.tvApiLevel.text = "API ${Build.VERSION.SDK_INT}"
     }
 
@@ -87,7 +82,6 @@ class MainActivity : AppCompatActivity() {
             tab.text = adapter.getTitle(position)
         }.attach()
 
-        // 监听页面切换
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 currentTabPosition = position
@@ -102,39 +96,23 @@ class MainActivity : AppCompatActivity() {
         val containerColor = ContextCompat.getColor(this, containerColorRes)
         val currentContainerColor = ContextCompat.getColor(this, tabColors[currentTabPosition].second)
 
-        // 动画过渡背景色
-        val colorAnimator = ValueAnimator.ofObject(
-            ArgbEvaluator(),
-            currentContainerColor,
-            containerColor
-        )
+        val colorAnimator = ValueAnimator.ofObject(ArgbEvaluator(), currentContainerColor, containerColor)
         colorAnimator.duration = 300
         colorAnimator.addUpdateListener { animator ->
-            val color = animator.animatedValue as Int
-            binding.appBarLayout.setBackgroundColor(color)
+            binding.appBarLayout.setBackgroundColor(animator.animatedValue as Int)
         }
         colorAnimator.start()
 
-        // 更新 TabLayout 指示器颜色
         binding.tabLayout.setSelectedTabIndicatorColor(primaryColor)
-        binding.tabLayout.setTabTextColors(
-            ContextCompat.getColor(this, R.color.on_surface_variant),
-            primaryColor
-        )
-
-        // 更新标题颜色
+        binding.tabLayout.setTabTextColors(ContextCompat.getColor(this, R.color.on_surface_variant), primaryColor)
         binding.tvTitle.setTextColor(primaryColor)
-
-        // 更新 API 徽章颜色
         binding.apiBadge.strokeColor = primaryColor
         binding.apiBadge.setCardBackgroundColor(containerColor)
         binding.tvApiLevel.setTextColor(primaryColor)
     }
 }
 
-class ViewPagerAdapter(
-    private val activity: AppCompatActivity
-) : androidx.viewpager2.adapter.FragmentStateAdapter(activity) {
+class ViewPagerAdapter(private val activity: AppCompatActivity) : androidx.viewpager2.adapter.FragmentStateAdapter(activity) {
 
     private val fragments = listOf(
         HandlerFragment.newInstance(),
@@ -148,6 +126,7 @@ class ViewPagerAdapter(
         BatteryFragment.newInstance(),
         UserFragment.newInstance(),
         StrictModeFragment.newInstance(),
+        ChoreographerFragment.newInstance(),
         DebugFragment.newInstance(),
         AsyncFragment.newInstance()
     )
@@ -164,13 +143,12 @@ class ViewPagerAdapter(
         activity.getString(R.string.tab_battery),
         activity.getString(R.string.tab_user),
         activity.getString(R.string.tab_strict_mode),
+        activity.getString(R.string.tab_choreographer),
         activity.getString(R.string.tab_debug),
         activity.getString(R.string.tab_async)
     )
 
     override fun getItemCount(): Int = fragments.size
-
     override fun createFragment(position: Int) = fragments[position]
-
     fun getTitle(position: Int): String = titles[position]
 }

@@ -59,7 +59,12 @@ class UserFragment : Fragment() {
         }
         
         try {
-            sb.appendLine("管理员用户: ${if (userManager.isAdminUser) "是" else "否"}")
+            val isAdmin = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                userManager.isAdminUser
+            } else {
+                false
+            }
+            sb.appendLine("管理员用户: ${if (isAdmin) "是" else "否"}")
         } catch (e: Exception) {
             sb.appendLine("管理员用户: (无法获取)")
         }
@@ -139,6 +144,7 @@ class UserFragment : Fragment() {
         }
         
         try {
+            @Suppress("MissingPermission")
             val userName = userManager.userName
             sb.appendLine("用户名: $userName")
         } catch (e: Exception) {

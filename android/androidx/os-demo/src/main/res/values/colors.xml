@@ -70,6 +70,10 @@
     <color name="tab_strict_mode">#9C4146</color>
     <color name="tab_strict_mode_container">#FFDAD8</color>
     
+    <!-- Choreographer Tab - 金色 -->
+    <color name="tab_choreographer">#7D5700</color>
+    <color name="tab_choreographer_container">#FFDEAB</color>
+    
     <!-- Debug Tab - 深蓝灰 -->
     <color name="tab_debug">#475D72</color>
     <color name="tab_debug_container">#CFE1F0</color>
