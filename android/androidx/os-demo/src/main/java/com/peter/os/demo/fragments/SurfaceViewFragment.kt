@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -121,8 +122,12 @@ class SurfaceViewFragment : Fragment() {
 
         var drawCount = 0
         
-        // 设置 Z-Order 让 SurfaceView 显示在上层
-        dialogBinding.surfaceView.setZOrderOnTop(true)
+        // 设置合成顺序，正值表示在父窗口上方显示 (API 36+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+            dialogBinding.surfaceView.setCompositionOrder(1)
+        } else {
+            dialogBinding.surfaceView.setZOrderMediaOverlay(true)
+        }
         
         dialogBinding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
@@ -227,8 +232,12 @@ class SurfaceViewFragment : Fragment() {
 
         var balls = mutableListOf<Ball>()
         
-        // 设置 Z-Order 让 SurfaceView 显示在上层
-        dialogBinding.surfaceView.setZOrderOnTop(true)
+        // 设置合成顺序，正值表示在父窗口上方显示 (API 36+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+            dialogBinding.surfaceView.setCompositionOrder(1)
+        } else {
+            dialogBinding.surfaceView.setZOrderMediaOverlay(true)
+        }
         
         dialogBinding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
@@ -462,8 +471,12 @@ class SurfaceViewFragment : Fragment() {
 
         val paths = mutableListOf<Pair<Path, Int>>()
         
-        // 设置 Z-Order 让 SurfaceView 显示在上层
-        dialogBinding.surfaceView.setZOrderOnTop(true)
+        // 设置合成顺序，正值表示在父窗口上方显示 (API 36+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA) {
+            dialogBinding.surfaceView.setCompositionOrder(1)
+        } else {
+            dialogBinding.surfaceView.setZOrderMediaOverlay(true)
+        }
         
         dialogBinding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             override fun surfaceCreated(holder: SurfaceHolder) {
