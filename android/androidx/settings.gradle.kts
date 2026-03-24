@@ -97,6 +97,9 @@ include(":viewpager2-demo")
 // File Demo - 文件存储示例
 include(":file-demo")
 
+// Sensor Demo - 传感器示例
+include(":sensor-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")

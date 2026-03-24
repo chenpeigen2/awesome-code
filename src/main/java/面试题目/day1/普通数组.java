@@ -1,5 +1,6 @@
 package 面试题目.day1;
 
+import 面试题目.DoubleCheck;
 import 面试题目.NeedDeepLearn;
 
 import java.util.*;
@@ -36,7 +37,7 @@ public class 普通数组 {
         for (int x : nums) {
             // 状态转移：选择继续扩展子数组或重新开始
             // f(i) = max{f(i-1) + nums[i], nums[i]}
-            cur = Math.max(x, cur + x);
+            cur = Math.max(x, cur + x); // please remember it
             // 更新全局最大值
             maxAns = Math.max(cur, maxAns);
         }
@@ -73,7 +74,6 @@ public class 普通数组 {
         if (intervals.length == 0) {
             return new int[0][2];
         }
-        
         // 按照区间起始位置排序，确保区间有序处理
         Arrays.sort(intervals, new Comparator<int[]>() {
             @Override
@@ -81,15 +81,12 @@ public class 普通数组 {
                 return o1[0] - o2[0];  // 按起始位置升序排序
             }
         });
-
         // 存储合并后的区间结果
         List<int[]> merged = new ArrayList<>();
-
         // 遍历所有区间
-        for (int i = 0; i < intervals.length; i++) {
+        for (int[] interval : intervals) {
             // 提取当前区间的左右边界
-            int L = intervals[i][0], R = intervals[i][1];
-            
+            int L = interval[0], R = interval[1];
             // 判断是否需要新建区间：
             // 1. 合并列表为空时
             // 2. 当前区间起始位置大于上一个区间结束位置（无重叠）
@@ -100,7 +97,6 @@ public class 普通数组 {
                 merged.get(merged.size() - 1)[1] = Math.max(merged.get(merged.size() - 1)[1], R);
             }
         }
-
         // 将 List 转换为二维数组返回
         return merged.toArray(new int[0][]);
     }
@@ -200,7 +196,7 @@ public class 普通数组 {
     }
 
     // https://leetcode.cn/problems/first-missing-positive/description/?envType=study-plan-v2&envId=top-100-liked
-    @NeedDeepLearn
+    @DoubleCheck
     public int firstMissingPositive(int[] nums) {
         int len = nums.length;
 

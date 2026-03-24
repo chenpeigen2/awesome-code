@@ -28,7 +28,7 @@ public class 子串 {
     }
 
     // https://leetcode.cn/problems/sliding-window-maximum/submissions/695212269/?envType=study-plan-v2&envId=top-100-liked
-    @NeedDeepLearn
+    @DoubleCheck
     public int[] maxSlidingWindow(int[] nums, int k) {
         int n = nums.length;
         // 倒序

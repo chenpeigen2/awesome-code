@@ -111,8 +111,6 @@ public class 二分 {
         return left;
     }
 
-
-    @NeedDeepLearn
     /**
      * 在旋转排序数组中搜索目标值。
      * 数组原本是升序排列的，但在某个未知点进行了旋转（例如 [4,5,6,7,0,1,2]）。
@@ -136,7 +134,7 @@ public class 二分 {
             if (nums[0] <= nums[mid]) {
                 // mid 在左半段（较大的数值区间）
                 // 检查 target 是否在左半段的范围内
-                if (nums[0] <= target && target < nums[mid]) {
+                if (target >= nums[0] && target < nums[mid]) {
                     // target 在左半段范围内，缩小搜索范围到左半部分
                     right = mid - 1;
                 } else {
@@ -146,7 +144,7 @@ public class 二分 {
             } else {
                 // mid 在右半段（较小的数值区间）
                 // 检查 target 是否在右半段的范围内
-                if (nums[mid] < target && target <= nums[n - 1]) {
+                if (target > nums[mid] && target <= nums[n - 1]) {
                     // target 在右半段范围内，缩小搜索范围到右半部分
                     left = mid + 1;
                 } else {
