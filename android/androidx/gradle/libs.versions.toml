@@ -73,6 +73,9 @@ room = "2.8.4"
 # MMKV 版本
 mmkv = "2.3.0"
 
+# Security Crypto 版本
+securityCrypto = "1.1.0-alpha06"
+
 [libraries]
 # ASM 字节码操作
 androidx-localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
@@ -139,6 +142,9 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 
 # MMKV
 mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
+
+# Security Crypto
+androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
 
 # Room
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

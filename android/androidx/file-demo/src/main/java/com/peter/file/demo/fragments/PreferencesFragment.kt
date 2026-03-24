@@ -128,6 +128,16 @@ class PreferencesFragment : Fragment() {
                 type = FileOperationType.PREF_IMPORT,
                 title = getString(R.string.pref_import),
                 description = getString(R.string.pref_import_desc)
+            ),
+            FileItem(
+                type = FileOperationType.PREF_ENCRYPTED,
+                title = getString(R.string.pref_encrypted),
+                description = getString(R.string.pref_encrypted_desc)
+            ),
+            FileItem(
+                type = FileOperationType.PREF_LIVE_DATA,
+                title = getString(R.string.pref_live_data),
+                description = getString(R.string.pref_live_data_desc)
             )
         )
     }
@@ -239,6 +249,14 @@ class PreferencesFragment : Fragment() {
                     }
                     showContentDialog("当前偏好设置", content)
                 }
+            }
+
+            FileOperationType.PREF_ENCRYPTED -> {
+                showEncryptedPrefsDialog()
+            }
+
+            FileOperationType.PREF_LIVE_DATA -> {
+                showPreferenceFlowDialog()
             }
 
             else -> {}
@@ -401,6 +419,89 @@ class PreferencesFragment : Fragment() {
 
     private fun showMessage(message: String) {
         (requireActivity() as MainActivity).showSnackbar(message)
+    }
+
+    private fun showEncryptedPrefsDialog() {
+        val layout = LinearLayout(requireContext()).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(50, 40, 50, 10)
+        }
+
+        val keyInput = EditText(requireContext()).apply {
+            hint = "敏感数据的键"
+            setText("secret_password")
+        }
+        layout.addView(keyInput)
+
+        val valueInput = EditText(requireContext()).apply {
+            hint = "敏感数据的值"
+            setText("my_secret_value_123")
+        }
+        layout.addView(valueInput)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle("加密存储演示")
+            .setMessage("使用 EncryptedSharedPreferences 加密存储敏感数据")
+            .setView(layout)
+            .setPositiveButton("保存并读取") { _, _ ->
+                val key = keyInput.text.toString()
+                val value = valueInput.text.toString()
+                if (key.isNotBlank() && value.isNotBlank()) {
+                    // Save encrypted
+                    val mainActivity = requireActivity() as MainActivity
+                    mainActivity.fileHelper.putEncryptedString(key, value)
+
+                    // Read back
+                    val retrieved = mainActivity.fileHelper.getEncryptedString(key, "")
+
+                    val result = """
+                        加密存储测试:
+
+                        原始值: $value
+                        加密后存储到: encrypted_prefs.xml
+                        读取回的值: $retrieved
+
+                        ✓ 数据已使用 AES256-GCM 加密
+                        ✓ 主密钥由 Android Keystore 管理
+                    """.trimIndent()
+
+                    showContentDialog("加密存储结果", result)
+                }
+            }
+            .setNegativeButton("取消", null)
+            .show()
+    }
+
+    private var isFlowStarted = false
+
+    private fun showPreferenceFlowDialog() {
+        if (!isFlowStarted) {
+            val mainActivity = requireActivity() as MainActivity
+            mainActivity.fileHelper.startPreferenceFlow()
+
+            AlertDialog.Builder(requireContext())
+                .setTitle("Preference Flow 已启动")
+                .setMessage("""
+                    已启动偏好设置变化监听 Flow
+
+                    现在当你修改任何偏好设置时，会通过 Flow 发出通知。
+
+                    点击其他偏好设置操作（如保存字符串）来观察变化。
+                """.trimIndent())
+                .setPositiveButton("停止监听") { _, _ ->
+                    mainActivity.fileHelper.stopPreferenceFlow()
+                    isFlowStarted = false
+                    showMessage("Preference Flow 已停止")
+                }
+                .show()
+
+            isFlowStarted = true
+        } else {
+            val mainActivity = requireActivity() as MainActivity
+            mainActivity.fileHelper.stopPreferenceFlow()
+            isFlowStarted = false
+            showMessage("Preference Flow 已停止")
+        }
     }
 
     override fun onDestroyView() {

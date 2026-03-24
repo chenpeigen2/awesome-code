@@ -29,6 +29,22 @@
     <string name="internal_cache_read_desc">读取缓存文件内容</string>
     <string name="internal_info">文件信息</string>
     <string name="internal_info_desc">获取文件大小和详情</string>
+    <string name="internal_create_dir">创建目录</string>
+    <string name="internal_create_dir_desc">在内部存储创建新目录</string>
+    <string name="internal_list_dirs">列出目录</string>
+    <string name="internal_list_dirs_desc">列出内部存储所有目录</string>
+    <string name="internal_delete_dir">删除目录</string>
+    <string name="internal_delete_dir_desc">删除指定目录</string>
+    <string name="internal_copy_file">复制文件</string>
+    <string name="internal_copy_file_desc">复制文件到新位置</string>
+    <string name="internal_move_file">移动文件</string>
+    <string name="internal_move_file_desc">移动文件到新位置</string>
+    <string name="internal_append">追加写入</string>
+    <string name="internal_append_desc">追加内容到文件末尾</string>
+    <string name="internal_write_bytes">写入二进制</string>
+    <string name="internal_write_bytes_desc">写入字节数组到文件</string>
+    <string name="internal_read_bytes">读取二进制</string>
+    <string name="internal_read_bytes_desc">以十六进制读取文件</string>
 
     <!-- External Storage Operations -->
     <string name="external_check">检查存储状态</string>
@@ -43,6 +59,10 @@
     <string name="external_delete_desc">删除外部存储文件</string>
     <string name="external_cache">外部缓存操作</string>
     <string name="external_cache_desc">读写外部缓存目录</string>
+    <string name="external_public_dirs">公共目录</string>
+    <string name="external_public_dirs_desc">访问Downloads/DCIM等公共目录</string>
+    <string name="external_volumes">存储卷管理</string>
+    <string name="external_volumes_desc">获取设备存储卷信息</string>
 
     <!-- Preferences Operations -->
     <string name="pref_put_string">保存字符串</string>
@@ -69,6 +89,10 @@
     <string name="pref_export_desc">导出偏好设置到文件</string>
     <string name="pref_import">从文件导入</string>
     <string name="pref_import_desc">从文件导入偏好设置</string>
+    <string name="pref_encrypted">加密存储</string>
+    <string name="pref_encrypted_desc">使用EncryptedSharedPreferences加密存储</string>
+    <string name="pref_live_data">LiveData/Flow</string>
+    <string name="pref_live_data_desc">监听偏好设置变化的Flow</string>
 
     <!-- Scoped Storage Operations -->
     <string name="scoped_pick_file">选择文件</string>
@@ -83,6 +107,16 @@
     <string name="scoped_photo_picker_desc">Android 13+ 照片选择器</string>
     <string name="scoped_permission">请求权限</string>
     <string name="scoped_permission_desc">请求读写存储权限</string>
+    <string name="scoped_pick_video">视频选择器</string>
+    <string name="scoped_pick_video_desc">选择视频文件</string>
+    <string name="scoped_pick_audio">音频选择器</string>
+    <string name="scoped_pick_audio_desc">选择音频文件</string>
+    <string name="scoped_pick_folder">文件夹选择</string>
+    <string name="scoped_pick_folder_desc">选择文件夹访问权限</string>
+    <string name="scoped_download_manager">下载管理器</string>
+    <string name="scoped_download_manager_desc">使用DownloadManager下载文件</string>
+    <string name="scoped_delete_media">删除媒体文件</string>
+    <string name="scoped_delete_media_desc">通过ContentResolver删除媒体</string>
 
     <!-- Messages -->
     <string name="msg_write_success">写入成功</string>

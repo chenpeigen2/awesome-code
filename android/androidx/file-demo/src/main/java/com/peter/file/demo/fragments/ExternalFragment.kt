@@ -92,6 +92,16 @@ class ExternalFragment : Fragment() {
                 type = FileOperationType.EXTERNAL_CACHE,
                 title = getString(R.string.external_cache),
                 description = getString(R.string.external_cache_desc)
+            ),
+            FileItem(
+                type = FileOperationType.EXTERNAL_PUBLIC_DIRS,
+                title = getString(R.string.external_public_dirs),
+                description = getString(R.string.external_public_dirs_desc)
+            ),
+            FileItem(
+                type = FileOperationType.EXTERNAL_VOLUMES,
+                title = getString(R.string.external_volumes),
+                description = getString(R.string.external_volumes_desc)
             )
         )
     }
@@ -162,6 +172,37 @@ class ExternalFragment : Fragment() {
                 lifecycleScope.launch {
                     val result = fileHelper.writeExternalCache(fileName, content)
                     showMessage(result.getOrNull() ?: result.exceptionOrNull()?.message ?: "写入失败")
+                }
+            }
+
+            FileOperationType.EXTERNAL_PUBLIC_DIRS -> {
+                val publicDirs = fileHelper.getPublicDirectories()
+                val dirInfo = publicDirs.entries.map { (name, file) ->
+                    if (file != null && file.exists()) {
+                        "$name: ${file.absolutePath}\n  可用空间: ${fileHelper.formatFileSize(file.freeSpace)}"
+                    } else {
+                        "$name: 不可用"
+                    }
+                }
+                showContentDialog("公共目录", dirInfo.joinToString("\n\n"))
+            }
+
+            FileOperationType.EXTERNAL_VOLUMES -> {
+                val volumes = fileHelper.getStorageVolumes()
+                if (volumes.isEmpty()) {
+                    showMessage("无法获取存储卷信息")
+                } else {
+                    val volumeInfo = volumes.map { vol ->
+                        """
+                        ${vol.description}
+                        UUID: ${vol.uuid ?: "无"}
+                        类型: ${if (vol.isRemovable) "可移除存储" else if (vol.isEmulated) "模拟存储" else "内置存储"}
+                        主存储: ${if (vol.isPrimary) "是" else "否"}
+                        状态: ${vol.state}
+                        ${if (vol.totalSpace > 0) "总空间: ${fileHelper.formatFileSize(vol.totalSpace)}\n可用空间: ${fileHelper.formatFileSize(vol.freeSpace)}" else ""}
+                        """.trimIndent()
+                    }
+                    showContentDialog("存储卷 (${volumes.size}个)", volumeInfo.joinToString("\n"))
                 }
             }
 

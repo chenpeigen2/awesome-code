@@ -56,6 +56,10 @@ dependencies {
     // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    // Security Crypto for encrypted preferences
+    implementation(libs.androidx.security.crypto)
 
     // Testing
     testImplementation(libs.junit)

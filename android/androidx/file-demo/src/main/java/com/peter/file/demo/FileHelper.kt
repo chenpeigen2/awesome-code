@@ -4,9 +4,17 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Environment
+import android.os.storage.StorageManager
 import android.provider.MediaStore
 import androidx.core.content.edit
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
@@ -69,6 +77,73 @@ class FileHelper(private val context: Context) {
         )
     }
 
+    // ==================== Internal Storage Extensions ====================
+
+    fun createDirectory(dirName: String): Boolean {
+        val dir = File(context.filesDir, dirName)
+        return if (dir.exists()) {
+            false // Directory already exists
+        } else {
+            dir.mkdirs()
+        }
+    }
+
+    fun listDirectories(): List<File> = context.filesDir.listFiles()?.filter { it.isDirectory }?.toList().orEmpty()
+
+    fun deleteDirectory(dirName: String): Boolean {
+        val dir = File(context.filesDir, dirName)
+        return if (dir.exists() && dir.isDirectory) {
+            dir.deleteRecursively()
+        } else {
+            false
+        }
+    }
+
+    suspend fun copyFile(sourceName: String, destName: String): Result<String> = withContext(Dispatchers.IO) {
+        runCatching {
+            val sourceFile = File(context.filesDir, sourceName)
+            require(sourceFile.exists()) { "源文件不存在" }
+            val destFile = File(context.filesDir, destName)
+            sourceFile.copyTo(destFile, overwrite = true)
+            "文件已复制: $sourceName -> $destName"
+        }
+    }
+
+    suspend fun moveFile(sourceName: String, destName: String): Result<String> = withContext(Dispatchers.IO) {
+        runCatching {
+            val sourceFile = File(context.filesDir, sourceName)
+            require(sourceFile.exists()) { "源文件不存在" }
+            val destFile = File(context.filesDir, destName)
+            sourceFile.copyTo(destFile, overwrite = true)
+            sourceFile.delete()
+            "文件已移动: $sourceName -> $destName"
+        }
+    }
+
+    suspend fun appendToFile(fileName: String, content: String): Result<String> = withContext(Dispatchers.IO) {
+        runCatching {
+            val file = File(context.filesDir, fileName)
+            file.appendText(content)
+            "内容已追加到: ${file.absolutePath}"
+        }
+    }
+
+    suspend fun writeBytes(fileName: String, bytes: ByteArray): Result<String> = withContext(Dispatchers.IO) {
+        runCatching {
+            val file = File(context.filesDir, fileName)
+            file.writeBytes(bytes)
+            "已写入 ${bytes.size} 字节到: ${file.absolutePath}"
+        }
+    }
+
+    suspend fun readBytes(fileName: String): Result<ByteArray> = withContext(Dispatchers.IO) {
+        runCatching {
+            val file = File(context.filesDir, fileName)
+            require(file.exists()) { "文件不存在" }
+            file.readBytes()
+        }
+    }
+
     // ==================== External Storage ====================
 
     fun getExternalStorageState(): StorageState = when (Environment.getExternalStorageState()) {
@@ -105,6 +180,36 @@ class FileHelper(private val context: Context) {
             val file = File(context.externalCacheDir, fileName)
             file.writeText(content)
             "外部缓存已保存到: ${file.absolutePath}"
+        }
+    }
+
+    // ==================== External Storage Extensions ====================
+
+    fun getPublicDirectories(): Map<String, File?> = mapOf(
+        "Downloads" to Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+        "DCIM" to Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
+        "Pictures" to Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+        "Music" to Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC),
+        "Documents" to Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+    )
+
+    fun getStorageVolumes(): List<StorageVolumeInfo> {
+        val storageManager = context.getSystemService(Context.STORAGE_SERVICE) as StorageManager
+        return storageManager.storageVolumes.map { volume ->
+            StorageVolumeInfo(
+                uuid = volume.uuid,
+                description = volume.getDescription(context),
+                isRemovable = volume.isRemovable,
+                isPrimary = volume.isPrimary,
+                isEmulated = volume.isEmulated,
+                state = volume.state,
+                totalSpace = if (volume.isPrimary) {
+                    context.filesDir.totalSpace
+                } else 0L,
+                freeSpace = if (volume.isPrimary) {
+                    context.filesDir.freeSpace
+                } else 0L
+            )
         }
     }
 
@@ -161,6 +266,49 @@ class FileHelper(private val context: Context) {
 
     fun getAllPreferenceKeys(): Set<String> = sharedPreferences.all.keys
 
+    // ==================== Preferences Extensions ====================
+
+    private val masterKey: MasterKey by lazy {
+        MasterKey.Builder(context)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+    }
+
+    private val encryptedPrefs: SharedPreferences by lazy {
+        EncryptedSharedPreferences.create(
+            context,
+            "encrypted_prefs",
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+        )
+    }
+
+    fun putEncryptedString(key: String, value: String) {
+        encryptedPrefs.edit { putString(key, value) }
+    }
+
+    fun getEncryptedString(key: String, defaultValue: String = ""): String =
+        encryptedPrefs.getString(key, defaultValue) ?: defaultValue
+
+    private val _preferenceFlow = MutableSharedFlow<Pair<String, Any?>>()
+    val preferenceFlow: SharedFlow<Pair<String, Any?>> = _preferenceFlow.asSharedFlow()
+
+    private val flowListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        val value = sharedPreferences.all[key]
+        GlobalScope.launch {
+            _preferenceFlow.emit(Pair(key ?: "", value))
+        }
+    }
+
+    fun startPreferenceFlow() {
+        sharedPreferences.registerOnSharedPreferenceChangeListener(flowListener)
+    }
+
+    fun stopPreferenceFlow() {
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(flowListener)
+    }
+
     // ==================== Scoped Storage ====================
 
     fun queryImages(): List<MediaImage> {
@@ -193,6 +341,92 @@ class FileHelper(private val context: Context) {
         }.orEmpty()
     }
 
+    fun queryVideos(): List<MediaVideo> {
+        val projection = arrayOf(
+            MediaStore.Video.Media._ID,
+            MediaStore.Video.Media.DISPLAY_NAME,
+            MediaStore.Video.Media.SIZE,
+            MediaStore.Video.Media.DURATION,
+            MediaStore.Video.Media.DATE_MODIFIED
+        )
+
+        return context.contentResolver.query(
+            MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            null,
+            null,
+            "${MediaStore.Video.Media.DATE_MODIFIED} DESC"
+        )?.use { cursor ->
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
+            val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME)
+            val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE)
+            val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION)
+            val dateColumn = cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATE_MODIFIED)
+
+            buildList {
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(idColumn)
+                    val uri = Uri.withAppendedPath(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, id.toString())
+                    add(MediaVideo(
+                        uri = uri,
+                        name = cursor.getString(nameColumn),
+                        size = cursor.getLong(sizeColumn),
+                        duration = cursor.getLong(durationColumn),
+                        dateModified = cursor.getLong(dateColumn)
+                    ))
+                }
+            }
+        }.orEmpty()
+    }
+
+    fun queryAudio(): List<MediaAudio> {
+        val projection = arrayOf(
+            MediaStore.Audio.Media._ID,
+            MediaStore.Audio.Media.DISPLAY_NAME,
+            MediaStore.Audio.Media.SIZE,
+            MediaStore.Audio.Media.DURATION,
+            MediaStore.Audio.Media.ARTIST,
+            MediaStore.Audio.Media.DATE_MODIFIED
+        )
+
+        return context.contentResolver.query(
+            MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+            projection,
+            null,
+            null,
+            "${MediaStore.Audio.Media.DATE_MODIFIED} DESC"
+        )?.use { cursor ->
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+            val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME)
+            val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE)
+            val durationColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION)
+            val artistColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST)
+            val dateColumn = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATE_MODIFIED)
+
+            buildList {
+                while (cursor.moveToNext()) {
+                    val id = cursor.getLong(idColumn)
+                    val uri = Uri.withAppendedPath(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, id.toString())
+                    add(MediaAudio(
+                        uri = uri,
+                        name = cursor.getString(nameColumn),
+                        size = cursor.getLong(sizeColumn),
+                        duration = cursor.getLong(durationColumn),
+                        artist = cursor.getString(artistColumn),
+                        dateModified = cursor.getLong(dateColumn)
+                    ))
+                }
+            }
+        }.orEmpty()
+    }
+
+    suspend fun deleteMedia(uri: Uri): Result<Boolean> = withContext(Dispatchers.IO) {
+        runCatching {
+            val deleted = context.contentResolver.delete(uri, null, null)
+            deleted > 0
+        }
+    }
+
     fun getStorageDirectories(): List<StorageDirectory> = buildList {
         add(StorageDirectory("内部存储", context.filesDir.absolutePath, StorageType.INTERNAL, context.filesDir.totalSpace, context.filesDir.freeSpace))
         add(StorageDirectory("内部缓存", context.cacheDir.absolutePath, StorageType.INTERNAL_CACHE, context.cacheDir.totalSpace, context.cacheDir.freeSpace))
@@ -205,6 +439,17 @@ class FileHelper(private val context: Context) {
         bytes < 1024 * 1024 -> "%.2f KB".format(bytes / 1024.0)
         bytes < 1024 * 1024 * 1024 -> "%.2f MB".format(bytes / (1024.0 * 1024))
         else -> "%.2f GB".format(bytes / (1024.0 * 1024 * 1024))
+    }
+
+    fun formatDuration(millis: Long): String {
+        val seconds = millis / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+        return if (hours > 0) {
+            String.format("%02d:%02d:%02d", hours, minutes % 60, seconds % 60)
+        } else {
+            String.format("%02d:%02d", minutes, seconds % 60)
+        }
     }
 }
 
@@ -229,9 +474,37 @@ data class StorageDirectory(
     val freeSpace: Long
 )
 
+data class StorageVolumeInfo(
+    val uuid: String?,
+    val description: String,
+    val isRemovable: Boolean,
+    val isPrimary: Boolean,
+    val isEmulated: Boolean,
+    val state: String,
+    val totalSpace: Long,
+    val freeSpace: Long
+)
+
 data class MediaImage(
     val uri: Uri,
     val name: String,
     val size: Long,
+    val dateModified: Long
+)
+
+data class MediaVideo(
+    val uri: Uri,
+    val name: String,
+    val size: Long,
+    val duration: Long,
+    val dateModified: Long
+)
+
+data class MediaAudio(
+    val uri: Uri,
+    val name: String,
+    val size: Long,
+    val duration: Long,
+    val artist: String,
     val dateModified: Long
 )
