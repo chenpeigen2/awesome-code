@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CameraX Demo</string>
+
+    <!-- Tab names -->
+    <string name="tab_basic">Basic</string>
+    <string name="tab_capture">Capture</string>
+    <string name="tab_video">Video</string>
+    <string name="tab_analysis">Analysis</string>
+
+    <!-- Basic operations -->
+    <string name="camera_preview">Camera Preview</string>
+    <string name="camera_preview_desc">Display real-time camera preview</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="take_photo_desc">Capture a photo and save to storage</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="switch_camera_desc">Switch between front and back camera</string>
+    <string name="zoom_control">Zoom Control</string>
+    <string name="zoom_control_desc">Adjust camera zoom level</string>
+
+    <!-- Capture operations -->
+    <string name="save_photo">Save Photo</string>
+    <string name="save_photo_desc">Configure photo save location and format</string>
+    <string name="image_quality">Image Quality</string>
+    <string name="image_quality_desc">Select JPEG or HEIC format</string>
+    <string name="flash_mode">Flash Mode</string>
+    <string name="flash_mode_desc">Set flash mode: auto, on, or off</string>
+    <string name="hdr_mode">HDR Mode</string>
+    <string name="hdr_mode_desc">Enable/disable HDR capture mode</string>
+
+    <!-- Video operations -->
+    <string name="video_recording">Video Recording</string>
+    <string name="video_recording_desc">Record video and save to storage</string>
+    <string name="audio_recording">Audio Recording</string>
+    <string name="audio_recording_desc">Include audio in video recording</string>
+    <string name="video_quality">Video Quality</string>
+    <string name="video_quality_desc">Select SD, HD, FHD, or UHD quality</string>
+    <string name="frame_rate">Frame Rate</string>
+    <string name="frame_rate_desc">Select 30fps or 60fps frame rate</string>
+
+    <!-- Analysis operations -->
+    <string name="image_analysis">Image Analysis</string>
+    <string name="image_analysis_desc">Real-time analysis of camera frames</string>
+    <string name="brightness_detection">Brightness Detection</string>
+    <string name="brightness_detection_desc">Detect ambient light brightness</string>
+    <string name="qr_code_scanning">QR Code Scanning</string>
+    <string name="qr_code_scanning_desc">Scan QR codes and barcodes</string>
+    <string name="color_detection">Color Detection</string>
+    <string name="color_detection_desc">Detect dominant color in scene</string>
+
+    <!-- Common strings -->
+    <string name="permission_granted">Granted</string>
+    <string name="permission_denied">Denied</string>
+    <string name="permission_granted_msg">Camera permissions granted</string>
+    <string name="permission_denied_msg">Camera permissions denied</string>
+    <string name="permission_already_granted">Camera permissions already granted</string>
+    <string name="please_open_preview_first">Please open Camera Preview first</string>
+
+    <string name="close">Close</string>
+    <string name="cancel">Cancel</string>
+    <string name="stop">Stop</string>
+
+    <!-- Camera messages -->
+    <string name="photo_saved">Photo saved: %s</string>
+    <string name="photo_failed">Failed to take photo: %s</string>
+    <string name="front_camera">Front camera</string>
+    <string name="back_camera">Back camera</string>
+
+    <!-- Flash modes -->
+    <string name="flash_off">Off</string>
+    <string name="flash_on">On</string>
+    <string name="flash_auto">Auto</string>
+    <string name="flash_mode_set">Flash mode: %s</string>
+
+    <!-- Video messages -->
+    <string name="recording_started">Recording started</string>
+    <string name="recording_stopped">Recording stopped</string>
+    <string name="recording_failed">Recording failed: %s</string>
+    <string name="audio_enabled">Audio recording enabled</string>
+    <string name="audio_disabled">Audio recording disabled</string>
+    <string name="video_quality_set">Video quality: %s</string>
+    <string name="frame_rate_set">Frame rate: %s</string>
+
+    <!-- Analysis messages -->
+    <string name="analyzing_brightness">Analyzing brightness…</string>
+    <string name="brightness_level">Brightness: %.0f (%s)</string>
+    <string name="detecting_color">Detecting color…</string>
+    <string name="dominant_color">Dominant color: %s</string>
+</resources>

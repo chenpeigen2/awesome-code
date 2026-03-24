@@ -100,6 +100,9 @@ include(":file-demo")
 // Sensor Demo - 传感器示例
 include(":sensor-demo")
 
+// CameraX Demo - CameraX 相机示例
+include(":camerax-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")
