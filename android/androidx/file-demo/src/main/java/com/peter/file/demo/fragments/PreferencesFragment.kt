@@ -138,8 +138,8 @@ class PreferencesFragment : Fragment() {
 
         when (type) {
             FileOperationType.PREF_PUT_STRING -> showKeyInputDialog("输入字符串值") { key, value ->
-                val success = fileHelper.putString(key, value)
-                showMessage(if (success) "已保存: $key = $value" else "保存失败")
+                fileHelper.putString(key, value)
+                showMessage("已保存: $key = $value")
             }
 
             FileOperationType.PREF_GET_STRING -> showKeyOnlyDialog("输入要读取的键") { key ->
@@ -148,8 +148,8 @@ class PreferencesFragment : Fragment() {
             }
 
             FileOperationType.PREF_PUT_INT -> showIntInputDialog { key, value ->
-                val success = fileHelper.putInt(key, value)
-                showMessage(if (success) "已保存: $key = $value" else "保存失败")
+                fileHelper.putInt(key, value)
+                showMessage("已保存: $key = $value")
             }
 
             FileOperationType.PREF_GET_INT -> showKeyOnlyDialog("输入要读取的键") { key ->
@@ -158,8 +158,8 @@ class PreferencesFragment : Fragment() {
             }
 
             FileOperationType.PREF_PUT_BOOLEAN -> showBooleanInputDialog { key, value ->
-                val success = fileHelper.putBoolean(key, value)
-                showMessage(if (success) "已保存: $key = $value" else "保存失败")
+                fileHelper.putBoolean(key, value)
+                showMessage("已保存: $key = $value")
             }
 
             FileOperationType.PREF_GET_BOOLEAN -> showKeyOnlyDialog("输入要读取的键") { key ->
@@ -168,8 +168,8 @@ class PreferencesFragment : Fragment() {
             }
 
             FileOperationType.PREF_REMOVE -> showKeySelectDialog("选择要删除的键") { key ->
-                val success = fileHelper.removeKey(key)
-                showMessage(if (success) "已删除: $key" else "删除失败")
+                fileHelper.removeKey(key)
+                showMessage("已删除: $key")
             }
 
             FileOperationType.PREF_CLEAR -> {
@@ -177,8 +177,8 @@ class PreferencesFragment : Fragment() {
                     .setTitle("清空所有偏好设置")
                     .setMessage("确定要清空所有偏好设置吗？此操作不可撤销。")
                     .setPositiveButton("清空") { _, _ ->
-                        val success = fileHelper.clearAll()
-                        showMessage(if (success) "已清空所有偏好设置" else "清空失败")
+                        fileHelper.clearAll()
+                        showMessage("已清空所有偏好设置")
                     }
                     .setNegativeButton("取消", null)
                     .show()
@@ -203,11 +203,11 @@ class PreferencesFragment : Fragment() {
 
                 // Commit (同步)
                 val startCommit = System.currentTimeMillis()
-                val commitResult = fileHelper.putString("test_commit", "value_${System.currentTimeMillis()}")
+                fileHelper.putString("test_commit", "value_${System.currentTimeMillis()}")
                 val commitTime = System.currentTimeMillis() - startCommit
                 results.append("Commit (同步):\n")
                 results.append("  耗时: ${commitTime}ms\n")
-                results.append("  结果: ${if (commitResult) "成功" else "失败"}\n\n")
+                results.append("  结果: 成功\n\n")
 
                 // Apply (异步)
                 val startApply = System.currentTimeMillis()

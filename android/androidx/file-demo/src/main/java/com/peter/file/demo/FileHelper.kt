@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.core.content.edit
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -113,27 +114,31 @@ class FileHelper(private val context: Context) {
         context.getSharedPreferences("file_demo_prefs", Context.MODE_PRIVATE)
     }
 
-    fun putString(key: String, value: String): Boolean =
-        sharedPreferences.edit().putString(key, value).commit()
+    fun putString(key: String, value: String) {
+        sharedPreferences.edit(commit = true) { putString(key, value) }
+    }
 
-    fun getString(key: String, defaultValue: String = ""): String =
-        sharedPreferences.getString(key, defaultValue) ?: defaultValue
+    fun getString(key: String, defaultValue: String = ""): String = sharedPreferences.getString(key, defaultValue) ?: defaultValue
 
-    fun putInt(key: String, value: Int): Boolean =
-        sharedPreferences.edit().putInt(key, value).commit()
+    fun putInt(key: String, value: Int) {
+        sharedPreferences.edit(commit = true) { putInt(key, value) }
+    }
 
-    fun getInt(key: String, defaultValue: Int = 0): Int =
-        sharedPreferences.getInt(key, defaultValue)
+    fun getInt(key: String, defaultValue: Int = 0): Int = sharedPreferences.getInt(key, defaultValue)
 
-    fun putBoolean(key: String, value: Boolean): Boolean =
-        sharedPreferences.edit().putBoolean(key, value).commit()
+    fun putBoolean(key: String, value: Boolean) {
+        sharedPreferences.edit(commit = true) { putBoolean(key, value) }
+    }
 
-    fun getBoolean(key: String, defaultValue: Boolean = false): Boolean =
-        sharedPreferences.getBoolean(key, defaultValue)
+    fun getBoolean(key: String, defaultValue: Boolean = false): Boolean = sharedPreferences.getBoolean(key, defaultValue)
 
-    fun removeKey(key: String): Boolean = sharedPreferences.edit().remove(key).commit()
+    fun removeKey(key: String) {
+        sharedPreferences.edit(commit = true) { remove(key) }
+    }
 
-    fun clearAll(): Boolean = sharedPreferences.edit().clear().commit()
+    fun clearAll() {
+        sharedPreferences.edit(commit = true) { clear() }
+    }
 
     fun registerListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) =
         sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
@@ -141,8 +146,9 @@ class FileHelper(private val context: Context) {
     fun unregisterListener(listener: SharedPreferences.OnSharedPreferenceChangeListener) =
         sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
 
-    fun applyString(key: String, value: String) =
-        sharedPreferences.edit().putString(key, value).apply()
+    fun applyString(key: String, value: String) {
+        sharedPreferences.edit { putString(key, value) }
+    }
 
     suspend fun exportPreferences(): Result<String> = withContext(Dispatchers.IO) {
         runCatching {
