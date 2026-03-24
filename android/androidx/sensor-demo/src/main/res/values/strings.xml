@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">传感器示例</string>
+
+    <!-- Tab names -->
+    <string name="tab_motion">运动</string>
+    <string name="tab_position">位置</string>
+    <string name="tab_environment">环境</string>
+    <string name="tab_proximity">接近</string>
+    <string name="tab_device">设备</string>
+
+    <!-- Motion sensors -->
+    <string name="accelerometer">加速度计</string>
+    <string name="accelerometer_desc">测量设备 X/Y/Z 轴的加速度</string>
+    <string name="gyroscope">陀螺仪</string>
+    <string name="gyroscope_desc">测量设备绕 X/Y/Z 轴的旋转角速度</string>
+    <string name="gravity">重力传感器</string>
+    <string name="gravity_desc">测量重力在 X/Y/Z 轴的分量</string>
+    <string name="linear_acceleration">线性加速度</string>
+    <string name="linear_acceleration_desc">测量去除重力后的加速度</string>
+    <string name="rotation_vector">旋转向量</string>
+    <string name="rotation_vector_desc">测量设备在空间中的方向</string>
+
+    <!-- Position sensors -->
+    <string name="magnetic_field">磁场传感器</string>
+    <string name="magnetic_field_desc">测量环境磁场强度</string>
+    <string name="orientation">方向传感器</string>
+    <string name="orientation_desc">测量设备的方位角、俯仰角和滚转角</string>
+    <string name="geomagnetic_rotation">地磁旋转向量</string>
+    <string name="geomagnetic_rotation_desc">使用地磁场计算的旋转向量</string>
+
+    <!-- Environment sensors -->
+    <string name="light">光线传感器</string>
+    <string name="light_desc">测量环境光照度（勒克斯）</string>
+    <string name="pressure">气压计</string>
+    <string name="pressure_desc">测量大气压强</string>
+    <string name="temperature">温度</string>
+    <string name="temperature_desc">测量环境温度</string>
+    <string name="humidity">湿度</string>
+    <string name="humidity_desc">测量相对湿度</string>
+
+    <!-- Proximity sensors -->
+    <string name="proximity">距离传感器</string>
+    <string name="proximity_desc">测量与附近物体的距离</string>
+    <string name="heart_rate">心率</string>
+    <string name="heart_rate_desc">测量心率（BPM）</string>
+
+    <!-- Device sensors -->
+    <string name="sensor_list">传感器列表</string>
+    <string name="sensor_list_desc">查看设备上所有可用的传感器</string>
+    <string name="sensor_details">传感器详情</string>
+    <string name="sensor_details_desc">查看传感器的详细属性</string>
+    <string name="step_counter">计步器</string>
+    <string name="step_counter_desc">统计开机以来的总步数</string>
+    <string name="step_detector">步数检测器</string>
+    <string name="step_detector_desc">检测单步事件</string>
+    <string name="significant_motion">显著运动</string>
+    <string name="significant_motion_desc">检测设备显著运动</string>
+
+    <!-- Common strings -->
+    <string name="permission_granted">已授权</string>
+    <string name="permission_denied">未授权</string>
+    <string name="sensor_not_available">传感器不可用</string>
+    <string name="start_listening">开始监听</string>
+    <string name="stop_listening">停止监听</string>
+    <string name="sensor_value">数值</string>
+    <string name="sensor_x">X</string>
+    <string name="sensor_y">Y</string>
+    <string name="sensor_z">Z</string>
+    <string name="unit_lux">勒克斯</string>
+    <string name="unit_hPa">百帕</string>
+    <string name="unit_celsius">°C</string>
+    <string name="unit_percent">%</string>
+    <string name="unit_cm">厘米</string>
+    <string name="unit_bpm">BPM</string>
+    <string name="unit_steps">步</string>
+    <string name="unit_rad_s">弧度/秒</string>
+    <string name="unit_m_s2">米/秒²</string>
+    <string name="unit_μT">微特斯拉</string>
+
+    <!-- Sensor details -->
+    <string name="sensor_name">名称</string>
+    <string name="sensor_vendor">厂商</string>
+    <string name="sensor_version">版本</string>
+    <string name="sensor_type">类型</string>
+    <string name="sensor_max_range">最大范围</string>
+    <string name="sensor_resolution">分辨率</string>
+    <string name="sensor_power">功耗</string>
+    <string name="sensor_min_delay">最小延迟</string>
+
+    <!-- Motion category -->
+    <string name="category_motion">运动传感器</string>
+    <string name="category_position">位置传感器</string>
+    <string name="category_environment">环境传感器</string>
+    <string name="category_proximity">接近传感器</string>
+    <string name="category_device">设备传感器</string>
+
+    <!-- Messages -->
+    <string name="shake_detected">检测到摇晃！</string>
+    <string name="step_detected">检测到步数</string>
+    <string name="motion_detected">检测到显著运动</string>
+    <string name="waiting_for_motion">等待显著运动...</string>
+    <string name="click_to_request_permission">点击申请权限</string>
+    <string name="total_steps">总步数</string>
+    <string name="no_sensors_found">未找到传感器</string>
+    <string name="started_listening">开始监听</string>
+</resources>
