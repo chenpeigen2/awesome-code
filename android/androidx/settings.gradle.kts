@@ -94,6 +94,9 @@ include(":room-demo")
 // ViewPager2 Demo - ViewPager2 和 Fragment 学习示例
 include(":viewpager2-demo")
 
+// File Demo - 文件存储示例
+include(":file-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")

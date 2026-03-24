@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">文件存储演示</string>
+
+    <!-- Tab titles -->
+    <string name="tab_internal">内部存储</string>
+    <string name="tab_external">外部存储</string>
+    <string name="tab_preferences">偏好设置</string>
+    <string name="tab_scoped">分区存储</string>
+
+    <!-- Permission -->
+    <string name="permission_granted">存储权限：已授权</string>
+    <string name="permission_denied">存储权限：未授权</string>
+    <string name="permission_request">请求存储权限</string>
+    <string name="permission_go_settings">去开启</string>
+
+    <!-- Internal Storage Operations -->
+    <string name="internal_write">写入文本文件</string>
+    <string name="internal_write_desc">写入文本到内部存储</string>
+    <string name="internal_read">读取文本文件</string>
+    <string name="internal_read_desc">从内部存储读取文本</string>
+    <string name="internal_list">列出文件</string>
+    <string name="internal_list_desc">列出内部存储所有文件</string>
+    <string name="internal_delete">删除文件</string>
+    <string name="internal_delete_desc">删除指定文件</string>
+    <string name="internal_cache_write">写入缓存</string>
+    <string name="internal_cache_write_desc">写入临时缓存文件</string>
+    <string name="internal_cache_read">读取缓存</string>
+    <string name="internal_cache_read_desc">读取缓存文件内容</string>
+    <string name="internal_info">文件信息</string>
+    <string name="internal_info_desc">获取文件大小和详情</string>
+
+    <!-- External Storage Operations -->
+    <string name="external_check">检查存储状态</string>
+    <string name="external_check_desc">检查外部存储是否可用</string>
+    <string name="external_write">写入外部文件</string>
+    <string name="external_write_desc">写入到外部文件目录</string>
+    <string name="external_read">读取外部文件</string>
+    <string name="external_read_desc">从外部文件目录读取</string>
+    <string name="external_list">列出外部文件</string>
+    <string name="external_list_desc">列出外部存储所有文件</string>
+    <string name="external_delete">删除外部文件</string>
+    <string name="external_delete_desc">删除外部存储文件</string>
+    <string name="external_cache">外部缓存操作</string>
+    <string name="external_cache_desc">读写外部缓存目录</string>
+
+    <!-- Preferences Operations -->
+    <string name="pref_put_string">保存字符串</string>
+    <string name="pref_put_string_desc">存储字符串值</string>
+    <string name="pref_get_string">读取字符串</string>
+    <string name="pref_get_string_desc">获取存储的字符串</string>
+    <string name="pref_put_int">保存整数</string>
+    <string name="pref_put_int_desc">存储整数值</string>
+    <string name="pref_get_int">读取整数</string>
+    <string name="pref_get_int_desc">获取存储的整数</string>
+    <string name="pref_put_boolean">保存布尔值</string>
+    <string name="pref_put_boolean_desc">存储布尔值</string>
+    <string name="pref_get_boolean">读取布尔值</string>
+    <string name="pref_get_boolean_desc">获取存储的布尔值</string>
+    <string name="pref_remove">删除键</string>
+    <string name="pref_remove_desc">删除指定键值对</string>
+    <string name="pref_clear">清空所有</string>
+    <string name="pref_clear_desc">清除所有偏好设置</string>
+    <string name="pref_listener">注册监听器</string>
+    <string name="pref_listener_desc">监听偏好设置变化</string>
+    <string name="pref_commit_vs_apply">Commit vs Apply</string>
+    <string name="pref_commit_vs_apply_desc">对比同步和异步保存</string>
+    <string name="pref_export">导出到文件</string>
+    <string name="pref_export_desc">导出偏好设置到文件</string>
+    <string name="pref_import">从文件导入</string>
+    <string name="pref_import_desc">从文件导入偏好设置</string>
+
+    <!-- Scoped Storage Operations -->
+    <string name="scoped_pick_file">选择文件</string>
+    <string name="scoped_pick_file_desc">通过SAF选择文件</string>
+    <string name="scoped_create_doc">创建文档</string>
+    <string name="scoped_create_doc_desc">通过SAF创建新文档</string>
+    <string name="scoped_query_images">查询图片</string>
+    <string name="scoped_query_images_desc">使用MediaStore查询图片</string>
+    <string name="scoped_save_image">保存图片</string>
+    <string name="scoped_save_image_desc">保存图片到Pictures目录</string>
+    <string name="scoped_photo_picker">照片选择器</string>
+    <string name="scoped_photo_picker_desc">Android 13+ 照片选择器</string>
+    <string name="scoped_permission">请求权限</string>
+    <string name="scoped_permission_desc">请求读写存储权限</string>
+
+    <!-- Messages -->
+    <string name="msg_write_success">写入成功</string>
+    <string name="msg_read_success">读取成功</string>
+    <string name="msg_delete_success">删除成功</string>
+    <string name="msg_file_not_found">文件不存在</string>
+    <string name="msg_storage_unavailable">存储不可用</string>
+    <string name="msg_permission_required">需要存储权限</string>
+    <string name="msg_saved">已保存</string>
+    <string name="msg_cleared">已清空</string>
+    <string name="msg_listener_registered">监听器已注册</string>
+    <string name="msg_listener_unregistered">监听器已注销</string>
+    <string name="msg_export_success">导出成功</string>
+    <string name="msg_import_success">导入成功</string>
+
+    <!-- Labels -->
+    <string name="label_result">结果</string>
+    <string name="label_files">文件列表</string>
+    <string name="label_no_files">暂无文件</string>
+    <string name="label_file_name">文件名</string>
+    <string name="label_file_size">文件大小</string>
+    <string name="label_file_path">文件路径</string>
+    <string name="label_content">内容</string>
+    <string name="label_key">键</string>
+    <string name="label_value">值</string>
+    <string name="label_input">输入</string>
+</resources>

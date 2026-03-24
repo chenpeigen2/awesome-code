@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- 文件夹图标 -->
+    <group
+        android:translateX="24"
+        android:translateY="30">
+        <!-- 文件夹主体 -->
+        <path
+            android:pathData="M0,8h24l8,8h32c4.4,0 8,3.6 8,8v28c0,4.4 -3.6,8 -8,8h-56c-4.4,0 -8,-3.6 -8,-8v-36c0,-4.4 3.6,-8 8,-8z"
+            android:fillColor="#FFFFFF"/>
+        <!-- 文件图标 -->
+        <group
+            android:translateX="20"
+            android:translateY="18">
+            <path
+                android:pathData="M4,0h20l8,8v28c0,2.2 -1.8,4 -4,4h-24c-2.2,0 -4,-1.8 -4,-4v-32c0,-2.2 1.8,-4 4,-4z"
+                android:fillColor="#6750A4"/>
+            <!-- 文件内容线条 -->
+            <path
+                android:pathData="M10,16h20c1.1,0 2,0.9 2,2s-0.9,2 -2,2h-20c-1.1,0 -2,-0.9 -2,-2s0.9,-2 2,-2z"
+                android:fillColor="#FFFFFF"/>
+            <path
+                android:pathData="M10,24h16c1.1,0 2,0.9 2,2s-0.9,2 -2,2h-16c-1.1,0 -2,-0.9 -2,-2s0.9,-2 2,-2z"
+                android:fillColor="#FFFFFF"/>
+        </group>
+    </group>
+
+</vector>

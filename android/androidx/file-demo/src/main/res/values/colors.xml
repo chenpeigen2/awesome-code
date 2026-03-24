@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Material 3 风格配色 -->
+    <color name="primary">#6750A4</color>
+    <color name="primary_container">#EADDFF</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="on_primary_container">#21005D</color>
+
+    <color name="secondary">#625B71</color>
+    <color name="secondary_container">#E8DEF8</color>
+    <color name="on_secondary">#FFFFFF</color>
+    <color name="on_secondary_container">#1D192B</color>
+
+    <color name="tertiary">#7D5260</color>
+    <color name="tertiary_container">#FFD8E4</color>
+
+    <color name="surface">#FFFBFE</color>
+    <color name="surface_variant">#E7E0EC</color>
+    <color name="on_surface">#1C1B1F</color>
+    <color name="on_surface_variant">#49454F</color>
+
+    <color name="outline">#79747E</color>
+    <color name="outline_variant">#CAC4D0</color>
+
+    <color name="background">#FFFBFE</color>
+    <color name="on_background">#1C1B1F</color>
+
+    <!-- Tab 主题色 -->
+    <!-- Internal Tab - 紫色 -->
+    <color name="tab_internal">#6750A4</color>
+    <color name="tab_internal_container">#EADDFF</color>
+
+    <!-- External Tab - 蓝色 -->
+    <color name="tab_external">#0061A4</color>
+    <color name="tab_external_container">#D1E4FF</color>
+
+    <!-- Preferences Tab - 绿色 -->
+    <color name="tab_preferences">#386A20</color>
+    <color name="tab_preferences_container">#E8F5E9</color>
+
+    <!-- Scoped Tab - 橙色 -->
+    <color name="tab_scoped">#B3261E</color>
+    <color name="tab_scoped_container">#FFDAD6</color>
+
+    <!-- 权限状态 -->
+    <color name="permission_granted">#386A20</color>
+    <color name="permission_denied">#BA1A1A</color>
+    <color name="permission_background">#E8F5E9</color>
+    <color name="permission_denied_background">#FFEBEE</color>
+
+    <!-- 灰色系 -->
+    <color name="gray_200">#E5E7EB</color>
+    <color name="gray_300">#D1D5DB</color>
+    <color name="gray_500">#6B7280</color>
+    <color name="gray_700">#374151</color>
+
+    <!-- 绿色/红色系 -->
+    <color name="green_500">#22C55E</color>
+    <color name="red_500">#EF4444</color>
+
+    <!-- 基础色 -->
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="transparent">#00000000</color>
+</resources>
