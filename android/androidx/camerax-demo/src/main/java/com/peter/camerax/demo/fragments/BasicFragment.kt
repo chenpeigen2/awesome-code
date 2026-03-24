@@ -101,11 +101,8 @@ class BasicFragment : Fragment() {
     private fun handleOperation(type: CameraOperationType) {
         val mainActivity = requireActivity() as MainActivity
 
-        // Debug: show click is registered
-        showMessage("Clicked: ${type.name}")
-
         if (!mainActivity.hasCameraPermission()) {
-            showMessage("Requesting camera permission...")
+            showMessage(getString(R.string.permission_denied_msg))
             mainActivity.requestCameraPermission()
             return
         }
