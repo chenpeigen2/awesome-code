@@ -106,6 +106,9 @@ include(":camerax-demo")
 // StatusBar Demo - 状态栏示例
 include(":statusbar-demo")
 
+// SystemInfo Demo - 系统信息示例
+include(":systeminfo-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")

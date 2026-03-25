@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SystemInfo Demo</string>
+
+    <!-- Tab titles -->
+    <string name="tab_display">显示</string>
+    <string name="tab_battery">电池</string>
+    <string name="tab_system">系统</string>
+    <string name="tab_font">字体</string>
+</resources>
