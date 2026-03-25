@@ -109,6 +109,9 @@ include(":statusbar-demo")
 // SystemInfo Demo - 系统信息示例
 include(":systeminfo-demo")
 
+// ListView Demo - ListView 与 Adapter 示例
+include(":listview-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")

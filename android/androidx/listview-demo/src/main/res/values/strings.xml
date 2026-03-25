@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ListView Demo</string>
+
+    <!-- Tab titles -->
+    <string name="tab_array_adapter">ArrayAdapter</string>
+    <string name="tab_base_adapter">BaseAdapter</string>
+    <string name="tab_cursor_adapter">CursorAdapter</string>
+    <string name="tab_advanced">进阶功能</string>
+
+    <!-- Menu IDs -->
+    <string name="nav_array_adapter">ArrayAdapter</string>
+    <string name="nav_base_adapter">BaseAdapter</string>
+    <string name="nav_cursor_adapter">CursorAdapter</string>
+    <string name="nav_advanced">进阶</string>
+
+    <!-- Empty state -->
+    <string name="empty_list">暂无数据</string>
+    <string name="empty_list_hint">下拉刷新重新加载</string>
+
+    <!-- Load more -->
+    <string name="loading">加载中...</string>
+    <string name="load_more">加载更多</string>
+    <string name="load_complete">加载完成</string>
+    <string name="load_failed">加载失败</string>
+    <string name="no_more_data">没有更多数据了</string>
+    <string name="delete_contact">已删除联系人</string>
+    <string name="search_hint">搜索联系人...</string>
+
+    <!-- ArrayAdapter section -->
+    <string name="array_adapter_basic">基础 ArrayAdapter</string>
+    <string name="array_adapter_custom">自定义布局</string>
+    <string name="simple_adapter">SimpleAdapter</string>
+    <string name="simple_adapter_view_binder">ViewBinder</string>
+
+    <!-- BaseAdapter section -->
+    <string name="base_adapter_basic">BaseAdapter 基础</string>
+    <string name="view_holder_pattern">ViewHolder 模式</string>
+    <string name="multi_type_adapter">多类型 Item</string>
+    <string name="optimization_tips">优化技巧</string>
+
+    <!-- CursorAdapter section -->
+    <string name="add_contact">添加联系人</string>
+    <string name="delete">删除</string>
+    <string name="contact_name">姓名</string>
+    <string name="contact_phone">电话</string>
+
+    <!-- Advanced section -->
+    <string name="pull_refresh">下拉刷新</string>
+    <string name="load_more_footer">上拉加载</string>
+    <string name="header_footer">Header/Footer</string>
+    <string name="grouped_list">分组列表</string>
+</resources>

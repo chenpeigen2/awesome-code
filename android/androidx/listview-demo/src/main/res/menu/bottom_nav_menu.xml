@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_array_adapter"
+        android:icon="@drawable/ic_tab_list"
+        android:title="@string/tab_array_adapter" />
+    <item
+        android:id="@+id/nav_base_adapter"
+        android:icon="@drawable/ic_tab_code"
+        android:title="@string/tab_base_adapter" />
+    <item
+        android:id="@+id/nav_cursor_adapter"
+        android:icon="@drawable/ic_tab_database"
+        android:title="@string/tab_cursor_adapter" />
+    <item
+        android:id="@+id/nav_advanced"
+        android:icon="@drawable/ic_tab_advanced"
+        android:title="@string/tab_advanced" />
+</menu>
