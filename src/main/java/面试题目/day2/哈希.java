@@ -54,13 +54,10 @@ public class 哈希 {
     public int longestConsecutive(int[] nums) {
         // 对数组进行排序，以便后续判断连续性
         Arrays.sort(nums);
-        
         // 边界条件：如果数组为空，最长连续序列长度为 0
         if (nums.length == 0) return 0;
-        
         // 初始化结果为 1，因为非空数组至少有一个元素
         int result = 1;
-        
         // 遍历数组，i 从 1 开始
         // count: 当前连续序列的长度
         // prev: 记录上一个处理的数字，用于判断是否连续

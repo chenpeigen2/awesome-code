@@ -1,5 +1,7 @@
 package 面试题目.day2;
 
+import 面试题目.DoubleCheck;
+
 import java.util.*;
 
 public class 链表 {
@@ -362,6 +364,7 @@ public class 链表 {
     }
 
     // https://leetcode.cn/problems/swap-nodes-in-pairs/submissions/696339023/?envType=study-plan-v2&envId=top-100-liked
+    @DoubleCheck
     public ListNode swapPairs(ListNode head) {
         // 递归终止条件：如果链表为空或只有一个节点，无需交换，直接返回
         if (head == null || head.next == null) {
@@ -372,7 +375,7 @@ public class 链表 {
         ListNode next = head.next;
 
         // 递归处理从第三个节点开始的剩余链表，并将结果连接到第一个节点后面
-        head.next = swapPairs(next.next);
+        head.next = swapPairs(next.next); // **** 注意一下
 
         // 将第二个节点指向第一个节点，完成相邻两个节点的交换
         next.next = head;

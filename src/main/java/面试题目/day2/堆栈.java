@@ -1,5 +1,6 @@
 package 面试题目.day2;
 
+import 面试题目.DoubleCheck;
 import 面试题目.Important;
 import 面试题目.NeedDeepLearn;
 import 面试题目.Tested;
@@ -40,6 +41,7 @@ public class 堆栈 {
      */
     @NeedDeepLearn
     @Important
+    @Deprecated
     public String decodeString(String s) {
         // 初始化两个栈：数字栈存储重复次数，字符串栈存储历史字符串
         Deque<Integer> numStack = new ArrayDeque<>();
@@ -108,6 +110,7 @@ public class 堆栈 {
      * @return 每日等待更高温度的天数数组
      */
     @Tested("xhs")
+    @DoubleCheck
     public int[] dailyTemperatures(int[] temperatures) {
         int n = temperatures.length;
         // 初始化结果数组，默认值为0

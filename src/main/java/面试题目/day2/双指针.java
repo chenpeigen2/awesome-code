@@ -1,5 +1,7 @@
 package 面试题目.day2;
 
+import 面试题目.DoubleCheck;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +69,7 @@ public class 双指针 {
      * @param nums 输入的整数数组
      * @return 包含所有不重复三元组的列表，每个三元组的和为 0
      */
+    @DoubleCheck
     public List<List<Integer>> threeSum(int[] nums) {
         // 获取数组长度
         int n = nums.length;
