@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">状态栏示例</string>
+
+    <!-- Tab 标题 -->
+    <string name="tab_color">颜色</string>
+    <string name="tab_immersive">沉浸式</string>
+    <string name="tab_icon">图标</string>
+    <string name="tab_hide">隐藏</string>
+    <string name="tab_notch">刘海屏</string>
+
+    <!-- 颜色 Fragment -->
+    <string name="color_title">状态栏颜色</string>
+    <string name="color_description">设置状态栏背景颜色</string>
+    <string name="color_change">更改颜色</string>
+    <string name="color_gradient">渐变效果</string>
+    <string name="color_transparent">透明状态栏</string>
+    <string name="color_transparent_desc">状态栏透明，内容延伸到状态栏下方</string>
+    <string name="color_solid">纯色状态栏</string>
+    <string name="color_solid_desc">状态栏使用指定颜色</string>
+    <string name="color_current">当前状态栏颜色</string>
+
+    <!-- 沉浸式 Fragment -->
+    <string name="immersive_title">沉浸式模式</string>
+    <string name="immersive_description">让内容延伸到系统栏后面</string>
+    <string name="immersive_standard">标准沉浸式</string>
+    <string name="immersive_standard_desc">内容延伸到状态栏下方，使用 fitsSystemWindows</string>
+    <string name="immersive_full">全屏沉浸式</string>
+    <string name="immersive_full_desc">内容完全延伸到状态栏和导航栏后面</string>
+    <string name="immersive_edge_to_edge">Edge-to-Edge</string>
+    <string name="immersive_edge_to_edge_desc">Android 15 推荐的边到边显示模式</string>
+    <string name="immersive_drawer">侧滑返回手势</string>
+    <string name="immersive_drawer_desc">配置状态栏区域的侧滑手势</string>
+
+    <!-- 图标 Fragment -->
+    <string name="icon_title">状态栏图标</string>
+    <string name="icon_description">控制状态栏图标和文字的颜色</string>
+    <string name="icon_light">浅色图标</string>
+    <string name="icon_light_desc">适用于深色状态栏背景</string>
+    <string name="icon_dark">深色图标</string>
+    <string name="icon_dark_desc">适用于浅色状态栏背景</string>
+    <string name="icon_auto">自动适配</string>
+    <string name="icon_auto_desc">根据背景颜色自动选择图标颜色</string>
+
+    <!-- 隐藏 Fragment -->
+    <string name="hide_title">隐藏状态栏</string>
+    <string name="hide_description">控制状态栏的显示和隐藏</string>
+    <string name="hide_temporary">临时隐藏</string>
+    <string name="hide_temporary_desc">滑动边缘或触摸屏幕恢复显示</string>
+    <string name="hide_permanent">永久隐藏</string>
+    <string name="hide_permanent_desc">完全隐藏状态栏，用户无法显示</string>
+    <string name="hide_low_profile">低调模式</string>
+    <string name="hide_low_profile_desc">状态栏图标变暗，不占用空间</string>
+    <string name="hide_fullscreen">全屏模式</string>
+    <string name="hide_fullscreen_desc">进入沉浸式全屏体验</string>
+    <string name="hide_show">显示状态栏</string>
+
+    <!-- 刘海屏 Fragment -->
+    <string name="notch_title">刘海屏适配</string>
+    <string name="notch_description">处理刘海屏和挖孔屏的安全区域</string>
+    <string name="notch_info">刘海屏信息</string>
+    <string name="notch_info_desc">获取刘海屏的位置和大小信息</string>
+    <string name="notch_layout">布局适配</string>
+    <string name="notch_layout_desc">使用 WindowInsets 处理刘海区域</string>
+    <string name="notch_padding">安全区域边距</string>
+    <string name="notch_padding_desc">为刘海区域添加额外的 padding</string>
+    <string name="notch_short_edges">短边模式</string>
+    <string name="notch_short_edges_desc">允许内容渲染到刘海区域</string>
+
+    <!-- 通用 -->
+    <string name="status_bar_height">状态栏高度: %d px</string>
+    <string name="action_apply">应用</string>
+    <string name="action_reset">重置</string>
+    <string name="msg_applied">已应用</string>
+    <string name="msg_reset">已重置</string>
+
+    <!-- 刘海屏信息 -->
+    <string name="notch_has_notch">设备有刘海屏: %s</string>
+    <string name="notch_count">刘海数量: %d</string>
+    <string name="notch_bounds">刘海边界: %s</string>
+    <string name="notch_safe_inset_top">顶部安全距离: %d px</string>
+    <string name="notch_safe_inset_bottom">底部安全距离: %d px</string>
+    <string name="notch_safe_inset_left">左侧安全距离: %d px</string>
+    <string name="notch_safe_inset_right">右侧安全距离: %d px</string>
+</resources>

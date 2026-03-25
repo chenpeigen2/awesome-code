@@ -103,6 +103,9 @@ include(":sensor-demo")
 // CameraX Demo - CameraX 相机示例
 include(":camerax-demo")
 
+// StatusBar Demo - 状态栏示例
+include(":statusbar-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")
