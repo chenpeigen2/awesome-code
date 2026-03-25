@@ -130,14 +130,17 @@ dependencies {
 | 功能 | 说明 | 实现方式 |
 |------|------|----------|
 | CursorAdapter 基础 | SQLite 数据绑定 | `CursorAdapter` / `newView()` / `bindView()` |
-| CursorLoader | 异步加载自动更新 | `LoaderManager` + `CursorLoader` |
-| 搜索过滤 | SearchView 过滤 | `setFilterQueryProvider()` |
-| 数据 CRUD | 增删改刷新 | ContentProvider 或直接 SQLite |
+| 异步加载 | Coroutines + LiveData | `viewModelScope` + `liveData` builder |
+| 搜索过滤 | SearchView 过滤 | `setFilterQueryProvider()` + Coroutines |
+| 数据 CRUD | 增删改刷新 | SQLite + `swapCursor()` 刷新 |
 
 **简化实现**：
 - 使用简单 SQLite 表（如：`users` 表：`_id`, `name`, `phone`）
-- 通过 `ViewModel` 管理数据库操作
+- 通过 `CursorAdapterViewModel` 管理数据库操作
 - 使用 Coroutines 进行异步数据库访问
+- 通过 `MutableLiveData<Cursor>` 驱动 UI 更新
+
+**注意**：`LoaderManager/CursorLoader` 已在 API 28 废弃，本示例使用 Coroutines + LiveData 替代，更符合现代 Android 开发实践。
 
 ---
 
@@ -180,9 +183,14 @@ ViewModel (LiveData<List<T>>)
 | 组件 | 职责 |
 |------|------|
 | `BaseListFragment` | Fragment 基类，封装 EmptyView 设置、列表初始化 |
-| `ListViewModel` | 管理 Tab 对应的列表数据，提供 LiveData |
+| `ListViewDemoViewModel` | 共享 ViewModel，管理所有 Tab 的列表数据 |
 | `EmptyView` | 空数据占位视图，支持自定义图标和文字 |
 | `LoadingFooter` | 上拉加载 Footer，显示加载中/加载完成/加载失败 |
+
+**ViewModel 数据管理**：
+- 单个共享 `ListViewDemoViewModel` 管理所有 Tab 数据
+- 每个 Tab 对应一个 `LiveData<List<T>>` 或 `LiveData<Cursor>`
+- Fragment 通过 `by activityViewModels()` 共享 ViewModel 实例
 
 ## 技术细节与注意事项
 
@@ -252,3 +260,70 @@ listView.setOnScrollListener(object : AbsListView.OnScrollListener {
 3. CursorAdapter 功能正常，支持搜索和刷新
 4. 下拉刷新和上拉加载流畅无卡顿
 5. 分组列表滚动流畅，快速定位正常工作
+
+## 附录：资源文件内容
+
+### bottom_nav_menu.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_array_adapter"
+        android:icon="@drawable/ic_array_adapter"
+        android:title="@string/tab_array_adapter" />
+    <item
+        android:id="@+id/nav_base_adapter"
+        android:icon="@drawable/ic_base_adapter"
+        android:title="@string/tab_base_adapter" />
+    <item
+        android:id="@+id/nav_cursor_adapter"
+        android:icon="@drawable/ic_cursor_adapter"
+        android:title="@string/tab_cursor_adapter" />
+    <item
+        android:id="@+id/nav_advanced"
+        android:icon="@drawable/ic_advanced"
+        android:title="@string/tab_advanced" />
+</menu>
+```
+
+### strings.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ListView Demo</string>
+
+    <!-- Tab titles -->
+    <string name="tab_array_adapter">ArrayAdapter</string>
+    <string name="tab_base_adapter">BaseAdapter</string>
+    <string name="tab_cursor_adapter">CursorAdapter</string>
+    <string name="tab_advanced">进阶功能</string>
+
+    <!-- Empty state -->
+    <string name="empty_list">暂无数据</string>
+    <string name="empty_list_hint">点击刷新按钮重新加载</string>
+
+    <!-- Load more -->
+    <string name="loading">加载中...</string>
+    <string name="load_more">加载更多</string>
+    <string name="load_complete">加载完成</string>
+    <string name="load_failed">加载失败，点击重试</string>
+    <string name="no_more_data">没有更多数据了</string>
+</resources>
+```
+
+### colors.xml
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#1976D2</color>
+    <color name="primary_dark">#1565C0</color>
+    <color name="accent">#03DAC6</color>
+    <color name="background">#FAFAFA</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+</resources>
+```
