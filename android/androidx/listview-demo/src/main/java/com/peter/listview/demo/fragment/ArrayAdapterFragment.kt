@@ -43,8 +43,8 @@ class ArrayAdapterFragment : Fragment() {
     }
 
     private fun setupArrayAdapter() {
-        // ArrayAdapter 基础示例
-        val items = listOf(
+        // ArrayAdapter 基础示例 - 使用 mutableListOf 创建可变列表
+        val items = mutableListOf(
             "Android", "iOS", "Windows", "macOS", "Linux", "Chrome OS"
         )
         arrayAdapter = SimpleArrayAdapter(

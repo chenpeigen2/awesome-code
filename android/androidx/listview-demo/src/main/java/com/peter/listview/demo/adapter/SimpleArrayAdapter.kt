@@ -23,7 +23,7 @@ import com.peter.listview.demo.R
 class SimpleArrayAdapter(
     context: Context,
     resource: Int,
-    objects: List<String>
+    objects: MutableList<String>
 ) : ArrayAdapter<String>(context, resource, objects) {
 
     /**
