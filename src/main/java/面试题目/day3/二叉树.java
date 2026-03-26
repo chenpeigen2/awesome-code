@@ -26,24 +26,22 @@ public class 二叉树 {
     }
 
     // 二叉树的中序遍历，非递归实现
+    // https://leetcode.cn/problems/binary-tree-inorder-traversal/description/?envType=study-plan-v2&envId=top-100-liked
     public List<Integer> inorderTraversal(TreeNode root) {
-        List<Integer> result = new ArrayList<>();
-        if (root == null) {
-            return result;
-        }
+        List<Integer> ans = new ArrayList<>();
 
-        Stack<TreeNode> stack = new Stack<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
         TreeNode current = root;
-        while (current != null || !stack.empty()) {
+        while (current != null || !stack.isEmpty()) {
             while (current != null) {
                 stack.push(current);
                 current = current.left;
             }
-            result.add(stack.peek().val);
+            ans.add(stack.peek().val);
             current = stack.pop().right;
         }
 
-        return result;
+        return ans;
     }
 
     void middleOrder(TreeNode node, List<Integer> ans) {
@@ -101,6 +99,7 @@ public class 二叉树 {
 
     // root -> left -> right
     // root -> right -> left
+    // left -> right -> root
     // 双栈实现
     // 好像可以前序遍历之后 翻转过来就行
     public List<Integer> postorderTraversal(TreeNode root) {
@@ -220,7 +219,7 @@ public class 二叉树 {
     // https://leetcode.cn/problems/diameter-of-binary-tree/?envType=study-plan-v2&envId=top-100-liked
     public int diameterOfBinaryTree(TreeNode root) {
         depth(root);
-        return ans - 1; // core
+        return ans - 1; // 我们计算的是多少个节点，结果返回的是几条边
     }
 
     /**
