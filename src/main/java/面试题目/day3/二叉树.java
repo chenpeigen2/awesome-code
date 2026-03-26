@@ -1,5 +1,6 @@
 package 面试题目.day3;
 
+import 面试题目.DoubleCheck;
 import 面试题目.Important;
 
 import java.util.*;
@@ -399,6 +400,7 @@ public class 二叉树 {
      * @param root 二叉树的根节点
      */
     @Important("Important")
+    @DoubleCheck
     // https://leetcode.cn/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-100-liked
     public void flatten(TreeNode root) {
         // 迭代处理每个节点，将其展开为右链表
@@ -550,6 +552,7 @@ public class 二叉树 {
      * @param q    目标节点q
      * @return p和q的最近公共祖先节点
      */
+    @DoubleCheck
     // https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/?envType=study-plan-v2&envId=top-100-liked
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         // 递归终止条件：

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rust 从简单到复杂 Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- 侧边栏导航 -->
+        <nav class="sidebar">
+            <div class="logo">
+                <span class="logo-icon">🦀</span>
+                <span class="logo-text">Rust Demo</span>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 1: 基础</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="1" data-demo="variables" class="nav-link active">
+                        <span class="nav-icon">📝</span>变量与常量
+                    </a></li>
+                    <li><a href="#" data-level="1" data-demo="types" class="nav-link">
+                        <span class="nav-icon">🔢</span>数据类型
+                    </a></li>
+                    <li><a href="#" data-level="1" data-demo="strings" class="nav-link">
+                        <span class="nav-icon">📄</span>字符串操作
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 2: 函数</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="2" data-demo="functions" class="nav-link">
+                        <span class="nav-icon">⚡</span>函数定义
+                    </a></li>
+                    <li><a href="#" data-level="2" data-demo="control_flow" class="nav-link">
+                        <span class="nav-icon">🔀</span>控制流
+                    </a></li>
+                    <li><a href="#" data-level="2" data-demo="loops" class="nav-link">
+                        <span class="nav-icon">🔄</span>循环
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 3: 所有权</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="3" data-demo="ownership" class="nav-link">
+                        <span class="nav-icon">🏠</span>所有权规则
+                    </a></li>
+                    <li><a href="#" data-level="3" data-demo="borrowing" class="nav-link">
+                        <span class="nav-icon">📚</span>借用引用
+                    </a></li>
+                    <li><a href="#" data-level="3" data-demo="lifetimes" class="nav-link">
+                        <span class="nav-icon">⏱️</span>生命周期
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 4: 结构体</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="4" data-demo="structs" class="nav-link">
+                        <span class="nav-icon">📦</span>结构体
+                    </a></li>
+                    <li><a href="#" data-level="4" data-demo="enums" class="nav-link">
+                        <span class="nav-icon">🎯</span>枚举
+                    </a></li>
+                    <li><a href="#" data-level="4" data-demo="pattern_matching" class="nav-link">
+                        <span class="nav-icon">🧩</span>模式匹配
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 5: Trait</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="5" data-demo="traits" class="nav-link">
+                        <span class="nav-icon">🏷️</span>Trait定义
+                    </a></li>
+                    <li><a href="#" data-level="5" data-demo="generics" class="nav-link">
+                        <span class="nav-icon">📐</span>泛型
+                    </a></li>
+                    <li><a href="#" data-level="5" data-demo="trait_bounds" class="nav-link">
+                        <span class="nav-icon">🔗</span>Trait Bounds
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 6: 错误处理</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="6" data-demo="result" class="nav-link">
+                        <span class="nav-icon">✅</span>Result类型
+                    </a></li>
+                    <li><a href="#" data-level="6" data-demo="option" class="nav-link">
+                        <span class="nav-icon">❓</span>Option类型
+                    </a></li>
+                    <li><a href="#" data-level="6" data-demo="custom_errors" class="nav-link">
+                        <span class="nav-icon">⚠️</span>自定义错误
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 7: 集合</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="7" data-demo="vectors" class="nav-link">
+                        <span class="nav-icon">📊</span>Vector
+                    </a></li>
+                    <li><a href="#" data-level="7" data-demo="hashmaps" class="nav-link">
+                        <span class="nav-icon">🗺️</span>HashMap
+                    </a></li>
+                    <li><a href="#" data-level="7" data-demo="iterators" class="nav-link">
+                        <span class="nav-icon">🔁</span>迭代器
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 8: 并发</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="8" data-demo="threads" class="nav-link">
+                        <span class="nav-icon">🧵</span>线程
+                    </a></li>
+                    <li><a href="#" data-level="8" data-demo="channels" class="nav-link">
+                        <span class="nav-icon">📡</span>通道
+                    </a></li>
+                    <li><a href="#" data-level="8" data-demo="async" class="nav-link">
+                        <span class="nav-icon">⚡</span>异步编程
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 9: 文件</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="9" data-demo="file_io" class="nav-link">
+                        <span class="nav-icon">📁</span>文件操作
+                    </a></li>
+                    <li><a href="#" data-level="9" data-demo="json" class="nav-link">
+                        <span class="nav-icon">📋</span>JSON序列化
+                    </a></li>
+                    <li><a href="#" data-level="9" data-demo="path_operations" class="nav-link">
+                        <span class="nav-icon">📂</span>路径处理
+                    </a></li>
+                </ul>
+            </div>
+
+            <div class="nav-section">
+                <h3 class="nav-title">Level 10: 实战</h3>
+                <ul class="nav-list">
+                    <li><a href="#" data-level="10" data-demo="api_client" class="nav-link">
+                        <span class="nav-icon">🌐</span>API客户端
+                    </a></li>
+                    <li><a href="#" data-level="10" data-demo="cache" class="nav-link">
+                        <span class="nav-icon">💾</span>缓存系统
+                    </a></li>
+                    <li><a href="#" data-level="10" data-demo="state_machine" class="nav-link">
+                        <span class="nav-icon">⚙️</span>状态机
+                    </a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- 主内容区 -->
+        <main class="main-content">
+            <header class="header">
+                <h1 class="page-title" id="pageTitle">
+                    <span class="level-badge">Level 1</span>
+                    Rust 变量与常量
+                </h1>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" id="refreshBtn">
+                        <span>🔄</span> 刷新
+                    </button>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- 加载状态 -->
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>加载中...</p>
+                </div>
+
+                <!-- 内容区域 -->
+                <div class="demo-content" id="demoContent" style="display: none;">
+                    <!-- 动态内容 -->
+                </div>
+
+                <!-- 欢迎页面 -->
+                <div class="welcome" id="welcomePage">
+                    <div class="welcome-hero">
+                        <span class="welcome-icon">🦀</span>
+                        <h2>欢迎来到 Rust 学习 Demo</h2>
+                        <p>这是一个从简单到复杂的 Rust 学习教程，通过交互式示例帮助你掌握 Rust 语言。</p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <span class="feature-icon">📚</span>
+                            <h3>10个学习级别</h3>
+                            <p>从基础变量到高级并发，循序渐进</p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">💻</span>
+                            <h3>代码示例</h3>
+                            <p>每个概念都有详细的代码示例和解释</p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">🎯</span>
+                            <h3>实时运行</h3>
+                            <p>点击导航查看 Rust 代码的实际运行结果</p>
+                        </div>
+                        <div class="feature-card">
+                            <span class="feature-icon">💡</span>
+                            <h3>最佳实践</h3>
+                            <p>学习 Rust 社区推荐的最佳实践</p>
+                        </div>
+                    </div>
+
+                    <div class="getting-started">
+                        <h3>🚀 开始学习</h3>
+                        <p>从左侧导航栏选择一个主题开始你的 Rust 学习之旅！</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/@tauri-apps/api@2.0.0/dist/tauri.umd.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

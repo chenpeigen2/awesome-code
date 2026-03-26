@@ -1,0 +1,12 @@
+{
+  "name": "rust-tauri-demo-ui",
+  "version": "1.0.0",
+  "description": "Rust 学习 Demo 前端界面",
+  "scripts": {
+    "dev": "npx http-server -p 5173 -c-1",
+    "build": "echo 'No build step required for static files'"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

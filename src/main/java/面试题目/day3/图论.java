@@ -1,5 +1,8 @@
 package 面试题目.day3;
 
+import 面试题目.DoubleCheck;
+import 面试题目.NeedDeepLearn;
+
 import java.util.*;
 
 public class 图论 {
@@ -155,6 +158,7 @@ public class 图论 {
      * @param prerequisites 先修课程关系数组，每个元素 [a,b] 表示学习课程 a 前必须先完成课程 b
      * @return 如果可以完成所有课程返回 true，否则返回 false
      */
+    @DoubleCheck
     public boolean canFinish(int numCourses, int[][] prerequisites) {
 
         List<List<Integer>> edges; // 邻接表
@@ -170,7 +174,7 @@ public class 图论 {
         indeg = new int[numCourses];
 
         // 构建图结构：对于每个先修关系 [a,b]，添加从 b 到 a 的边，并增加 a 的入度
-        // b ---> a
+        // b(1) ---> a(0)
         for (int[] info : prerequisites) {
             edges.get(info[1]).add(info[0]);  // 课程 info[1] 是 info[0] 的先修课程
             indeg[info[0]]++;                 // 课程 info[0] 的入度加1
@@ -217,6 +221,7 @@ public class 图论 {
  * 实现前缀树(Trie)数据结构
  * 用于高效存储和检索字符串集合中的键
  */
+@DoubleCheck
 class Trie {
     // 子节点数组，每个索引对应一个字母(a-z)
     Trie[] children;
