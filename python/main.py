@@ -1,15 +1,17 @@
-# This is a sample Python script.
+"""
+Awesome Python - 主入口模块
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+这是一个 Python 学习示例集合的主入口。
+"""
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+__version__ = "0.1.0"
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+def main() -> None:
+    """主函数入口"""
+    print(f"Awesome Python v{__version__}")
+    print("使用 --help 查看可用命令")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+if __name__ == "__main__":
+    main()

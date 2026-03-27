@@ -1,11 +1,13 @@
 [project]
-name = "python"
+name = "awesome-python"
 version = "0.1.0"
-description = "Add your description here"
+description = "Python 学习示例集合 - 包含基础语法、内置函数、面向对象、多线程、正则表达式、PyTorch 等示例"
 readme = "README.md"
 requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "chenpeigen" }]
+keywords = ["python", "learning", "examples", "pytorch", "tutorial"]
 dependencies = [
-    "iflow-cli-sdk>=0.2.1",
     "pandas>=3.0.0",
     "numpy>=2.0.0",
     "matplotlib>=3.9.0",
@@ -13,4 +15,20 @@ dependencies = [
     "torchvision>=0.20.0",
     "Pillow>=11.0.0",
     "typer>=0.15.0",
+    "openpyxl>=3.1.0",
 ]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0", "ruff>=0.4.0", "mypy>=1.10.0"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
