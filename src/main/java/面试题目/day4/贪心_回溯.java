@@ -2,6 +2,7 @@ package 面试题目.day4;
 
 import java.util.*;
 
+// 4 + 3
 public class 贪心_回溯 {
 
     // https://leetcode.cn/problems/best-time-to-buy-and-sell-stock/?envType=study-plan-v2&envId=top-100-liked
@@ -61,7 +62,7 @@ public class 贪心_回溯 {
         // 当遍历到end位置时，说明需要进行下一次跳跃
         int end = 0;
         // 遍历数组，不需要遍历到最后一个元素（因为到达最后一个位置后不需要再跳跃）
-        for (int i = 0; i < nums.length - 1; i++) { // 这个要注意，走1部不需要jump兄弟
+        for (int i = 0; i < nums.length - 1 /* 需要关注点 */; i++) { // 这个要注意，走1部不需要jump兄弟
             // 更新当前能够到达的最远位置
             maxJump = Math.max(maxJump, i + nums[i]); // 不能放到后面
             // 如果遍历到了上一次跳跃的边界位置
@@ -211,7 +212,7 @@ public class 贪心_回溯 {
             stack.push(nums[i]);
             // 递归处理下一个位置，深度加1
             // i+1确保不会重复选择同一个元素
-            backTrack02(i + 1, stack, depth + 1, ans, nums);
+            backTrack02(i + 1 /* attention */, stack, depth + 1, ans, nums);
             // 回溯：弹出刚才添加的元素，恢复栈的状态
             // 这样可以在同一层级尝试其他元素的选择
             stack.pop();
@@ -266,7 +267,7 @@ public class 贪心_回溯 {
             // 递归搜索，注意起始位置仍为i（允许重复使用同一元素）
             // 目标值减去当前选择的数字
             // 注意此时的depth 是 i ******
-            dfs(candidates, i, target - candidates[i], path, res);
+            dfs(candidates, i /* attention */, target - candidates[i], path, res);
             // 回溯：移除刚才添加的数字，恢复路径状态
             // 以便在同一层级尝试其他候选数字
             path.pop();
