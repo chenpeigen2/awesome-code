@@ -124,7 +124,7 @@ network-demo/
 [versions]
 retrofit = "2.11.0"
 okhttp = "4.12.0"
-coil = "2.7.0"
+coil = "2.7.0"   # 使用 Coil 2.x（View-based 兼容），非 Compose 项目无需 Coil 3.x
 
 [libraries]
 # Retrofit
@@ -140,15 +140,35 @@ okhttp-mockwebserver = { module = "com.squareup.okhttp3:mockwebserver", version.
 coil = { module = "io.coil-kt:coil", version.ref = "coil" }
 ```
 
-模块 `build.gradle.kts` 额外依赖：
+模块 `build.gradle.kts` 完整依赖：
 ```kotlin
-// Network
-implementation(libs.retrofit)
-implementation(libs.retrofit.converter.gson)
-implementation(libs.okhttp)
-implementation(libs.okhttp.logging)
-debugImplementation(libs.okhttp.mockwebserver)
-implementation(libs.coil)
+dependencies {
+    // Core AndroidX
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.recyclerview)
+
+    // Lifecycle
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
+    // Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+
+    // Network
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.logging)
+    debugImplementation(libs.okhttp.mockwebserver)
+    implementation(libs.coil)
+}
 ```
 
 ## API 接口设计
@@ -176,9 +196,9 @@ interface JsonPlaceholderApi {
     @PUT("posts/{id}")
     suspend fun updatePost(@Path("id") id: Int, @Body post: Post): Post
 
-    // DELETE
+    // DELETE（返回 ResponseBody 避免解析空 body 报错）
     @DELETE("posts/{id}")
-    suspend fun deletePost(@Path("id") id: Int)
+    suspend fun deletePost(@Path("id") id: Int): ResponseBody
 
     // Header 演示
     @GET("posts")
@@ -232,17 +252,56 @@ data class Todo(
 ```kotlin
 sealed class NetworkResult<out T> {
     data class Success<T>(val data: T) : NetworkResult<T>()
-    data class Error(val code: Int?, val message: String) : NetworkResult<Nothing>()
+    data class Error(val code: Int? = null, val message: String, val throwable: Throwable? = null) : NetworkResult<Nothing>()
     data object Loading : NetworkResult<Nothing>()
 }
 ```
 
+## 数据流与 UI 交互
+
+```
+┌─────────────┐     ┌──────────────┐     ┌─────────────────┐     ┌───────────┐
+│  ViewModel   │────>│  LiveData /  │────>│    Fragment      │────>│ RecyclerView│
+│              │     │  StateFlow   │     │                  │     │  Adapter    │
+│ (coroutine)  │<────│  <NetworkResult>│   │ (observe + render)│    │             │
+└──────┬───────┘     └──────────────┘     └──────────────────┘    └───────────┘
+       │
+       │ Tab 1-3: 直接调用 API
+       │ Tab 4: 通过 Repository 调用
+       ▼
+┌──────────────┐
+│  Repository   │ (仅 Tab 4 使用，演示三层架构)
+└──────┬───────┘
+       │
+       ▼
+┌──────────────┐
+│  Retrofit API │
+└──────────────┘
+```
+
+**UI 状态处理**：每个 Fragment 统一处理三种状态：
+- `Loading`：显示 ProgressBar，隐藏内容
+- `Success`：显示数据内容，隐藏 ProgressBar
+- `Error`：显示错误信息，提供重试按钮
+
+**Tab 1-3**：ViewModel 直接调用 `ApiClient` 获取 Retrofit 实例发起请求
+**Tab 4**：ViewModel 通过 `PostRepository` 调用 API，演示 Repository 模式
+
+## MockWebServer 使用说明
+
+Tab 3 文件上传使用 MockWebServer 模拟服务端：
+- 仅在 `MediaFragment` 中按需启动/关闭，不使用 Application 类
+- 上传测试时，创建独立的 Retrofit 实例指向 MockWebServer 的 URL
+- MockWebServer 配置为接受任意请求并返回 200 成功响应
+- 不影响其他 Tab 使用真实 JSONPlaceholder API
+
 ## 构建配置
 
 遵循项目现有约定：
-- **SDK**：compileSdk=36, targetSdk=36, minSdk=33
+- **SDK**：通过版本目录引用 `libs.versions.compileSdk`、`libs.versions.compileSdkMinor`
 - **Java**：VERSION_11
 - **Kotlin**：JVM_11
 - **ViewBinding**：启用
+- **testInstrumentationRunner**：`androidx.test.runner.AndroidJUnitRunner`
 - **INTERNET 权限**：AndroidManifest 中声明
 - **模块注册**：在 `settings.gradle.kts` 中 `include(":network-demo")`
