@@ -1,0 +1,12 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`Bun 特性测试 支持 Snapshot 测试 1`] = `
+{
+  "features": [
+    "fast",
+    "sqlite",
+  ],
+  "name": "Bun",
+  "version": "1.x",
+}
+`;
