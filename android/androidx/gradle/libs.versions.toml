@@ -7,7 +7,7 @@ javapoet = "1.13.0"
 localbroadcastmanager = "1.1.0"
 media = "1.7.0"
 targetSdk = "37"
-minSdk = "33"
+minSdk = "34"
 
 # Compose BOM 版本
 composeBom = "2024.12.01"
