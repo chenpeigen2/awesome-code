@@ -40,11 +40,11 @@ export function StatsBar({ models, providers }: StatsBarProps) {
   ];
 
   return (
-    <div className="stats-bar">
+    <div className="flex bg-zinc-800 border-b border-zinc-700">
       {stats.map((s) => (
-        <div key={s.label} className="stat-item">
-          <span className="stat-value">{s.value}</span>
-          <span className="stat-label">{s.label}</span>
+        <div key={s.label} className="flex-1 flex flex-col items-center py-3 bg-zinc-900">
+          <span className="text-xl font-bold text-indigo-400">{s.value}</span>
+          <span className="text-xs text-zinc-500 mt-0.5">{s.label}</span>
         </div>
       ))}
     </div>

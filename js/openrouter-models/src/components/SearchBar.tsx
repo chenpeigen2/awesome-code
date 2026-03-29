@@ -5,8 +5,8 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <div className="search-bar">
-      <svg className="search-icon" viewBox="0 0 24 24" width="18" height="18">
+    <div className="flex items-center bg-zinc-800 border border-zinc-700 rounded-lg px-3 min-w-72 max-md:min-w-0">
+      <svg className="text-zinc-500 shrink-0" viewBox="0 0 24 24" width="18" height="18">
         <path
           fill="currentColor"
           d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"
@@ -17,9 +17,13 @@ export function SearchBar({ value, onChange }: SearchBarProps) {
         placeholder="Search models..."
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        className="flex-1 bg-transparent border-none outline-none text-zinc-200 text-sm px-2 py-2 placeholder-zinc-500"
       />
       {value && (
-        <button className="clear-btn" onClick={() => onChange("")}>
+        <button
+          className="text-zinc-500 hover:text-zinc-200 text-lg px-1 cursor-pointer"
+          onClick={() => onChange("")}
+        >
           &times;
         </button>
       )}
