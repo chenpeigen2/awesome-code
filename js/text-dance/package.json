@@ -1,0 +1,19 @@
+{
+  "name": "text-dance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@chenglou/pretext": "^0.0.3"
+  },
+  "devDependencies": {
+    "vite": "^8.0.3"
+  }
+}

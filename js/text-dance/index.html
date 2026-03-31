@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matrix - 矩阵雨</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #000;
+    overflow: hidden;
+    font-family: 'PingFang SC', 'Microsoft YaHei', monospace;
+    cursor: crosshair;
+  }
+  canvas {
+    display: block;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+  #overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 5;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%);
+  }
+  #scanlines {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 6;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.08) 2px,
+      rgba(0, 0, 0, 0.08) 4px
+    );
+  }
+  #controls {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 20;
+    align-items: center;
+  }
+  #controls input {
+    padding: 8px 14px;
+    border: 1px solid rgba(0, 255, 65, 0.25);
+    background: rgba(0, 0, 0, 0.6);
+    color: #00ff41;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 300px;
+    font-family: monospace;
+    outline: none;
+    backdrop-filter: blur(6px);
+  }
+  #controls input::placeholder { color: rgba(0, 255, 65, 0.3); }
+  #controls input:focus { border-color: rgba(0, 255, 65, 0.6); }
+  #controls button {
+    padding: 8px 16px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    background: rgba(0, 255, 65, 0.08);
+    color: #00ff41;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: monospace;
+    transition: all 0.2s;
+  }
+  #controls button:hover {
+    background: rgba(0, 255, 65, 0.2);
+    text-shadow: 0 0 8px #00ff41;
+  }
+  #stats {
+    position: fixed;
+    top: 12px;
+    right: 16px;
+    color: rgba(0, 255, 65, 0.4);
+    font: 12px monospace;
+    z-index: 10;
+    text-align: right;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+<canvas id="bg"></canvas>
+<canvas id="fg"></canvas>
+<div id="overlay"></div>
+<div id="scanlines"></div>
+<div id="stats">
+  <div id="fps"></div>
+  <div id="colCount"></div>
+</div>
+<div id="controls">
+  <input id="textInput" value="觉醒吧 矩阵无所不在" placeholder="输入文字注入矩阵..." />
+  <button id="injectBtn">[ 注入 ]</button>
+  <button id="modeBtn">[ 模式: 经典 ]</button>
+</div>
+
+<script type="module">
+import { prepareWithSegments, layoutWithLines, clearCache } from '@chenglou/pretext';
+
+// ========== Canvas Setup ==========
+const bgCanvas = document.getElementById('bg');
+const fgCanvas = document.getElementById('fg');
+const bgCtx = bgCanvas.getContext('2d');
+const fgCtx = fgCanvas.getContext('2d');
+let W, H, dpr;
+
+function resize() {
+  dpr = window.devicePixelRatio || 1;
+  W = window.innerWidth;
+  H = window.innerHeight;
+  bgCanvas.width = fgCanvas.width = W * dpr;
+  bgCanvas.height = fgCanvas.height = H * dpr;
+  bgCanvas.style.width = fgCanvas.style.width = W + 'px';
+  bgCanvas.style.height = fgCanvas.style.height = H + 'px';
+  bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  fgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+resize();
+
+// ========== Character Pools ==========
+// Half-width katakana + digits + symbols (classic Matrix feel)
+const KATAKANA = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+const DIGITS = '0123456789';
+const SYMBOLS = '!@#$%^&*()_+-=[]{}|;:<>?/~';
+const LATIN = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+function randomChar() {
+  const pool = KATAKANA + DIGITS + SYMBOLS + LATIN;
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+// ========== Matrix Column ==========
+const FONT_SIZE = 18;
+const FONT = `${FONT_SIZE}px "PingFang SC", "Microsoft YaHei", monospace`;
+
+class MatrixColumn {
+  constructor(x) {
+    this.x = x;
+    this.chars = [];
+    this.speed = 1.5 + Math.random() * 4;
+    this.maxLength = 8 + Math.floor(Math.random() * 25);
+    this.y = -Math.random() * H * 2;
+    this.changeTimer = Math.random() * 100;
+    this.brightness = 0.4 + Math.random() * 0.6;
+    this.paused = false;
+    this.pauseTimer = 0;
+    this.reset();
+  }
+
+  reset() {
+    this.chars = [];
+    for (let i = 0; i < this.maxLength; i++) {
+      this.chars.push(randomChar());
+    }
+    this.y = -this.maxLength * FONT_SIZE - Math.random() * H;
+    this.speed = 1.5 + Math.random() * 4;
+    this.maxLength = 8 + Math.floor(Math.random() * 25);
+  }
+
+  update(dt) {
+    this.changeTimer += dt;
+    if (this.changeTimer > 0.05) {
+      this.changeTimer = 0;
+      // Randomly mutate some characters
+      if (Math.random() < 0.3) {
+        const idx = Math.floor(Math.random() * this.chars.length);
+        this.chars[idx] = randomChar();
+      }
+    }
+
+    // Occasional pause for dramatic effect
+    if (this.paused) {
+      this.pauseTimer -= dt;
+      if (this.pauseTimer <= 0) this.paused = false;
+      return;
+    }
+    if (Math.random() < 0.001) {
+      this.paused = true;
+      this.pauseTimer = 0.3 + Math.random() * 0.5;
+    }
+
+    this.y += this.speed * FONT_SIZE * dt;
+
+    if (this.y - this.maxLength * FONT_SIZE > H) {
+      this.reset();
+    }
+  }
+
+  draw(ctx) {
+    ctx.font = FONT;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    for (let i = 0; i < this.chars.length; i++) {
+      const cy = this.y - i * FONT_SIZE;
+      if (cy < -FONT_SIZE || cy > H + FONT_SIZE) continue;
+
+      const fadeRatio = i / this.chars.length;
+      const isHead = (i === 0);
+      const isNearHead = (i <= 2);
+
+      if (isHead) {
+        // Head char - bright white/green
+        ctx.save();
+        ctx.shadowColor = '#00ff41';
+        ctx.shadowBlur = 25;
+        ctx.fillStyle = '#ffffff';
+        ctx.globalAlpha = 1;
+        ctx.fillText(this.chars[i], this.x, cy);
+        // Double draw for glow intensity
+        ctx.shadowBlur = 15;
+        ctx.fillStyle = '#aaffaa';
+        ctx.fillText(this.chars[i], this.x, cy);
+        ctx.restore();
+      } else if (isNearHead) {
+        // Near head - bright green
+        ctx.save();
+        ctx.shadowColor = '#00ff41';
+        ctx.shadowBlur = 12;
+        const alpha = 0.95 - fadeRatio * 0.3;
+        ctx.globalAlpha = alpha * this.brightness;
+        ctx.fillStyle = `rgb(${80 + (1-fadeRatio)*175}, 255, ${60 + (1-fadeRatio)*80})`;
+        ctx.fillText(this.chars[i], this.x, cy);
+        ctx.restore();
+      } else {
+        // Trail - fading green
+        const alpha = Math.max(0, (1 - fadeRatio) * 0.8) * this.brightness;
+        if (alpha < 0.02) continue;
+        const g = Math.floor(100 + (1 - fadeRatio) * 155);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = `rgb(0, ${g}, 0)`;
+        if (alpha > 0.3) {
+          ctx.shadowColor = '#00ff41';
+          ctx.shadowBlur = 4;
+        }
+        ctx.fillText(this.chars[i], this.x, cy);
+        ctx.restore();
+      }
+    }
+  }
+}
+
+// ========== User Text Rain ==========
+// User's custom text flows as special bright columns
+class UserTextColumn {
+  constructor(text, x, delay) {
+    this.originalText = text;
+    this.chars = [...text];
+    this.x = x;
+    this.y = -(delay * FONT_SIZE * 3);
+    this.speed = 1.8 + Math.random() * 2;
+    this.changeTimer = 0;
+    this.trail = [];
+    this.trailLength = 6 + Math.floor(Math.random() * 6);
+  }
+
+  update(dt) {
+    this.changeTimer += dt;
+    if (this.changeTimer > 0.15) {
+      this.changeTimer = 0;
+      if (Math.random() < 0.15) {
+        const idx = Math.floor(Math.random() * this.chars.length);
+        this.chars[idx] = randomChar();
+        // Restore after flicker
+        setTimeout(() => {
+          this.chars[idx] = this.originalText[idx] || randomChar();
+        }, 80 + Math.random() * 150);
+      }
+    }
+
+    this.y += this.speed * FONT_SIZE * dt;
+
+    // Save trail position
+    this.trail.unshift({ y: this.y, chars: [...this.chars] });
+    if (this.trail.length > this.trailLength) this.trail.pop();
+
+    if (this.y > H + this.chars.length * FONT_SIZE + 200) {
+      this.y = -this.chars.length * FONT_SIZE * 2 - Math.random() * H * 0.5;
+      this.trail = [];
+    }
+  }
+
+  draw(ctx) {
+    const fontSize = 22;
+    const font = `bold ${fontSize}px "PingFang SC", "Microsoft YaHei", monospace`;
+    ctx.font = font;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Draw trail ghosts
+    for (let t = 0; t < this.trail.length; t++) {
+      const trailItem = this.trail[t];
+      const alpha = (1 - t / this.trail.length) * 0.15;
+      for (let i = 0; i < trailItem.chars.length; i++) {
+        const cy = trailItem.y - i * (fontSize * 1.3);
+        if (cy < -fontSize || cy > H + fontSize) continue;
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = '#00ff41';
+        ctx.fillText(trailItem.chars[i], this.x, cy);
+        ctx.restore();
+      }
+    }
+
+    // Draw main text
+    for (let i = 0; i < this.chars.length; i++) {
+      const cy = this.y - i * (fontSize * 1.3);
+      if (cy < -fontSize || cy > H + fontSize) continue;
+
+      const isHead = (i === 0);
+      const fadeRatio = i / this.chars.length;
+
+      if (isHead) {
+        ctx.save();
+        ctx.shadowColor = '#00ff41';
+        ctx.shadowBlur = 35;
+        ctx.fillStyle = '#ffffff';
+        ctx.globalAlpha = 1;
+        ctx.fillText(this.chars[i], this.x, cy);
+        ctx.fillText(this.chars[i], this.x, cy); // double for intensity
+        ctx.restore();
+      } else {
+        const alpha = 1 - fadeRatio * 0.6;
+        const green = 180 + Math.floor((1 - fadeRatio) * 75);
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.shadowColor = '#00ff41';
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = `rgb(${Math.floor((1-fadeRatio)*100)}, ${green}, ${Math.floor((1-fadeRatio)*60)})`;
+        ctx.fillText(this.chars[i], this.x, cy);
+        ctx.restore();
+      }
+    }
+  }
+}
+
+// ========== Ripples (mouse click effect) ==========
+const ripples = [];
+
+class Ripple {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.radius = 0;
+    this.maxRadius = 120 + Math.random() * 80;
+    this.speed = 200 + Math.random() * 100;
+    this.alive = true;
+  }
+  update(dt) {
+    this.radius += this.speed * dt;
+    if (this.radius > this.maxRadius) this.alive = false;
+  }
+  draw(ctx) {
+    const alpha = 1 - this.radius / this.maxRadius;
+    if (alpha <= 0) return;
+    ctx.save();
+    ctx.strokeStyle = `rgba(0, 255, 65, ${alpha * 0.6})`;
+    ctx.lineWidth = 2;
+    ctx.shadowColor = '#00ff41';
+    ctx.shadowBlur = 15;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.stroke();
+    // Inner ring
+    ctx.strokeStyle = `rgba(0, 255, 65, ${alpha * 0.3})`;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius * 0.6, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
+fgCanvas.addEventListener('click', e => {
+  ripples.push(new Ripple(e.clientX, e.clientY));
+  ripples.push(new Ripple(e.clientX, e.clientY));
+});
+
+// ========== State ==========
+let columns = [];
+let userColumns = [];
+let currentMode = 0;
+const modeNames = ['经典', '密集', '稀疏', '变速', '混沌'];
+let time = 0;
+let mouseX = W / 2, mouseY = H / 2;
+
+fgCanvas.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+
+function buildColumns() {
+  columns = [];
+  const spacing = FONT_SIZE * 1.1;
+  const count = Math.ceil(W / spacing);
+  for (let i = 0; i < count; i++) {
+    columns.push(new MatrixColumn(i * spacing + spacing / 2));
+  }
+}
+
+function buildUserColumns(text) {
+  userColumns = [];
+  // Use pretext to measure text and create well-spaced columns
+  clearCache();
+  const font = '22px "PingFang SC", "Microsoft YaHei", monospace';
+  const prepared = prepareWithSegments(text, font);
+  const result = layoutWithLines(prepared, W * 0.8, 30);
+
+  for (let li = 0; li < result.lines.length; li++) {
+    const line = result.lines[li];
+    const chars = [...line.text];
+    // Spread user text characters across columns
+    const segmentWidth = Math.floor(W / (chars.length + 1));
+    const offsetX = segmentWidth;
+
+    // Create one UserTextColumn per character, spread across screen
+    const chunkSize = Math.max(1, Math.ceil(chars.length / Math.ceil(W / 80)));
+    for (let c = 0; c < chars.length; c += chunkSize) {
+      const chunk = chars.slice(c, c + chunkSize).join('');
+      const x = offsetX + (c / chars.length) * (W - offsetX * 2);
+      userColumns.push(new UserTextColumn(chunk, x, c * 0.3 + li * 5));
+    }
+  }
+}
+
+// ========== Controls ==========
+document.getElementById('injectBtn').addEventListener('click', () => {
+  const val = document.getElementById('textInput').value.trim();
+  if (val) buildUserColumns(val);
+});
+document.getElementById('textInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') {
+    const val = e.target.value.trim();
+    if (val) buildUserColumns(val);
+  }
+});
+
+document.getElementById('modeBtn').addEventListener('click', () => {
+  currentMode = (currentMode + 1) % modeNames.length;
+  document.getElementById('modeBtn').textContent = `[ 模式: ${modeNames[currentMode]} ]`;
+  applyMode();
+});
+
+function applyMode() {
+  buildColumns();
+  switch (currentMode) {
+    case 0: // Classic
+      columns.forEach(c => { c.speed = 1.5 + Math.random() * 4; c.brightness = 0.4 + Math.random() * 0.6; });
+      break;
+    case 1: // Dense
+      columns.forEach(c => { c.speed = 3 + Math.random() * 3; c.brightness = 0.6 + Math.random() * 0.4; c.maxLength = 15 + Math.floor(Math.random() * 20); });
+      break;
+    case 2: // Sparse
+      columns.forEach(c => { c.speed = 1 + Math.random() * 2; c.brightness = 0.3 + Math.random() * 0.4; c.maxLength = 5 + Math.floor(Math.random() * 10); });
+      break;
+    case 3: // Variable speed
+      columns.forEach((c, i) => { c.speed = (i % 5 === 0) ? 6 + Math.random() * 3 : 0.8 + Math.random() * 1.5; });
+      break;
+    case 4: // Chaos
+      columns.forEach(c => { c.speed = 1 + Math.random() * 8; c.brightness = 0.3 + Math.random() * 0.7; c.maxLength = 4 + Math.floor(Math.random() * 30); });
+      break;
+  }
+}
+
+// ========== Mouse Glow ==========
+function drawMouseGlow(ctx) {
+  const grad = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 80);
+  grad.addColorStop(0, 'rgba(0, 255, 65, 0.08)');
+  grad.addColorStop(0.5, 'rgba(0, 255, 65, 0.03)');
+  grad.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad;
+  ctx.fillRect(mouseX - 80, mouseY - 80, 160, 160);
+}
+
+// ========== Glitch Effect ==========
+let glitchTimer = 0;
+let glitchActive = false;
+let glitchX = 0, glitchW = 0;
+
+function updateGlitch(dt) {
+  glitchTimer -= dt;
+  if (glitchTimer <= 0 && !glitchActive) {
+    if (Math.random() < 0.01) {
+      glitchActive = true;
+      glitchTimer = 0.05 + Math.random() * 0.1;
+      glitchX = Math.random() * W;
+      glitchW = 30 + Math.random() * 100;
+    }
+  }
+  if (glitchActive && glitchTimer <= 0) {
+    glitchActive = false;
+    glitchTimer = 1 + Math.random() * 3;
+  }
+}
+
+function drawGlitch(ctx) {
+  if (!glitchActive) return;
+  ctx.save();
+  const imgData = ctx.getImageData(
+    glitchX * dpr, 0,
+    Math.min(glitchW * dpr, (W - glitchX) * dpr),
+    H * dpr
+  );
+  const offset = (Math.random() - 0.5) * 20 * dpr;
+  ctx.putImageData(imgData, glitchX * dpr + offset, Math.random() * 5 * dpr);
+  ctx.restore();
+}
+
+// ========== Main Loop ==========
+let lastTime = performance.now();
+let frameCount = 0;
+let fpsTime = 0;
+let fps = 0;
+
+function loop(now) {
+  const dt = Math.min((now - lastTime) / 1000, 0.05);
+  lastTime = now;
+  time += dt;
+
+  // FPS
+  frameCount++;
+  fpsTime += dt;
+  if (fpsTime >= 1) {
+    fps = frameCount;
+    frameCount = 0;
+    fpsTime = 0;
+    document.getElementById('fps').textContent = `${fps} FPS`;
+    document.getElementById('colCount').textContent = `${columns.length} COLUMNS`;
+  }
+
+  // Update
+  columns.forEach(c => c.update(dt));
+  userColumns.forEach(c => c.update(dt));
+  ripples.forEach(r => r.update(dt));
+  // Remove dead ripples
+  for (let i = ripples.length - 1; i >= 0; i--) {
+    if (!ripples[i].alive) ripples.splice(i, 1);
+  }
+  updateGlitch(dt);
+
+  // Draw background (fade effect instead of clear)
+  bgCtx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+  bgCtx.fillRect(0, 0, W, H);
+
+  // Draw columns on background canvas (with trail fade)
+  columns.forEach(c => c.draw(bgCtx));
+
+  // Draw foreground
+  fgCtx.clearRect(0, 0, W, H);
+  userColumns.forEach(c => c.draw(fgCtx));
+  ripples.forEach(r => r.draw(fgCtx));
+  drawMouseGlow(fgCtx);
+  drawGlitch(fgCtx);
+
+  requestAnimationFrame(loop);
+}
+
+// ========== Init ==========
+window.addEventListener('resize', () => {
+  resize();
+  buildColumns();
+  applyMode();
+});
+
+buildColumns();
+applyMode();
+buildUserColumns('觉醒吧 矩阵无所不在');
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>
