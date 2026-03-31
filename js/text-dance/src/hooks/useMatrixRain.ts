@@ -298,13 +298,13 @@ export function useMatrixRain(): UseMatrixRainReturn {
     const config = modeConfig();
     const W = window.innerWidth;
     const spacing = state.fontSize * 1.1;
-    const count = Math.ceil(W / spacing * config.density);
+    const count = Math.ceil(W / spacing * state.density);
     const cols: Column[] = [];
     for (let i = 0; i < count; i++) {
       cols.push(new Column(i * spacing + spacing / 2, state.fontSize, config, state.charPools));
     }
     columnsRef.current = cols;
-  }, [state.fontSize, state.charPools, modeConfig]);
+  }, [state.fontSize, state.charPools, state.density, modeConfig]);
 
   const buildUserColumns = useCallback((text: string) => {
     const W = window.innerWidth;

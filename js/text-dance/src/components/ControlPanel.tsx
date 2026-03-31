@@ -107,6 +107,15 @@ export default function ControlPanel() {
             />
           </div>
 
+          <div style={styles.sliderRow}>
+            <span style={styles.sliderLabel}>密度: {Math.round(state.density * 100)}%</span>
+            <input
+              type="range" min={20} max={200} value={Math.round(state.density * 100)}
+              onChange={e => dispatch({ type: 'SET_DENSITY', payload: +e.target.value / 100 })}
+              style={styles.slider}
+            />
+          </div>
+
           <CharPoolSelector pools={state.charPools} onChange={p => dispatch({ type: 'SET_CHAR_POOLS', payload: p })} />
         </div>
       )}

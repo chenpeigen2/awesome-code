@@ -26,6 +26,7 @@ const initialState: MatrixState = {
   theme: 'green',
   userText: '觉醒吧 矩阵无所不在',
   fontSize: 18,
+  density: 1,
   soundEnabled: true,
   showStats: true,
   charPools: ['katakana', 'digits', 'symbols'],
@@ -40,6 +41,7 @@ function reducer(state: MatrixState, action: MatrixAction): MatrixState {
     case 'SET_THEME': return { ...state, theme: action.payload };
     case 'SET_USER_TEXT': return { ...state, userText: action.payload };
     case 'SET_FONT_SIZE': return { ...state, fontSize: action.payload };
+    case 'SET_DENSITY': return { ...state, density: action.payload };
     case 'TOGGLE_SOUND': return { ...state, soundEnabled: !state.soundEnabled };
     case 'TOGGLE_STATS': return { ...state, showStats: !state.showStats };
     case 'TOGGLE_PAUSED': return { ...state, paused: !state.paused };

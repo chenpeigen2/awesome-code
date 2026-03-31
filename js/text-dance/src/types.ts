@@ -26,6 +26,7 @@ export interface MatrixState {
   theme: string;
   userText: string;
   fontSize: number;
+  density: number;
   soundEnabled: boolean;
   showStats: boolean;
   charPools: PoolKey[];
@@ -39,6 +40,7 @@ export type MatrixAction =
   | { type: 'SET_THEME'; payload: string }
   | { type: 'SET_USER_TEXT'; payload: string }
   | { type: 'SET_FONT_SIZE'; payload: number }
+  | { type: 'SET_DENSITY'; payload: number }
   | { type: 'TOGGLE_SOUND' }
   | { type: 'TOGGLE_STATS' }
   | { type: 'TOGGLE_PAUSED' }
