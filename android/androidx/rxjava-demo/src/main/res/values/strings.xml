@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RxJava Demo</string>
+
+    <!-- 一、RxJava 基础 -->
+    <string name="basics_title">一、RxJava 基础</string>
+    <string name="observable">Observable 创建</string>
+    <string name="observable_desc">just/fromIterable/create/range/interval</string>
+    <string name="single_maybe_completable">Single / Maybe / Completable</string>
+    <string name="single_maybe_completable_desc">四种响应式类型对比</string>
+    <string name="disposable">Disposable 资源管理</string>
+    <string name="disposable_desc">订阅取消与内存泄漏防范</string>
+
+    <!-- 二、操作符 -->
+    <string name="operators_title">二、操作符</string>
+    <string name="transform_operators">变换操作符</string>
+    <string name="transform_operators_desc">map/flatMap/concatMap/switchMap</string>
+    <string name="filter_operators">过滤操作符</string>
+    <string name="filter_operators_desc">filter/distinct/take/skip/debounce</string>
+    <string name="combine_operators">组合操作符</string>
+    <string name="combine_operators_desc">zip/merge/combineLatest/concat</string>
+
+    <!-- 三、调度器 -->
+    <string name="schedulers_title">三、调度器</string>
+    <string name="schedulers">Schedulers 线程调度</string>
+    <string name="schedulers_desc">IO/Computation/Main/NewThread/Single</string>
+
+    <!-- 四、Subject -->
+    <string name="subjects_title">四、Subject</string>
+    <string name="subjects">Subject 热观测</string>
+    <string name="subjects_desc">Publish/Behavior/Replay/AsyncSubject</string>
+
+    <!-- 五、错误处理 -->
+    <string name="error_title">五、错误处理</string>
+    <string name="error_handling">错误处理操作符</string>
+    <string name="error_handling_desc">onErrorReturn/onErrorResumeNext/retry/retryWhen</string>
+
+    <!-- 六、Android 集成 -->
+    <string name="android_title">六、Android 集成</string>
+    <string name="rx_android">RxAndroid 集成</string>
+    <string name="rx_android_desc">AndroidSchedulers.mainThread + Lifecycle</string>
+</resources>

@@ -70,6 +70,10 @@ swiperefreshlayout = "1.1.0"
 # Room 版本
 room = "2.8.4"
 
+# RxJava 版本
+rxjava3 = "3.1.9"
+rxandroid3 = "3.0.2"
+
 # MMKV 版本
 mmkv = "2.3.0"
 
@@ -150,6 +154,10 @@ androidx-security-crypto = { group = "androidx.security", name = "security-crypt
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+
+# RxJava
+rxjava3 = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava3" }
+rxandroid3 = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid3" }
 
 # Koin 依赖注入
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }

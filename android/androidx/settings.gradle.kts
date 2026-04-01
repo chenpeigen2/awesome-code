@@ -106,6 +106,9 @@ include(":camerax-demo")
 // StatusBar Demo - 状态栏示例
 include(":statusbar-demo")
 
+// RxJava Demo - RxJava 响应式编程示例
+include(":rxjava-demo")
+
 // SystemInfo Demo - 系统信息示例
 include(":systeminfo-demo")
 
