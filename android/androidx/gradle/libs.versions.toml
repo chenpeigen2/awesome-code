@@ -85,6 +85,12 @@ mmkv = "2.4.0"
 # Security Crypto 版本
 securityCrypto = "1.1.0"
 
+# Biometric 版本
+biometric = "1.1.0"
+
+# SplashScreen 版本
+splashscreen = "1.0.1"
+
 [libraries]
 # ASM 字节码操作
 androidx-localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
@@ -154,6 +160,12 @@ mmkv = { group = "com.tencent", name = "mmkv", version.ref = "mmkv" }
 
 # Security Crypto
 androidx-security-crypto = { group = "androidx.security", name = "security-crypto", version.ref = "securityCrypto" }
+
+# Biometric
+androidx-biometric = { group = "androidx.biometric", name = "biometric", version.ref = "biometric" }
+
+# SplashScreen
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 
 # Room
 androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }

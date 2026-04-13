@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SplashScreen API (Android 12+)"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Android 12 引入的 SplashScreen API，\n通过 core-splashscreen 兼容库可向后兼容。"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/panel_background"
+        android:padding="12dp"
+        android:text="本 App 已配置 SplashScreen:\n\n1. theme 使用 Theme.SplashScreen 作为启动主题\n2. windowSplashScreenBackground 设置背景色\n3. windowSplashScreenAnimatedIcon 设置图标\n4. postSplashScreenTheme 设置进入后的主题\n\n启动 App 时可以看到绿色的 Splash 页面。\nAndroid 12+ 还支持 keepOnScreenCondition\n和 OnExitAnimationListener。"
+        android:textColor="@color/text_secondary" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bn_relaunch"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="查看当前配置说明" />
+
+    <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/panel_background"
+        android:padding="12dp"
+        android:textColor="@color/text_secondary" />
+
+</LinearLayout>

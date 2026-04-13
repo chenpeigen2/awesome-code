@@ -118,6 +118,12 @@ include(":listview-demo")
 // Network Demo - Retrofit / OkHttp / Coil 网络示例
 include(":network-demo")
 
+// Motion Demo - MotionLayout + Transition 转场动画示例
+include(":motion-demo")
+
+// Security Demo - SplashScreen + Biometric + Security Crypto 示例
+include(":security-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="MotionLayout 关键帧: KeyPosition + KeyAttribute"
+        android:textColor="@color/text_primary"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="向右拖拽球体，观察弧形运动轨迹和缩放旋转关键帧"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp" />
+
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1"
+        android:background="@drawable/panel_background"
+        app:layoutDescription="@xml/scene_keyframe"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+        <View
+            android:id="@+id/ball"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@android:color/holo_orange_dark" />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/panel_background"
+        android:padding="12dp"
+        android:text="关键帧说明:\n- 25%: 上移 + 放大\n- 50%: 回中 + 缩小 + 旋转 180\n- 75%: 上移 + 放大 + 旋转 270\n- 100%: 旋转 360"
+        android:textColor="@color/text_secondary" />
+
+</LinearLayout>

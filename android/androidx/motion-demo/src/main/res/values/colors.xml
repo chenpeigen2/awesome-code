@@ -1,0 +1,9 @@
+<resources>
+    <color name="primary">#6200EE</color>
+    <color name="surface">#FAFAFA</color>
+    <color name="panel">#F0EAFF</color>
+    <color name="text_primary">#1C1B1F</color>
+    <color name="text_secondary">#49454F</color>
+    <color name="nav_item_active">#6200EE</color>
+    <color name="nav_item_inactive">#79747E</color>
+</resources>
