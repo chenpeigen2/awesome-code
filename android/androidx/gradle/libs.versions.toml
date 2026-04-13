@@ -7,10 +7,10 @@ javapoet = "1.13.0"
 localbroadcastmanager = "1.1.0"
 media = "1.7.0"
 targetSdk = "37"
-minSdk = "34"
+minSdk = "33"
 
 # Compose BOM 版本
-composeBom = "2024.12.01"
+composeBom = "2026.03.01"
 
 # Gradle 插件版本
 agp = "8.13.2"
@@ -21,11 +21,11 @@ kotlin = "2.2.21"
 asm = "9.9.1"
 
 # AndroidX 库版本
-coreKtx = "1.15.0"
-appcompat = "1.7.0"
-activity = "1.9.3"
-fragment = "1.6.2"
-constraintlayout = "2.2.0"
+coreKtx = "1.18.0"
+appcompat = "1.7.1"
+activity = "1.13.0"
+fragment = "1.8.9"
+constraintlayout = "2.2.1"
 
 # Material Design 版本
 material = "1.12.0"
@@ -34,34 +34,34 @@ material = "1.12.0"
 datastore = "1.1.1"
 
 # Coroutines 版本
-coroutines = "1.8.1"
+coroutines = "1.10.2"
 
 # Lifecycle 版本
-lifecycle = "2.8.7"
+lifecycle = "2.10.0"
 
 # WorkManager 版本
-workmanager = "2.10.0"
+workmanager = "2.11.2"
 
 # Kotlinx Serialization 版本
-kotlinxSerializationJson = "1.6.3"
+kotlinxSerializationJson = "1.10.0"
 
 # Koin 依赖注入
 koin = "4.1.1"
 koinCompose = "4.1.1"
 
 # Dagger2 依赖注入
-dagger = "2.55"
-ksp = "2.2.21-2.0.4"
+dagger = "2.59.2"
+ksp = "2.3.6"
 
 # 测试库版本
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
+junitVersion = "1.3.0"
+espressoCore = "3.7.0"
 coreTesting = "2.2.0"
-coroutinesTest = "1.8.1"
-testCore = "1.5.0"
-testRunner = "1.5.2"
-testRules = "1.5.0"
+coroutinesTest = "1.10.2"
+testCore = "1.7.0"
+testRunner = "1.7.0"
+testRules = "1.7.0"
 recyclerview = "1.4.0"
 cardview = "1.0.0"
 viewpager2 = "1.1.0"
@@ -71,14 +71,19 @@ swiperefreshlayout = "1.1.0"
 room = "2.8.4"
 
 # RxJava 版本
-rxjava3 = "3.1.9"
+rxjava3 = "3.1.12"
 rxandroid3 = "3.0.2"
 
+# Network 版本
+retrofit = "2.12.0"
+okhttp = "5.3.2"
+coil = "2.7.0"
+
 # MMKV 版本
-mmkv = "2.3.0"
+mmkv = "2.4.0"
 
 # Security Crypto 版本
-securityCrypto = "1.1.0-alpha06"
+securityCrypto = "1.1.0"
 
 [libraries]
 # ASM 字节码操作
@@ -158,6 +163,14 @@ androidx-room-compiler = { group = "androidx.room", name = "room-compiler", vers
 # RxJava
 rxjava3 = { group = "io.reactivex.rxjava3", name = "rxjava", version.ref = "rxjava3" }
 rxandroid3 = { group = "io.reactivex.rxjava3", name = "rxandroid", version.ref = "rxandroid3" }
+
+# Network
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver3", version.ref = "okhttp" }
+coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 
 # Koin 依赖注入
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }

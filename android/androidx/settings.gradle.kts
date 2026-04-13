@@ -115,6 +115,9 @@ include(":systeminfo-demo")
 // ListView Demo - ListView 与 Adapter 示例
 include(":listview-demo")
 
+// Network Demo - Retrofit / OkHttp / Coil 网络示例
+include(":network-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")

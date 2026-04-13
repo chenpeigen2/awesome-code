@@ -105,6 +105,11 @@ iflow-cli-sdk = "1.0.4"
 # ========== Mock 测试 ==========
 mockito = "5.23.0"
 
+# ========== Ktor ==========
+ktor = "3.4.2"
+logback = "1.4.14"
+kotlinx-serialization = "2.3.20"
+
 # ========== Groovy ==========
 groovy = "5.0.5"
 
@@ -236,6 +241,16 @@ iflow-cli-sdk = { module = "cn.iflow:iflow-cli-sdk", version.ref = "iflow-cli-sd
 # ========== Mock 测试 ==========
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 
+# ========== Ktor ==========
+ktor-server-core = { module = "io.ktor:ktor-server-core", version.ref = "ktor" }
+ktor-server-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-serialization-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktor" }
+ktor-server-thymeleaf = { module = "io.ktor:ktor-server-thymeleaf", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
 # ========== Groovy ==========
 groovy-all = { module = "org.apache.groovy:groovy-all", version.ref = "groovy" }
 
@@ -244,6 +259,10 @@ groovy-all = { module = "org.apache.groovy:groovy-all", version.ref = "groovy" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 kotlin-plugin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin-plugin-spring" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinx-serialization" }
+
+# ========== Ktor ==========
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 
 # ========== gRPC ==========
 protobuf = { id = "com.google.protobuf", version.ref = "grpc-protobuf-plugin" }
