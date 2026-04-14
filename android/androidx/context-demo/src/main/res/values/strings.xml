@@ -28,6 +28,15 @@
     
     <string name="context_window">Window 和 Dialog</string>
     <string name="context_window_desc">使用 Context 创建 Dialog 和 Window</string>
+
+    <string name="context_broadcast">BroadcastReceiver</string>
+    <string name="context_broadcast_desc">动态注册/注销广播、有序广播、系统广播</string>
+
+    <string name="context_content_provider">ContentProvider</string>
+    <string name="context_content_provider_desc">ContentResolver 查询联系人/媒体、ContentObserver</string>
+
+    <string name="context_permission">运行时权限</string>
+    <string name="context_permission_desc">权限检查、危险权限请求、特殊权限处理</string>
     
     <!-- 深入示例标题 -->
     <string name="deep_title">三、Context 深入</string>

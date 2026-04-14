@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="运行时权限示例"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnCheckPermission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="检查权限状态"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnRequestCamera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请求相机"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnRequestLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请求位置"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnRequestNotification"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请求通知"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnRequestOverlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="悬浮窗权限"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnRequestAlarmExact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="精确闹钟"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnPermissionCompare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Context 对比"
+                style="@style/Widget.Material3.Chip.Input" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnBestPractices"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="最佳实践"
+                style="@style/Widget.Material3.Chip.Input" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/tvInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/gray_dark"
+            android:lineSpacingExtra="2dp" />
+
+        <TextView
+            android:id="@+id/tvResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textSize="12sp"
+            android:fontFamily="monospace"
+            android:textColor="@color/black"
+            android:lineSpacingExtra="2dp" />
+
+    </LinearLayout>
+
+</ScrollView>

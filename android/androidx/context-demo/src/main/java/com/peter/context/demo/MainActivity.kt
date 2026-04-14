@@ -25,6 +25,7 @@ import com.peter.context.demo.databinding.ActivityMainBinding
  * 1. ContextWrapper 详解 - Context 的装饰器模式，自定义 Context
  * 2. 内存泄漏分析 - Context 使用不当导致的内存泄漏及解决方案
  * 3. 最佳实践 - Context 使用的最佳实践和注意事项
+ * 4. 配置变化处理 - Context 处理 DPI、字体大小等配置变化
  */
 class MainActivity : AppCompatActivity() {
 
@@ -94,6 +95,21 @@ class MainActivity : AppCompatActivity() {
                 title = getString(R.string.context_window),
                 description = getString(R.string.context_window_desc),
                 intent = createContextWindowIntent(this)
+            ),
+            MenuItem(
+                title = getString(R.string.context_broadcast),
+                description = getString(R.string.context_broadcast_desc),
+                intent = createContextBroadcastIntent(this)
+            ),
+            MenuItem(
+                title = getString(R.string.context_content_provider),
+                description = getString(R.string.context_content_provider_desc),
+                intent = createContextContentProviderIntent(this)
+            ),
+            MenuItem(
+                title = getString(R.string.context_permission),
+                description = getString(R.string.context_permission_desc),
+                intent = createContextPermissionIntent(this)
             ),
 
             // 深入示例

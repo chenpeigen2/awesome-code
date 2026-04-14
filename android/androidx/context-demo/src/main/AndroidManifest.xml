@@ -9,6 +9,19 @@
     <!-- 悬浮窗权限 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
+    <!-- 联系人权限 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
+    <!-- 位置权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- 相机权限 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- 媒体权限 (Android 13+) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
     <application
         android:name=".ContextDemoApp"
         android:allowBackup="true"
@@ -40,6 +53,9 @@
         <activity android:name=".advanced.ContextDatabaseActivity" />
         <activity android:name=".advanced.ContextSystemServicesActivity" />
         <activity android:name=".advanced.ContextWindowActivity" />
+        <activity android:name=".advanced.ContextBroadcastActivity" />
+        <activity android:name=".advanced.ContextContentProviderActivity" />
+        <activity android:name=".advanced.ContextPermissionActivity" />
         
         <!-- 深入示例 -->
         <activity android:name=".deep.ContextWrapperActivity" />

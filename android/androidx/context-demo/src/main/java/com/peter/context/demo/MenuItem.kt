@@ -2,7 +2,10 @@ package com.peter.context.demo
 
 import android.content.Context
 import android.content.Intent
+import com.peter.context.demo.advanced.ContextBroadcastActivity
+import com.peter.context.demo.advanced.ContextContentProviderActivity
 import com.peter.context.demo.advanced.ContextDatabaseActivity
+import com.peter.context.demo.advanced.ContextPermissionActivity
 import com.peter.context.demo.advanced.ContextSystemServicesActivity
 import com.peter.context.demo.advanced.ContextWindowActivity
 import com.peter.context.demo.basic.ContextFileActivity
@@ -12,6 +15,7 @@ import com.peter.context.demo.basic.ContextTypeActivity
 import com.peter.context.demo.deep.ContextBestPracticesActivity
 import com.peter.context.demo.deep.ContextMemoryLeakActivity
 import com.peter.context.demo.deep.ContextWrapperActivity
+import com.peter.context.demo.deep.ContextConfigurationActivity
 
 /**
  * 菜单项数据模型
@@ -37,6 +41,9 @@ fun createContextFileIntent(context: Context) = Intent(context, ContextFileActiv
 fun createContextDatabaseIntent(context: Context) = Intent(context, ContextDatabaseActivity::class.java)
 fun createContextSystemServicesIntent(context: Context) = Intent(context, ContextSystemServicesActivity::class.java)
 fun createContextWindowIntent(context: Context) = Intent(context, ContextWindowActivity::class.java)
+fun createContextBroadcastIntent(context: Context) = Intent(context, ContextBroadcastActivity::class.java)
+fun createContextContentProviderIntent(context: Context) = Intent(context, ContextContentProviderActivity::class.java)
+fun createContextPermissionIntent(context: Context) = Intent(context, ContextPermissionActivity::class.java)
 
 // 深入示例
 fun createContextWrapperIntent(context: Context) = Intent(context, ContextWrapperActivity::class.java)
