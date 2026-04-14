@@ -124,6 +124,9 @@ include(":motion-demo")
 // Security Demo - SplashScreen + Biometric + Security Crypto 示例
 include(":security-demo")
 
+// ANR Demo - ANR 原理与场景示例
+include(":anr-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")

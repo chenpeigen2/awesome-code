@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">ANR Demo</string>
+
+    <!-- 主菜单 -->
+    <string name="anr_info">ANR 基础介绍</string>
+    <string name="anr_info_desc">ANR 原理、类型、超时阈值、trace 文件解读</string>
+
+    <string name="input_anr">输入事件 ANR</string>
+    <string name="input_anr_desc">主线程阻塞、死循环、死锁等 Input ANR 场景</string>
+
+    <string name="broadcast_anr">广播 ANR</string>
+    <string name="broadcast_anr_desc">BroadcastReceiver onReceive 耗时导致的 ANR</string>
+
+    <string name="service_anr">Service ANR</string>
+    <string name="service_anr_desc">Service onCreate/onStartCommand 耗时导致的 ANR</string>
+
+    <string name="common_anr">常见 ANR 场景</string>
+    <string name="common_anr_desc">SP commit、SQLite、文件 I/O、Binder 等</string>
+
+    <string name="anr_solution">检测与解决</string>
+    <string name="anr_solution_desc">StrictMode、监控方案、预防措施、最佳实践</string>
+
+    <string name="warning_anr">以下操作会触发 ANR，仅在调试设备上使用！</string>
+</resources>
