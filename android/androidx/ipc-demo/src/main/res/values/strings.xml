@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">IPC Demo</string>
+    <string name="tab_shared_memory">SharedMemory</string>
+    <string name="tab_local_socket">LocalSocket</string>
+    <string name="tab_file_share">文件共享</string>
+
+    <string name="hint_input_text">输入要发送的文本…</string>
+    <string name="btn_send">发送</string>
+    <string name="btn_clear">清空</string>
+    <string name="label_result">接收结果：</string>
+    <string name="label_status">状态：%s</string>
+    <string name="status_disconnected">未连接</string>
+    <string name="status_connected">已连接</string>
+    <string name="status_sending">发送中…</string>
+    <string name="status_success">发送成功 (耗时 %d ms)</string>
+    <string name="status_error">错误：%s</string>
+
+    <string name="desc_shared_memory">通过 SharedMemory 创建共享内存区域，跨进程传递 FileDescriptor，实现零拷贝数据传输。\n适用于大数据量的跨进程共享场景。</string>
+    <string name="desc_local_socket">通过 LocalSocket/LocalServerSocket 在本地建立 Socket 连接进行跨进程通信。\n基于 Linux abstract namespace，适用于流式数据传输场景。</string>
+    <string name="desc_file_share">通过共享文件进行跨进程数据交换，使用 FileObserver 监听文件变化。\n最简单的跨进程通信方式，适用于对实时性要求不高的场景。</string>
+</resources>

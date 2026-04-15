@@ -127,6 +127,12 @@ include(":security-demo")
 // ANR Demo - ANR 原理与场景示例
 include(":anr-demo")
 
+// IPC Demo - SharedMemory / LocalSocket / 文件共享跨进程示例
+include(":ipc-demo")
+
+// Coil Demo - Coil 图片加载示例
+include(":coil-demo")
+
 // CrossProcessRenderDemo - 跨进程渲染示例
 include(":CrossProcessRenderDemo:common")
 include(":CrossProcessRenderDemo:client")

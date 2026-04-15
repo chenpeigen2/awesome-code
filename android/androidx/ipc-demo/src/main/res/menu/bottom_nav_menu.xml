@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_shared_memory"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/tab_shared_memory" />
+    <item
+        android:id="@+id/nav_local_socket"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="@string/tab_local_socket" />
+    <item
+        android:id="@+id/nav_file_share"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/tab_file_share" />
+</menu>
