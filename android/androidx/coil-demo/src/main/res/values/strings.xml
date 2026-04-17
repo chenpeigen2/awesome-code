@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Coil Demo</string>
+
+    <string name="basic_load">基础图片加载</string>
+    <string name="basic_load_desc">URL、Resource、File、Uri 等数据源加载</string>
+
+    <string name="transform">图片变换</string>
+    <string name="transform_desc">CircleCrop、RoundedCorners、Blur、Grayscale 等</string>
+
+    <string name="cache">缓存策略</string>
+    <string name="cache_desc">Memory 缓存、Disk 缓存、缓存策略配置</string>
+
+    <string name="placeholder">占位图与过渡</string>
+    <string name="placeholder_desc">placeholder、error、fallback、crossfade</string>
+
+    <string name="advanced">高级用法</string>
+    <string name="advanced_desc">自定义 ImageLoader、OkHttp 集成、Listener</string>
+
+    <string name="list_load">列表图片加载</string>
+    <string name="list_load_desc">RecyclerView + Coil、预加载、缩略图</string>
+</resources>
