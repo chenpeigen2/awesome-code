@@ -89,7 +89,7 @@ fun getDemoLevels(): List<DemoLevel> {
     return listOf(
         DemoLevel(
             level = 1,
-            title = "入门基础",
+            title = "基础组件",
             description = "Compose 基础概念与组件",
             color = Color(0xFF6200EE),
             items = listOf(
@@ -106,27 +106,53 @@ fun getDemoLevels(): List<DemoLevel> {
                     color = Color(0xFF3700B3)
                 ),
                 DemoItem(
-                    title = "布局组件",
-                    description = "Column, Row, Box, Card",
-                    activityClass = com.peter.compose.demo.level1.LayoutComponentsActivity::class.java,
+                    title = "Material3 组件",
+                    description = "TopAppBar, NavigationBar, Chip, DatePicker, Dialog",
+                    activityClass = com.peter.compose.demo.level1.Material3ComponentsActivity::class.java,
                     color = Color(0xFF03DAC5)
                 ),
                 DemoItem(
-                    title = "修饰符",
-                    description = "padding, size, background, border",
-                    activityClass = com.peter.compose.demo.level1.ModifiersActivity::class.java,
+                    title = "布局组件",
+                    description = "Column, Row, Box, Card",
+                    activityClass = com.peter.compose.demo.level1.LayoutComponentsActivity::class.java,
                     color = Color(0xFF018786)
-                ),
-                DemoItem(
-                    title = "Elevation 详解",
-                    description = "shadow, translationZ, 传统View方式",
-                    activityClass = com.peter.compose.demo.level1.ElevationActivity::class.java,
-                    color = Color(0xFF7B1FA2)
                 )
             )
         ),
         DemoLevel(
             level = 2,
+            title = "样式与主题",
+            description = "修饰符、阴影、主题与输入",
+            color = Color(0xFF795548),
+            items = listOf(
+                DemoItem(
+                    title = "修饰符",
+                    description = "padding, size, background, border",
+                    activityClass = com.peter.compose.demo.level2.ModifiersActivity::class.java,
+                    color = Color(0xFF8D6E63)
+                ),
+                DemoItem(
+                    title = "Elevation 详解",
+                    description = "shadow, translationZ, 传统View方式",
+                    activityClass = com.peter.compose.demo.level2.ElevationActivity::class.java,
+                    color = Color(0xFF795548)
+                ),
+                DemoItem(
+                    title = "动态主题",
+                    description = "DynamicColor, 自定义 ColorScheme, Typography",
+                    activityClass = com.peter.compose.demo.level2.DynamicThemeActivity::class.java,
+                    color = Color(0xFF6D4C41)
+                ),
+                DemoItem(
+                    title = "TextField 进阶",
+                    description = "BasicTextField2, 输入法交互, 文本选择",
+                    activityClass = com.peter.compose.demo.level2.TextFieldAdvancedActivity::class.java,
+                    color = Color(0xFF5D4037)
+                )
+            )
+        ),
+        DemoLevel(
+            level = 3,
             title = "状态与交互",
             description = "状态管理与手势处理",
             color = Color(0xFFE91E63),
@@ -134,122 +160,172 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "状态基础",
                     description = "mutableStateOf, remember",
-                    activityClass = com.peter.compose.demo.level2.StateBasicsActivity::class.java,
+                    activityClass = com.peter.compose.demo.level3.StateBasicsActivity::class.java,
                     color = Color(0xFFF06292)
                 ),
                 DemoItem(
                     title = "状态提升",
                     description = "状态提升模式与最佳实践",
-                    activityClass = com.peter.compose.demo.level2.StateHoistingActivity::class.java,
+                    activityClass = com.peter.compose.demo.level3.StateHoistingActivity::class.java,
                     color = Color(0xFFEC407A)
                 ),
                 DemoItem(
                     title = "副作用",
                     description = "LaunchedEffect, DisposableEffect",
-                    activityClass = com.peter.compose.demo.level2.SideEffectsActivity::class.java,
+                    activityClass = com.peter.compose.demo.level3.SideEffectsActivity::class.java,
                     color = Color(0xFFD81B60)
                 ),
                 DemoItem(
                     title = "手势处理",
-                    description = "clickable, detectTapGestures, detectDragGestures",
-                    activityClass = com.peter.compose.demo.level2.GesturesActivity::class.java,
+                    description = "clickable, transformable, 多点触控, 拖拽",
+                    activityClass = com.peter.compose.demo.level3.GesturesActivity::class.java,
                     color = Color(0xFFC2185B)
                 )
             )
         ),
         DemoLevel(
-            level = 3,
-            title = "架构与数据流",
-            description = "ViewModel 与 MVI 模式",
+            level = 4,
+            title = "导航与架构",
+            description = "导航、ViewModel、Flow 与依赖注入",
             color = Color(0xFF009688),
             items = listOf(
                 DemoItem(
+                    title = "Compose Navigation",
+                    description = "NavHost, 导航参数, 深层链接",
+                    activityClass = com.peter.compose.demo.level4.ComposeNavigationActivity::class.java,
+                    color = Color(0xFF4DB6AC)
+                ),
+                DemoItem(
                     title = "ViewModel 集成",
                     description = "viewModel() 与状态持有",
-                    activityClass = com.peter.compose.demo.level3.ViewModelIntegrationActivity::class.java,
-                    color = Color(0xFF4DB6AC)
+                    activityClass = com.peter.compose.demo.level4.ViewModelIntegrationActivity::class.java,
+                    color = Color(0xFF00897B)
                 ),
                 DemoItem(
                     title = "Flow/LiveData",
                     description = "collectAsState, observeAsState",
-                    activityClass = com.peter.compose.demo.level3.FlowLiveDataActivity::class.java,
-                    color = Color(0xFF00897B)
+                    activityClass = com.peter.compose.demo.level4.FlowLiveDataActivity::class.java,
+                    color = Color(0xFF00796B)
                 ),
                 DemoItem(
                     title = "MVI 模式",
                     description = "单向数据流架构",
-                    activityClass = com.peter.compose.demo.level3.MviPatternActivity::class.java,
-                    color = Color(0xFF00796B)
+                    activityClass = com.peter.compose.demo.level4.MviPatternActivity::class.java,
+                    color = Color(0xFF00695C)
                 ),
                 DemoItem(
                     title = "依赖注入",
                     description = "Koin 集成与 ViewModel 注入",
-                    activityClass = com.peter.compose.demo.level3.DependencyInjectionActivity::class.java,
-                    color = Color(0xFF00695C)
-                )
-            )
-        ),
-        DemoLevel(
-            level = 4,
-            title = "列表与动画",
-            description = "懒加载列表与动画效果",
-            color = Color(0xFFFF9800),
-            items = listOf(
-                DemoItem(
-                    title = "懒加载列表",
-                    description = "LazyColumn, LazyRow, LazyGrid",
-                    activityClass = com.peter.compose.demo.level4.LazyListsActivity::class.java,
-                    color = Color(0xFFFFB74D)
-                ),
-                DemoItem(
-                    title = "动画基础",
-                    description = "animate*AsState, AnimatedVisibility",
-                    activityClass = com.peter.compose.demo.level4.AnimationsActivity::class.java,
-                    color = Color(0xFFF57C00)
-                ),
-                DemoItem(
-                    title = "内容转换",
-                    description = "Crossfade, AnimatedContent",
-                    activityClass = com.peter.compose.demo.level4.ContentTransformActivity::class.java,
-                    color = Color(0xFFEF6C00)
-                ),
-                DemoItem(
-                    title = "Canvas 绘制",
-                    description = "自定义绘制与图形",
-                    activityClass = com.peter.compose.demo.level4.CanvasDrawingActivity::class.java,
-                    color = Color(0xFFE65100)
+                    activityClass = com.peter.compose.demo.level4.DependencyInjectionActivity::class.java,
+                    color = Color(0xFF004D40)
                 )
             )
         ),
         DemoLevel(
             level = 5,
-            title = "高级进阶",
-            description = "自定义布局与性能优化",
-            color = Color(0xFF3F51B5),
+            title = "列表与数据",
+            description = "懒加载列表、分页与刷新",
+            color = Color(0xFFFF9800),
             items = listOf(
                 DemoItem(
-                    title = "自定义布局",
-                    description = "Layout, MeasurePolicy",
-                    activityClass = com.peter.compose.demo.level5.CustomLayoutActivity::class.java,
-                    color = Color(0xFF7986CB)
+                    title = "懒加载列表",
+                    description = "LazyColumn, LazyRow, LazyGrid",
+                    activityClass = com.peter.compose.demo.level5.LazyListsActivity::class.java,
+                    color = Color(0xFFFFB74D)
+                ),
+                DemoItem(
+                    title = "Paging 分页",
+                    description = "Paging 3, PagingSource, LoadState",
+                    activityClass = com.peter.compose.demo.level5.PagingActivity::class.java,
+                    color = Color(0xFFF57C00)
+                ),
+                DemoItem(
+                    title = "下拉刷新",
+                    description = "PullToRefreshBox, 刷新状态管理",
+                    activityClass = com.peter.compose.demo.level5.PullToRefreshActivity::class.java,
+                    color = Color(0xFFEF6C00)
                 ),
                 DemoItem(
                     title = "CompositionLocal",
                     description = "作用域数据传递与主题切换",
                     activityClass = com.peter.compose.demo.level5.CompositionLocalActivity::class.java,
+                    color = Color(0xFFE65100)
+                )
+            )
+        ),
+        DemoLevel(
+            level = 6,
+            title = "动画与图形",
+            description = "动画效果与自定义绘制",
+            color = Color(0xFF3F51B5),
+            items = listOf(
+                DemoItem(
+                    title = "动画基础",
+                    description = "animate*AsState, AnimatedVisibility",
+                    activityClass = com.peter.compose.demo.level6.AnimationsActivity::class.java,
+                    color = Color(0xFF7986CB)
+                ),
+                DemoItem(
+                    title = "内容转换",
+                    description = "Crossfade, AnimatedContent",
+                    activityClass = com.peter.compose.demo.level6.ContentTransformActivity::class.java,
                     color = Color(0xFF5C6BC0)
+                ),
+                DemoItem(
+                    title = "共享元素转场",
+                    description = "SharedTransitionLayout, sharedElement",
+                    activityClass = com.peter.compose.demo.level6.SharedElementTransitionActivity::class.java,
+                    color = Color(0xFF3F51B5)
+                ),
+                DemoItem(
+                    title = "Canvas 绘制",
+                    description = "自定义绘制与图形",
+                    activityClass = com.peter.compose.demo.level6.CanvasDrawingActivity::class.java,
+                    color = Color(0xFF303F9F)
+                )
+            )
+        ),
+        DemoLevel(
+            level = 7,
+            title = "高级进阶",
+            description = "自定义布局、性能优化与测试",
+            color = Color(0xFF455A64),
+            items = listOf(
+                DemoItem(
+                    title = "自定义布局",
+                    description = "Layout, MeasurePolicy",
+                    activityClass = com.peter.compose.demo.level7.CustomLayoutActivity::class.java,
+                    color = Color(0xFF78909C)
+                ),
+                DemoItem(
+                    title = "自适应布局",
+                    description = "WindowSizeClass, 响应式UI",
+                    activityClass = com.peter.compose.demo.level7.AdaptiveLayoutActivity::class.java,
+                    color = Color(0xFF607D8B)
+                ),
+                DemoItem(
+                    title = "拖拽排序",
+                    description = "LazyColumn 拖拽, 视觉反馈",
+                    activityClass = com.peter.compose.demo.level7.DragAndDropActivity::class.java,
+                    color = Color(0xFF546E7A)
                 ),
                 DemoItem(
                     title = "性能优化",
                     description = "重组优化, derivedStateOf",
-                    activityClass = com.peter.compose.demo.level5.PerformanceActivity::class.java,
-                    color = Color(0xFF3F51B5)
+                    activityClass = com.peter.compose.demo.level7.PerformanceActivity::class.java,
+                    color = Color(0xFF455A64)
                 ),
                 DemoItem(
                     title = "互操作",
                     description = "AndroidView 与 View 互操作",
-                    activityClass = com.peter.compose.demo.level5.InteropActivity::class.java,
-                    color = Color(0xFF303F9F)
+                    activityClass = com.peter.compose.demo.level7.InteropActivity::class.java,
+                    color = Color(0xFF37474F)
+                ),
+                DemoItem(
+                    title = "Compose Testing",
+                    description = "createComposeRule, 语义测试",
+                    activityClass = com.peter.compose.demo.level7.ComposeTestingActivity::class.java,
+                    color = Color(0xFF263238)
                 )
             )
         )
@@ -284,7 +360,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "5 个层级 · 20 个示例",
+                    text = "7 个层级 · 31 个示例",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
                 )
