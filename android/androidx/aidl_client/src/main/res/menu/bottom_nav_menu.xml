@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_sync"
+        android:icon="@drawable/ic_sync"
+        android:title="同步调用" />
+    <item
+        android:id="@+id/nav_async"
+        android:icon="@drawable/ic_oneway"
+        android:title="异步下载" />
+    <item
+        android:id="@+id/nav_callback"
+        android:icon="@drawable/ic_callback"
+        android:title="回调下载" />
+    <item
+        android:id="@+id/nav_register"
+        android:icon="@drawable/ic_register"
+        android:title="回调注册" />
+</menu>

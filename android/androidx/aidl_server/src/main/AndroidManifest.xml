@@ -13,23 +13,19 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- 注册AIDL服务 -->
         <service
-            android:name=".MyAidlService"
+            android:name=".DownloadManagerService"
             android:enabled="true"
             android:exported="true">
-            <!-- 隐式Intent过滤器 -->
             <intent-filter>
-                <action android:name="com.example.aidl_common.IMyAidlInterface" />
+                <action android:name="com.example.aidl_common.IDownloadManager" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>
