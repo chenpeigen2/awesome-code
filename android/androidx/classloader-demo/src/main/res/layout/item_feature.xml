@@ -68,7 +68,7 @@
                 android:layout_marginStart="8dp"
                 android:src="@drawable/ic_arrow_right"
                 android:alpha="0.3"
-                android:tint="@color/on_surface_variant"
+                app:tint="@color/on_surface_variant"
                 tools:ignore="ContentDescription" />
 
         </LinearLayout>
