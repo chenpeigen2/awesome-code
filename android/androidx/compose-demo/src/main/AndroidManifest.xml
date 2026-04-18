@@ -49,6 +49,11 @@
             android:exported="false"
             android:theme="@style/Theme.Compose" />
 
+        <activity
+            android:name=".level1.Material3ComponentsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
         <!-- Level 2 - 状态与交互 -->
         <activity
             android:name=".level2.StateBasicsActivity"
@@ -67,6 +72,16 @@
 
         <activity
             android:name=".level2.GesturesActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level2.DynamicThemeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level2.TextFieldAdvancedActivity"
             android:exported="false"
             android:theme="@style/Theme.Compose" />
 
@@ -112,6 +127,11 @@
             android:exported="false"
             android:theme="@style/Theme.Compose" />
 
+        <activity
+            android:name=".level4.ComposeNavigationActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
         <!-- Level 5 - 高级进阶 -->
         <activity
             android:name=".level5.CustomLayoutActivity"
@@ -130,6 +150,38 @@
 
         <activity
             android:name=".level5.InteropActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level5.PagingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level5.PullToRefreshActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <!-- Level 6 - 动画与图形 -->
+        <activity
+            android:name=".level6.SharedElementTransitionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <!-- Level 7 - 高级进阶 -->
+        <activity
+            android:name=".level7.AdaptiveLayoutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level7.DragAndDropActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level7.ComposeTestingActivity"
             android:exported="false"
             android:theme="@style/Theme.Compose" />
 
