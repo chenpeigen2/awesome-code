@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.extended)
 
+    // Compose Animation (SharedTransitionLayout)
+    implementation("androidx.compose.animation:animation")
+
     // Activity Compose
     implementation(libs.androidx.activity.compose)
 
