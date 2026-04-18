@@ -91,6 +91,12 @@ biometric = "1.1.0"
 # SplashScreen 版本
 splashscreen = "1.0.1"
 
+# Navigation 版本
+navigation = "2.9.0"
+
+# Paging 版本
+paging = "3.3.6"
+
 [libraries]
 # ASM 字节码操作
 androidx-localbroadcastmanager = { module = "androidx.localbroadcastmanager:localbroadcastmanager", version.ref = "localbroadcastmanager" }
@@ -188,6 +194,13 @@ coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koinCompose" }
+
+# Navigation
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+
+# Paging 3
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 
 # Dagger2 依赖注入
 dagger = { group = "com.google.dagger", name = "dagger", version.ref = "dagger" }
