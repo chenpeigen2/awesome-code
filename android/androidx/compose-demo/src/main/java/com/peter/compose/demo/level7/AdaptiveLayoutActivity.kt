@@ -72,6 +72,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.WindowHeightSizeClass
@@ -148,6 +149,7 @@ val sampleEmails = listOf(
 
 // ========== Activity ==========
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 class AdaptiveLayoutActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -167,6 +169,7 @@ class AdaptiveLayoutActivity : ComponentActivity() {
 
 // ========== 主屏幕 ==========
 
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun AdaptiveLayoutScreen(
     modifier: Modifier = Modifier,

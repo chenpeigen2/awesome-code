@@ -990,7 +990,8 @@ fun CustomThemeFunctionSection() {
             }
 
             // 控制面板
-            var useDarkTheme by remember { mutableStateOf(isSystemInDarkTheme()) }
+            val systemDarkTheme = isSystemInDarkTheme()
+            var useDarkTheme by remember { mutableStateOf(systemDarkTheme) }
             var useDynamicColor by remember { mutableStateOf(true) }
 
             Row(

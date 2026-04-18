@@ -128,13 +128,13 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "修饰符",
                     description = "padding, size, background, border",
-                    activityClass = com.peter.compose.demo.level2.ModifiersActivity::class.java,
+                    activityClass = com.peter.compose.demo.level1.ModifiersActivity::class.java,
                     color = Color(0xFF8D6E63)
                 ),
                 DemoItem(
                     title = "Elevation 详解",
                     description = "shadow, translationZ, 传统View方式",
-                    activityClass = com.peter.compose.demo.level2.ElevationActivity::class.java,
+                    activityClass = com.peter.compose.demo.level1.ElevationActivity::class.java,
                     color = Color(0xFF795548)
                 ),
                 DemoItem(
@@ -160,25 +160,25 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "状态基础",
                     description = "mutableStateOf, remember",
-                    activityClass = com.peter.compose.demo.level3.StateBasicsActivity::class.java,
+                    activityClass = com.peter.compose.demo.level2.StateBasicsActivity::class.java,
                     color = Color(0xFFF06292)
                 ),
                 DemoItem(
                     title = "状态提升",
                     description = "状态提升模式与最佳实践",
-                    activityClass = com.peter.compose.demo.level3.StateHoistingActivity::class.java,
+                    activityClass = com.peter.compose.demo.level2.StateHoistingActivity::class.java,
                     color = Color(0xFFEC407A)
                 ),
                 DemoItem(
                     title = "副作用",
                     description = "LaunchedEffect, DisposableEffect",
-                    activityClass = com.peter.compose.demo.level3.SideEffectsActivity::class.java,
+                    activityClass = com.peter.compose.demo.level2.SideEffectsActivity::class.java,
                     color = Color(0xFFD81B60)
                 ),
                 DemoItem(
                     title = "手势处理",
                     description = "clickable, transformable, 多点触控, 拖拽",
-                    activityClass = com.peter.compose.demo.level3.GesturesActivity::class.java,
+                    activityClass = com.peter.compose.demo.level2.GesturesActivity::class.java,
                     color = Color(0xFFC2185B)
                 )
             )
@@ -198,25 +198,25 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "ViewModel 集成",
                     description = "viewModel() 与状态持有",
-                    activityClass = com.peter.compose.demo.level4.ViewModelIntegrationActivity::class.java,
+                    activityClass = com.peter.compose.demo.level3.ViewModelIntegrationActivity::class.java,
                     color = Color(0xFF00897B)
                 ),
                 DemoItem(
                     title = "Flow/LiveData",
                     description = "collectAsState, observeAsState",
-                    activityClass = com.peter.compose.demo.level4.FlowLiveDataActivity::class.java,
+                    activityClass = com.peter.compose.demo.level3.FlowLiveDataActivity::class.java,
                     color = Color(0xFF00796B)
                 ),
                 DemoItem(
                     title = "MVI 模式",
                     description = "单向数据流架构",
-                    activityClass = com.peter.compose.demo.level4.MviPatternActivity::class.java,
+                    activityClass = com.peter.compose.demo.level3.MviPatternActivity::class.java,
                     color = Color(0xFF00695C)
                 ),
                 DemoItem(
                     title = "依赖注入",
                     description = "Koin 集成与 ViewModel 注入",
-                    activityClass = com.peter.compose.demo.level4.DependencyInjectionActivity::class.java,
+                    activityClass = com.peter.compose.demo.level3.DependencyInjectionActivity::class.java,
                     color = Color(0xFF004D40)
                 )
             )
@@ -230,7 +230,7 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "懒加载列表",
                     description = "LazyColumn, LazyRow, LazyGrid",
-                    activityClass = com.peter.compose.demo.level5.LazyListsActivity::class.java,
+                    activityClass = com.peter.compose.demo.level4.LazyListsActivity::class.java,
                     color = Color(0xFFFFB74D)
                 ),
                 DemoItem(
@@ -262,13 +262,13 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "动画基础",
                     description = "animate*AsState, AnimatedVisibility",
-                    activityClass = com.peter.compose.demo.level6.AnimationsActivity::class.java,
+                    activityClass = com.peter.compose.demo.level4.AnimationsActivity::class.java,
                     color = Color(0xFF7986CB)
                 ),
                 DemoItem(
                     title = "内容转换",
                     description = "Crossfade, AnimatedContent",
-                    activityClass = com.peter.compose.demo.level6.ContentTransformActivity::class.java,
+                    activityClass = com.peter.compose.demo.level4.ContentTransformActivity::class.java,
                     color = Color(0xFF5C6BC0)
                 ),
                 DemoItem(
@@ -280,7 +280,7 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "Canvas 绘制",
                     description = "自定义绘制与图形",
-                    activityClass = com.peter.compose.demo.level6.CanvasDrawingActivity::class.java,
+                    activityClass = com.peter.compose.demo.level4.CanvasDrawingActivity::class.java,
                     color = Color(0xFF303F9F)
                 )
             )
@@ -294,7 +294,7 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "自定义布局",
                     description = "Layout, MeasurePolicy",
-                    activityClass = com.peter.compose.demo.level7.CustomLayoutActivity::class.java,
+                    activityClass = com.peter.compose.demo.level5.CustomLayoutActivity::class.java,
                     color = Color(0xFF78909C)
                 ),
                 DemoItem(
@@ -312,13 +312,13 @@ fun getDemoLevels(): List<DemoLevel> {
                 DemoItem(
                     title = "性能优化",
                     description = "重组优化, derivedStateOf",
-                    activityClass = com.peter.compose.demo.level7.PerformanceActivity::class.java,
+                    activityClass = com.peter.compose.demo.level5.PerformanceActivity::class.java,
                     color = Color(0xFF455A64)
                 ),
                 DemoItem(
                     title = "互操作",
                     description = "AndroidView 与 View 互操作",
-                    activityClass = com.peter.compose.demo.level7.InteropActivity::class.java,
+                    activityClass = com.peter.compose.demo.level5.InteropActivity::class.java,
                     color = Color(0xFF37474F)
                 ),
                 DemoItem(

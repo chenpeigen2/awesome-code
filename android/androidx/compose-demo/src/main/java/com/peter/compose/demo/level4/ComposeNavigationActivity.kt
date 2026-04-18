@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideIntoContainer
-import androidx.compose.animation.slideOutOfContainer
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -358,29 +358,29 @@ fun LiveNavigationDemo(modifier: Modifier = Modifier) {
             // 配置页面切换动画
             // 进入动画：从右侧滑入
             enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Start,
+                slideInHorizontally(
+                    initialOffsetX = { it },
                     animationSpec = tween(300)
                 )
             },
             // 退出动画：向左侧滑出
             exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Start,
+                slideOutHorizontally(
+                    targetOffsetX = { -it },
                     animationSpec = tween(300)
                 )
             },
             // 返回时进入动画：从左侧滑入
             popEnterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.End,
+                slideInHorizontally(
+                    initialOffsetX = { -it },
                     animationSpec = tween(300)
                 )
             },
             // 返回时退出动画：向右侧滑出
             popExitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.End,
+                slideOutHorizontally(
+                    targetOffsetX = { it },
                     animationSpec = tween(300)
                 )
             }
@@ -666,7 +666,7 @@ fun HomeDestination(
 /**
  * 首页列表项数据类
  */
-private data class HomeItem(
+internal data class HomeItem(
     val id: String,
     val title: String,
     val description: String
@@ -679,7 +679,7 @@ private data class HomeItem(
  * @param onClick 点击回调
  */
 @Composable
-fun HomeItemCard(
+internal fun HomeItemCard(
     item: HomeItem,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
