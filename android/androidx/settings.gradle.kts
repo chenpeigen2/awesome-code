@@ -142,3 +142,6 @@ include(":CrossProcessRenderDemo:server")
 include(":RemoteViewsDemo:common")
 include(":RemoteViewsDemo:client")
 include(":RemoteViewsDemo:server")
+
+// JNI Demo - JNI 从简单到复杂示例
+include(":jni-demo")

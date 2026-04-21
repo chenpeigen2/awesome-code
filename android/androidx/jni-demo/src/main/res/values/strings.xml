@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">JNI Demo</string>
+
+    <!-- 基础示例 -->
+    <string name="basic_call">基础 JNI 调用</string>
+    <string name="basic_call_desc">从 C++ 返回字符串，简单四则运算</string>
+    <string name="param_passing">参数传递</string>
+    <string name="param_passing_desc">基本类型、字符串在 Java 与 C++ 间传递</string>
+    <string name="array_operation">数组操作</string>
+    <string name="array_operation_desc">int 数组求和、排序、byte 数组处理</string>
+
+    <!-- 进阶示例 -->
+    <string name="object_manipulation">对象操作</string>
+    <string name="object_manipulation_desc">C++ 创建 Java 对象、访问字段、调用方法</string>
+    <string name="callback">回调机制</string>
+    <string name="callback_desc">C++ 通过接口回调 Java 层</string>
+    <string name="file_io">文件读写</string>
+    <string name="file_io_desc">通过 JNI 读写文件</string>
+
+    <!-- 高级示例 -->
+    <string name="dynamic_register">动态注册</string>
+    <string name="dynamic_register_desc">JNI_OnLoad + RegisterNatives 替代静态命名</string>
+    <string name="thread_callback">线程回调</string>
+    <string name="thread_callback_desc">C++ 子线程回调 Java，全局引用与 Env 管理</string>
+
+    <!-- Rust JNI 示例 -->
+    <string name="rust_jni">Rust JNI</string>
+    <string name="rust_jni_desc">Rust 编译 .so 通过 JNI 调用，安全高效</string>
+</resources>
