@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
 }
 
 android {
@@ -68,62 +67,62 @@ dependencies {
 }
 
 // 将 plugin-module 打包成 dex 并放入 assets
-android.applicationVariants.all {
-    val variantName = name.capitalize()
-    
-    tasks.register("preparePluginDex${variantName}") {
-        group = "build"
-        description = "Package plugin-module as dex for dynamic loading"
-        
-        // 依赖 plugin-module 的编译任务
-        dependsOn(":plugin-module:compileDebugKotlin", ":plugin-module:bundleLibCompileToJarDebug")
-        
-        doLast {
-            val assetsDir = file("src/main/assets")
-            val outputDex = File(assetsDir, "plugin.dex")
-            
-            if (!assetsDir.exists()) {
-                assetsDir.mkdirs()
+val preparePluginDex by tasks.registering {
+    group = "build"
+    description = "Package plugin-module as dex for dynamic loading"
+    dependsOn(":plugin-module:compileDebugKotlin", ":plugin-module:bundleLibCompileToJarDebug")
+
+    doLast {
+        val assetsDir = file("src/main/assets")
+        val outputDex = File(assetsDir, "plugin.dex")
+
+        if (!assetsDir.exists()) {
+            assetsDir.mkdirs()
+        }
+
+        val pluginJar = file("../plugin-module/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar")
+
+        val androidSdkPath = System.getenv("ANDROID_SDK_ROOT")
+            ?: System.getenv("ANDROID_HOME")
+            ?: "${System.getProperty("user.home")}/Android/Sdk"
+        val buildToolsDir = File(androidSdkPath, "build-tools")
+        val latestBuildTools = buildToolsDir.listFiles()
+            ?.filter { it.isDirectory && File(it, "d8").exists() }
+            ?.maxByOrNull { it.name }
+
+        if (latestBuildTools != null && pluginJar.exists()) {
+            val d8Path = File(latestBuildTools, "d8")
+
+            val process = ProcessBuilder(
+                d8Path.absolutePath, "--output", assetsDir.absolutePath, pluginJar.absolutePath
+            ).redirectErrorStream(true).start()
+            process.inputStream.bufferedReader().forEachLine { logger.lifecycle(it) }
+            process.waitFor()
+
+            val classesDex = File(assetsDir, "classes.dex")
+            if (classesDex.exists() && classesDex.name != outputDex.name) {
+                classesDex.renameTo(outputDex)
             }
-            
-            // 使用 plugin-module 编译生成的 jar
-            val pluginJar = file("../plugin-module/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar")
-            
-            // 查找 Android SDK 路径
-            val androidSdkPath = System.getenv("ANDROID_SDK_ROOT") 
-                ?: System.getenv("ANDROID_HOME")
-                ?: "${System.getProperty("user.home")}/Android/Sdk"
-            val buildToolsDir = File(androidSdkPath, "build-tools")
-            val latestBuildTools = buildToolsDir.listFiles()
-                ?.filter { it.isDirectory && File(it, "d8").exists() }
-                ?.maxByOrNull { it.name }
-            
-            if (latestBuildTools != null && pluginJar.exists()) {
-                val d8Path = File(latestBuildTools, "d8")
-                
-                // 使用 d8 转换为 dex
-                exec {
-                    commandLine(d8Path.absolutePath, "--output", assetsDir.absolutePath, pluginJar.absolutePath)
-                }
-                
-                // d8 输出的是 classes.dex，重命名为 plugin.dex
-                val classesDex = File(assetsDir, "classes.dex")
-                if (classesDex.exists() && classesDex.name != outputDex.name) {
-                    classesDex.renameTo(outputDex)
-                }
-                
-                println("✅ Plugin dex created at: ${outputDex.absolutePath}")
-                println("   Source JAR: ${pluginJar.absolutePath}")
-                println("   Size: ${outputDex.length()} bytes")
-            } else {
-                println("⚠️ Warning: Could not create plugin.dex")
-                println("   build-tools found: ${latestBuildTools?.absolutePath ?: "no"}")
-                println("   plugin.jar exists: ${pluginJar.exists()}")
-                println("   plugin.jar path: ${pluginJar.absolutePath}")
-            }
+
+            println("Plugin dex created at: ${outputDex.absolutePath}")
+            println("   Source JAR: ${pluginJar.absolutePath}")
+            println("   Size: ${outputDex.length()} bytes")
+        } else {
+            logger.warn("Could not create plugin.dex")
+            logger.warn("   build-tools found: ${latestBuildTools?.absolutePath ?: "no"}")
+            logger.warn("   plugin.jar exists: ${pluginJar.exists()}")
+            logger.warn("   plugin.jar path: ${pluginJar.absolutePath}")
         }
     }
-    
-    // 在打包前生成 plugin.dex
-    tasks.findByName("merge${variantName}Assets")?.dependsOn("preparePluginDex${variantName}")
+}
+
+androidComponents {
+    onVariants { variant ->
+        val variantName = variant.name.replaceFirstChar { it.uppercase() }
+        try {
+            tasks.named("merge${variantName}Assets").configure {
+                dependsOn(preparePluginDex)
+            }
+        } catch (_: Exception) {}
+    }
 }

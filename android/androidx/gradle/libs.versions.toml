@@ -13,7 +13,7 @@ minSdk = "33"
 composeBom = "2026.03.01"
 
 # Gradle 插件版本
-agp = "8.13.2"
+agp = "9.1.1"
 asynclayoutinflater = "1.1.0"
 kotlin = "2.2.21"
 
@@ -221,7 +221,6 @@ androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrains-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }

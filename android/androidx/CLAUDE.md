@@ -79,9 +79,11 @@ These demos have client/server/common submodules demonstrating cross-process com
 
 ## Configuration
 
-- **SDK Versions**: compileSdk=36, targetSdk=36, minSdk=33
+- **SDK Versions**: compileSdk=37, targetSdk=37, minSdk=33
 - **Java**: VERSION_11 (source and target compatibility)
 - **Kotlin**: JVM target JVM_11
+- **AGP**: 9.1.1 (built-in Kotlin support, no need for `org.jetbrains.kotlin.android` plugin)
+- **Gradle**: 9.3.1
 - **Version Catalog**: `gradle/libs.versions.toml` manages all dependency versions
 
 ## Custom Gradle Plugins
