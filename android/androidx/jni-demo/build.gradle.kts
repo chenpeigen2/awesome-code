@@ -50,16 +50,16 @@ android {
 
     externalNativeBuild {
         cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
+            path = project.file("src/main/cpp/CMakeLists.txt")
+            version = "4.1.2"
         }
     }
 
-    ndkVersion = "27.2.12479018"
+    ndkVersion = "30.0.14904198"
 
     sourceSets {
         getByName("main") {
-            jniLibs.srcDir(file("${project.layout.buildDirectory.get().asFile}/rustJniLibs"))
+            jniLibs.srcDir(project.file("${project.layout.buildDirectory.get().asFile}/rustJniLibs"))
         }
     }
 }
