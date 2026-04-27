@@ -56,8 +56,6 @@ include("kotlin:basic-kotlin")
 findProject(":kotlin:basic-kotlin")?.name = "basic-kotlin"
 include("kotlin:native-kotlin")
 findProject(":kotlin:native-kotlin")?.name = "native-kotlin"
-include("kotlin:js-kotlin")
-findProject(":kotlin:js-kotlin")?.name = "js-kotlin"
 // include("kotlin:coroutines-examples")  // Excluded due to Kotlin syntax errors in examples, not JDK 25 related
 // findProject(":kotlin:coroutines-examples")?.name = "coroutines-examples"
 // include("explore:spring-shell")  // Excluded due to JDK 25 compatibility issues
@@ -99,4 +97,3 @@ include("zip")
 include("explore:ai")
 include("patterns")
 include("claude")
-include("awesome-ktor")
