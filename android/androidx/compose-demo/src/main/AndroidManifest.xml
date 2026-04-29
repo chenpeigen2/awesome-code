@@ -106,6 +106,16 @@
             android:exported="false"
             android:theme="@style/Theme.Compose" />
 
+        <activity
+            android:name=".level3.StateRestoreActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level3.SnapshotFlowActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
         <!-- Level 4 - 列表与动画 -->
         <activity
             android:name=".level4.LazyListsActivity"
@@ -169,6 +179,16 @@
             android:exported="false"
             android:theme="@style/Theme.Compose" />
 
+        <activity
+            android:name=".level6.InfiniteTransitionActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level6.GraphicsLayerActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
         <!-- Level 7 - 高级进阶 -->
         <activity
             android:name=".level7.AdaptiveLayoutActivity"
@@ -182,6 +202,26 @@
 
         <activity
             android:name=".level7.ComposeTestingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level7.StabilityActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level7.AnnotatedStringActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level7.ScaffoldAdvancedActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Compose" />
+
+        <activity
+            android:name=".level7.CustomModifierActivity"
             android:exported="false"
             android:theme="@style/Theme.Compose" />
 

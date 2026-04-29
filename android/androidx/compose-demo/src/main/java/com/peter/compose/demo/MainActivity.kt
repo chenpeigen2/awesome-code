@@ -180,7 +180,19 @@ fun getDemoLevels(): List<DemoLevel> {
                     description = "clickable, transformable, 多点触控, 拖拽",
                     activityClass = com.peter.compose.demo.level2.GesturesActivity::class.java,
                     color = Color(0xFFC2185B)
-                )
+                ),
+                DemoItem(
+                    title = "状态恢复",
+                    description = "rememberSaveable, 自定义 Saver",
+                    activityClass = com.peter.compose.demo.level3.StateRestoreActivity::class.java,
+                    color = Color(0xFFAD1457)
+                ),
+                DemoItem(
+                    title = "SnapshotFlow",
+                    description = "State 转 Flow, 防抖搜索",
+                    activityClass = com.peter.compose.demo.level3.SnapshotFlowActivity::class.java,
+                    color = Color(0xFF880E4F)
+                ),
             )
         ),
         DemoLevel(
@@ -282,6 +294,18 @@ fun getDemoLevels(): List<DemoLevel> {
                     description = "自定义绘制与图形",
                     activityClass = com.peter.compose.demo.level4.CanvasDrawingActivity::class.java,
                     color = Color(0xFF303F9F)
+                ),
+                DemoItem(
+                    title = "无限 & 物理动画",
+                    description = "InfiniteTransition, spring, animateDecay",
+                    activityClass = com.peter.compose.demo.level6.InfiniteTransitionActivity::class.java,
+                    color = Color(0xFF1A237E)
+                ),
+                DemoItem(
+                    title = "GraphicsLayer",
+                    description = "模糊效果, 毛玻璃, 自定义绘制",
+                    activityClass = com.peter.compose.demo.level6.GraphicsLayerActivity::class.java,
+                    color = Color(0xFF283593)
                 )
             )
         ),
@@ -326,6 +350,30 @@ fun getDemoLevels(): List<DemoLevel> {
                     description = "createComposeRule, 语义测试",
                     activityClass = com.peter.compose.demo.level7.ComposeTestingActivity::class.java,
                     color = Color(0xFF263238)
+                ),
+                DemoItem(
+                    title = "稳定性优化",
+                    description = "@Stable, @Immutable, skippability",
+                    activityClass = com.peter.compose.demo.level7.StabilityActivity::class.java,
+                    color = Color(0xFF1B5E20)
+                ),
+                DemoItem(
+                    title = "富文本",
+                    description = "AnnotatedString, 可点击链接",
+                    activityClass = com.peter.compose.demo.level7.AnnotatedStringActivity::class.java,
+                    color = Color(0xFF004D40)
+                ),
+                DemoItem(
+                    title = "Scaffold 进阶",
+                    description = "BottomSheet, Drawer, Snackbar",
+                    activityClass = com.peter.compose.demo.level7.ScaffoldAdvancedActivity::class.java,
+                    color = Color(0xFF4E342E)
+                ),
+                DemoItem(
+                    title = "自定义 Modifier",
+                    description = "drawBehind, pointerInput, 渐变边框",
+                    activityClass = com.peter.compose.demo.level7.CustomModifierActivity::class.java,
+                    color = Color(0xFF3E2723)
                 )
             )
         )
@@ -360,7 +408,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "7 个层级 · 31 个示例",
+                    text = "7 个层级 · 39 个示例",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
                 )
