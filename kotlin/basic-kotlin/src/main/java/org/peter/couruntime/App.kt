@@ -1,6 +1,7 @@
 package org.peter.couruntime
 
 import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.isActive
@@ -204,12 +205,104 @@ private fun cancelBehaviorDemo() = runBlocking {
     }
 }
 
+// ==================== Dispatcher 线程切换对比 ====================
+// 展示每种 Start 模式在不同 Dispatcher 下的线程行为
+private fun dispatcherDemo() = runBlocking {
+    println("=== Dispatcher 线程切换对比 ===\n")
+    val mainThread = Thread.currentThread().name
+
+    // ---- DEFAULT + Default Dispatcher ----
+    println("--- DEFAULT + Dispatchers.Default ---")
+    val job1 = launch(Dispatchers.Default, start = CoroutineStart.DEFAULT) {
+        println("  协程体线程: ${Thread.currentThread().name}")
+    }
+    job1.join()
+
+    // ---- DEFAULT + Unconfined ----
+    println("--- DEFAULT + Dispatchers.Unconfined ---")
+    val job2 = launch(Dispatchers.Unconfined, start = CoroutineStart.DEFAULT) {
+        println("  协程体线程: ${Thread.currentThread().name}")
+    }
+    job2.join()
+
+    // ---- LAZY + Default（触发时才调度到 Default 线程）----
+    println("--- LAZY + Dispatchers.Default ---")
+    val job3 = launch(Dispatchers.Default, start = CoroutineStart.LAZY) {
+        println("  协程体线程: ${Thread.currentThread().name}")
+    }
+    println("  start 前线程: $mainThread")
+    job3.start()
+    job3.join()
+
+    // ---- ATOMIC + Default（保证在 Default 线程执行）----
+    println("--- ATOMIC + Dispatchers.Default ---")
+    val job4 = launch(Dispatchers.Default, start = CoroutineStart.ATOMIC) {
+        println("  协程体线程: ${Thread.currentThread().name} (isActive=$isActive)")
+    }
+    job4.cancel()
+    job4.join()
+
+    // ---- UNDISPATCHED + Default（关键区别！）----
+    println("--- UNDISPATCHED + Dispatchers.Default ---")
+    println("  主线程: $mainThread")
+    val job5 = launch(Dispatchers.Default, start = CoroutineStart.UNDISPATCHED) {
+        println("  第一段线程: ${Thread.currentThread().name}  ← 当前线程，忽略 Dispatcher")
+        delay(1)
+        println("  第二段线程: ${Thread.currentThread().name}  ← 挂起恢复后，走 Dispatcher")
+    }
+    println("  UNDISPATCHED 不等协程执行完就返回了")
+    job5.join()
+
+    // ---- UNDISPATCHED + Unconfined 对比 ----
+    println("\n--- UNDISPATCHED vs Unconfined ---")
+    println("  UNDISPATCHED: 首段当前线程，恢复后走 Dispatcher")
+    val job6 = launch(Dispatchers.Default, start = CoroutineStart.UNDISPATCHED) {
+        print("  UNDISPATCHED 首段: ${threadTag()} → ")
+        delay(1)
+        println("恢复: ${threadTag()}")
+    }
+    println("  Unconfined: 首段当前线程，恢复后也走提交线程")
+    val job7 = launch(Dispatchers.Unconfined) {
+        print("  Unconfined 首段: ${threadTag()} → ")
+        delay(1)
+        println("恢复: ${threadTag()}")
+    }
+    job6.join()
+    job7.join()
+
+    // ---- DEFAULT + IO（实际场景）----
+    println("\n--- 实战: DEFAULT vs UNDISPATCHED + Dispatchers.IO ---")
+    val job8 = launch(Dispatchers.IO, start = CoroutineStart.DEFAULT) {
+        println("  [DEFAULT] 全程在: ${threadTag()}")
+    }
+    val job9 = launch(Dispatchers.IO, start = CoroutineStart.UNDISPATCHED) {
+        println("  [UNDISPATCHED] 首段: ${threadTag()} (runBlocking 主线程)")
+        delay(1)
+        println("  [UNDISPATCHED] 恢复: ${threadTag()} (IO 线程)")
+    }
+    job8.join()
+    job9.join()
+    println()
+}
+
+/** 返回线程标签，用于区分 Default/IO/Main 线程 */
+private fun threadTag(): String {
+    val name = Thread.currentThread().name
+    return when {
+        name.contains("DefaultDispatcher") -> "Default($name)"
+        name.contains("IO") -> "IO($name)"
+        name.contains("main") -> "main($name)"
+        else -> name
+    }
+}
+
 fun main() {
     defaultDemo()
     lazyDemo()
     atomicDemo()
     undispatchedDemo()
     cancelBehaviorDemo()
+    dispatcherDemo()
 }
 
 private suspend fun intValue1(): Int {
