@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 说明 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fts_description"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 插入示例数据 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSeedData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="插入示例文章" />
+
+        <!-- 搜索输入 -->
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="输入搜索关键词（如：协程、Compose、优化）"
+            android:layout_marginTop="8dp" />
+
+        <!-- 搜索按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSearchMatch"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="MATCH 搜索" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSearchLike"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="LIKE 搜索"
+                android:layout_marginStart="8dp"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
+        </LinearLayout>
+
+        <!-- 搜索方式标识 -->
+        <TextView
+            android:id="@+id/tvSearchMethod"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="当前搜索方式: MATCH"
+            android:textSize="12sp"
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginTop="4dp" />
+
+        <!-- 清空按钮 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDeleteAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="清空所有文章"
+            android:layout_marginTop="8dp"
+            style="@style/Widget.Material3.Button.OutlinedButton" />
+
+        <!-- 搜索结果 -->
+        <TextView
+            android:id="@+id/tvSearchResults"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="暂无搜索结果"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="12dp" />
+
+    </LinearLayout>
+</ScrollView>

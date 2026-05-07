@@ -25,6 +25,12 @@
     <string name="state_flow_desc">状态流与 UI 状态管理</string>
     <string name="cold_hot_flow">冷流与热流</string>
     <string name="cold_hot_flow_desc">Flow、SharedFlow、StateFlow 对比</string>
+    <string name="flow_exception">Flow 异常处理</string>
+    <string name="flow_exception_desc">catch/onCompletion/retry 操作符</string>
+    <string name="flow_buffer">Flow 缓冲与背压</string>
+    <string name="flow_buffer_desc">buffer、conflate、debounce、collectLatest</string>
+    <string name="shared_flow_deep">SharedFlow 进阶</string>
+    <string name="shared_flow_deep_desc">参数详解、StateFlow 对比、Event Bus 模式</string>
 
     <!-- Channel -->
     <string name="channel_title">三、Channel 通道</string>

@@ -60,6 +60,18 @@
             android:name=".flow.ColdHotFlowActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".flow.FlowExceptionActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".flow.FlowBufferActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".flow.SharedFlowDeepActivity"
+            android:exported="false" />
+
         <!-- Channel 模块 (03-Channel) -->
         <activity
             android:name=".channel.ChannelBasicsActivity"

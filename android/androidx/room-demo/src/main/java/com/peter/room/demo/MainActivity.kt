@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         Pair(R.color.tab_basic, R.color.tab_basic_container),
         Pair(R.color.tab_relation, R.color.tab_relation_container),
         Pair(R.color.tab_migration, R.color.tab_migration_container),
+        Pair(R.color.tab_embedded, R.color.tab_embedded_container),
+        Pair(R.color.tab_fts, R.color.tab_fts_container),
         Pair(R.color.tab_converter, R.color.tab_converter_container),
         Pair(R.color.tab_advanced, R.color.tab_advanced_container)
     )
@@ -88,6 +90,8 @@ class MainPagerAdapter(
         BasicFragment.newInstance(),
         RelationFragment.newInstance(),
         MigrationFragment.newInstance(),
+        EmbeddedFragment.newInstance(),
+        FtsFragment.newInstance(),
         ConverterFragment.newInstance(),
         AdvancedFragment.newInstance()
     )
@@ -96,6 +100,8 @@ class MainPagerAdapter(
         "基础用法",
         "关系映射",
         "迁移",
+        "嵌套对象",
+        "全文搜索",
         "类型转换",
         "高级查询"
     )

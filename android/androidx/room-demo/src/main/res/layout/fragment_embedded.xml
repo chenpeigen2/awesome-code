@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 说明 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/embedded_description"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 姓名 + 电话 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="姓名" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPhone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="电话"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- 家庭地址 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🏠 家庭地址 (@Embedded)"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etHomeStreet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="街道" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etHomeCity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="城市" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etHomeZip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="邮编"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- 工作地址 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🏢 工作地址 (@Embedded(prefix=&quot;work_&quot;))"
+            android:textStyle="bold"
+            android:layout_marginTop="12dp" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etWorkStreet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="街道" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etWorkCity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="城市" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etWorkZip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="邮编"
+                android:layout_marginStart="8dp" />
+        </LinearLayout>
+
+        <!-- 按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddContact"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="添加联系人" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDeleteAll"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="清空"
+                android:layout_marginStart="8dp"
+                style="@style/Widget.Material3.Button.OutlinedButton" />
+        </LinearLayout>
+
+        <!-- 联系人列表 -->
+        <TextView
+            android:id="@+id/tvContactList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="暂无联系人，请添加"
+            android:textSize="14sp"
+            android:layout_marginTop="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="12dp" />
+
+    </LinearLayout>
+</ScrollView>

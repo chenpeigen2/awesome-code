@@ -37,6 +37,12 @@
     <string name="converter_list">列表类型</string>
     <string name="converter_enum">枚举类型</string>
     
+    <!-- Embedded -->
+    <string name="embedded_description">演示 @Embedded 注解：将对象嵌入 Entity，无需单独建表。\n\n无前缀：homeAddress 的字段直接映射到列 (street, city, zipCode)\n有前缀：workAddress 的字段加 work_ 前缀 (work_street, work_city, work_zipCode)</string>
+
+    <!-- FTS -->
+    <string name="fts_description">演示 @Fts4 全文搜索：\n\n• MATCH 查询：FTS4 虚拟表专用，支持中文分词，性能优秀\n• LIKE 查询：传统 SQL 模糊匹配，逐行扫描，性能较差\n\n点击"插入示例文章"后，输入关键词搜索对比两种方式</string>
+
     <!-- Advanced -->
     <string name="advanced_title">高级查询</string>
     <string name="advanced_description">演示 Flow、事务、复杂查询</string>

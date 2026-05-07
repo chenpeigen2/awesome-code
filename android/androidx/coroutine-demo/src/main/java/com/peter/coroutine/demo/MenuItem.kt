@@ -12,7 +12,10 @@ import com.peter.coroutine.demo.channel.ProduceConsumeActivity
 import com.peter.coroutine.demo.channel.SelectExpressionActivity
 import com.peter.coroutine.demo.flow.ColdHotFlowActivity
 import com.peter.coroutine.demo.flow.FlowBasicsActivity
+import com.peter.coroutine.demo.flow.FlowBufferActivity
+import com.peter.coroutine.demo.flow.FlowExceptionActivity
 import com.peter.coroutine.demo.flow.FlowOperatorsActivity
+import com.peter.coroutine.demo.flow.SharedFlowDeepActivity
 import com.peter.coroutine.demo.flow.StateFlowActivity
 import com.peter.coroutine.demo.errorhandling.ExceptionHandlerActivity
 import com.peter.coroutine.demo.errorhandling.SupervisorJobActivity
@@ -54,6 +57,9 @@ fun createFlowBasicsIntent(context: Context) = Intent(context, FlowBasicsActivit
 fun createFlowOperatorsIntent(context: Context) = Intent(context, FlowOperatorsActivity::class.java)
 fun createStateFlowIntent(context: Context) = Intent(context, StateFlowActivity::class.java)
 fun createColdHotFlowIntent(context: Context) = Intent(context, ColdHotFlowActivity::class.java)
+fun createFlowExceptionIntent(context: Context) = Intent(context, FlowExceptionActivity::class.java)
+fun createFlowBufferIntent(context: Context) = Intent(context, FlowBufferActivity::class.java)
+fun createSharedFlowDeepIntent(context: Context) = Intent(context, SharedFlowDeepActivity::class.java)
 
 // ==================== Channel (03-Channel) ====================
 fun createChannelBasicsIntent(context: Context) = Intent(context, ChannelBasicsActivity::class.java)

@@ -34,6 +34,10 @@
     <color name="tab_migration_container">#FFF3E0</color>
     <color name="tab_converter">#7B1FA2</color>
     <color name="tab_converter_container">#F3E5F5</color>
+    <color name="tab_embedded">#FF4CAF50</color>
+    <color name="tab_embedded_container">#FFE8F5E9</color>
+    <color name="tab_fts">#FFFF9800</color>
+    <color name="tab_fts_container">#FFFFF3E0</color>
     <color name="tab_advanced">#C62828</color>
     <color name="tab_advanced_container">#FFEBEE</color>
     

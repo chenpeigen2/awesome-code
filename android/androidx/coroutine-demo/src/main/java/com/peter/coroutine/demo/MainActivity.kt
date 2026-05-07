@@ -128,6 +128,21 @@ class MainActivity : AppCompatActivity() {
                 description = getString(R.string.cold_hot_flow_desc),
                 intent = createColdHotFlowIntent(this)
             ),
+            MenuItem(
+                title = getString(R.string.flow_exception),
+                description = getString(R.string.flow_exception_desc),
+                intent = createFlowExceptionIntent(this)
+            ),
+            MenuItem(
+                title = getString(R.string.flow_buffer),
+                description = getString(R.string.flow_buffer_desc),
+                intent = createFlowBufferIntent(this)
+            ),
+            MenuItem(
+                title = getString(R.string.shared_flow_deep),
+                description = getString(R.string.shared_flow_deep_desc),
+                intent = createSharedFlowDeepIntent(this)
+            ),
 
             // 三、Channel 通道
             MenuItem(

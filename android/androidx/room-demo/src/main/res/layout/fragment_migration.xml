@@ -14,11 +14,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/migration_description"
+            android:text="演示 Room 数据库从 v1 到 v2 的迁移过程。v1 包含 id/name/age/email/createdAt，v2 新增 phone 字段。"
             android:textColor="@color/on_surface_variant"
             android:textSize="14sp" />
 
-        <!-- 当前版本 -->
+        <!-- 当前状态 -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="数据库版本"
+                    android:text="当前状态"
                     android:textColor="@color/on_surface"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -45,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="当前版本: 1"
+                    android:text="数据库未创建"
                     android:textColor="@color/primary"
                     android:textSize="14sp" />
 
@@ -70,18 +70,45 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="迁移操作"
+                    android:text="迁移操作 (请按顺序执行)"
                     android:textColor="@color/on_surface"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnUpgrade"
+                    android:id="@+id/btnInsertV1"
                     style="@style/Widget.Material3.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="12dp"
-                    android:text="升级到版本 2 (添加字段)"
+                    android:text="1. 插入 v1 数据"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnMigrate"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:text="2. 执行迁移 (v1→v2)"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnQueryV2"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:text="3. 查询 v2 数据"
+                    app:cornerRadius="12dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnReset"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:text="重置数据库"
                     app:cornerRadius="12dp" />
 
                 <TextView
@@ -89,8 +116,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:fontFamily="monospace"
                     android:textColor="@color/on_surface"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     android:visibility="gone" />
 
             </LinearLayout>
@@ -114,7 +142,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="迁移代码示例"
+                    android:text="迁移代码"
                     android:textColor="@color/on_surface"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -124,16 +152,20 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="monospace"
-                    android:text="Migration 示例:
-
-val MIGRATION_1_2 = object : Migration(1, 2) {
-  override fun migrate(db) {
+                    android:text="val MIGRATION_1_2 = object : Migration(1, 2) {
+  override fun migrate(db: SupportSQLiteDatabase) {
     db.execSQL(
-      ALTER TABLE users
-      ADD COLUMN phone TEXT
+      &quot;ALTER TABLE migration_users
+       ADD COLUMN phone TEXT
+       NOT NULL DEFAULT ''&quot;
     )
   }
-}"
+}
+
+// 使用方式:
+Room.databaseBuilder(context, DB::class.java, name)
+  .addMigrations(MIGRATION_1_2)
+  .build()"
                     android:textColor="@color/on_surface_variant"
                     android:textSize="11sp" />
 
