@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android → JS</title>
+    <style>
+        body { font-family: sans-serif; padding: 16px; background: #f5f5f5; }
+        .card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h3 { color: #3700B3; margin-top: 0; }
+        .demo-area { background: #e8f5e9; border-radius: 4px; padding: 12px; margin: 8px 0; min-height: 40px; }
+        .principle { background: #fff3e0; border-left: 3px solid #ff9800; padding: 8px 12px; margin: 8px 0; font-size: 13px; }
+        code { background: #f5f5f5; padding: 2px 4px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>Demo 1: Android → JS</h3>
+        <div class="principle">
+            <strong>原理：</strong>Android 通过 <code>evaluateJavascript("jsFunction(args)", callback)</code> 调用 WebView 中的 JS 函数，可同步获取返回值。
+        </div>
+        <div class="principle">
+            <strong>对比旧方案：</strong><code>loadUrl("javascript:...")</code> 无法获取返回值，且 API 18 以下有安全风险。
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>JS 函数定义</h3>
+        <pre style="background:#f5f5f5;padding:8px;border-radius:4px;font-size:12px;overflow-x:auto;">
+// 1. 显示消息（Android 调用此函数）
+function showMessage(msg) {
+    document.getElementById('demoArea').textContent = msg;
+    return 'JS received: ' + msg;  // 返回值给 Android
+}
+
+// 2. 返回 JSON 数据
+function getUserData() {
+    return JSON.stringify({name:'Peter', age:28, skills:['Android','Kotlin']});
+}
+
+// 3. 更新页面内容
+function updateContent(text) {
+    var el = document.getElementById('demoArea');
+    el.textContent = text;  // 使用 textContent 而非 innerHTML
+    return 'updated';
+}
+        </pre>
+    </div>
+
+    <div class="card">
+        <h3>Demo 区域</h3>
+        <p>请点击上方 Android 按钮，观察此区域变化：</p>
+        <div id="demoArea" class="demo-area">等待 Android 调用 JS 函数...</div>
+    </div>
+
+    <script>
+        // === JS 函数定义 ===
+
+        /**
+         * 显示消息
+         * Android 调用：webView.evaluateJavascript("showMessage('Hello')", callback)
+         * 返回值会通过 ValueCallback 传回 Android
+         */
+        function showMessage(msg) {
+            document.getElementById('demoArea').textContent = msg;
+            console.log('[JS] showMessage called: ' + msg);
+            return 'JS received: ' + msg;
+        }
+
+        /**
+         * 返回 JSON 数据
+         * Android 调用：webView.evaluateJavascript("getUserData()", callback)
+         * 返回值是 JSON 字符串，Android 端需要解析
+         */
+        function getUserData() {
+            var data = {name: 'Peter', age: 28, skills: ['Android', 'Kotlin']};
+            console.log('[JS] getUserData called');
+            return JSON.stringify(data);
+        }
+
+        /**
+         * 更新页面内容
+         * Android 调用：webView.evaluateJavascript("updateContent('new text')", callback)
+         */
+        function updateContent(text) {
+            document.getElementById('demoArea').textContent = text;
+            console.log('[JS] updateContent called: ' + text);
+            return 'updated';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Scheme 拦截</title>
+    <style>
+        body { font-family: sans-serif; padding: 16px; background: #f5f5f5; }
+        .card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h3 { color: #3700B3; margin-top: 0; }
+        button { background: #6200EE; color: white; border: none; padding: 10px 16px; border-radius: 4px; margin: 4px; cursor: pointer; font-size: 14px; }
+        button:active { background: #3700B3; }
+        .result { background: #e8f5e9; border-radius: 4px; padding: 12px; margin: 8px 0; min-height: 40px; font-family: monospace; font-size: 13px; }
+        .principle { background: #fff3e0; border-left: 3px solid #ff9800; padding: 8px 12px; margin: 8px 0; font-size: 13px; }
+        code { background: #f5f5f5; padding: 2px 4px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>Demo 3: URL Scheme 拦截</h3>
+        <div class="principle">
+            <strong>原理：</strong>JS 通过 <code>window.location = "jsbridge://method?params"</code> 触发 URL 跳转。Android 在 <code>shouldOverrideUrlLoading()</code> 中拦截并解析 URL。
+        </div>
+        <div class="principle">
+            <strong>URL 格式：</strong><code>jsbridge://method?key1=value1&key2=value2</code>
+        </div>
+        <div class="principle">
+            <strong>特点：</strong>无法直接返回值（异步），需要通过 evaluateJavascript 回传。兼容性好，iOS 也用此方式。
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>调用示例</h3>
+        <button onclick="callShowToast()">URL: showToast</button>
+        <button onclick="callGetData()">URL: getData</button>
+        <button onclick="callNavigate()">URL: navigate</button>
+        <div id="result" class="result">点击按钮触发 URL Scheme...</div>
+    </div>
+
+    <script>
+        /**
+         * 通过 URL Scheme 调用 Android 的 showToast
+         *
+         * JS 设置 window.location，Android 拦截 URL 后执行原生逻辑
+         *
+         * 数据流：
+         * JS → window.location = "jsbridge://showToast?msg=xxx"
+         * Android → shouldOverrideUrlLoading() 拦截
+         * Android → Uri.parse(url) 解析参数
+         * Android → 执行原生逻辑
+         */
+        function callShowToast() {
+            var url = 'jsbridge://showToast?msg=Hello from URL Scheme!';
+            document.getElementById('result').innerText = '触发: ' + url;
+            window.location = url;
+        }
+
+        /**
+         * 通过 URL Scheme 请求数据
+         *
+         * 由于 URL Scheme 无法直接返回值，
+         * Android 通过 evaluateJavascript("onDataReceived(data)") 回传
+         */
+        function callGetData() {
+            var url = 'jsbridge://getData';
+            document.getElementById('result').innerText = '请求数据: ' + url;
+            window.location = url;
+        }
+
+        /**
+         * 通过 URL Scheme 触发页面导航
+         */
+        function callNavigate() {
+            var url = 'jsbridge://navigate?page=profile&userId=123';
+            document.getElementById('result').innerText = '导航: ' + url;
+            window.location = url;
+        }
+
+        /**
+         * 接收 Android 回传的数据
+         * Android 通过 evaluateJavascript("onDataReceived(json)") 调用
+         */
+        function onDataReceived(data) {
+            document.getElementById('result').innerText =
+                '收到数据:\n' + JSON.stringify(JSON.parse(data), null, 2);
+        }
+    </script>
+</body>
+</html>

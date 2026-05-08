@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS → Android (@JavascriptInterface)</title>
+    <style>
+        body { font-family: sans-serif; padding: 16px; background: #f5f5f5; }
+        .card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h3 { color: #3700B3; margin-top: 0; }
+        button { background: #6200EE; color: white; border: none; padding: 10px 16px; border-radius: 4px; margin: 4px; cursor: pointer; font-size: 14px; }
+        button:active { background: #3700B3; }
+        .result { background: #e8f5e9; border-radius: 4px; padding: 12px; margin: 8px 0; min-height: 40px; font-family: monospace; font-size: 13px; }
+        .principle { background: #fff3e0; border-left: 3px solid #ff9800; padding: 8px 12px; margin: 8px 0; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>Demo 2: JS → Android</h3>
+        <div class="principle">
+            <strong>原理：</strong>Android 通过 <code>addJavascriptInterface(obj, "Android")</code> 将 Java 对象暴露给 JS。JS 通过 <code>window.Android.method()</code> 调用原生方法。
+        </div>
+        <div class="principle">
+            <strong>安全：</strong>只有标注 <code>@JavascriptInterface</code> 的方法才会暴露。API 17+ 强制要求注解。
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>调用 Android 方法</h3>
+        <button onclick="callShowToast()">显示 Toast</button>
+        <button onclick="callGetUserInfo()">获取用户信息</button>
+        <button onclick="callCalculate()">计算 10+20</button>
+        <button onclick="callFetchData()">异步获取数据</button>
+        <div id="result" class="result">点击按钮调用 Android 方法...</div>
+    </div>
+
+    <script>
+        /**
+         * 调用 Android 的 showToast 方法
+         * JS 代码：window.Android.showToast("Hello from JS")
+         *
+         * 数据流：
+         * JS → window.Android.showToast() → Android @JavascriptInterface 方法 → Toast
+         */
+        function callShowToast() {
+            if (window.Android) {
+                window.Android.showToast("Hello from JavaScript!");
+                document.getElementById('result').innerText = '已调用: window.Android.showToast("Hello from JavaScript!")';
+            } else {
+                document.getElementById('result').innerText = '错误: window.Android 未定义';
+            }
+        }
+
+        /**
+         * 调用 Android 的 getUserInfo 方法（获取 JSON 数据）
+         * JS 代码：var json = window.Android.getUserInfo()
+         *
+         * 注意：@JavascriptInterface 方法返回的是字符串，需要 JSON.parse 解析
+         */
+        function callGetUserInfo() {
+            if (window.Android) {
+                var json = window.Android.getUserInfo();
+                var user = JSON.parse(json);
+                document.getElementById('result').innerText =
+                    'getUserInfo() 返回:\n' + JSON.stringify(user, null, 2);
+            }
+        }
+
+        /**
+         * 调用 Android 的 calculate 方法（传递参数）
+         * JS 代码：var result = window.Android.calculate(10, 20)
+         */
+        function callCalculate() {
+            if (window.Android) {
+                var result = window.Android.calculate(10, 20);
+                document.getElementById('result').innerText =
+                    'calculate(10, 20) = ' + result;
+            }
+        }
+
+        /**
+         * 调用 Android 的 fetchData 方法（异步回调）
+         *
+         * 由于 @JavascriptInterface 方法同步执行，无法直接返回异步结果。
+         * 解决方案：传入 callbackId，Android 完成后通过 evaluateJavascript 回传。
+         *
+         * 数据流：
+         * JS → window.Android.fetchData("cb_1")
+         * Android → 异步操作 → webView.evaluateJavascript("onCallback('cb_1', data)")
+         * JS → onCallback() 处理结果
+         */
+        var callbackId = 0;
+        function callFetchData() {
+            if (window.Android) {
+                callbackId++;
+                var cbId = 'cb_' + callbackId;
+                document.getElementById('result').innerText = '等待异步回调 (callbackId=' + cbId + ')...';
+                window.Android.fetchData(cbId);
+            }
+        }
+
+        /**
+         * 异步回调处理函数
+         * Android 通过 evaluateJavascript 调用此函数回传数据
+         */
+        function onCallback(id, data) {
+            document.getElementById('result').innerText =
+                '异步回调 [' + id + ']:\n' + JSON.stringify(JSON.parse(data), null, 2);
+        }
+    </script>
+</body>
+</html>

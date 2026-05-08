@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebMessagePort</title>
+    <style>
+        body { font-family: sans-serif; padding: 16px; background: #f5f5f5; margin: 0; }
+        .card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h3 { color: #3700B3; margin-top: 0; }
+        .principle { background: #fff3e0; border-left: 3px solid #ff9800; padding: 8px 12px; margin: 8px 0; font-size: 13px; }
+        .result { background: #e8f5e9; border-radius: 4px; padding: 12px; margin: 8px 0; min-height: 40px; font-family: monospace; font-size: 13px; }
+        code { background: #f5f5f5; padding: 2px 4px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>Demo 6: WebMessagePort</h3>
+        <div class="principle">
+            <strong>原理：</strong>使用 <code>WebMessagePort</code> API（API 23+）进行安全的双向消息传递。与 @JavascriptInterface 不同，不暴露 Java 对象给 JS，而是通过 MessagePort 通道交换 <code>WebMessage</code> 对象。
+        </div>
+        <div class="principle">
+            <strong>步骤：</strong>
+            <br>1. Android 调用 <code>createWebMessageChannel()</code> 创建端口对
+            <br>2. 端口[0] 留在 Android 端，端口[1] 通过 <code>postWebMessage()</code> 传给 JS
+            <br>3. 双方通过 <code>port.postMessage()</code> / <code>port.onmessage</code> 通信
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>JS 端</h3>
+        <div id="status" class="result">等待消息通道建立...</div>
+        <div class="principle">
+            <strong>状态：</strong><span id="portStatus">未连接</span>
+        </div>
+    </div>
+
+    <script>
+        var jsPort = null;
+
+        /**
+         * 接收 Android 传来的 WebMessagePort
+         *
+         * Android 代码：
+         * val channel = webView.createWebMessageChannel()
+         * channel[0].setWebMessageCallback(...)  // Android 端保留
+         * webView.postWebMessage(WebMessage("port", arrayOf(channel[1])), Uri.EMPTY)
+         *
+         * JS 通过 navigator.serviceWorker 或 window.onmessage 接收
+         */
+        window.addEventListener('message', function(event) {
+            if (event.data && event.data === 'port') {
+                // event.ports[0] 就是 Android 传来的端口
+                jsPort = event.ports[0];
+
+                // 设置消息回调
+                jsPort.onmessage = function(event) {
+                    var data = event.data;
+                    document.getElementById('status').textContent = '收到 Android 消息: ' + data;
+                    console.log('[JS] WebMessagePort 收到: ' + data);
+
+                    // 回复 Android
+                    jsPort.postMessage('JS 已收到: ' + data);
+                };
+
+                document.getElementById('portStatus').textContent = '已连接';
+                document.getElementById('status').textContent = '消息通道已建立，等待通信...';
+                console.log('[JS] WebMessagePort 已连接');
+            }
+        });
+
+        /**
+         * JS 通过 WebMessagePort 发送消息到 Android
+         * 调用方式：jsPort.postMessage("message")
+         */
+        function sendToAndroid(msg) {
+            if (jsPort) {
+                jsPort.postMessage(msg);
+                document.getElementById('status').textContent = '已发送: ' + msg;
+            } else {
+                document.getElementById('status').textContent = '错误: 消息通道未建立';
+            }
+        }
+    </script>
+</body>
+</html>

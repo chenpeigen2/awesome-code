@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WebView Demo</string>
+
+    <!-- 基础通信 -->
+    <string name="basics_title">一、基础通信</string>
+    <string name="android_call_js">Android → JS</string>
+    <string name="android_call_js_desc">evaluateJavascript() 调用 JS 函数</string>
+    <string name="js_call_android">JS → Android</string>
+    <string name="js_call_android_desc">@JavascriptInterface 暴露原生方法给 JS</string>
+
+    <!-- 中级通信 -->
+    <string name="intermediate_title">二、中级通信</string>
+    <string name="url_scheme">URL Scheme 拦截</string>
+    <string name="url_scheme_desc">shouldOverrideUrlLoading 拦截自定义协议</string>
+    <string name="js_prompt">onJsPrompt 拦截</string>
+    <string name="js_prompt_desc">拦截 window.prompt() 实现 JS 调用原生</string>
+
+    <!-- 高级通信 -->
+    <string name="advanced_title">三、高级通信</string>
+    <string name="bidirectional">双向通信综合案例</string>
+    <string name="bidirectional_desc">组合 evaluateJavascript + JavascriptInterface 实现聊天</string>
+    <string name="web_message_port">WebMessagePort</string>
+    <string name="web_message_port_desc">API 23+ postMessage 通道，更安全的双向通信</string>
+</resources>

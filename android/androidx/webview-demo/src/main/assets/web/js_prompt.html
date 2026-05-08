@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>onJsPrompt 拦截</title>
+    <style>
+        body { font-family: sans-serif; padding: 16px; background: #f5f5f5; }
+        .card { background: white; border-radius: 8px; padding: 16px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        h3 { color: #3700B3; margin-top: 0; }
+        button { background: #6200EE; color: white; border: none; padding: 10px 16px; border-radius: 4px; margin: 4px; cursor: pointer; font-size: 14px; }
+        button:active { background: #3700B3; }
+        .result { background: #e8f5e9; border-radius: 4px; padding: 12px; margin: 8px 0; min-height: 40px; font-family: monospace; font-size: 13px; }
+        .principle { background: #fff3e0; border-left: 3px solid #ff9800; padding: 8px 12px; margin: 8px 0; font-size: 13px; }
+        code { background: #f5f5f5; padding: 2px 4px; border-radius: 2px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h3>Demo 4: onJsPrompt 拦截</h3>
+        <div class="principle">
+            <strong>原理：</strong>JS 调用 <code>window.prompt(message)</code> 时，Android 的 <code>WebChromeClient.onJsPrompt()</code> 被触发。我们将 prompt 的 message 作为通信协议，解析后执行原生逻辑，通过 <code>result.confirm()</code> 返回结果。
+        </div>
+        <div class="principle">
+            <strong>协议格式：</strong><code>jsbridge://method?param=value</code>
+        </div>
+        <div class="principle">
+            <strong>优势：</strong>可以同步返回值，不需要 addJavascriptInterface。适合不方便暴露原生对象的场景。
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>调用示例</h3>
+        <button onclick="callGetUserInfo()">获取用户信息</button>
+        <button onclick="callCalculate()">计算 15+27</button>
+        <button onclick="callGetTimestamp()">获取时间戳</button>
+        <div id="result" class="result">点击按钮通过 window.prompt() 调用 Android...</div>
+    </div>
+
+    <script>
+        /**
+         * 通过 window.prompt() 调用 Android
+         *
+         * 数据流：
+         * JS → window.prompt("jsbridge://getUserInfo")
+         * Android → onJsPrompt() 拦截
+         * Android → result.confirm(returnValue)
+         * JS → prompt() 同步返回 returnValue
+         *
+         * 关键点：
+         * - prompt() 是同步调用，JS 会等待 Android 返回结果
+         * - Android 通过 result.confirm(value) 设置返回值
+         * - return true 阻止系统弹出 prompt 对话框
+         */
+        function callGetUserInfo() {
+            var result = window.prompt('jsbridge://getUserInfo');
+            if (result) {
+                var user = JSON.parse(result);
+                document.getElementById('result').textContent =
+                    'getUserInfo() 返回:\n' + JSON.stringify(user, null, 2);
+            }
+        }
+
+        /**
+         * 通过 prompt 传递参数
+         * URL 格式：jsbridge://calculate?a=15&b=27
+         */
+        function callCalculate() {
+            var result = window.prompt('jsbridge://calculate?a=15&b=27');
+            if (result) {
+                document.getElementById('result').textContent =
+                    'calculate(15, 27) = ' + result;
+            }
+        }
+
+        /**
+         * 获取时间戳
+         */
+        function callGetTimestamp() {
+            var result = window.prompt('jsbridge://getTimestamp');
+            if (result) {
+                var date = new Date(parseInt(result));
+                document.getElementById('result').textContent =
+                    'Android 时间戳: ' + result + '\n转换为日期: ' + date.toLocaleString();
+            }
+        }
+    </script>
+</body>
+</html>

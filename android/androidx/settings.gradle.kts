@@ -145,3 +145,6 @@ include(":RemoteViewsDemo:server")
 
 // JNI Demo - JNI 从简单到复杂示例
 include(":jni-demo")
+
+// WebView Demo - WebView 与原生通信示例
+include(":webview-demo")
