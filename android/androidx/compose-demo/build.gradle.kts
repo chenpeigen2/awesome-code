@@ -73,7 +73,7 @@ dependencies {
 
     // LiveData
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation("androidx.compose.runtime:runtime-livedata:1.7.6")
+    implementation(libs.androidx.compose.runtime.livedata)
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.core)

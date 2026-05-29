@@ -170,7 +170,7 @@ class ListActivity : AppCompatActivity() {
 
         // 实际预加载
         val prefetchImages = (31..40).map { "https://picsum.photos/200/200?random=$it" }
-        val imageLoader = coil.Coil.imageLoader(this)
+        val loader = coil.Coil.imageLoader(this)
         sb.appendLine("--- 开始预加载 10 张图片 ---")
         sb.appendLine()
 
@@ -180,7 +180,7 @@ class ListActivity : AppCompatActivity() {
                 .size(200, 200)
                 .memoryCachePolicy(CachePolicy.ENABLED)
                 .build()
-            imageLoader.enqueue(request)
+            loader.enqueue(request)
         }
 
         sb.appendLine("已提交 ${prefetchImages.size} 个预加载请求")

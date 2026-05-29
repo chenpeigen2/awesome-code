@@ -56,7 +56,7 @@ dependencies {
     implementation(libs.androidx.cardview)
 
     // Physics动画
-    implementation("androidx.dynamicanimation:dynamicanimation:1.0.0")
+    implementation(libs.androidx.dynamicanimation)
 
     // Lifecycle
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -5,7 +5,7 @@ compileSdk = "37"
 compileSdkMinor = "0"
 javapoet = "1.13.0"
 localbroadcastmanager = "1.1.0"
-media = "1.7.0"
+media = "1.8.0"
 targetSdk = "37"
 minSdk = "33"
 
@@ -13,16 +13,16 @@ minSdk = "33"
 composeBom = "2026.05.01"
 
 # Gradle 插件版本
-agp = "9.2.1"
+agp = "9.3.0-alpha08"
 asynclayoutinflater = "1.1.0"
-kotlin = "2.3.21"
+kotlin = "2.4.0-RC2"
 
 # ASM 字节码操作
 asm = "9.10.1"
 
 # AndroidX 库版本
-coreKtx = "1.18.0"
-appcompat = "1.7.1"
+coreKtx = "1.19.0-rc01"
+appcompat = "1.8.0-alpha01"
 activity = "1.13.0"
 fragment = "1.8.9"
 constraintlayout = "2.2.1"
@@ -31,13 +31,13 @@ constraintlayout = "2.2.1"
 material = "1.14.0"
 
 # DataStore 版本
-datastore = "1.2.1"
+datastore = "1.3.0-alpha09"
 
 # Coroutines 版本
 coroutines = "1.11.0"
 
 # Lifecycle 版本
-lifecycle = "2.10.0"
+lifecycle = "2.11.0-beta02"
 
 # WorkManager 版本
 workmanager = "2.11.2"
@@ -65,7 +65,7 @@ testRules = "1.7.0"
 recyclerview = "1.4.0"
 cardview = "1.0.0"
 viewpager2 = "1.1.0"
-swiperefreshlayout = "1.1.0"
+swiperefreshlayout = "1.2.0"
 
 # Room 版本
 room = "2.8.4"
@@ -75,7 +75,7 @@ rxjava3 = "3.1.12"
 rxandroid3 = "3.0.2"
 
 # Network 版本
-retrofit = "2.12.0"
+retrofit = "3.0.0"
 okhttp = "5.3.2"
 coil = "2.7.0"
 
@@ -86,16 +86,22 @@ mmkv = "2.4.0"
 securityCrypto = "1.1.0"
 
 # Biometric 版本
-biometric = "1.1.0"
+biometric = "1.4.0-alpha07"
 
 # SplashScreen 版本
-splashscreen = "1.0.1"
+splashscreen = "1.2.0"
 
 # Navigation 版本
-navigation = "2.9.8"
+navigation = "2.10.0-alpha05"
 
 # Paging 版本
 paging = "3.5.0"
+
+# CameraX 版本
+camerax = "1.7.0-alpha01"
+
+# AndroidX DynamicAnimation 版本
+androidxDynamicanimation = "1.1.0"
 
 [libraries]
 # ASM 字节码操作
@@ -112,6 +118,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 
 # AndroidX 核心库
@@ -121,6 +128,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragment" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-dynamicanimation = { module = "androidx.dynamicanimation:dynamicanimation", version.ref = "androidxDynamicanimation" }
 
 # Material Design
 androidx-swiperefreshlayout = { module = "androidx.swiperefreshlayout:swiperefreshlayout", version.ref = "swiperefreshlayout" }
@@ -189,6 +197,14 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 okhttp-mockwebserver = { group = "com.squareup.okhttp3", name = "mockwebserver3", version.ref = "okhttp" }
 coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
+
+# CameraX
+androidx-camera-core = { module = "androidx.camera:camera-core", version.ref = "camerax" }
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax" }
+androidx-camera-video = { module = "androidx.camera:camera-video", version.ref = "camerax" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax" }
+androidx-camera-extensions = { module = "androidx.camera:camera-extensions", version.ref = "camerax" }
 
 # Koin 依赖注入
 koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }

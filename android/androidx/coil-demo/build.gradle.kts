@@ -59,8 +59,6 @@ dependencies {
 
     // Coil
     implementation(libs.coil)
-
-    // OkHttp (Coil 底层网络库)
     implementation(libs.okhttp)
 
     testImplementation(libs.junit)
