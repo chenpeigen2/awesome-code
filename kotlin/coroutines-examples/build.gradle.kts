@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "2.3.0"
+    alias(libs.plugins.kotlin.jvm)
     application
 }
 
@@ -11,17 +11,10 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib"))
-    
-    // Kotlin Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.8.0")
-    
-    // For testing
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.0")
-    testImplementation("org.junit.jupiter:junit-jupiter:5.14.2")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.14.2")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.14.2")
+    implementation(libs.kotlinx.coroutines.core)
+    testImplementation(libs.kotlinx.coroutines.core)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
 }
 
 tasks.test {
@@ -38,4 +31,3 @@ kotlin {
 application {
     mainClass.set("org.peter.coroutines.MainKt")
 }
-

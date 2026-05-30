@@ -2,7 +2,9 @@ package org.peter.coroutines.channels
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
-import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.selects.onTimeout
+import kotlinx.coroutines.selects.select
 import kotlin.system.measureTimeMillis
 
 /**
@@ -332,61 +334,94 @@ object ChannelExamples {
     /**
      * Example 11: Select Expression
      * Demonstrates selecting from multiple channels
-     * Note: select API is experimental in some coroutines versions
      */
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun example11SelectExpression() = runBlocking {
-        println("Example 11: Select Expression (Skipped - requires experimental API)")
-        println("In coroutines 1.8.0, select API requires @OptIn(ExperimentalCoroutinesApi::class)")
+        println("Example 11: Select Expression")
+
+        val channelA = Channel<String>()
+        val channelB = Channel<String>()
+
+        launch {
+            delay(100L)
+            channelA.send("from A")
+        }
+        launch {
+            delay(50L)
+            channelB.send("from B")
+        }
+
+        val result = select<String> {
+            channelA.onReceive { it }
+            channelB.onReceive { it }
+        }
+        println("First received: $result")
+
+        channelA.close()
+        channelB.close()
         println("---")
     }
-    
+
     /**
-     * Example 12: Channel Timeouts
-     * Demonstrates handling timeouts with channels
-     * Note: select API is experimental in some coroutines versions
+     * Example 12: Channel Timeouts with Select
+     * Demonstrates handling timeouts with onTimeout
      */
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun example12ChannelTimeouts() = runBlocking {
-        println("Example 12: Channel Timeouts (Skipped - requires experimental API)")
-        println("In coroutines 1.8.0, select API requires @OptIn(ExperimentalCoroutinesApi::class)")
+        println("Example 12: Channel Timeouts")
+
+        val channel = Channel<String>()
+
+        launch {
+            delay(500L)
+            channel.send("delayed message")
+        }
+
+        val result = select<String?> {
+            channel.onReceive { it }
+            onTimeout(200L) { null }
+        }
+
+        when (result) {
+            null -> println("Timed out waiting for message")
+            else -> println("Received: $result")
+        }
+
+        channel.close()
         println("---")
     }
     
     /**
-     * Example 13: Broadcast Channel
-     * Demonstrates broadcasting to multiple receivers
+     * Example 13: SharedFlow Broadcast (replaces deprecated BroadcastChannel)
+     * Demonstrates broadcasting to multiple subscribers via SharedFlow
      */
     fun example13BroadcastChannel() = runBlocking {
-        println("Example 13: Broadcast Channel")
-        
-        val broadcast = BroadcastChannel<Int>(capacity = 1)
-        
-        // Multiple subscribers
-        val subscriber1 = broadcast.openSubscription()
-        val subscriber2 = broadcast.openSubscription()
-        
-        launch {
-            repeat(3) { i ->
-                broadcast.send(i)
-                println("Broadcast: sent $i")
-                delay(100L)
-            }
-            broadcast.close()
-        }
-        
-        launch {
-            for (msg in subscriber1) {
+        println("Example 13: SharedFlow Broadcast")
+
+        val sharedFlow = MutableSharedFlow<Int>(replay = 1, extraBufferCapacity = 3)
+
+        val subscriber1Job = launch {
+            sharedFlow.collect { msg ->
                 println("Subscriber 1: received $msg")
             }
         }
-        
-        launch {
-            delay(150L) // Late subscriber
-            for (msg in subscriber2) {
+
+        val subscriber2Job = launch {
+            delay(150L)
+            sharedFlow.collect { msg ->
                 println("Subscriber 2: received $msg (late)")
             }
         }
-        
-        delay(500L)
+
+        repeat(3) { i ->
+            sharedFlow.emit(i)
+            println("Broadcast: sent $i")
+            delay(100L)
+        }
+
+        delay(200L)
+        subscriber1Job.cancel()
+        subscriber2Job.cancel()
         println("---")
     }
     

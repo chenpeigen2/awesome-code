@@ -1,83 +1,110 @@
 package org.peter.coroutines
 
+import org.peter.coroutines.advanced.AdvancedExamples
 import org.peter.coroutines.basics.BasicExamples
-import org.peter.coroutines.structured.StructuredExamples
-import org.peter.coroutines.flow.FlowExamples
 import org.peter.coroutines.channels.ChannelExamples
+import org.peter.coroutines.context.ContextExamples
+import org.peter.coroutines.flow.FlowExamples
 import org.peter.coroutines.performance.PerformanceExamples
 import org.peter.coroutines.realworld.RealWorldExamples
-import kotlinx.coroutines.*
+import org.peter.coroutines.structured.StructuredExamples
+import org.peter.coroutines.sync.SyncExamples
+import kotlinx.coroutines.runBlocking
 
-fun main() = runBlocking {
+private val categories = linkedMapOf(
+    "basic" to Category("Basic Coroutine Examples", { BasicExamples.runAll() }),
+    "structured" to Category("Structured Concurrency Examples", { StructuredExamples.runAll() }),
+    "flow" to Category("Flow Examples", { FlowExamples.runAll() }),
+    "channel" to Category("Channel Examples", { ChannelExamples.runAll() }),
+    "sync" to Category("Sync (Mutex/Semaphore) Examples", { SyncExamples.runAll() }),
+    "advanced" to Category("Advanced Examples (Start/Handler)", { AdvancedExamples.runAll() }),
+    "context" to Category("Coroutine Context Examples", { ContextExamples.runAll() }),
+    "performance" to Category("Performance Examples", { PerformanceExamples.runAll() }),
+    "realworld" to Category("Real-world Examples", { RealWorldExamples.runAll() }),
+)
+
+private data class Category(val title: String, val run: () -> Unit)
+
+fun main(args: Array<String>) = runBlocking {
     println("=== Kotlin Coroutines Examples ===")
     println()
-    
-    // Ask user which examples to run
-    println("Select examples to run:")
-    println("1. Basic Coroutine Examples")
-    println("2. Structured Concurrency Examples")
-    println("3. Flow Examples")
-    println("4. Channel Examples")
-    println("5. Performance Examples")
-    println("6. Real-world Examples")
-    println("7. Run all examples (takes time)")
-    println("8. Quick test (run one example from each category)")
+
+    when {
+        args.isEmpty() -> {
+            printMenu()
+            println("Running quick test (one example per category)...")
+            println()
+            runQuickTest()
+        }
+        args[0] == "all" -> {
+            categories.values.forEach { category ->
+                println(">>> ${category.title}")
+                category.run()
+                println()
+            }
+        }
+        args[0] == "list" -> printMenu()
+        args[0] in categories -> {
+            val category = categories.getValue(args[0])
+            println(">>> ${category.title}")
+            category.run()
+        }
+        else -> {
+            println("Unknown category: ${args[0]}")
+            printMenu()
+        }
+    }
+
     println()
-    
-    // For now, run quick test
-    println("Running quick test...")
+    println("=== Done ===")
+    println("Usage: ./gradlew :kotlin:coroutines-examples:run --args=\"<category>\"")
+    println("Categories: ${categories.keys.joinToString(", ")}, all, list")
+}
+
+private fun printMenu() {
+    println("Available categories:")
+    categories.entries.forEachIndexed { index, (key, category) ->
+        println("  ${index + 1}. $key — ${category.title}")
+    }
+    println("  all — run every category")
     println()
-    
-    runQuickTest()
-    
-    println()
-    println("=== All tests completed successfully! ===")
-    println()
-    println("To run specific examples, modify the main() function.")
-    println("Each example category has a runAll() method.")
 }
 
 suspend fun runQuickTest() {
-    println("--- Testing Basic Examples ---")
+    println("--- Basic ---")
     BasicExamples.example1SimpleLaunch()
-    
-    println("--- Testing Structured Concurrency ---")
+
+    println("--- Structured ---")
     StructuredExamples.example1BasicScope()
-    
-    println("--- Testing Flow Examples ---")
+
+    println("--- Flow ---")
     FlowExamples.example1BasicFlow()
-    
-    println("--- Testing Channel Examples ---")
+
+    println("--- Channel ---")
     ChannelExamples.example1BasicChannel()
-    
-    println("--- Testing Performance Examples ---")
+
+    println("--- Sync ---")
+    SyncExamples.example1MutexCounter()
+
+    println("--- Advanced ---")
+    AdvancedExamples.example1LazyStart()
+
+    println("--- Context ---")
+    ContextExamples.example1JobHierarchy()
+
+    println("--- Performance ---")
     PerformanceExamples.example1DispatcherPerformance()
-    
-    println("--- Testing Real-world Examples ---")
+
+    println("--- Real-world ---")
     RealWorldExamples.example1ConcurrentApiCalls()
 }
 
-// Helper functions to run all examples from each category
-fun runBasicExamples() = runBlocking {
-    BasicExamples.runAll()
-}
-
-fun runStructuredExamples() = runBlocking {
-    StructuredExamples.runAll()
-}
-
-fun runFlowExamples() = runBlocking {
-    FlowExamples.runAll()
-}
-
-fun runChannelExamples() = runBlocking {
-    ChannelExamples.runAll()
-}
-
-fun runPerformanceExamples() = runBlocking {
-    PerformanceExamples.runAll()
-}
-
-fun runRealWorldExamples() = runBlocking {
-    RealWorldExamples.runAll()
-}
+fun runBasicExamples() = BasicExamples.runAll()
+fun runStructuredExamples() = StructuredExamples.runAll()
+fun runFlowExamples() = FlowExamples.runAll()
+fun runChannelExamples() = ChannelExamples.runAll()
+fun runSyncExamples() = SyncExamples.runAll()
+fun runAdvancedExamples() = AdvancedExamples.runAll()
+fun runContextExamples() = ContextExamples.runAll()
+fun runPerformanceExamples() = PerformanceExamples.runAll()
+fun runRealWorldExamples() = RealWorldExamples.runAll()

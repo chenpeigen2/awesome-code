@@ -403,7 +403,7 @@ object FlowExamples {
         dataProcessingPipeline()
             .catch { e ->
                 println("Pipeline error: ${e.message}")
-                emptyFlow()
+                emptyFlow<String>()
             }
             .collect { result ->
                 println("Final result: $result")

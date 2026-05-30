@@ -1,8 +1,10 @@
 package org.peter.coroutines.performance
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import kotlin.system.measureTimeMillis
 import kotlin.system.measureNanoTime
 
@@ -430,7 +432,7 @@ object PerformanceExamples {
                             }
                         }
                     }
-                    jobs.awaitAll()
+                    jobs.joinAll()
                 }
             }
             println("Concurrency level $level: $time ms")
@@ -638,7 +640,7 @@ object PerformanceExamples {
         delay(1L)
     }
     
-    private fun measureMemoryUsage(block: () -> Unit): Pair<Long, String> {
+    private suspend fun measureMemoryUsage(block: suspend () -> Unit): Pair<Long, String> {
         val runtime = Runtime.getRuntime()
         
         // Run GC to get clean measurement

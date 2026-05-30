@@ -3,9 +3,9 @@ package org.peter.coroutines.realworld
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import kotlin.system.measureTimeMillis
-import java.io.File
-import java.net.URL
 import kotlin.random.Random
 
 /**
@@ -527,21 +527,10 @@ object RealWorldExamples {
     
     class RateLimitedApiClient(private val requestsPerSecond: Int) {
         private val semaphore = Semaphore(requestsPerSecond)
-        private val timeWindow = 1000L // 1 second
-        
-        suspend fun makeRequest(requestId: Int): String {
-            semaphore.acquire()
-            
-            try {
-                delay(timeWindow / requestsPerSecond) // Simulate API call
-                return "Response for request $requestId"
-            } finally {
-                // Release after time window
-                launch {
-                    delay(timeWindow)
-                    semaphore.release()
-                }
-            }
+
+        suspend fun makeRequest(requestId: Int): String = semaphore.withPermit {
+            delay(1000L / requestsPerSecond)
+            "Response for request $requestId"
         }
     }
     
