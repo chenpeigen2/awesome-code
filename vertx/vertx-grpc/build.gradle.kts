@@ -3,6 +3,8 @@ import com.google.protobuf.gradle.id
 plugins {
     id("java")
     alias(libs.plugins.protobuf)
+    alias(libs.plugins.dokka)
+
 }
 
 group = "org.peter"

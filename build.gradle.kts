@@ -5,6 +5,7 @@ plugins {
     id("java")
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.dokka)
 }
 
 group = "org.peter"
@@ -57,4 +58,27 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+// Dokka 多模块文档聚合
+// 每个子模块已在各自的 build.gradle.kts 中通过 plugins { alias(libs.plugins.dokka) } 应用
+// 此处将所有子模块聚合到根项目，生成统一的多模块文档站点
+val excludedFromDokka = setOf(
+    "native-kotlin",
+    "kotlin-spring-coroutines",
+    "simple-webflux",
+)
+
+dependencies {
+    subprojects
+        .filter { it.name !in excludedFromDokka }
+        .filter { it.file("src").isDirectory }
+        .forEach { dokka(it) }
+}
+
+dokka {
+    dokkaPublications.html {
+        moduleName.set("awesome-code")
+        outputDirectory.set(layout.buildDirectory.dir("dokka/html"))
+    }
 }

@@ -2,6 +2,8 @@ plugins {
     id("java")
     alias(libs.plugins.kotlin.jvm)
     application
+    alias(libs.plugins.dokka)
+
 }
 
 group = "org.peter.vertx.coroutines"

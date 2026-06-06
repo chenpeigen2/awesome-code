@@ -1,6 +1,8 @@
 plugins {
     id("java")
     id("groovy")
+    alias(libs.plugins.dokka)
+
 }
 
 group = "org.peter"

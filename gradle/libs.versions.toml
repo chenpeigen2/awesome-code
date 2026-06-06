@@ -113,6 +113,9 @@ kotlinx-serialization = "2.3.21"
 # ========== Groovy ==========
 groovy = "5.0.6"
 
+# ========== 文档生成 ==========
+dokka = "2.2.0"
+
 [libraries]
 # ========== 测试框架 ==========
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-bom" }
@@ -271,6 +274,9 @@ protobuf = { id = "com.google.protobuf", version.ref = "grpc-protobuf-plugin" }
 # ========== Spring ==========
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+
+# ========== Dokka ==========
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 
 [bundles]
 # ========== Kotlin 生态 ==========
