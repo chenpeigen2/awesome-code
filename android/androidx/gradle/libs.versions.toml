@@ -13,7 +13,7 @@ minSdk = "33"
 composeBom = "2026.05.01"
 
 # Gradle 插件版本
-agp = "9.3.0-alpha08"
+agp = "9.2.1"
 asynclayoutinflater = "1.1.0"
 kotlin = "2.4.0-RC2"
 
