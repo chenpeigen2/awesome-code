@@ -1,6 +1,6 @@
 package com.peter.notification.demo.fragments
 
-import android.media.AudioAttributes
+//import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.RingtoneManager as SystemRingtoneManager
 import android.os.Bundle
@@ -116,12 +116,12 @@ class SoundFragment : Fragment() {
         try {
             mediaPlayer?.release()
             mediaPlayer = MediaPlayer().apply {
-                setAudioAttributes(
-                    AudioAttributes.Builder()
-                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                        .build()
-                )
+//                setAudioAttributes(
+//                    AudioAttributes.Builder()
+//                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+//                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+//                        .build()
+//                )
                 setDataSource(
                     requireContext(),
                     SystemRingtoneManager.getDefaultUri(SystemRingtoneManager.TYPE_NOTIFICATION)
