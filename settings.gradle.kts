@@ -1,5 +1,10 @@
 rootProject.name = "awesome-code"
 
+// JDK 工具链自动下载：本机缺少匹配版本（Java 25）时，Gradle 会从 foojay 下载对应 JDK
+plugins {
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
+}
+
 // 依赖版本目录 (Version Catalog)
 // Gradle 默认自动从 gradle/libs.versions.toml 加载名为 "libs" 的版本目录
 // 子项目可通过 libs 访问器使用统一的依赖版本

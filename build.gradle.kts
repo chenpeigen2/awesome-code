@@ -1,3 +1,6 @@
+import org.gradle.api.plugins.JavaPlugin
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -30,6 +33,13 @@ allprojects {
         // 官方仓库作为备用
         mavenCentral()
         gradlePluginPortal()
+    }
+
+    // 统一 JDK 25 工具链：本机没有 25 时由 foojay resolver 自动下载（见 settings.gradle.kts）
+    plugins.withType<JavaPlugin> {
+        extensions.configure<JavaPluginExtension> {
+            toolchain.languageVersion.set(JavaLanguageVersion.of(25))
+        }
     }
 
     tasks.withType<JavaCompile> {
