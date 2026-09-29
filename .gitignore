@@ -111,3 +111,6 @@ logs/
 /lynx/hello-world/dist/
 /lynx/hello-world/node_modules/
 /lynx/hello-world/package-lock.json
+
+# Kotlin 构建会话缓存
+.kotlin/
