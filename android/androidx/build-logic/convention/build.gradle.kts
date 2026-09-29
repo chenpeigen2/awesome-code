@@ -3,10 +3,7 @@ plugins {
     `java-gradle-plugin`
 }
 
-repositories {
-    google()
-    mavenCentral()
-}
+// 仓库统一由 build-logic/settings.gradle.kts 的 dependencyResolutionManagement 管理（镜像优先）
 
 gradlePlugin {
     plugins {

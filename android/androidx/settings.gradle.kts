@@ -1,6 +1,12 @@
 pluginManagement {
     includeBuild("build-logic")
     repositories {
+        // 阿里云镜像（国内直连 mavenCentral/gradlePluginPortal 不稳定，镜像优先）
+        maven("https://maven.aliyun.com/repository/google")
+        maven("https://maven.aliyun.com/repository/central")
+        maven("https://maven.aliyun.com/repository/gradle-plugin")
+        maven("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/")
+        // 官方仓库作为备用
         google()
         mavenCentral()
         gradlePluginPortal()
@@ -11,6 +17,11 @@ pluginManagement {
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        // 阿里云镜像（国内直连 mavenCentral 不稳定，镜像优先）
+        maven("https://maven.aliyun.com/repository/google")
+        maven("https://maven.aliyun.com/repository/central")
+        maven("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/")
+        // 官方仓库作为备用
         google()
         mavenCentral()
     }
