@@ -13,6 +13,7 @@ junit-bom = "6.1.3"
 kotlinx-coroutines = "1.11.0"
 kotlinx-datetime = "0.8.0"
 kotlinx-metadata = "0.9.0"
+kotlinx-collections-immutable = "0.5.2"
 
 # ========== Google 生态 ==========
 guava = "33.8.0-jre"
@@ -128,6 +129,7 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "kotlinx-coroutines" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime-jvm", version.ref = "kotlinx-datetime" }
 kotlinx-metadata = { module = "org.jetbrains.kotlinx:kotlinx-metadata-jvm", version.ref = "kotlinx-metadata" }
+kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect" }
 kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
 

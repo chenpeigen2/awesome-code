@@ -102,3 +102,5 @@ include("zip")
 include("explore:ai")
 include("patterns")
 include("claude")
+include("kotlin:immutable-collections")
+findProject(":kotlin:immutable-collections")?.name = "immutable-collections"

@@ -23,7 +23,7 @@
 
 ```
 awesome-code/
-├── kotlin/                  # Kotlin 基础与协程示例
+├── kotlin/                  # Kotlin 基础、协程与不可变集合示例
 ├── python/                  # Python 学习 (PyTorch, pandas, matplotlib)
 ├── go/                      # Go 应用 (Fyne GUI)
 ├── rust/                    # Rust 实验
