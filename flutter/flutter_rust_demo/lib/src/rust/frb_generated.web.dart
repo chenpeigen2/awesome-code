@@ -6,7 +6,12 @@
 // Static analysis wrongly picks the IO variant, thus ignore this
 // ignore_for_file: argument_type_not_assignable
 
+import 'api/mandelbrot.dart';
+import 'api/matrix.dart';
+import 'api/primes.dart';
 import 'api/simple.dart';
+import 'api/streaming.dart';
+import 'api/text.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
@@ -21,25 +26,30 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   });
 
   @protected
+  AnyhowException dco_decode_AnyhowException(dynamic raw);
+
+  @protected
+  RustStreamSink<ProgressEvent> dco_decode_StreamSink_progress_event_Sse(
+    dynamic raw,
+  );
+
+  @protected
   String dco_decode_String(dynamic raw);
 
   @protected
-  CalcResult dco_decode_box_autoadd_calc_result(dynamic raw);
+  bool dco_decode_bool(dynamic raw);
 
   @protected
-  Operation dco_decode_box_autoadd_operation(dynamic raw);
+  MandelbrotConfig dco_decode_box_autoadd_mandelbrot_config(dynamic raw);
 
   @protected
-  CalcRequest dco_decode_calc_request(dynamic raw);
+  Matrix dco_decode_box_autoadd_matrix(dynamic raw);
 
   @protected
-  CalcResult dco_decode_calc_result(dynamic raw);
+  CharCount dco_decode_char_count(dynamic raw);
 
   @protected
-  CalculationRecord dco_decode_calculation_record(dynamic raw);
-
-  @protected
-  CalculatorStats dco_decode_calculator_stats(dynamic raw);
+  EngineInfo dco_decode_engine_info(dynamic raw);
 
   @protected
   double dco_decode_f_64(dynamic raw);
@@ -51,25 +61,58 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   PlatformInt64 dco_decode_i_64(dynamic raw);
 
   @protected
-  List<String> dco_decode_list_String(dynamic raw);
+  List<CharCount> dco_decode_list_char_count(dynamic raw);
 
   @protected
-  List<CalcRequest> dco_decode_list_calc_request(dynamic raw);
+  List<double> dco_decode_list_prim_f_64_loose(dynamic raw);
 
   @protected
-  List<CalcResult> dco_decode_list_calc_result(dynamic raw);
+  Float64List dco_decode_list_prim_f_64_strict(dynamic raw);
 
   @protected
-  List<CalculationRecord> dco_decode_list_calculation_record(dynamic raw);
+  Uint64List dco_decode_list_prim_u_64_strict(dynamic raw);
 
   @protected
   Uint8List dco_decode_list_prim_u_8_strict(dynamic raw);
 
   @protected
-  Operation dco_decode_operation(dynamic raw);
+  List<PrimeFactor> dco_decode_list_prime_factor(dynamic raw);
 
   @protected
-  Operation? dco_decode_opt_box_autoadd_operation(dynamic raw);
+  List<WordCount> dco_decode_list_word_count(dynamic raw);
+
+  @protected
+  MandelbrotConfig dco_decode_mandelbrot_config(dynamic raw);
+
+  @protected
+  MandelbrotResult dco_decode_mandelbrot_result(dynamic raw);
+
+  @protected
+  Matrix dco_decode_matrix(dynamic raw);
+
+  @protected
+  MatrixErrorKind dco_decode_matrix_error_kind(dynamic raw);
+
+  @protected
+  MatrixOutcome dco_decode_matrix_outcome(dynamic raw);
+
+  @protected
+  PrimeFactor dco_decode_prime_factor(dynamic raw);
+
+  @protected
+  ProgressEvent dco_decode_progress_event(dynamic raw);
+
+  @protected
+  SieveStats dco_decode_sieve_stats(dynamic raw);
+
+  @protected
+  TextStats dco_decode_text_stats(dynamic raw);
+
+  @protected
+  int dco_decode_u_32(dynamic raw);
+
+  @protected
+  BigInt dco_decode_u_64(dynamic raw);
 
   @protected
   int dco_decode_u_8(dynamic raw);
@@ -78,25 +121,35 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void dco_decode_unit(dynamic raw);
 
   @protected
+  WordCount dco_decode_word_count(dynamic raw);
+
+  @protected
+  AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer);
+
+  @protected
+  RustStreamSink<ProgressEvent> sse_decode_StreamSink_progress_event_Sse(
+    SseDeserializer deserializer,
+  );
+
+  @protected
   String sse_decode_String(SseDeserializer deserializer);
 
   @protected
-  CalcResult sse_decode_box_autoadd_calc_result(SseDeserializer deserializer);
+  bool sse_decode_bool(SseDeserializer deserializer);
 
   @protected
-  Operation sse_decode_box_autoadd_operation(SseDeserializer deserializer);
+  MandelbrotConfig sse_decode_box_autoadd_mandelbrot_config(
+    SseDeserializer deserializer,
+  );
 
   @protected
-  CalcRequest sse_decode_calc_request(SseDeserializer deserializer);
+  Matrix sse_decode_box_autoadd_matrix(SseDeserializer deserializer);
 
   @protected
-  CalcResult sse_decode_calc_result(SseDeserializer deserializer);
+  CharCount sse_decode_char_count(SseDeserializer deserializer);
 
   @protected
-  CalculationRecord sse_decode_calculation_record(SseDeserializer deserializer);
-
-  @protected
-  CalculatorStats sse_decode_calculator_stats(SseDeserializer deserializer);
+  EngineInfo sse_decode_engine_info(SseDeserializer deserializer);
 
   @protected
   double sse_decode_f_64(SseDeserializer deserializer);
@@ -108,27 +161,58 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   PlatformInt64 sse_decode_i_64(SseDeserializer deserializer);
 
   @protected
-  List<String> sse_decode_list_String(SseDeserializer deserializer);
+  List<CharCount> sse_decode_list_char_count(SseDeserializer deserializer);
 
   @protected
-  List<CalcRequest> sse_decode_list_calc_request(SseDeserializer deserializer);
+  List<double> sse_decode_list_prim_f_64_loose(SseDeserializer deserializer);
 
   @protected
-  List<CalcResult> sse_decode_list_calc_result(SseDeserializer deserializer);
+  Float64List sse_decode_list_prim_f_64_strict(SseDeserializer deserializer);
 
   @protected
-  List<CalculationRecord> sse_decode_list_calculation_record(
-    SseDeserializer deserializer,
-  );
+  Uint64List sse_decode_list_prim_u_64_strict(SseDeserializer deserializer);
 
   @protected
   Uint8List sse_decode_list_prim_u_8_strict(SseDeserializer deserializer);
 
   @protected
-  Operation sse_decode_operation(SseDeserializer deserializer);
+  List<PrimeFactor> sse_decode_list_prime_factor(SseDeserializer deserializer);
 
   @protected
-  Operation? sse_decode_opt_box_autoadd_operation(SseDeserializer deserializer);
+  List<WordCount> sse_decode_list_word_count(SseDeserializer deserializer);
+
+  @protected
+  MandelbrotConfig sse_decode_mandelbrot_config(SseDeserializer deserializer);
+
+  @protected
+  MandelbrotResult sse_decode_mandelbrot_result(SseDeserializer deserializer);
+
+  @protected
+  Matrix sse_decode_matrix(SseDeserializer deserializer);
+
+  @protected
+  MatrixErrorKind sse_decode_matrix_error_kind(SseDeserializer deserializer);
+
+  @protected
+  MatrixOutcome sse_decode_matrix_outcome(SseDeserializer deserializer);
+
+  @protected
+  PrimeFactor sse_decode_prime_factor(SseDeserializer deserializer);
+
+  @protected
+  ProgressEvent sse_decode_progress_event(SseDeserializer deserializer);
+
+  @protected
+  SieveStats sse_decode_sieve_stats(SseDeserializer deserializer);
+
+  @protected
+  TextStats sse_decode_text_stats(SseDeserializer deserializer);
+
+  @protected
+  int sse_decode_u_32(SseDeserializer deserializer);
+
+  @protected
+  BigInt sse_decode_u_64(SseDeserializer deserializer);
 
   @protected
   int sse_decode_u_8(SseDeserializer deserializer);
@@ -137,40 +221,40 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_decode_unit(SseDeserializer deserializer);
 
   @protected
-  bool sse_decode_bool(SseDeserializer deserializer);
+  WordCount sse_decode_word_count(SseDeserializer deserializer);
+
+  @protected
+  void sse_encode_AnyhowException(
+    AnyhowException self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_StreamSink_progress_event_Sse(
+    RustStreamSink<ProgressEvent> self,
+    SseSerializer serializer,
+  );
 
   @protected
   void sse_encode_String(String self, SseSerializer serializer);
 
   @protected
-  void sse_encode_box_autoadd_calc_result(
-    CalcResult self,
+  void sse_encode_bool(bool self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_box_autoadd_mandelbrot_config(
+    MandelbrotConfig self,
     SseSerializer serializer,
   );
 
   @protected
-  void sse_encode_box_autoadd_operation(
-    Operation self,
-    SseSerializer serializer,
-  );
+  void sse_encode_box_autoadd_matrix(Matrix self, SseSerializer serializer);
 
   @protected
-  void sse_encode_calc_request(CalcRequest self, SseSerializer serializer);
+  void sse_encode_char_count(CharCount self, SseSerializer serializer);
 
   @protected
-  void sse_encode_calc_result(CalcResult self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_calculation_record(
-    CalculationRecord self,
-    SseSerializer serializer,
-  );
-
-  @protected
-  void sse_encode_calculator_stats(
-    CalculatorStats self,
-    SseSerializer serializer,
-  );
+  void sse_encode_engine_info(EngineInfo self, SseSerializer serializer);
 
   @protected
   void sse_encode_f_64(double self, SseSerializer serializer);
@@ -182,23 +266,26 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_i_64(PlatformInt64 self, SseSerializer serializer);
 
   @protected
-  void sse_encode_list_String(List<String> self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_list_calc_request(
-    List<CalcRequest> self,
+  void sse_encode_list_char_count(
+    List<CharCount> self,
     SseSerializer serializer,
   );
 
   @protected
-  void sse_encode_list_calc_result(
-    List<CalcResult> self,
+  void sse_encode_list_prim_f_64_loose(
+    List<double> self,
     SseSerializer serializer,
   );
 
   @protected
-  void sse_encode_list_calculation_record(
-    List<CalculationRecord> self,
+  void sse_encode_list_prim_f_64_strict(
+    Float64List self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_list_prim_u_64_strict(
+    Uint64List self,
     SseSerializer serializer,
   );
 
@@ -209,13 +296,58 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   );
 
   @protected
-  void sse_encode_operation(Operation self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_opt_box_autoadd_operation(
-    Operation? self,
+  void sse_encode_list_prime_factor(
+    List<PrimeFactor> self,
     SseSerializer serializer,
   );
+
+  @protected
+  void sse_encode_list_word_count(
+    List<WordCount> self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_mandelbrot_config(
+    MandelbrotConfig self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_mandelbrot_result(
+    MandelbrotResult self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_matrix(Matrix self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_matrix_error_kind(
+    MatrixErrorKind self,
+    SseSerializer serializer,
+  );
+
+  @protected
+  void sse_encode_matrix_outcome(MatrixOutcome self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_prime_factor(PrimeFactor self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_progress_event(ProgressEvent self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_sieve_stats(SieveStats self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_text_stats(TextStats self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_u_32(int self, SseSerializer serializer);
+
+  @protected
+  void sse_encode_u_64(BigInt self, SseSerializer serializer);
 
   @protected
   void sse_encode_u_8(int self, SseSerializer serializer);
@@ -224,7 +356,7 @@ abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {
   void sse_encode_unit(void self, SseSerializer serializer);
 
   @protected
-  void sse_encode_bool(bool self, SseSerializer serializer);
+  void sse_encode_word_count(WordCount self, SseSerializer serializer);
 }
 
 // Section: wire_class

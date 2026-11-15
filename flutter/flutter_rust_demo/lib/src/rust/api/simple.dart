@@ -5,188 +5,47 @@
 
 import '../frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
-import 'package:freezed_annotation/freezed_annotation.dart' hide protected;
-part 'simple.freezed.dart';
 
-// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `clone`, `clone`, `clone`, `clone`, `fmt`, `fmt`, `fmt`, `fmt`, `fmt`
+// These function are ignored because they are on traits that is not defined in current crate (put an empty `#[frb]` on it to unignore): `clone`, `fmt`
 
-/// 异步计算函数 - 不阻塞 UI
-Future<CalcResult> calculateAsync({
-  required double a,
-  required double b,
-  required Operation operation,
-}) => RustLib.instance.api.crateApiSimpleCalculateAsync(
-  a: a,
-  b: b,
-  operation: operation,
-);
+/// 同步获取引擎信息（`#[frb(sync)]`：调用零开销，不走异步调度）
+EngineInfo engineInfo() => RustLib.instance.api.crateApiSimpleEngineInfo();
 
-/// 同步计算函数（简单场景）
-Future<CalcResult> calculateSync({
-  required double a,
-  required double b,
-  required Operation operation,
-}) => RustLib.instance.api.crateApiSimpleCalculateSync(
-  a: a,
-  b: b,
-  operation: operation,
-);
+/// 最小异步示例：延迟后返回 x 的平方（验证 async 跨桥通路）
+Future<PlatformInt64> slowSquare({
+  required PlatformInt64 x,
+  required PlatformInt64 delayMs,
+}) => RustLib.instance.api.crateApiSimpleSlowSquare(x: x, delayMs: delayMs);
 
-/// 批量计算
-Future<List<CalcResult>> batchCalculate({
-  required List<CalcRequest> requests,
-}) => RustLib.instance.api.crateApiSimpleBatchCalculate(requests: requests);
+/// Rust 引擎自描述信息
+class EngineInfo {
+  final String name;
+  final String version;
 
-/// 格式化计算结果
-Future<String> formatResult({
-  required double a,
-  required double b,
-  required Operation operation,
-  required CalcResult result,
-}) => RustLib.instance.api.crateApiSimpleFormatResult(
-  a: a,
-  b: b,
-  operation: operation,
-  result: result,
-);
+  /// 编译目标三元组，如 aarch64-apple-darwin
+  final String target;
 
-/// 生成计算历史记录
-Future<CalculationRecord> createRecord({
-  required double a,
-  required double b,
-  required Operation operation,
-}) => RustLib.instance.api.crateApiSimpleCreateRecord(
-  a: a,
-  b: b,
-  operation: operation,
-);
+  /// 是否为 debug 构建
+  final bool debugBuild;
 
-/// 计算统计信息
-Future<CalculatorStats> computeStats({
-  required List<CalculationRecord> records,
-}) => RustLib.instance.api.crateApiSimpleComputeStats(records: records);
-
-/// 字符串转运算类型
-Future<Operation?> parseOperation({required String s}) =>
-    RustLib.instance.api.crateApiSimpleParseOperation(s: s);
-
-/// 获取支持的运算列表
-Future<List<String>> getSupportedOperations() =>
-    RustLib.instance.api.crateApiSimpleGetSupportedOperations();
-
-/// 模拟耗时计算（展示异步优势）
-Future<double> heavyComputation({required int iterations}) =>
-    RustLib.instance.api.crateApiSimpleHeavyComputation(iterations: iterations);
-
-/// 计算请求结构
-class CalcRequest {
-  final double a;
-  final double b;
-  final Operation operation;
-
-  const CalcRequest({
-    required this.a,
-    required this.b,
-    required this.operation,
-  });
-
-  @override
-  int get hashCode => a.hashCode ^ b.hashCode ^ operation.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CalcRequest &&
-          runtimeType == other.runtimeType &&
-          a == other.a &&
-          b == other.b &&
-          operation == other.operation;
-}
-
-@freezed
-sealed class CalcResult with _$CalcResult {
-  const CalcResult._();
-
-  const factory CalcResult.success({required double value}) =
-      CalcResult_Success;
-  const factory CalcResult.error({required String message}) = CalcResult_Error;
-}
-
-/// 计算历史记录
-class CalculationRecord {
-  final double a;
-  final double b;
-  final Operation operation;
-  final CalcResult result;
-  final PlatformInt64 timestamp;
-
-  const CalculationRecord({
-    required this.a,
-    required this.b,
-    required this.operation,
-    required this.result,
-    required this.timestamp,
+  const EngineInfo({
+    required this.name,
+    required this.version,
+    required this.target,
+    required this.debugBuild,
   });
 
   @override
   int get hashCode =>
-      a.hashCode ^
-      b.hashCode ^
-      operation.hashCode ^
-      result.hashCode ^
-      timestamp.hashCode;
+      name.hashCode ^ version.hashCode ^ target.hashCode ^ debugBuild.hashCode;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CalculationRecord &&
+      other is EngineInfo &&
           runtimeType == other.runtimeType &&
-          a == other.a &&
-          b == other.b &&
-          operation == other.operation &&
-          result == other.result &&
-          timestamp == other.timestamp;
-}
-
-/// 计算器统计信息
-class CalculatorStats {
-  final int totalCalculations;
-  final int successCount;
-  final int errorCount;
-  final double averageValue;
-
-  const CalculatorStats({
-    required this.totalCalculations,
-    required this.successCount,
-    required this.errorCount,
-    required this.averageValue,
-  });
-
-  @override
-  int get hashCode =>
-      totalCalculations.hashCode ^
-      successCount.hashCode ^
-      errorCount.hashCode ^
-      averageValue.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CalculatorStats &&
-          runtimeType == other.runtimeType &&
-          totalCalculations == other.totalCalculations &&
-          successCount == other.successCount &&
-          errorCount == other.errorCount &&
-          averageValue == other.averageValue;
-}
-
-/// 运算类型
-enum Operation {
-  add,
-  subtract,
-  multiply,
-  divide;
-
-  Future<String> symbol() =>
-      RustLib.instance.api.crateApiSimpleOperationSymbol(that: this);
+          name == other.name &&
+          version == other.version &&
+          target == other.target &&
+          debugBuild == other.debugBuild;
 }

@@ -1,6 +1,5 @@
-[build]
-# 使用系统 GCC 而不是 lld
-rustflags = ["-C", "linker=gcc", "-C", "link-arg=-fuse-ld=bfd"]
+# 注：不要在这里写全局 [build] linker 设置，否则会破坏 macOS/iOS 主机构建；
+# Linux 特定配置请放在对应的 [target.*] 段下。
 
 [target.x86_64-unknown-linux-gnu]
 linker = "/usr/bin/gcc"

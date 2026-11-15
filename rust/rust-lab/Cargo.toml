@@ -1,0 +1,8 @@
+[package]
+name = "rust-lab"
+version = "0.1.0"
+edition = "2021"
+description = "Rust 核心概念实验室：所有权、智能指针、迭代器、错误处理、并发 —— 零依赖，全部用 std 完成"
+
+[lints.rust]
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(frb_expand)'] }

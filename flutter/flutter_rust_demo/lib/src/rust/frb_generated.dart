@@ -3,7 +3,12 @@
 
 // ignore_for_file: unused_import, unused_element, unnecessary_import, duplicate_ignore, invalid_use_of_internal_member, annotate_overrides, non_constant_identifier_names, curly_braces_in_flow_control_structures, prefer_const_literals_to_create_immutables, unused_field
 
+import 'api/mandelbrot.dart';
+import 'api/matrix.dart';
+import 'api/primes.dart';
 import 'api/simple.dart';
+import 'api/streaming.dart';
+import 'api/text.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'frb_generated.dart';
@@ -54,9 +59,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
       RustLibWire.fromExternalLibrary;
 
   @override
-  Future<void> executeRustInitializers() async {
-    await api.crateApiSimpleInitApp();
-  }
+  Future<void> executeRustInitializers() async {}
 
   @override
   ExternalLibraryLoaderConfig get defaultExternalLibraryLoaderConfig =>
@@ -66,7 +69,7 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
   String get codegenVersion => '2.11.1';
 
   @override
-  int get rustContentHash => 1218447063;
+  int get rustContentHash => -2094276183;
 
   static const kDefaultExternalLibraryLoaderConfig =
       ExternalLibraryLoaderConfig(
@@ -77,48 +80,72 @@ class RustLib extends BaseEntrypoint<RustLibApi, RustLibApiImpl, RustLibWire> {
 }
 
 abstract class RustLibApi extends BaseApi {
-  Future<List<CalcResult>> crateApiSimpleBatchCalculate({
-    required List<CalcRequest> requests,
+  Future<TextStats> crateApiTextAnalyzeText({
+    required String text,
+    required int topK,
   });
 
-  Future<CalcResult> crateApiSimpleCalculateAsync({
-    required double a,
-    required double b,
-    required Operation operation,
+  Future<BigInt> crateApiStreamingCountInside({
+    required BigInt iterations,
+    required BigInt seed,
   });
 
-  Future<CalcResult> crateApiSimpleCalculateSync({
-    required double a,
-    required double b,
-    required Operation operation,
+  Future<MatrixOutcome> crateApiMatrixDeterminant({required Matrix a});
+
+  EngineInfo crateApiSimpleEngineInfo();
+
+  Future<double> crateApiStreamingEstimatePi({
+    required BigInt iterations,
+    required BigInt seed,
   });
 
-  Future<CalculatorStats> crateApiSimpleComputeStats({
-    required List<CalculationRecord> records,
+  Future<List<PrimeFactor>> crateApiPrimesFactorize({required BigInt n});
+
+  Future<MatrixOutcome> crateApiMatrixFromRows({
+    required int rows,
+    required int cols,
+    required List<double> data,
   });
 
-  Future<CalculationRecord> crateApiSimpleCreateRecord({
-    required double a,
-    required double b,
-    required Operation operation,
+  Future<MatrixOutcome> crateApiMatrixIdentity({required int n});
+
+  Future<bool> crateApiTextIsPalindrome({required String text});
+
+  Stream<ProgressEvent> crateApiStreamingMonteCarloPi({
+    required PlatformInt64 iterations,
+    required int chunks,
   });
 
-  Future<String> crateApiSimpleFormatResult({
-    required double a,
-    required double b,
-    required Operation operation,
-    required CalcResult result,
+  Future<MatrixOutcome> crateApiMatrixMultiply({
+    required Matrix a,
+    required Matrix b,
   });
 
-  Future<List<String>> crateApiSimpleGetSupportedOperations();
+  Future<BigInt> crateApiPrimesNthPrime({required BigInt n});
 
-  Future<double> crateApiSimpleHeavyComputation({required int iterations});
+  Future<double> crateApiStreamingPiFromCounts({
+    required BigInt inside,
+    required BigInt total,
+  });
 
-  Future<void> crateApiSimpleInitApp();
+  Future<MandelbrotResult> crateApiMandelbrotRender({
+    required MandelbrotConfig config,
+  });
 
-  Future<String> crateApiSimpleOperationSymbol({required Operation that});
+  Future<MandelbrotResult> crateApiMandelbrotRenderMandelbrot({
+    required MandelbrotConfig config,
+  });
 
-  Future<Operation?> crateApiSimpleParseOperation({required String s});
+  Future<Uint64List> crateApiPrimesSieve({required BigInt limit});
+
+  Future<SieveStats> crateApiPrimesSieveStats({required BigInt limit});
+
+  Future<PlatformInt64> crateApiSimpleSlowSquare({
+    required PlatformInt64 x,
+    required PlatformInt64 delayMs,
+  });
+
+  Future<MatrixOutcome> crateApiMatrixTranspose({required Matrix a});
 }
 
 class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
@@ -130,14 +157,16 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   });
 
   @override
-  Future<List<CalcResult>> crateApiSimpleBatchCalculate({
-    required List<CalcRequest> requests,
+  Future<TextStats> crateApiTextAnalyzeText({
+    required String text,
+    required int topK,
   }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_list_calc_request(requests, serializer);
+          sse_encode_String(text, serializer);
+          sse_encode_i_32(topK, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -146,32 +175,32 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_list_calc_result,
+          decodeSuccessData: sse_decode_text_stats,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleBatchCalculateConstMeta,
-        argValues: [requests],
+        constMeta: kCrateApiTextAnalyzeTextConstMeta,
+        argValues: [text, topK],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleBatchCalculateConstMeta =>
-      const TaskConstMeta(debugName: "batch_calculate", argNames: ["requests"]);
+  TaskConstMeta get kCrateApiTextAnalyzeTextConstMeta => const TaskConstMeta(
+    debugName: "analyze_text",
+    argNames: ["text", "topK"],
+  );
 
   @override
-  Future<CalcResult> crateApiSimpleCalculateAsync({
-    required double a,
-    required double b,
-    required Operation operation,
+  Future<BigInt> crateApiStreamingCountInside({
+    required BigInt iterations,
+    required BigInt seed,
   }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_f_64(a, serializer);
-          sse_encode_f_64(b, serializer);
-          sse_encode_operation(operation, serializer);
+          sse_encode_u_64(iterations, serializer);
+          sse_encode_u_64(seed, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -180,35 +209,29 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_calc_result,
+          decodeSuccessData: sse_decode_u_64,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleCalculateAsyncConstMeta,
-        argValues: [a, b, operation],
+        constMeta: kCrateApiStreamingCountInsideConstMeta,
+        argValues: [iterations, seed],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleCalculateAsyncConstMeta =>
+  TaskConstMeta get kCrateApiStreamingCountInsideConstMeta =>
       const TaskConstMeta(
-        debugName: "calculate_async",
-        argNames: ["a", "b", "operation"],
+        debugName: "count_inside",
+        argNames: ["iterations", "seed"],
       );
 
   @override
-  Future<CalcResult> crateApiSimpleCalculateSync({
-    required double a,
-    required double b,
-    required Operation operation,
-  }) {
+  Future<MatrixOutcome> crateApiMatrixDeterminant({required Matrix a}) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_f_64(a, serializer);
-          sse_encode_f_64(b, serializer);
-          sse_encode_operation(operation, serializer);
+          sse_encode_box_autoadd_matrix(a, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -217,65 +240,52 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_calc_result,
+          decodeSuccessData: sse_decode_matrix_outcome,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleCalculateSyncConstMeta,
-        argValues: [a, b, operation],
+        constMeta: kCrateApiMatrixDeterminantConstMeta,
+        argValues: [a],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleCalculateSyncConstMeta =>
-      const TaskConstMeta(
-        debugName: "calculate_sync",
-        argNames: ["a", "b", "operation"],
-      );
+  TaskConstMeta get kCrateApiMatrixDeterminantConstMeta =>
+      const TaskConstMeta(debugName: "determinant", argNames: ["a"]);
 
   @override
-  Future<CalculatorStats> crateApiSimpleComputeStats({
-    required List<CalculationRecord> records,
-  }) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
+  EngineInfo crateApiSimpleEngineInfo() {
+    return handler.executeSync(
+      SyncTask(
+        callFfi: () {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_list_calculation_record(records, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 4,
-            port: port_,
-          );
+          return pdeCallFfi(generalizedFrbRustBinding, serializer, funcId: 4)!;
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_calculator_stats,
+          decodeSuccessData: sse_decode_engine_info,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleComputeStatsConstMeta,
-        argValues: [records],
+        constMeta: kCrateApiSimpleEngineInfoConstMeta,
+        argValues: [],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleComputeStatsConstMeta =>
-      const TaskConstMeta(debugName: "compute_stats", argNames: ["records"]);
+  TaskConstMeta get kCrateApiSimpleEngineInfoConstMeta =>
+      const TaskConstMeta(debugName: "engine_info", argNames: []);
 
   @override
-  Future<CalculationRecord> crateApiSimpleCreateRecord({
-    required double a,
-    required double b,
-    required Operation operation,
+  Future<double> crateApiStreamingEstimatePi({
+    required BigInt iterations,
+    required BigInt seed,
   }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_f_64(a, serializer);
-          sse_encode_f_64(b, serializer);
-          sse_encode_operation(operation, serializer);
+          sse_encode_u_64(iterations, serializer);
+          sse_encode_u_64(seed, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -284,36 +294,29 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_calculation_record,
+          decodeSuccessData: sse_decode_f_64,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleCreateRecordConstMeta,
-        argValues: [a, b, operation],
+        constMeta: kCrateApiStreamingEstimatePiConstMeta,
+        argValues: [iterations, seed],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleCreateRecordConstMeta => const TaskConstMeta(
-    debugName: "create_record",
-    argNames: ["a", "b", "operation"],
-  );
+  TaskConstMeta get kCrateApiStreamingEstimatePiConstMeta =>
+      const TaskConstMeta(
+        debugName: "estimate_pi",
+        argNames: ["iterations", "seed"],
+      );
 
   @override
-  Future<String> crateApiSimpleFormatResult({
-    required double a,
-    required double b,
-    required Operation operation,
-    required CalcResult result,
-  }) {
+  Future<List<PrimeFactor>> crateApiPrimesFactorize({required BigInt n}) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_f_64(a, serializer);
-          sse_encode_f_64(b, serializer);
-          sse_encode_operation(operation, serializer);
-          sse_encode_box_autoadd_calc_result(result, serializer);
+          sse_encode_u_64(n, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -322,27 +325,32 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_String,
+          decodeSuccessData: sse_decode_list_prime_factor,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleFormatResultConstMeta,
-        argValues: [a, b, operation, result],
+        constMeta: kCrateApiPrimesFactorizeConstMeta,
+        argValues: [n],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleFormatResultConstMeta => const TaskConstMeta(
-    debugName: "format_result",
-    argNames: ["a", "b", "operation", "result"],
-  );
+  TaskConstMeta get kCrateApiPrimesFactorizeConstMeta =>
+      const TaskConstMeta(debugName: "factorize", argNames: ["n"]);
 
   @override
-  Future<List<String>> crateApiSimpleGetSupportedOperations() {
+  Future<MatrixOutcome> crateApiMatrixFromRows({
+    required int rows,
+    required int cols,
+    required List<double> data,
+  }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_i_32(rows, serializer);
+          sse_encode_i_32(cols, serializer);
+          sse_encode_list_prim_f_64_loose(data, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -351,26 +359,28 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_list_String,
+          decodeSuccessData: sse_decode_matrix_outcome,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleGetSupportedOperationsConstMeta,
-        argValues: [],
+        constMeta: kCrateApiMatrixFromRowsConstMeta,
+        argValues: [rows, cols, data],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleGetSupportedOperationsConstMeta =>
-      const TaskConstMeta(debugName: "get_supported_operations", argNames: []);
+  TaskConstMeta get kCrateApiMatrixFromRowsConstMeta => const TaskConstMeta(
+    debugName: "from_rows",
+    argNames: ["rows", "cols", "data"],
+  );
 
   @override
-  Future<double> crateApiSimpleHeavyComputation({required int iterations}) {
+  Future<MatrixOutcome> crateApiMatrixIdentity({required int n}) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_i_32(iterations, serializer);
+          sse_encode_i_32(n, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -379,28 +389,26 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_f_64,
+          decodeSuccessData: sse_decode_matrix_outcome,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleHeavyComputationConstMeta,
-        argValues: [iterations],
+        constMeta: kCrateApiMatrixIdentityConstMeta,
+        argValues: [n],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleHeavyComputationConstMeta =>
-      const TaskConstMeta(
-        debugName: "heavy_computation",
-        argNames: ["iterations"],
-      );
+  TaskConstMeta get kCrateApiMatrixIdentityConstMeta =>
+      const TaskConstMeta(debugName: "identity", argNames: ["n"]);
 
   @override
-  Future<void> crateApiSimpleInitApp() {
+  Future<bool> crateApiTextIsPalindrome({required String text}) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_String(text, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -409,54 +417,70 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_unit,
+          decodeSuccessData: sse_decode_bool,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleInitAppConstMeta,
-        argValues: [],
+        constMeta: kCrateApiTextIsPalindromeConstMeta,
+        argValues: [text],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleInitAppConstMeta =>
-      const TaskConstMeta(debugName: "init_app", argNames: []);
+  TaskConstMeta get kCrateApiTextIsPalindromeConstMeta =>
+      const TaskConstMeta(debugName: "is_palindrome", argNames: ["text"]);
 
   @override
-  Future<String> crateApiSimpleOperationSymbol({required Operation that}) {
-    return handler.executeNormal(
-      NormalTask(
-        callFfi: (port_) {
-          final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_operation(that, serializer);
-          pdeCallFfi(
-            generalizedFrbRustBinding,
-            serializer,
-            funcId: 10,
-            port: port_,
-          );
-        },
-        codec: SseCodec(
-          decodeSuccessData: sse_decode_String,
-          decodeErrorData: null,
+  Stream<ProgressEvent> crateApiStreamingMonteCarloPi({
+    required PlatformInt64 iterations,
+    required int chunks,
+  }) {
+    final sink = RustStreamSink<ProgressEvent>();
+    unawaited(
+      handler.executeNormal(
+        NormalTask(
+          callFfi: (port_) {
+            final serializer = SseSerializer(generalizedFrbRustBinding);
+            sse_encode_StreamSink_progress_event_Sse(sink, serializer);
+            sse_encode_i_64(iterations, serializer);
+            sse_encode_i_32(chunks, serializer);
+            pdeCallFfi(
+              generalizedFrbRustBinding,
+              serializer,
+              funcId: 10,
+              port: port_,
+            );
+          },
+          codec: SseCodec(
+            decodeSuccessData: sse_decode_unit,
+            decodeErrorData: sse_decode_AnyhowException,
+          ),
+          constMeta: kCrateApiStreamingMonteCarloPiConstMeta,
+          argValues: [sink, iterations, chunks],
+          apiImpl: this,
         ),
-        constMeta: kCrateApiSimpleOperationSymbolConstMeta,
-        argValues: [that],
-        apiImpl: this,
       ),
     );
+    return sink.stream;
   }
 
-  TaskConstMeta get kCrateApiSimpleOperationSymbolConstMeta =>
-      const TaskConstMeta(debugName: "operation_symbol", argNames: ["that"]);
+  TaskConstMeta get kCrateApiStreamingMonteCarloPiConstMeta =>
+      const TaskConstMeta(
+        debugName: "monte_carlo_pi",
+        argNames: ["sink", "iterations", "chunks"],
+      );
 
   @override
-  Future<Operation?> crateApiSimpleParseOperation({required String s}) {
+  Future<MatrixOutcome> crateApiMatrixMultiply({
+    required Matrix a,
+    required Matrix b,
+  }) {
     return handler.executeNormal(
       NormalTask(
         callFfi: (port_) {
           final serializer = SseSerializer(generalizedFrbRustBinding);
-          sse_encode_String(s, serializer);
+          sse_encode_box_autoadd_matrix(a, serializer);
+          sse_encode_box_autoadd_matrix(b, serializer);
           pdeCallFfi(
             generalizedFrbRustBinding,
             serializer,
@@ -465,18 +489,271 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
           );
         },
         codec: SseCodec(
-          decodeSuccessData: sse_decode_opt_box_autoadd_operation,
+          decodeSuccessData: sse_decode_matrix_outcome,
           decodeErrorData: null,
         ),
-        constMeta: kCrateApiSimpleParseOperationConstMeta,
-        argValues: [s],
+        constMeta: kCrateApiMatrixMultiplyConstMeta,
+        argValues: [a, b],
         apiImpl: this,
       ),
     );
   }
 
-  TaskConstMeta get kCrateApiSimpleParseOperationConstMeta =>
-      const TaskConstMeta(debugName: "parse_operation", argNames: ["s"]);
+  TaskConstMeta get kCrateApiMatrixMultiplyConstMeta =>
+      const TaskConstMeta(debugName: "multiply", argNames: ["a", "b"]);
+
+  @override
+  Future<BigInt> crateApiPrimesNthPrime({required BigInt n}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_u_64(n, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 12,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_u_64,
+          decodeErrorData: sse_decode_String,
+        ),
+        constMeta: kCrateApiPrimesNthPrimeConstMeta,
+        argValues: [n],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiPrimesNthPrimeConstMeta =>
+      const TaskConstMeta(debugName: "nth_prime", argNames: ["n"]);
+
+  @override
+  Future<double> crateApiStreamingPiFromCounts({
+    required BigInt inside,
+    required BigInt total,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_u_64(inside, serializer);
+          sse_encode_u_64(total, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 13,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_f_64,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiStreamingPiFromCountsConstMeta,
+        argValues: [inside, total],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiStreamingPiFromCountsConstMeta =>
+      const TaskConstMeta(
+        debugName: "pi_from_counts",
+        argNames: ["inside", "total"],
+      );
+
+  @override
+  Future<MandelbrotResult> crateApiMandelbrotRender({
+    required MandelbrotConfig config,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_box_autoadd_mandelbrot_config(config, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 14,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_mandelbrot_result,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiMandelbrotRenderConstMeta,
+        argValues: [config],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiMandelbrotRenderConstMeta =>
+      const TaskConstMeta(debugName: "render", argNames: ["config"]);
+
+  @override
+  Future<MandelbrotResult> crateApiMandelbrotRenderMandelbrot({
+    required MandelbrotConfig config,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_box_autoadd_mandelbrot_config(config, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 15,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_mandelbrot_result,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiMandelbrotRenderMandelbrotConstMeta,
+        argValues: [config],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiMandelbrotRenderMandelbrotConstMeta =>
+      const TaskConstMeta(debugName: "render_mandelbrot", argNames: ["config"]);
+
+  @override
+  Future<Uint64List> crateApiPrimesSieve({required BigInt limit}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_u_64(limit, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 16,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_list_prim_u_64_strict,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiPrimesSieveConstMeta,
+        argValues: [limit],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiPrimesSieveConstMeta =>
+      const TaskConstMeta(debugName: "sieve", argNames: ["limit"]);
+
+  @override
+  Future<SieveStats> crateApiPrimesSieveStats({required BigInt limit}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_u_64(limit, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 17,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_sieve_stats,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiPrimesSieveStatsConstMeta,
+        argValues: [limit],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiPrimesSieveStatsConstMeta =>
+      const TaskConstMeta(debugName: "sieve_stats", argNames: ["limit"]);
+
+  @override
+  Future<PlatformInt64> crateApiSimpleSlowSquare({
+    required PlatformInt64 x,
+    required PlatformInt64 delayMs,
+  }) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_i_64(x, serializer);
+          sse_encode_i_64(delayMs, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 18,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_i_64,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiSimpleSlowSquareConstMeta,
+        argValues: [x, delayMs],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiSimpleSlowSquareConstMeta =>
+      const TaskConstMeta(debugName: "slow_square", argNames: ["x", "delayMs"]);
+
+  @override
+  Future<MatrixOutcome> crateApiMatrixTranspose({required Matrix a}) {
+    return handler.executeNormal(
+      NormalTask(
+        callFfi: (port_) {
+          final serializer = SseSerializer(generalizedFrbRustBinding);
+          sse_encode_box_autoadd_matrix(a, serializer);
+          pdeCallFfi(
+            generalizedFrbRustBinding,
+            serializer,
+            funcId: 19,
+            port: port_,
+          );
+        },
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_matrix_outcome,
+          decodeErrorData: null,
+        ),
+        constMeta: kCrateApiMatrixTransposeConstMeta,
+        argValues: [a],
+        apiImpl: this,
+      ),
+    );
+  }
+
+  TaskConstMeta get kCrateApiMatrixTransposeConstMeta =>
+      const TaskConstMeta(debugName: "transpose", argNames: ["a"]);
+
+  @protected
+  AnyhowException dco_decode_AnyhowException(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return AnyhowException(raw as String);
+  }
+
+  @protected
+  RustStreamSink<ProgressEvent> dco_decode_StreamSink_progress_event_Sse(
+    dynamic raw,
+  ) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    throw UnimplementedError();
+  }
 
   @protected
   String dco_decode_String(dynamic raw) {
@@ -485,69 +762,46 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  CalcResult dco_decode_box_autoadd_calc_result(dynamic raw) {
+  bool dco_decode_bool(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_calc_result(raw);
+    return raw as bool;
   }
 
   @protected
-  Operation dco_decode_box_autoadd_operation(dynamic raw) {
+  MandelbrotConfig dco_decode_box_autoadd_mandelbrot_config(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return dco_decode_operation(raw);
+    return dco_decode_mandelbrot_config(raw);
   }
 
   @protected
-  CalcRequest dco_decode_calc_request(dynamic raw) {
+  Matrix dco_decode_box_autoadd_matrix(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dco_decode_matrix(raw);
+  }
+
+  @protected
+  CharCount dco_decode_char_count(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
-    if (arr.length != 3)
-      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
-    return CalcRequest(
-      a: dco_decode_f_64(arr[0]),
-      b: dco_decode_f_64(arr[1]),
-      operation: dco_decode_operation(arr[2]),
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return CharCount(
+      ch: dco_decode_String(arr[0]),
+      count: dco_decode_i_64(arr[1]),
     );
   }
 
   @protected
-  CalcResult dco_decode_calc_result(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    switch (raw[0]) {
-      case 0:
-        return CalcResult_Success(value: dco_decode_f_64(raw[1]));
-      case 1:
-        return CalcResult_Error(message: dco_decode_String(raw[1]));
-      default:
-        throw Exception("unreachable");
-    }
-  }
-
-  @protected
-  CalculationRecord dco_decode_calculation_record(dynamic raw) {
-    // Codec=Dco (DartCObject based), see doc to use other codecs
-    final arr = raw as List<dynamic>;
-    if (arr.length != 5)
-      throw Exception('unexpected arr length: expect 5 but see ${arr.length}');
-    return CalculationRecord(
-      a: dco_decode_f_64(arr[0]),
-      b: dco_decode_f_64(arr[1]),
-      operation: dco_decode_operation(arr[2]),
-      result: dco_decode_calc_result(arr[3]),
-      timestamp: dco_decode_i_64(arr[4]),
-    );
-  }
-
-  @protected
-  CalculatorStats dco_decode_calculator_stats(dynamic raw) {
+  EngineInfo dco_decode_engine_info(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
     final arr = raw as List<dynamic>;
     if (arr.length != 4)
       throw Exception('unexpected arr length: expect 4 but see ${arr.length}');
-    return CalculatorStats(
-      totalCalculations: dco_decode_i_32(arr[0]),
-      successCount: dco_decode_i_32(arr[1]),
-      errorCount: dco_decode_i_32(arr[2]),
-      averageValue: dco_decode_f_64(arr[3]),
+    return EngineInfo(
+      name: dco_decode_String(arr[0]),
+      version: dco_decode_String(arr[1]),
+      target: dco_decode_String(arr[2]),
+      debugBuild: dco_decode_bool(arr[3]),
     );
   }
 
@@ -570,27 +824,27 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  List<String> dco_decode_list_String(dynamic raw) {
+  List<CharCount> dco_decode_list_char_count(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_String).toList();
+    return (raw as List<dynamic>).map(dco_decode_char_count).toList();
   }
 
   @protected
-  List<CalcRequest> dco_decode_list_calc_request(dynamic raw) {
+  List<double> dco_decode_list_prim_f_64_loose(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_calc_request).toList();
+    return raw as List<double>;
   }
 
   @protected
-  List<CalcResult> dco_decode_list_calc_result(dynamic raw) {
+  Float64List dco_decode_list_prim_f_64_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_calc_result).toList();
+    return raw as Float64List;
   }
 
   @protected
-  List<CalculationRecord> dco_decode_list_calculation_record(dynamic raw) {
+  Uint64List dco_decode_list_prim_u_64_strict(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return (raw as List<dynamic>).map(dco_decode_calculation_record).toList();
+    return dcoDecodeUint64List(raw);
   }
 
   @protected
@@ -600,15 +854,163 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  Operation dco_decode_operation(dynamic raw) {
+  List<PrimeFactor> dco_decode_list_prime_factor(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return Operation.values[raw as int];
+    return (raw as List<dynamic>).map(dco_decode_prime_factor).toList();
   }
 
   @protected
-  Operation? dco_decode_opt_box_autoadd_operation(dynamic raw) {
+  List<WordCount> dco_decode_list_word_count(dynamic raw) {
     // Codec=Dco (DartCObject based), see doc to use other codecs
-    return raw == null ? null : dco_decode_box_autoadd_operation(raw);
+    return (raw as List<dynamic>).map(dco_decode_word_count).toList();
+  }
+
+  @protected
+  MandelbrotConfig dco_decode_mandelbrot_config(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 6)
+      throw Exception('unexpected arr length: expect 6 but see ${arr.length}');
+    return MandelbrotConfig(
+      width: dco_decode_i_32(arr[0]),
+      height: dco_decode_i_32(arr[1]),
+      centerX: dco_decode_f_64(arr[2]),
+      centerY: dco_decode_f_64(arr[3]),
+      scale: dco_decode_f_64(arr[4]),
+      maxIter: dco_decode_i_32(arr[5]),
+    );
+  }
+
+  @protected
+  MandelbrotResult dco_decode_mandelbrot_result(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 6)
+      throw Exception('unexpected arr length: expect 6 but see ${arr.length}');
+    return MandelbrotResult(
+      width: dco_decode_i_32(arr[0]),
+      height: dco_decode_i_32(arr[1]),
+      pixels: dco_decode_list_prim_u_8_strict(arr[2]),
+      avgEscape: dco_decode_f_64(arr[3]),
+      elapsedMs: dco_decode_i_64(arr[4]),
+      interiorRatio: dco_decode_f_64(arr[5]),
+    );
+  }
+
+  @protected
+  Matrix dco_decode_matrix(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 3)
+      throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
+    return Matrix(
+      rows: dco_decode_i_32(arr[0]),
+      cols: dco_decode_i_32(arr[1]),
+      data: dco_decode_list_prim_f_64_strict(arr[2]),
+    );
+  }
+
+  @protected
+  MatrixErrorKind dco_decode_matrix_error_kind(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return MatrixErrorKind.values[raw as int];
+  }
+
+  @protected
+  MatrixOutcome dco_decode_matrix_outcome(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    switch (raw[0]) {
+      case 0:
+        return MatrixOutcome_Success(
+          matrix: dco_decode_box_autoadd_matrix(raw[1]),
+        );
+      case 1:
+        return MatrixOutcome_Failure(
+          kind: dco_decode_matrix_error_kind(raw[1]),
+          message: dco_decode_String(raw[2]),
+        );
+      default:
+        throw Exception("unreachable");
+    }
+  }
+
+  @protected
+  PrimeFactor dco_decode_prime_factor(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return PrimeFactor(
+      prime: dco_decode_u_64(arr[0]),
+      exponent: dco_decode_u_32(arr[1]),
+    );
+  }
+
+  @protected
+  ProgressEvent dco_decode_progress_event(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    switch (raw[0]) {
+      case 0:
+        return ProgressEvent_Progress(
+          done: dco_decode_i_64(raw[1]),
+          total: dco_decode_i_64(raw[2]),
+          partialEstimate: dco_decode_f_64(raw[3]),
+        );
+      case 1:
+        return ProgressEvent_Done(
+          estimate: dco_decode_f_64(raw[1]),
+          absError: dco_decode_f_64(raw[2]),
+          elapsedMs: dco_decode_i_64(raw[3]),
+        );
+      default:
+        throw Exception("unreachable");
+    }
+  }
+
+  @protected
+  SieveStats dco_decode_sieve_stats(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 5)
+      throw Exception('unexpected arr length: expect 5 but see ${arr.length}');
+    return SieveStats(
+      limit: dco_decode_u_64(arr[0]),
+      count: dco_decode_u_64(arr[1]),
+      largest: dco_decode_u_64(arr[2]),
+      density: dco_decode_f_64(arr[3]),
+      elapsedMs: dco_decode_i_64(arr[4]),
+    );
+  }
+
+  @protected
+  TextStats dco_decode_text_stats(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 9)
+      throw Exception('unexpected arr length: expect 9 but see ${arr.length}');
+    return TextStats(
+      charCount: dco_decode_i_64(arr[0]),
+      byteCount: dco_decode_i_64(arr[1]),
+      wordCount: dco_decode_i_64(arr[2]),
+      lineCount: dco_decode_i_64(arr[3]),
+      uniqueWords: dco_decode_i_64(arr[4]),
+      avgWordLen: dco_decode_f_64(arr[5]),
+      longestWord: dco_decode_String(arr[6]),
+      topWords: dco_decode_list_word_count(arr[7]),
+      topChars: dco_decode_list_char_count(arr[8]),
+    );
+  }
+
+  @protected
+  int dco_decode_u_32(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return raw as int;
+  }
+
+  @protected
+  BigInt dco_decode_u_64(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    return dcoDecodeU64(raw);
   }
 
   @protected
@@ -624,6 +1026,33 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
+  WordCount dco_decode_word_count(dynamic raw) {
+    // Codec=Dco (DartCObject based), see doc to use other codecs
+    final arr = raw as List<dynamic>;
+    if (arr.length != 2)
+      throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    return WordCount(
+      word: dco_decode_String(arr[0]),
+      count: dco_decode_i_64(arr[1]),
+    );
+  }
+
+  @protected
+  AnyhowException sse_decode_AnyhowException(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_String(deserializer);
+    return AnyhowException(inner);
+  }
+
+  @protected
+  RustStreamSink<ProgressEvent> sse_decode_StreamSink_progress_event_Sse(
+    SseDeserializer deserializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    throw UnimplementedError('Unreachable ()');
+  }
+
+  @protected
   String sse_decode_String(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     var inner = sse_decode_list_prim_u_8_strict(deserializer);
@@ -631,74 +1060,45 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  CalcResult sse_decode_box_autoadd_calc_result(SseDeserializer deserializer) {
+  bool sse_decode_bool(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_calc_result(deserializer));
+    return deserializer.buffer.getUint8() != 0;
   }
 
   @protected
-  Operation sse_decode_box_autoadd_operation(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    return (sse_decode_operation(deserializer));
-  }
-
-  @protected
-  CalcRequest sse_decode_calc_request(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_a = sse_decode_f_64(deserializer);
-    var var_b = sse_decode_f_64(deserializer);
-    var var_operation = sse_decode_operation(deserializer);
-    return CalcRequest(a: var_a, b: var_b, operation: var_operation);
-  }
-
-  @protected
-  CalcResult sse_decode_calc_result(SseDeserializer deserializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-
-    var tag_ = sse_decode_i_32(deserializer);
-    switch (tag_) {
-      case 0:
-        var var_value = sse_decode_f_64(deserializer);
-        return CalcResult_Success(value: var_value);
-      case 1:
-        var var_message = sse_decode_String(deserializer);
-        return CalcResult_Error(message: var_message);
-      default:
-        throw UnimplementedError('');
-    }
-  }
-
-  @protected
-  CalculationRecord sse_decode_calculation_record(
+  MandelbrotConfig sse_decode_box_autoadd_mandelbrot_config(
     SseDeserializer deserializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_a = sse_decode_f_64(deserializer);
-    var var_b = sse_decode_f_64(deserializer);
-    var var_operation = sse_decode_operation(deserializer);
-    var var_result = sse_decode_calc_result(deserializer);
-    var var_timestamp = sse_decode_i_64(deserializer);
-    return CalculationRecord(
-      a: var_a,
-      b: var_b,
-      operation: var_operation,
-      result: var_result,
-      timestamp: var_timestamp,
-    );
+    return (sse_decode_mandelbrot_config(deserializer));
   }
 
   @protected
-  CalculatorStats sse_decode_calculator_stats(SseDeserializer deserializer) {
+  Matrix sse_decode_box_autoadd_matrix(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    var var_totalCalculations = sse_decode_i_32(deserializer);
-    var var_successCount = sse_decode_i_32(deserializer);
-    var var_errorCount = sse_decode_i_32(deserializer);
-    var var_averageValue = sse_decode_f_64(deserializer);
-    return CalculatorStats(
-      totalCalculations: var_totalCalculations,
-      successCount: var_successCount,
-      errorCount: var_errorCount,
-      averageValue: var_averageValue,
+    return (sse_decode_matrix(deserializer));
+  }
+
+  @protected
+  CharCount sse_decode_char_count(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_ch = sse_decode_String(deserializer);
+    var var_count = sse_decode_i_64(deserializer);
+    return CharCount(ch: var_ch, count: var_count);
+  }
+
+  @protected
+  EngineInfo sse_decode_engine_info(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_name = sse_decode_String(deserializer);
+    var var_version = sse_decode_String(deserializer);
+    var var_target = sse_decode_String(deserializer);
+    var var_debugBuild = sse_decode_bool(deserializer);
+    return EngineInfo(
+      name: var_name,
+      version: var_version,
+      target: var_target,
+      debugBuild: var_debugBuild,
     );
   }
 
@@ -721,53 +1121,36 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  List<String> sse_decode_list_String(SseDeserializer deserializer) {
+  List<CharCount> sse_decode_list_char_count(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
     var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <String>[];
+    var ans_ = <CharCount>[];
     for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_String(deserializer));
+      ans_.add(sse_decode_char_count(deserializer));
     }
     return ans_;
   }
 
   @protected
-  List<CalcRequest> sse_decode_list_calc_request(SseDeserializer deserializer) {
+  List<double> sse_decode_list_prim_f_64_loose(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-
     var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <CalcRequest>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_calc_request(deserializer));
-    }
-    return ans_;
+    return deserializer.buffer.getFloat64List(len_);
   }
 
   @protected
-  List<CalcResult> sse_decode_list_calc_result(SseDeserializer deserializer) {
+  Float64List sse_decode_list_prim_f_64_strict(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-
     var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <CalcResult>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_calc_result(deserializer));
-    }
-    return ans_;
+    return deserializer.buffer.getFloat64List(len_);
   }
 
   @protected
-  List<CalculationRecord> sse_decode_list_calculation_record(
-    SseDeserializer deserializer,
-  ) {
+  Uint64List sse_decode_list_prim_u_64_strict(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-
     var len_ = sse_decode_i_32(deserializer);
-    var ans_ = <CalculationRecord>[];
-    for (var idx_ = 0; idx_ < len_; ++idx_) {
-      ans_.add(sse_decode_calculation_record(deserializer));
-    }
-    return ans_;
+    return deserializer.buffer.getUint64List(len_);
   }
 
   @protected
@@ -778,23 +1161,190 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  Operation sse_decode_operation(SseDeserializer deserializer) {
+  List<PrimeFactor> sse_decode_list_prime_factor(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    var inner = sse_decode_i_32(deserializer);
-    return Operation.values[inner];
+
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <PrimeFactor>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_prime_factor(deserializer));
+    }
+    return ans_;
   }
 
   @protected
-  Operation? sse_decode_opt_box_autoadd_operation(
-    SseDeserializer deserializer,
-  ) {
+  List<WordCount> sse_decode_list_word_count(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
 
-    if (sse_decode_bool(deserializer)) {
-      return (sse_decode_box_autoadd_operation(deserializer));
-    } else {
-      return null;
+    var len_ = sse_decode_i_32(deserializer);
+    var ans_ = <WordCount>[];
+    for (var idx_ = 0; idx_ < len_; ++idx_) {
+      ans_.add(sse_decode_word_count(deserializer));
     }
+    return ans_;
+  }
+
+  @protected
+  MandelbrotConfig sse_decode_mandelbrot_config(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_width = sse_decode_i_32(deserializer);
+    var var_height = sse_decode_i_32(deserializer);
+    var var_centerX = sse_decode_f_64(deserializer);
+    var var_centerY = sse_decode_f_64(deserializer);
+    var var_scale = sse_decode_f_64(deserializer);
+    var var_maxIter = sse_decode_i_32(deserializer);
+    return MandelbrotConfig(
+      width: var_width,
+      height: var_height,
+      centerX: var_centerX,
+      centerY: var_centerY,
+      scale: var_scale,
+      maxIter: var_maxIter,
+    );
+  }
+
+  @protected
+  MandelbrotResult sse_decode_mandelbrot_result(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_width = sse_decode_i_32(deserializer);
+    var var_height = sse_decode_i_32(deserializer);
+    var var_pixels = sse_decode_list_prim_u_8_strict(deserializer);
+    var var_avgEscape = sse_decode_f_64(deserializer);
+    var var_elapsedMs = sse_decode_i_64(deserializer);
+    var var_interiorRatio = sse_decode_f_64(deserializer);
+    return MandelbrotResult(
+      width: var_width,
+      height: var_height,
+      pixels: var_pixels,
+      avgEscape: var_avgEscape,
+      elapsedMs: var_elapsedMs,
+      interiorRatio: var_interiorRatio,
+    );
+  }
+
+  @protected
+  Matrix sse_decode_matrix(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_rows = sse_decode_i_32(deserializer);
+    var var_cols = sse_decode_i_32(deserializer);
+    var var_data = sse_decode_list_prim_f_64_strict(deserializer);
+    return Matrix(rows: var_rows, cols: var_cols, data: var_data);
+  }
+
+  @protected
+  MatrixErrorKind sse_decode_matrix_error_kind(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var inner = sse_decode_i_32(deserializer);
+    return MatrixErrorKind.values[inner];
+  }
+
+  @protected
+  MatrixOutcome sse_decode_matrix_outcome(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var tag_ = sse_decode_i_32(deserializer);
+    switch (tag_) {
+      case 0:
+        var var_matrix = sse_decode_box_autoadd_matrix(deserializer);
+        return MatrixOutcome_Success(matrix: var_matrix);
+      case 1:
+        var var_kind = sse_decode_matrix_error_kind(deserializer);
+        var var_message = sse_decode_String(deserializer);
+        return MatrixOutcome_Failure(kind: var_kind, message: var_message);
+      default:
+        throw UnimplementedError('');
+    }
+  }
+
+  @protected
+  PrimeFactor sse_decode_prime_factor(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_prime = sse_decode_u_64(deserializer);
+    var var_exponent = sse_decode_u_32(deserializer);
+    return PrimeFactor(prime: var_prime, exponent: var_exponent);
+  }
+
+  @protected
+  ProgressEvent sse_decode_progress_event(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+
+    var tag_ = sse_decode_i_32(deserializer);
+    switch (tag_) {
+      case 0:
+        var var_done = sse_decode_i_64(deserializer);
+        var var_total = sse_decode_i_64(deserializer);
+        var var_partialEstimate = sse_decode_f_64(deserializer);
+        return ProgressEvent_Progress(
+          done: var_done,
+          total: var_total,
+          partialEstimate: var_partialEstimate,
+        );
+      case 1:
+        var var_estimate = sse_decode_f_64(deserializer);
+        var var_absError = sse_decode_f_64(deserializer);
+        var var_elapsedMs = sse_decode_i_64(deserializer);
+        return ProgressEvent_Done(
+          estimate: var_estimate,
+          absError: var_absError,
+          elapsedMs: var_elapsedMs,
+        );
+      default:
+        throw UnimplementedError('');
+    }
+  }
+
+  @protected
+  SieveStats sse_decode_sieve_stats(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_limit = sse_decode_u_64(deserializer);
+    var var_count = sse_decode_u_64(deserializer);
+    var var_largest = sse_decode_u_64(deserializer);
+    var var_density = sse_decode_f_64(deserializer);
+    var var_elapsedMs = sse_decode_i_64(deserializer);
+    return SieveStats(
+      limit: var_limit,
+      count: var_count,
+      largest: var_largest,
+      density: var_density,
+      elapsedMs: var_elapsedMs,
+    );
+  }
+
+  @protected
+  TextStats sse_decode_text_stats(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    var var_charCount = sse_decode_i_64(deserializer);
+    var var_byteCount = sse_decode_i_64(deserializer);
+    var var_wordCount = sse_decode_i_64(deserializer);
+    var var_lineCount = sse_decode_i_64(deserializer);
+    var var_uniqueWords = sse_decode_i_64(deserializer);
+    var var_avgWordLen = sse_decode_f_64(deserializer);
+    var var_longestWord = sse_decode_String(deserializer);
+    var var_topWords = sse_decode_list_word_count(deserializer);
+    var var_topChars = sse_decode_list_char_count(deserializer);
+    return TextStats(
+      charCount: var_charCount,
+      byteCount: var_byteCount,
+      wordCount: var_wordCount,
+      lineCount: var_lineCount,
+      uniqueWords: var_uniqueWords,
+      avgWordLen: var_avgWordLen,
+      longestWord: var_longestWord,
+      topWords: var_topWords,
+      topChars: var_topChars,
+    );
+  }
+
+  @protected
+  int sse_decode_u_32(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getUint32();
+  }
+
+  @protected
+  BigInt sse_decode_u_64(SseDeserializer deserializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    return deserializer.buffer.getBigUint64();
   }
 
   @protected
@@ -809,9 +1359,37 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  bool sse_decode_bool(SseDeserializer deserializer) {
+  WordCount sse_decode_word_count(SseDeserializer deserializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    return deserializer.buffer.getUint8() != 0;
+    var var_word = sse_decode_String(deserializer);
+    var var_count = sse_decode_i_64(deserializer);
+    return WordCount(word: var_word, count: var_count);
+  }
+
+  @protected
+  void sse_encode_AnyhowException(
+    AnyhowException self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(self.message, serializer);
+  }
+
+  @protected
+  void sse_encode_StreamSink_progress_event_Sse(
+    RustStreamSink<ProgressEvent> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_String(
+      self.setupAndSerialize(
+        codec: SseCodec(
+          decodeSuccessData: sse_decode_progress_event,
+          decodeErrorData: sse_decode_AnyhowException,
+        ),
+      ),
+      serializer,
+    );
   }
 
   @protected
@@ -821,67 +1399,40 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_box_autoadd_calc_result(
-    CalcResult self,
+  void sse_encode_bool(bool self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putUint8(self ? 1 : 0);
+  }
+
+  @protected
+  void sse_encode_box_autoadd_mandelbrot_config(
+    MandelbrotConfig self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_calc_result(self, serializer);
+    sse_encode_mandelbrot_config(self, serializer);
   }
 
   @protected
-  void sse_encode_box_autoadd_operation(
-    Operation self,
-    SseSerializer serializer,
-  ) {
+  void sse_encode_box_autoadd_matrix(Matrix self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_operation(self, serializer);
+    sse_encode_matrix(self, serializer);
   }
 
   @protected
-  void sse_encode_calc_request(CalcRequest self, SseSerializer serializer) {
+  void sse_encode_char_count(CharCount self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_f_64(self.a, serializer);
-    sse_encode_f_64(self.b, serializer);
-    sse_encode_operation(self.operation, serializer);
+    sse_encode_String(self.ch, serializer);
+    sse_encode_i_64(self.count, serializer);
   }
 
   @protected
-  void sse_encode_calc_result(CalcResult self, SseSerializer serializer) {
+  void sse_encode_engine_info(EngineInfo self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    switch (self) {
-      case CalcResult_Success(value: final value):
-        sse_encode_i_32(0, serializer);
-        sse_encode_f_64(value, serializer);
-      case CalcResult_Error(message: final message):
-        sse_encode_i_32(1, serializer);
-        sse_encode_String(message, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_calculation_record(
-    CalculationRecord self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_f_64(self.a, serializer);
-    sse_encode_f_64(self.b, serializer);
-    sse_encode_operation(self.operation, serializer);
-    sse_encode_calc_result(self.result, serializer);
-    sse_encode_i_64(self.timestamp, serializer);
-  }
-
-  @protected
-  void sse_encode_calculator_stats(
-    CalculatorStats self,
-    SseSerializer serializer,
-  ) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.totalCalculations, serializer);
-    sse_encode_i_32(self.successCount, serializer);
-    sse_encode_i_32(self.errorCount, serializer);
-    sse_encode_f_64(self.averageValue, serializer);
+    sse_encode_String(self.name, serializer);
+    sse_encode_String(self.version, serializer);
+    sse_encode_String(self.target, serializer);
+    sse_encode_bool(self.debugBuild, serializer);
   }
 
   @protected
@@ -903,48 +1454,47 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_list_String(List<String> self, SseSerializer serializer) {
-    // Codec=Sse (Serialization based), see doc to use other codecs
-    sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_String(item, serializer);
-    }
-  }
-
-  @protected
-  void sse_encode_list_calc_request(
-    List<CalcRequest> self,
+  void sse_encode_list_char_count(
+    List<CharCount> self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
     for (final item in self) {
-      sse_encode_calc_request(item, serializer);
+      sse_encode_char_count(item, serializer);
     }
   }
 
   @protected
-  void sse_encode_list_calc_result(
-    List<CalcResult> self,
+  void sse_encode_list_prim_f_64_loose(
+    List<double> self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_calc_result(item, serializer);
-    }
+    serializer.buffer.putFloat64List(
+      self is Float64List ? self : Float64List.fromList(self),
+    );
   }
 
   @protected
-  void sse_encode_list_calculation_record(
-    List<CalculationRecord> self,
+  void sse_encode_list_prim_f_64_strict(
+    Float64List self,
     SseSerializer serializer,
   ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.length, serializer);
-    for (final item in self) {
-      sse_encode_calculation_record(item, serializer);
-    }
+    serializer.buffer.putFloat64List(self);
+  }
+
+  @protected
+  void sse_encode_list_prim_u_64_strict(
+    Uint64List self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    serializer.buffer.putUint64List(self);
   }
 
   @protected
@@ -958,22 +1508,154 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_operation(Operation self, SseSerializer serializer) {
+  void sse_encode_list_prime_factor(
+    List<PrimeFactor> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_prime_factor(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_list_word_count(
+    List<WordCount> self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.length, serializer);
+    for (final item in self) {
+      sse_encode_word_count(item, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_mandelbrot_config(
+    MandelbrotConfig self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.width, serializer);
+    sse_encode_i_32(self.height, serializer);
+    sse_encode_f_64(self.centerX, serializer);
+    sse_encode_f_64(self.centerY, serializer);
+    sse_encode_f_64(self.scale, serializer);
+    sse_encode_i_32(self.maxIter, serializer);
+  }
+
+  @protected
+  void sse_encode_mandelbrot_result(
+    MandelbrotResult self,
+    SseSerializer serializer,
+  ) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.width, serializer);
+    sse_encode_i_32(self.height, serializer);
+    sse_encode_list_prim_u_8_strict(self.pixels, serializer);
+    sse_encode_f_64(self.avgEscape, serializer);
+    sse_encode_i_64(self.elapsedMs, serializer);
+    sse_encode_f_64(self.interiorRatio, serializer);
+  }
+
+  @protected
+  void sse_encode_matrix(Matrix self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_32(self.rows, serializer);
+    sse_encode_i_32(self.cols, serializer);
+    sse_encode_list_prim_f_64_strict(self.data, serializer);
+  }
+
+  @protected
+  void sse_encode_matrix_error_kind(
+    MatrixErrorKind self,
+    SseSerializer serializer,
+  ) {
     // Codec=Sse (Serialization based), see doc to use other codecs
     sse_encode_i_32(self.index, serializer);
   }
 
   @protected
-  void sse_encode_opt_box_autoadd_operation(
-    Operation? self,
-    SseSerializer serializer,
-  ) {
+  void sse_encode_matrix_outcome(MatrixOutcome self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-
-    sse_encode_bool(self != null, serializer);
-    if (self != null) {
-      sse_encode_box_autoadd_operation(self, serializer);
+    switch (self) {
+      case MatrixOutcome_Success(matrix: final matrix):
+        sse_encode_i_32(0, serializer);
+        sse_encode_box_autoadd_matrix(matrix, serializer);
+      case MatrixOutcome_Failure(kind: final kind, message: final message):
+        sse_encode_i_32(1, serializer);
+        sse_encode_matrix_error_kind(kind, serializer);
+        sse_encode_String(message, serializer);
     }
+  }
+
+  @protected
+  void sse_encode_prime_factor(PrimeFactor self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_u_64(self.prime, serializer);
+    sse_encode_u_32(self.exponent, serializer);
+  }
+
+  @protected
+  void sse_encode_progress_event(ProgressEvent self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    switch (self) {
+      case ProgressEvent_Progress(
+        done: final done,
+        total: final total,
+        partialEstimate: final partialEstimate,
+      ):
+        sse_encode_i_32(0, serializer);
+        sse_encode_i_64(done, serializer);
+        sse_encode_i_64(total, serializer);
+        sse_encode_f_64(partialEstimate, serializer);
+      case ProgressEvent_Done(
+        estimate: final estimate,
+        absError: final absError,
+        elapsedMs: final elapsedMs,
+      ):
+        sse_encode_i_32(1, serializer);
+        sse_encode_f_64(estimate, serializer);
+        sse_encode_f_64(absError, serializer);
+        sse_encode_i_64(elapsedMs, serializer);
+    }
+  }
+
+  @protected
+  void sse_encode_sieve_stats(SieveStats self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_u_64(self.limit, serializer);
+    sse_encode_u_64(self.count, serializer);
+    sse_encode_u_64(self.largest, serializer);
+    sse_encode_f_64(self.density, serializer);
+    sse_encode_i_64(self.elapsedMs, serializer);
+  }
+
+  @protected
+  void sse_encode_text_stats(TextStats self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    sse_encode_i_64(self.charCount, serializer);
+    sse_encode_i_64(self.byteCount, serializer);
+    sse_encode_i_64(self.wordCount, serializer);
+    sse_encode_i_64(self.lineCount, serializer);
+    sse_encode_i_64(self.uniqueWords, serializer);
+    sse_encode_f_64(self.avgWordLen, serializer);
+    sse_encode_String(self.longestWord, serializer);
+    sse_encode_list_word_count(self.topWords, serializer);
+    sse_encode_list_char_count(self.topChars, serializer);
+  }
+
+  @protected
+  void sse_encode_u_32(int self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putUint32(self);
+  }
+
+  @protected
+  void sse_encode_u_64(BigInt self, SseSerializer serializer) {
+    // Codec=Sse (Serialization based), see doc to use other codecs
+    serializer.buffer.putBigUint64(self);
   }
 
   @protected
@@ -988,8 +1670,9 @@ class RustLibApiImpl extends RustLibApiImplPlatform implements RustLibApi {
   }
 
   @protected
-  void sse_encode_bool(bool self, SseSerializer serializer) {
+  void sse_encode_word_count(WordCount self, SseSerializer serializer) {
     // Codec=Sse (Serialization based), see doc to use other codecs
-    serializer.buffer.putUint8(self ? 1 : 0);
+    sse_encode_String(self.word, serializer);
+    sse_encode_i_64(self.count, serializer);
   }
 }
