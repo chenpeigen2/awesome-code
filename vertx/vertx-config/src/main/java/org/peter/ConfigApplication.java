@@ -24,8 +24,8 @@ public class ConfigApplication {
         Vertx vertx = Vertx.vertx();
         ConfigRetriever retriever = readYaml(vertx);
 
-        retriever.getConfig(json -> {
-//            DeploymentOptions options = new DeploymentOptions().setConfig(json.result());
+        retriever.getConfig().onSuccess(json -> {
+//            DeploymentOptions options = new DeploymentOptions().setConfig(json);
 //            vertx.deployVerticle(MainApp.class.getName(), options);
         });
         retriever.listen(new Handler<ConfigChange>() {

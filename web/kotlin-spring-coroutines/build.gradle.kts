@@ -27,6 +27,7 @@ dependencies {
     implementation(libs.reactor.core)
 
     testImplementation(libs.spring.boot.starter.test)
+    testImplementation(libs.spring.boot.starter.webmvc.test)
 }
 
 tasks.withType<KotlinCompile> {
