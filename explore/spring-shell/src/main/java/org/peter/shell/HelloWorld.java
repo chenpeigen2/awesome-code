@@ -1,63 +1,74 @@
 package org.peter.shell;
 
 import jakarta.validation.constraints.Size;
-import org.springframework.shell.standard.ShellComponent;
-import org.springframework.shell.standard.ShellMethod;
-import org.springframework.shell.standard.ShellOption;
+import org.springframework.shell.core.command.annotation.Arguments;
+import org.springframework.shell.core.command.annotation.Command;
+import org.springframework.shell.core.command.annotation.CommandGroup;
+import org.springframework.shell.core.command.annotation.Option;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@ShellComponent
+/**
+ * Spring Shell 4 的注解式命令示例。
+ *
+ * <p>4.0 起 {@code org.springframework.shell.standard} 包被移除：
+ * {@code @ShellComponent}/{@code @ShellMethod}/{@code @ShellOption} 全部废弃，
+ * 改为在普通 Spring bean 上用 {@code @Command}/{@code @Option}/{@code @Argument} 声明命令。
+ */
+@Component
+@CommandGroup(name = "hello", description = "Hello world 示例命令")
 public class HelloWorld {
 
-    @ShellMethod(key = "hello-world")
-    public String helloWorld(
-            @ShellOption(defaultValue = "spring") String arg
-    ) {
+    @Command(name = "hello-world", description = "Say hello")
+    public String helloWorld(@Option(longName = "arg", defaultValue = "spring") String arg) {
         return "Hello world " + arg;
     }
 
     // 为一个命令指定多个名称
-    @ShellMethod(value = "Add numbers.", key = {"sum", "addition"})
-    public void add(int a, int b) {
-        int sum = a + b;
-        System.out.printf("%d + %d = %d%n", a, b, sum);
+    @Command(name = "sum", alias = "addition", description = "Add numbers.")
+    public String add(@Option(longName = "a") int a, @Option(longName = "b") int b) {
+        return "%d + %d = %d".formatted(a, b, a + b);
     }
 
-    @ShellMethod("Echo params")
-    public void echo(int a, int b, @ShellOption("--third") int c) {
-        System.out.printf("a=%d, b=%d, c=%d%n", a, b, c);
+    @Command(name = "echo", description = "Echo params")
+    public String echo(@Option(longName = "a") int a,
+                       @Option(longName = "b") int b,
+                       @Option(longName = "third") int c) {
+        return "a=%d, b=%d, c=%d".formatted(a, b, c);
     }
 
     // 参数为一个数组
-    @ShellMethod("Add by array")
-    public void addByArray(@ShellOption(arity = 3) int[] numbers) {
+    @Command(name = "add-by-array", description = "Add by array")
+    public String addByArray(@Arguments(arity = 3) int[] numbers) {
         int sum = 0;
         for (int number : numbers) {
             sum += number;
         }
-        System.out.printf("sum=%d%n", sum);
+        return "sum=" + sum;
     }
 
     // 参数为集合
-    @ShellMethod("Add by list")
-    public void addByList(@ShellOption(arity = 3) List<Integer> numbers) {
+    // Spring Shell 4 对 List 的元素不做类型转换，元素按原始字符串传入，
+    // 所以这里声明为 List<String> 再自行解析。
+    @Command(name = "add-by-list", description = "Add by list")
+    public String addByList(@Arguments(arity = 3) List<String> numbers) {
         int s = 0;
-        for (int number : numbers) {
-            s += number;
+        for (String number : numbers) {
+            s += Integer.parseInt(number);
         }
-        System.out.printf("s=%d%n", s);
+        return "s=" + s;
     }
 
     // 参数为Boolean类型
-    @ShellMethod("Shutdown action")
-    public void shutdown(boolean shutdown) {
-        System.out.printf("shutdown=%s%n", shutdown);
+    @Command(name = "shutdown-app", description = "Shutdown action")
+    public String shutdown(@Option(longName = "shutdown") boolean shutdown) {
+        return "shutdown=" + shutdown;
     }
 
     // 使用@Size注解校验参数长度
-    @ShellMethod("Change password")
-    public void changePwd(@Size(min = 6, max = 30) String pwd) {
-        System.out.println(pwd);
+    @Command(name = "change-pwd", description = "Change password")
+    public String changePwd(@Option(longName = "pwd") @Size(min = 6, max = 30) String pwd) {
+        return pwd;
     }
 }

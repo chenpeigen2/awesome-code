@@ -63,8 +63,8 @@ include("kotlin:native-kotlin")
 findProject(":kotlin:native-kotlin")?.name = "native-kotlin"
 include("kotlin:coroutines-examples")
 findProject(":kotlin:coroutines-examples")?.name = "coroutines-examples"
-// include("explore:spring-shell")  // Excluded due to JDK 25 compatibility issues
-// findProject(":explore:spring-shell")?.name = "spring-shell"
+include("explore:spring-shell")
+findProject(":explore:spring-shell")?.name = "spring-shell"
 include("vertx:vertx-grpc")
 findProject(":vertx:vertx-grpc")?.name = "vertx-grpc"
 include("database:postgres")

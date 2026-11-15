@@ -1,7 +1,7 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.4.1"
-    id("io.spring.dependency-management") version "1.1.7"
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.spring.dependency.management)
 }
 
 group = "org.peter"
@@ -17,20 +17,21 @@ repositories {
     mavenCentral()
 }
 
-extra["springShellVersion"] = "3.4.0"
-
 dependencies {
     implementation("org.springframework.shell:spring-shell-starter")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation(platform("org.junit:junit-bom:5.14.2"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    developmentOnly(libs.spring.boot.devtools)
+    annotationProcessor(libs.spring.boot.configuration.processor)
+    // HelloWorld 使用 jakarta.validation.constraints.Size 校验参数
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    testImplementation(libs.spring.boot.starter.test)
+    testImplementation(platform(libs.junit.bom))
+    testImplementation(libs.junit.jupiter)
 }
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.shell:spring-shell-dependencies:${property("springShellVersion")}")
+        mavenBom("org.springframework.shell:spring-shell-dependencies:${libs.versions.spring.shell.get()}")
     }
 }
 

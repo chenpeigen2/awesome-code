@@ -37,6 +37,7 @@ vertx = "5.2.3"
 
 # ========== Spring 生态 ==========
 spring-boot = "4.1.2"
+spring-shell = "4.0.3"
 spring-dependency-management = "1.1.7"
 kotlin-plugin-spring = "2.4.21"
 jackson-module-kotlin = "3.3.0"
