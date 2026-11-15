@@ -190,7 +190,7 @@ Capacitor 混合应用示例
 - **TypeScript**: 严格模式, const 优先
 
 ### 测试框架
-- **Java/Kotlin**: JUnit 5 + Mockito
+- **Java/Kotlin**: JUnit 6 + Mockito
 - **Go**: testify + 表驱动测试
 - **Python**: pytest + pytest-asyncio
 - **TypeScript**: Vitest + Testing Library
@@ -202,14 +202,14 @@ Capacitor 混合应用示例
 | 依赖 | 版本 |
 |------|------|
 | Java | 25 |
-| Kotlin | 2.3.0 |
-| Gradle | 9.3.1 |
-| JUnit | 5.14.2 |
-| Guava | 33.5.0-jre |
-| OkHttp | 5.3.0 |
-| Vert.x | 4.5.24 |
-| gRPC | 1.78.0 |
-| Dagger | 2.59 |
+| Kotlin | 2.4.21 |
+| Gradle | 9.8.2 |
+| JUnit | 6.1.3 |
+| Guava | 33.7.2-jre |
+| OkHttp | 5.5.1 |
+| Vert.x | 5.2.2 |
+| gRPC | 1.85.1 |
+| Dagger | 2.60.1 |
 
 ---
 

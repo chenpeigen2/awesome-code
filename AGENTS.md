@@ -76,7 +76,7 @@ awesome-code/
 ./gradlew :explore:disruptor:build
 ```
 
-**Note:** Java 25 and Kotlin 2.4.20 are used. The build auto-provisions JDK 25 via the
+**Note:** Java 25 and Kotlin 2.4.21 are used. The build auto-provisions JDK 25 via the
 foojay toolchain resolver when no matching local JDK is found (see `settings.gradle.kts`).
 Some modules are excluded due to compatibility:
 - `explore:spring-shell` - JDK 25 compatibility issues
@@ -176,13 +176,13 @@ implementation(libs.bundles.grpc.all)
 | Technology | Version |
 |------------|---------|
 | Java | 25 |
-| Kotlin | 2.4.20 |
-| Gradle | 9.8.0 |
-| JUnit | 5.14.4 |
-| Guava | 33.7.1-jre |
-| OkHttp | 5.5.0 |
-| Vert.x | 4.5.34 |
-| gRPC | 1.84.0 |
+| Kotlin | 2.4.21 |
+| Gradle | 9.8.2 |
+| JUnit | 6.1.3 |
+| Guava | 33.7.2-jre |
+| OkHttp | 5.5.1 |
+| Vert.x | 5.2.2 |
+| gRPC | 1.85.1 |
 | Dagger | 2.60.1 |
 
 ## Code Style Guidelines
