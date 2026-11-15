@@ -177,7 +177,7 @@ implementation(libs.bundles.grpc.all)
 |------------|---------|
 | Java | 25 |
 | Kotlin | 2.4.21 |
-| Gradle | 9.8.2 |
+| Gradle | 9.9.1 |
 | JUnit | 6.1.3 |
 | Guava | 33.8.0-jre |
 | OkHttp | 5.5.1 |
