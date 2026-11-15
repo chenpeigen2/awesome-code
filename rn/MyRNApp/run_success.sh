@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # React Native MyRNApp 成功运行脚本
-# 支持 Linux 环境，使用 Java 17
+# 支持 Linux 环境，使用 Java 17+
 
 set -e
 
-# 使用 Java 17
+# 使用 Java 17+（RN 0.88 / AGP 9 需要 JDK 17 及以上）
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 export PATH=$JAVA_HOME/bin:$PATH
 

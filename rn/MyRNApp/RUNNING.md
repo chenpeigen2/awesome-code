@@ -7,14 +7,31 @@
 在运行此项目之前，请确保您的开发环境满足以下要求：
 
 ### 基础环境
-- Node.js (版本 >= 16)
+- Node.js (版本 >= 22.11)
 - npm 或 yarn
-- Java Development Kit (JDK)
+- Java Development Kit (JDK 17 及以上，推荐 25)
 
 ### Android 开发环境（必须）
 - Android Studio
 - Android SDK
 - ANDROID_HOME 环境变量设置
+
+## 版本基线
+
+本项目已升级到 React Native 0.88.1（新架构 + Hermes）：
+
+| 组件 | 版本 |
+|------|------|
+| React Native | 0.88.1 |
+| React | 19.3.0 |
+| Gradle | 9.4.1 |
+| Android Gradle Plugin | 9.x（由 RN Gradle Plugin 指定） |
+| Kotlin | 2.2.0 |
+| compileSdk / targetSdk | 37 / 36 |
+| minSdk | 24 |
+| NDK | 27.1.12297006 |
+
+首次构建时 Gradle 会自动下载匹配的 NDK。
 
 ## 环境检查
 
