@@ -179,9 +179,9 @@ implementation(libs.bundles.grpc.all)
 | Kotlin | 2.4.21 |
 | Gradle | 9.8.2 |
 | JUnit | 6.1.3 |
-| Guava | 33.7.2-jre |
+| Guava | 33.8.0-jre |
 | OkHttp | 5.5.1 |
-| Vert.x | 5.2.2 |
+| Vert.x | 5.2.3 |
 | gRPC | 1.85.1 |
 | Dagger | 2.60.1 |
 
