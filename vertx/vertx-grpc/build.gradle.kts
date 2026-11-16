@@ -17,6 +17,7 @@ repositories {
 dependencies {
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
     implementation(libs.grpc.protobuf)
     implementation(libs.grpc.stub)
     compileOnly(libs.tomcat.annotations)
@@ -59,4 +60,14 @@ sourceSets {
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
+
+tasks.register<JavaExec>("demo") {
+    group = "application"
+    description = "启动 Vert.x gRPC 服务端并调用一次"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("org.peter.vertx.grpc.GreeterDemo")
 }
