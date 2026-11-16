@@ -15,8 +15,6 @@ include("time:chrono")
 findProject(":time:chrono")?.name = "chrono"
 include("reflect:anno")
 findProject(":reflect:anno")?.name = "anno"
-include("asm:poet")
-findProject(":asm:poet")?.name = "poet"
 include("json:gson")
 findProject(":json:gson")?.name = "gson"
 include("http:okhttp")
@@ -24,14 +22,19 @@ findProject(":http:okhttp")?.name = "okhttp"
 include("groovy")
 include("compile:apt")
 findProject(":compile:apt")?.name = "apt"
+include("compile:apt-processor")
+findProject(":compile:apt-processor")?.name = "apt-processor"
+include("compile:inmemory")
+findProject(":compile:inmemory")?.name = "inmemory"
 include("rxjava3")
 include("pref")
 include("io:okio")
 findProject(":io:okio")?.name = "okio"
-include("asm:core")
-findProject(":asm:core")?.name = "core"
-include("asm:model")
-findProject(":asm:model")?.name = "model"
+// ASM 字节码操作：:asm:basics（Core API）/ :asm:tree（Tree API）/ :asm:transform（转换）/ :asm:poet（源码生成）
+include("asm:basics")
+include("asm:tree")
+include("asm:transform")
+include("asm:poet")
 include("database:couchdb")
 findProject(":database:couchdb")?.name = "couchdb"
 include("database:mongodb")

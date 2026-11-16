@@ -74,10 +74,10 @@ awesome-code/
 │   ├── graphQL/             # GraphQL
 │   └── ...                  # 更多框架
 │
-├── asm/                     # ASM 字节码操作
+├── asm/                     # ASM 字节码操作 (basics/tree/transform/poet)
 ├── auto/                    # AutoValue
 ├── spi/                     # SPI 服务提供者
-├── compile/                 # 编译时注解处理
+├── compile/                 # 注解处理器 (apt/apt-processor) / 内存编译
 ├── rxjava3/                 # RxJava3 响应式
 ├── json/                    # JSON 处理 (Gson)
 ├── http/                    # HTTP 客户端 (OkHttp)
