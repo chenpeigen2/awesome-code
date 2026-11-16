@@ -113,7 +113,6 @@ logback = "1.6.7"
 kotlinx-serialization = "2.4.21"
 
 # ========== Groovy ==========
-groovy = "6.0.0"
 
 # ========== 文档生成 ==========
 dokka = "2.3.0"
@@ -259,7 +258,6 @@ ktor-server-test-host = { module = "io.ktor:ktor-server-test-host", version.ref 
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 # ========== Groovy ==========
-groovy-all = { module = "org.apache.groovy:groovy-all", version.ref = "groovy" }
 
 [plugins]
 # ========== Kotlin ==========
