@@ -154,6 +154,7 @@ grpc-protoc-gen = { module = "io.grpc:protoc-gen-grpc-java", version.ref = "grpc
 
 # ========== Square 生态 ==========
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+mockwebserver3 = { module = "com.squareup.okhttp3:mockwebserver3", version.ref = "okhttp" }
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 
