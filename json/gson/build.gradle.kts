@@ -15,6 +15,7 @@ repositories {
 dependencies {
     implementation(platform(libs.junit.bom))
     testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
     implementation(libs.gson)
     implementation(libs.json.org)
     implementation(libs.error.prone.core)
@@ -22,4 +23,7 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }
