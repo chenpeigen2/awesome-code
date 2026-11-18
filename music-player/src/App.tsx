@@ -39,7 +39,7 @@ function App() {
     audioManager.onError((error) => {
       console.error('Audio error:', error)
     })
-  }, [])
+  }, [setIsPlaying, playNext, setCurrentTime, setDuration])
 
   useEffect(() => {
     audioManager.setVolume(volume)
@@ -49,8 +49,10 @@ function App() {
     if (currentTrack) {
       console.log('Current track changed:', currentTrack.title)
       audioManager.load(currentTrack).then(() => {
-        console.log('Track loaded, isPlaying:', isPlaying)
-        if (isPlaying) {
+        // 读 store 的最新状态，避免把 isPlaying 放进依赖导致切歌时重复加载
+        const playing = usePlayerStore.getState().isPlaying
+        console.log('Track loaded, isPlaying:', playing)
+        if (playing) {
           audioManager.play()
         }
       }).catch(err => {

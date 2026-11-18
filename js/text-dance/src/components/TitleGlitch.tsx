@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useMatrix } from '../contexts/MatrixContext';
 
 const TITLES: string[] = [
@@ -18,10 +18,17 @@ export default function TitleGlitch() {
   const [visible, setVisible] = useState(true);
   const [idx, setIdx] = useState(0);
 
+  // 切换标题时同步清空已打出的文字：用 React 官方的「渲染期调整 state」写法，
+  // 而不是放在 effect 里同步 setState
+  const [prevIdx, setPrevIdx] = useState(idx);
+  if (idx !== prevIdx) {
+    setPrevIdx(idx);
+    setText('');
+  }
+
   useEffect(() => {
     const target = TITLES[idx];
     let i = 0;
-    setText('');
     const iv = setInterval(() => {
       i++;
       setText(target.slice(0, i));
@@ -39,10 +46,28 @@ export default function TitleGlitch() {
     return () => clearInterval(iv);
   }, [idx]);
 
-  const getDisplayChar = useCallback((char: string): string => {
-    if (Math.random() < 0.02) return GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)];
-    return char;
-  }, []);
+  // 故障效果依赖随机数，但随机必须在 effect 里产生：渲染期调用随机函数
+  // 会让每次渲染输出不同，并发渲染下可能出现不一致
+  const [glitchCells, setGlitchCells] = useState<{ char: string; transform: string }[]>([]);
+
+  useEffect(() => {
+    const rollGlitch = () => {
+      setGlitchCells(
+        text.split('').map(ch => ({
+          char: Math.random() < 0.02
+            ? GLITCH_CHARS[Math.floor(Math.random() * GLITCH_CHARS.length)]
+            : ch,
+          transform: Math.random() < 0.03
+            ? `translateY(${(Math.random() - 0.5) * 8}px)`
+            : 'none',
+        })),
+      );
+    };
+
+    rollGlitch();
+    const iv = setInterval(rollGlitch, 100);
+    return () => clearInterval(iv);
+  }, [text]);
 
   return (
     <div style={{
@@ -68,12 +93,12 @@ export default function TitleGlitch() {
         textShadow: `0 0 40px ${theme.primary}40`,
         whiteSpace: 'nowrap',
       }}>
-        {text.split('').map((ch, i) => (
+        {glitchCells.map((cell, i) => (
           <span key={i} style={{
             display: 'inline-block',
-            transform: Math.random() < 0.03 ? `translateY(${(Math.random() - 0.5) * 8}px)` : 'none',
+            transform: cell.transform,
           }}>
-            {getDisplayChar(ch)}
+            {cell.char}
           </span>
         ))}
       </span>

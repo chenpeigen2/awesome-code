@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { 
   Play, 
   Pause, 
@@ -27,31 +27,29 @@ function formatDuration(seconds: number): string {
 }
 
 export default function MainContent() {
-  const { tracks, currentView, searchQuery, setSearchQuery, setTracks, toggleLike, isLiked, getLikedTracks, likedTrackIds } = useLibraryStore()
+  const { tracks, currentView, searchQuery, setSearchQuery, setTracks, toggleLike, isLiked, likedTrackIds } = useLibraryStore()
   const { currentTrack, isPlaying, setCurrentTrack, setIsPlaying, setQueue, setQueueIndex } = usePlayerStore()
-  const [tracksArray, setTracksArray] = useState<Track[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [statusMessage, setStatusMessage] = useState<string | null>(null)
 
-  useEffect(() => {
-    let arr: Track[]
-    
-    if (currentView === 'favorites') {
-      arr = getLikedTracks()
-    } else {
-      arr = Array.from(tracks.values())
-    }
-    
-    if (searchQuery) {
-      const filtered = arr.filter(track => 
-        track.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        track.artist.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        track.album.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      setTracksArray(filtered)
-    } else {
-      setTracksArray(arr)
-    }
+  // 列表内容完全由 store 与搜索词派生，渲染期计算即可
+  const tracksArray = useMemo<Track[]>(() => {
+    const arr: Track[] =
+      currentView === 'favorites'
+        ? Array.from(likedTrackIds)
+            .map(id => tracks.get(id))
+            .filter((track): track is Track => Boolean(track))
+        : Array.from(tracks.values())
+
+    if (!searchQuery) return arr
+
+    const keyword = searchQuery.toLowerCase()
+    return arr.filter(
+      track =>
+        track.title.toLowerCase().includes(keyword) ||
+        track.artist.toLowerCase().includes(keyword) ||
+        track.album.toLowerCase().includes(keyword),
+    )
   }, [tracks, searchQuery, currentView, likedTrackIds])
 
   const groupedByArtist = useMemo(() => {

@@ -2,9 +2,13 @@ import { useRef, useEffect } from 'react';
 
 export function useAnimationLoop(onFrame: (dt: number) => void): void {
   const rafRef = useRef<number>(0);
-  const lastTimeRef = useRef(performance.now());
+  const lastTimeRef = useRef(0);
   const callbackRef = useRef(onFrame);
-  callbackRef.current = onFrame;
+
+  // 渲染期不写 ref，交给 effect 保证动画循环拿到的是最新的回调
+  useEffect(() => {
+    callbackRef.current = onFrame;
+  }, [onFrame]);
 
   useEffect(() => {
     lastTimeRef.current = performance.now();

@@ -14,12 +14,16 @@ export default function MatrixCanvas() {
   } = useMatrixRain();
 
   // Keep latest values in refs for the stable animation loop
+  // ref 的写入放在 effect 里，渲染期只读取，避免并发渲染下的不一致
   const stateRef = useRef(state);
-  stateRef.current = state;
   const themeRef = useRef(themeConfig());
-  themeRef.current = themeConfig();
   const setStatsRef = useRef(setStats);
-  setStatsRef.current = setStats;
+
+  useEffect(() => {
+    stateRef.current = state;
+    themeRef.current = themeConfig();
+    setStatsRef.current = setStats;
+  });
 
   const fpsRef = useRef<FpsTracker>({ count: 0, time: 0, value: 0 });
   const glitchRef = useRef<GlitchState>({ active: false, timer: 0, x: 0, w: 0 });
@@ -76,9 +80,12 @@ export default function MatrixCanvas() {
         fpsRef.current.count = 0;
         fpsRef.current.time = 0;
         fpsRef.current.value = fps;
-        const totalChars = columnsRef.current.reduce((sum, c) => sum + c.chars.length, 0)
-          + userColumnsRef.current.reduce((sum, c) => sum + c.chars.length, 0);
-        setStatsRef.current({ fps, columns: columnsRef.current.length, chars: totalChars });
+        // 读 ref 的当前值（每帧都是最新的），用局部变量承接便于阅读
+        const cols = columnsRef.current;
+        const userCols = userColumnsRef.current;
+        const totalChars = cols.reduce((sum, c) => sum + c.chars.length, 0)
+          + userCols.reduce((sum, c) => sum + c.chars.length, 0);
+        setStatsRef.current({ fps, columns: cols.length, chars: totalChars });
       }
 
       // Update entities (mode doesn't matter for update, columns manage their own reset)
@@ -147,7 +154,7 @@ export default function MatrixCanvas() {
 
     rafRef.current = requestAnimationFrame(loop);
     return () => cancelAnimationFrame(rafRef.current);
-  }, []);
+  }, [columnsRef, userColumnsRef, ripplesRef]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { parseLrc, getCurrentLyric, LyricsLine } from '@/utils/lyrics'
 import { usePlayerStore } from '@/stores'
 import './Lyrics.css'
@@ -11,41 +11,40 @@ interface LyricsProps {
 
 export default function Lyrics({ lyricsContent, currentTime, isWindow = false }: LyricsProps) {
   const { currentTrack, currentTime: playerTime } = usePlayerStore()
-  const [lyrics, setLyrics] = useState<LyricsLine[]>([])
-  const [currentLineIndex, setCurrentLineIndex] = useState(-1)
+  // 直接传入歌词内容时在渲染期解析；只有异步读取 .lrc 文件的结果才需要存 state
+  const [fetchedLyrics, setFetchedLyrics] = useState<LyricsLine[]>([])
   const containerRef = useRef<HTMLDivElement>(null)
 
   const time = currentTime ?? playerTime
 
+  const lyrics = useMemo(
+    () => (lyricsContent ? parseLrc(lyricsContent) : fetchedLyrics),
+    [lyricsContent, fetchedLyrics],
+  )
+
   useEffect(() => {
-    if (lyricsContent) {
-      const parsed = parseLrc(lyricsContent)
-      setLyrics(parsed)
-    } else if (currentTrack) {
-      const lrcPath = currentTrack.path.replace(/\.[^/.]+$/, '.lrc')
-      fetch(`file://${lrcPath}`)
-        .then(res => res.text())
-        .then(text => {
-          const parsed = parseLrc(text)
-          setLyrics(parsed)
-        })
-        .catch(() => {
-          setLyrics([])
-        })
-    }
+    if (lyricsContent || !currentTrack) return
+
+    const lrcPath = currentTrack.path.replace(/\.[^/.]+$/, '.lrc')
+    fetch(`file://${lrcPath}`)
+      .then(res => res.text())
+      .then(text => {
+        setFetchedLyrics(parseLrc(text))
+      })
+      .catch(() => {
+        setFetchedLyrics([])
+      })
   }, [lyricsContent, currentTrack])
 
-  useEffect(() => {
-    if (lyrics.length === 0) return
+  // 当前高亮行由播放时间直接派生，避免在 effect 里同步 setState
+  const currentLineIndex = useMemo(() => {
+    if (lyrics.length === 0) return -1
 
     const current = getCurrentLyric(lyrics, time)
-    if (current) {
-      const index = lyrics.findIndex(l => l.time === current?.time)
-      if (index !== currentLineIndex) {
-        setCurrentLineIndex(index)
-      }
-    }
-  }, [time, lyrics])
+    if (!current) return -1
+
+    return lyrics.findIndex(l => l.time === current.time)
+  }, [lyrics, time])
 
   useEffect(() => {
     if (containerRef.current && currentLineIndex >= 0) {

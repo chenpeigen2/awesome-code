@@ -12,6 +12,11 @@ Object.defineProperty(window, 'localStorage', {
   writable: true,
 })
 
+// jsdom 不实现 Element.scrollTo，歌词组件滚动时需要它
+if (typeof Element.prototype.scrollTo !== 'function') {
+  Element.prototype.scrollTo = vi.fn()
+}
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation(query => ({

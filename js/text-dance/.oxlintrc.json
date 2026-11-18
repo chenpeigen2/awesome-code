@@ -18,16 +18,12 @@
   ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "off",
-    "react/set-state-in-effect": "off",
     "typescript/no-explicit-any": "off",
     "no-unused-vars": [
       "error",
       {
         "varsIgnorePattern": "^[A-Z_]"
       }
-    ],
-    "react/purity": "off",
-    "react/refs": "off"
+    ]
   }
 }

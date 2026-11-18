@@ -27,10 +27,14 @@ export default function OnlineMusic() {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [downloadTasks, setDownloadTasks] = useState<DownloadTask[]>([])
+  const [downloadTasks, setDownloadTasks] = useState<DownloadTask[]>(() => [
+    ...downloadManager.getAllTasks(),
+  ])
   const [activeTab, setActiveTab] = useState<'search' | 'downloads'>('search')
   const [showSettings, setShowSettings] = useState(false)
-  const [downloadPath, setDownloadPath] = useState('')
+  const [downloadPath, setDownloadPath] = useState(
+    () => downloadManager.getSettings().downloadPath || '',
+  )
   
   const { currentTrack, isPlaying, setCurrentTrack, setIsPlaying } = usePlayerStore()
 
@@ -39,12 +43,8 @@ export default function OnlineMusic() {
   }, [])
 
   useEffect(() => {
-    const settings = downloadManager.getSettings()
-    setDownloadPath(settings.downloadPath || '')
-    
     downloadManager.init()
-    updateTasks()
-    
+
     const unsubscribe = downloadManager.onTaskUpdate(updateTasks)
     
     audioManager.onPlay(() => {
