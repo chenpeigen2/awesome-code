@@ -128,6 +128,16 @@ bun run index.ts
 bun test
 ```
 
+### Linting (TypeScript projects)
+
+TypeScript 项目统一用 **oxlint**（不是 ESLint）——TypeScript 7 的原生编译器不再暴露
+JS API，typescript-eslint 无法工作，oxlint 不依赖它：
+
+```bash
+npx oxlint .        # 配置在 .oxlintrc.json
+npx tsc --noEmit    # TypeScript 7 原生编译器
+```
+
 ### Electron Apps (music-player)
 
 ```bash
@@ -151,6 +161,22 @@ npm run test
 npm run test:watch
 npm run test:coverage
 ```
+
+## Continuous Integration
+
+`.github/workflows/ci.yml` 在每次 push / PR 上跑五个生态，全部命令都与本地一致：
+
+| Job | 内容 |
+|-----|------|
+| `js-npm` | music-player、js/text-dance 的 lint / build（music-player 另跑测试） |
+| `js-bun` | js/openrouter-models、js/bun-demo |
+| `python` | py-imageviewer 的 pytest / ruff / mypy，python 工作区的 ruff |
+| `flutter` | 三个 Flutter 工程的 `flutter test` 与 `flutter analyze` |
+| `java` | `./gradlew build`（55 个模块） |
+| `rust` | 三个 Rust 工程的 `cargo check` |
+
+改动后本地先跑一遍对应命令再提交；Linux 上还需要 PyQt6 的 GL/X11 运行库
+和 Tauri 的 webkit2gtk，这些已在工作流里装好。
 
 ## Dependencies Management
 

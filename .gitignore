@@ -114,3 +114,6 @@ logs/
 
 # Kotlin 构建会话缓存
 .kotlin/
+
+# 测试覆盖率报告
+coverage/
