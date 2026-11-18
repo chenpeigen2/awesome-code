@@ -2,13 +2,13 @@
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from typing import Any
 
 from imageviewer.core.models import ImageItem, SearchResult
 
 
-class ImageSize(str, Enum):
+class ImageSize(StrEnum):
     ANY = ""
     LARGE = "large"
     MEDIUM = "medium"
@@ -16,7 +16,7 @@ class ImageSize(str, Enum):
     ICON = "icon"
 
 
-class ImageColor(str, Enum):
+class ImageColor(StrEnum):
     ANY = ""
     COLOR = "color"
     BLACK_WHITE = "blackandwhite"
@@ -31,7 +31,7 @@ class ImageColor(str, Enum):
     BLACK = "black"
 
 
-class ImageType(str, Enum):
+class ImageType(StrEnum):
     ANY = ""
     PHOTO = "photo"
     CLIPART = "clipart"
@@ -39,14 +39,14 @@ class ImageType(str, Enum):
     ANIMATED = "animated"
 
 
-class ImageLayout(str, Enum):
+class ImageLayout(StrEnum):
     ANY = ""
     HORIZONTAL = "horizontal"
     VERTICAL = "vertical"
     SQUARE = "square"
 
 
-class SafeSearch(str, Enum):
+class SafeSearch(StrEnum):
     OFF = "off"
     MODERATE = "moderate"
     STRICT = "strict"
@@ -100,7 +100,8 @@ class BaseSearchService(ABC):
         pass
 
     async def close(self) -> None:
-        pass
+        """默认没有需要释放的资源；持有会话的子类可覆写。"""
+        return None
 
     async def __aenter__(self) -> "BaseSearchService":
         return self

@@ -1,6 +1,5 @@
 """Tests for base search service."""
 
-import pytest
 
 from imageviewer.services.base_search_service import (
     ImageColor,

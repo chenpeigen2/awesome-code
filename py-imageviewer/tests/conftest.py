@@ -1,8 +1,8 @@
 """Test configuration and fixtures."""
 
 import sys
+from collections.abc import Generator
 from pathlib import Path
-from typing import Generator
 
 import pytest
 from PyQt6.QtWidgets import QApplication

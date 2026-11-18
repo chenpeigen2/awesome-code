@@ -3,7 +3,12 @@
 import pytest
 
 from imageviewer.core.exceptions import APIKeyError
-from imageviewer.services.base_search_service import ImageColor, ImageSize, SafeSearch, SearchFilters
+from imageviewer.services.base_search_service import (
+    ImageColor,
+    ImageSize,
+    SafeSearch,
+    SearchFilters,
+)
 from imageviewer.services.google_service import GoogleImageService
 
 

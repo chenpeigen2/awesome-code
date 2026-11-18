@@ -2,7 +2,6 @@
 
 from pathlib import Path
 
-from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
     QDialog,
     QDialogButtonBox,
@@ -129,10 +128,8 @@ class SettingsDialog(QDialog):
         self._collections_dir.setText(settings.collections_dir)
 
     def _save_settings(self) -> None:
-        import os
         from imageviewer.utils.config import reset_settings
         env_path = Path(__file__).parent.parent.parent.parent.parent / ".env"
-        lines = []
         existing = {}
         if env_path.exists():
             with open(env_path, encoding="utf-8") as f:

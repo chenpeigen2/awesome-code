@@ -2,8 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-
 from imageviewer.core.models import ImageItem, ImageSource
 from imageviewer.services.collection_service import CollectionService, ImageCollection
 

@@ -1,11 +1,11 @@
 """Collection management service for saving and organizing images."""
 
 import json
+import shutil
 import zipfile
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-import shutil
 
 from imageviewer.core.models import ImageItem
 from imageviewer.utils.config import get_settings

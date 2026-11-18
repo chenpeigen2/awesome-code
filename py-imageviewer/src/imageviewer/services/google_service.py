@@ -1,12 +1,11 @@
 """Google Custom Search API service for image search."""
 
-import asyncio
 from datetime import datetime
 from typing import Any
 
 import httpx
 
-from imageviewer.core.exceptions import APIError, APIKeyError, APIRateLimitError, APINetworkError
+from imageviewer.core.exceptions import APIError, APIKeyError, APINetworkError, APIRateLimitError
 from imageviewer.core.models import ImageItem, ImageSource, SearchResult
 from imageviewer.services.base_search_service import BaseSearchService, SearchFilters
 from imageviewer.utils.config import get_settings

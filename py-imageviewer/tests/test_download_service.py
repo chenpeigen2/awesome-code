@@ -1,6 +1,5 @@
 """Tests for download service."""
 
-from pathlib import Path
 
 import pytest
 

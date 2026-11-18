@@ -2,18 +2,18 @@
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 
 from pydantic import BaseModel, Field
 
 
-class ImageSource(str, Enum):
+class ImageSource(StrEnum):
     LOCAL = "local"
     ONLINE = "online"
 
 
-class ImageFormat(str, Enum):
+class ImageFormat(StrEnum):
     JPEG = "jpeg"
     PNG = "png"
     GIF = "gif"
@@ -91,12 +91,12 @@ class DownloadTask(BaseModel):
     completed_at: datetime | None = None
 
 
-class ViewMode(str, Enum):
+class ViewMode(StrEnum):
     LOCAL = "local"
     ONLINE = "online"
 
 
-class SortOrder(str, Enum):
+class SortOrder(StrEnum):
     NAME_ASC = "name_asc"
     NAME_DESC = "name_desc"
     DATE_ASC = "date_asc"

@@ -8,13 +8,11 @@ from PIL import Image
 from PyQt6.QtCore import QSize, Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QAction, QIcon, QPixmap
 from PyQt6.QtWidgets import (
-    QCheckBox,
     QComboBox,
     QDialog,
     QDialogButtonBox,
     QFileDialog,
     QFormLayout,
-    QGridLayout,
     QHBoxLayout,
     QLabel,
     QLineEdit,
@@ -24,7 +22,6 @@ from PyQt6.QtWidgets import (
     QMessageBox,
     QProgressBar,
     QPushButton,
-    QScrollArea,
     QSpinBox,
     QTabWidget,
     QVBoxLayout,

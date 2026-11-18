@@ -2,9 +2,6 @@
 
 from pathlib import Path
 
-import pytest
-from PIL import Image
-
 from imageviewer.core.models import ImageFormat, ImageTransform
 from imageviewer.utils.image_utils import (
     apply_transform,

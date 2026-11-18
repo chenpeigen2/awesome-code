@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from imageviewer.core.exceptions import FileNotFoundError as ImageViewerFileNotFoundError
 from imageviewer.core.models import SortOrder
 from imageviewer.services.local_service import LocalFileService
 
@@ -20,7 +21,7 @@ class TestLocalFileService:
 
     def test_set_invalid_directory(self):
         service = LocalFileService()
-        with pytest.raises(Exception):
+        with pytest.raises(ImageViewerFileNotFoundError):
             service.set_directory(Path("/nonexistent/path"))
 
     def test_scan_images(self, temp_image_dir: Path):

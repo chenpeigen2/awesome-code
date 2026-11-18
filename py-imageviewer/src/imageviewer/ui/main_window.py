@@ -22,9 +22,9 @@ from PyQt6.QtWidgets import (
 
 from imageviewer.core.models import ImageItem, ViewMode
 from imageviewer.services.download_service import DownloadService
+from imageviewer.ui.enhanced_online_viewer import EnhancedOnlineViewerPanel
 from imageviewer.ui.image_viewer import ImageViewerWidget
 from imageviewer.ui.local_viewer import LocalViewerPanel
-from imageviewer.ui.enhanced_online_viewer import EnhancedOnlineViewerPanel
 from imageviewer.utils.config import get_settings
 from imageviewer.utils.logger import get_logger
 
