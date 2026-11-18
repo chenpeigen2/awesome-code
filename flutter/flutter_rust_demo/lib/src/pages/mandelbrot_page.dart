@@ -163,6 +163,10 @@ class _MandelbrotPageState extends State<MandelbrotPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                if (_error != null) ...[
+                  _buildErrorBanner(colorScheme),
+                  const SizedBox(height: 16),
+                ],
                 _buildCanvas(canvasSize),
                 const SizedBox(height: 16),
                 _buildPresets(),
@@ -174,6 +178,30 @@ class _MandelbrotPageState extends State<MandelbrotPage> {
             ),
           );
         },
+      ),
+    );
+  }
+
+  /// 渲染失败时给出可见提示，而不是把错误吞掉
+  Widget _buildErrorBanner(ColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: colorScheme.errorContainer,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.error_outline, color: colorScheme.onErrorContainer, size: 18),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              '渲染失败: $_error',
+              style: TextStyle(color: colorScheme.onErrorContainer, fontSize: 12),
+            ),
+          ),
+        ],
       ),
     );
   }
