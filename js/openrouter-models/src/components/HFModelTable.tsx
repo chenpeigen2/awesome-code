@@ -1,5 +1,5 @@
 import type { HFModel } from "../types/huggingface";
-import { formatNumber } from "./HFStatsBar";
+import { formatNumber } from "../utils/format";
 
 interface HFModelTableProps {
   models: HFModel[];

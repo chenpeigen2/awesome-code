@@ -1,5 +1,5 @@
 import type { Model } from "../types/model";
-import { formatPrice, formatContext, formatDate } from "./StatsBar";
+import { formatPrice, formatContext, formatDate } from "../utils/format";
 
 interface ModelTableProps {
   models: Model[];

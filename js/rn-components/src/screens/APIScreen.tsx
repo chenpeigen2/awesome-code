@@ -11,7 +11,10 @@ import {
 import { ScreenWrapper } from '../components/ScreenWrapper';
 
 export const APIScreen = () => {
-  const [appState, setAppState] = useState<AppStateStatus>(AppState.currentState);
+  // RN 0.88 的 AppState.currentState 类型退化为 string，这里收窄回 AppStateStatus
+  const [appState, setAppState] = useState<AppStateStatus | undefined>(
+    AppState.currentState as AppStateStatus | undefined,
+  );
 
   useEffect(() => {
     const sub = AppState.addEventListener('change', setAppState);

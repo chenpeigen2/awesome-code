@@ -4,7 +4,7 @@
  * Bun 内置了多种哈希算法，无需安装 crypto 模块。
  * 支持: MD5, SHA-1, SHA-256, SHA-512 等。
  */
-import { hash, CRC32 } from "bun";
+import { hash } from "bun";
 
 export async function demoHash() {
   const data = "Hello, Bun!";
