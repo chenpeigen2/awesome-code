@@ -7,14 +7,14 @@
 这是一个使用 **Electron + React + TypeScript** 构建的桌面音乐播放器应用。
 
 ### 核心技术栈
-- **前端框架**: React 19 + TypeScript 6
+- **前端框架**: React 19 + TypeScript 7
 - **桌面框架**: Electron 45
 - **构建工具**: Vite 8
 - **状态管理**: Zustand 5 (带 persist 中间件)
 - **UI 图标**: Lucide React 1.x
 - **音频播放**: HTML5 Audio API (通过自定义 AudioManager 封装)
 - **测试框架**: Vitest 5 + Testing Library
-- **代码检查**: ESLint 10 (flat config, `eslint.config.mjs`)
+- **代码检查**: oxlint 1.x (配置 `.oxlintrc.json`)
 
 ### 主要功能
 - 本地音乐文件播放 (支持 mp3, flac, wav, aac, ogg, ape 格式)
@@ -58,7 +58,7 @@ music-player/
 ├── vite.config.ts          # Vite 配置
 ├── vitest.config.mts       # Vitest 测试配置
 ├── vite.config.mts         # Vite 构建配置
-├── eslint.config.mjs       # ESLint flat config
+├── .oxlintrc.json          # oxlint 配置
 ├── tsconfig.json           # TypeScript 配置
 └── package.json            # 项目依赖和脚本
 ```
