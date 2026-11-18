@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      '@': path.resolve(import.meta.dirname, './src'),
     },
   },
   base: './',
@@ -15,8 +15,8 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'index.html'),
-        lyrics: path.resolve(__dirname, 'lyrics.html'),
+        main: path.resolve(import.meta.dirname, 'index.html'),
+        lyrics: path.resolve(import.meta.dirname, 'lyrics.html'),
       },
     },
   },

@@ -138,7 +138,7 @@ describe('DownloadManager', () => {
   describe('clearCompleted', () => {
     it('should remove only completed tasks', () => {
       const task1 = downloadManager.addTask(mockSearchResult)
-      const task2 = downloadManager.addTask({ ...mockSearchResult, id: 'search-2' })
+      downloadManager.addTask({ ...mockSearchResult, id: 'search-2' })
       
       const tasks = downloadManager.getAllTasks()
       const t1 = tasks.find(t => t.id === task1.id)
@@ -361,23 +361,8 @@ describe('DownloadManager', () => {
 
   describe('loadTasks', () => {
     it('should handle saved tasks in localStorage', () => {
-      const savedTasks = [
-        {
-          id: 'saved-task-1',
-          searchResult: mockSearchResult,
-          status: 'completed',
-          progress: 100,
-          downloadedBytes: 1000,
-          totalBytes: 1000,
-          speed: 0,
-          savePath: 'C:\\Downloads',
-          startTime: new Date().toISOString(),
-          endTime: new Date().toISOString(),
-        },
-      ]
-      
       downloadManager.updateSettings({ downloadPath: 'C:\\Downloads' })
-      const task = downloadManager.addTask(mockSearchResult)
+      downloadManager.addTask(mockSearchResult)
       const tasks = downloadManager.getAllTasks()
       expect(tasks.length).toBe(1)
     })

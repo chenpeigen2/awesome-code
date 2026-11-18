@@ -38,9 +38,9 @@ describe('Integration Tests', () => {
       const { usePlayerStore, useLibraryStore } = await import('@/stores')
       
       const tracks = [
-        { id: 'queue-1', path: '/path/1.mp3', title: 'Song 1', artist: 'Artist 1', duration: 180 },
-        { id: 'queue-2', path: '/path/2.mp3', title: 'Song 2', artist: 'Artist 2', duration: 200 },
-        { id: 'queue-3', path: '/path/3.mp3', title: 'Song 3', artist: 'Artist 3', duration: 220 },
+        { id: 'queue-1', path: '/path/1.mp3', title: 'Song 1', artist: 'Artist 1', album: 'Album 1', duration: 180 },
+        { id: 'queue-2', path: '/path/2.mp3', title: 'Song 2', artist: 'Artist 2', album: 'Album 2', duration: 200 },
+        { id: 'queue-3', path: '/path/3.mp3', title: 'Song 3', artist: 'Artist 3', album: 'Album 3', duration: 220 },
       ]
 
       act(() => {
@@ -80,6 +80,7 @@ describe('Integration Tests', () => {
         path: '/path/to/liked.mp3',
         title: 'Liked Song',
         artist: 'Artist',
+        album: 'Album',
         duration: 180,
       }
 
@@ -307,10 +308,11 @@ describe('Integration Tests', () => {
         path: '/path/to/audio.mp3',
         title: 'Audio Test',
         artist: 'Test Artist',
+        album: 'Test Album',
         duration: 180,
       }
 
-      const loadPromise = audioManager.load(track)
+      void audioManager.load(track)
       
       await waitFor(() => {
         expect(audioManager.getCurrentTrack()).toEqual(track)

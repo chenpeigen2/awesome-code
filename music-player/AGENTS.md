@@ -7,13 +7,14 @@
 这是一个使用 **Electron + React + TypeScript** 构建的桌面音乐播放器应用。
 
 ### 核心技术栈
-- **前端框架**: React 18 + TypeScript
-- **桌面框架**: Electron 28
-- **构建工具**: Vite 5
-- **状态管理**: Zustand (带 persist 中间件)
-- **UI 图标**: Lucide React
+- **前端框架**: React 19 + TypeScript 6
+- **桌面框架**: Electron 45
+- **构建工具**: Vite 8
+- **状态管理**: Zustand 5 (带 persist 中间件)
+- **UI 图标**: Lucide React 1.x
 - **音频播放**: HTML5 Audio API (通过自定义 AudioManager 封装)
-- **测试框架**: Vitest + Testing Library
+- **测试框架**: Vitest 5 + Testing Library
+- **代码检查**: ESLint 10 (flat config, `eslint.config.mjs`)
 
 ### 主要功能
 - 本地音乐文件播放 (支持 mp3, flac, wav, aac, ogg, ape 格式)
@@ -55,7 +56,9 @@ music-player/
 ├── index.html              # 主窗口 HTML
 ├── lyrics.html             # 歌词窗口 HTML
 ├── vite.config.ts          # Vite 配置
-├── vitest.config.ts        # Vitest 测试配置
+├── vitest.config.mts       # Vitest 测试配置
+├── vite.config.mts         # Vite 构建配置
+├── eslint.config.mjs       # ESLint flat config
 ├── tsconfig.json           # TypeScript 配置
 └── package.json            # 项目依赖和脚本
 ```
@@ -224,7 +227,8 @@ describe('PlayerBar', () => {
 - 歌词窗口: 透明、始终置顶、可调整大小
 
 ### 数据持久化
-- 使用 Zustand persist 中间件 + localStorage
+- 使用 Zustand 5 persist 中间件 + localStorage
+- Zustand 5 已移除 `persist` 的 `serialize`/`deserialize` 选项，Map/Set 状态改用 `partialize` 转数组、`merge` 还原
 - 持久化内容: 音乐库、播放列表、用户设置、收藏列表
 
 ## 注意事项

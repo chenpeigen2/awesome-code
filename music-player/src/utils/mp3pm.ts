@@ -56,7 +56,7 @@ async function fetchHtml(url: string): Promise<string> {
     } catch (error: any) {
       clearTimeout(timeoutId)
       if (error.name === 'AbortError') {
-        throw new Error('请求超时，请检查网络连接')
+        throw new Error('请求超时，请检查网络连接', { cause: error })
       }
       throw error
     }
@@ -127,12 +127,6 @@ function parseHtmlTracks(html: string): ParsedTrack[] {
   return tracks
 }
 
-function formatSeconds(seconds: number): string {
-  const mins = Math.floor(seconds / 60)
-  const secs = Math.floor(seconds % 60)
-  return `${mins}:${secs.toString().padStart(2, '0')}`
-}
-
 export async function searchTracks(query: string): Promise<SearchResult[]> {
   if (!query.trim()) {
     return []
@@ -157,7 +151,7 @@ export async function searchTracks(query: string): Promise<SearchResult[]> {
     }))
   } catch (error: any) {
     console.error('Search error:', error)
-    throw new Error(`搜索失败: ${error.message || '网络错误'}`)
+    throw new Error(`搜索失败: ${error.message || '网络错误'}`, { cause: error })
   }
 }
 
@@ -175,7 +169,7 @@ export async function getPopularTracks(): Promise<SearchResult[]> {
     }))
   } catch (error: any) {
     console.error('Get popular tracks error:', error)
-    throw new Error(`获取热门歌曲失败: ${error.message || '网络错误'}`)
+    throw new Error(`获取热门歌曲失败: ${error.message || '网络错误'}`, { cause: error })
   }
 }
 

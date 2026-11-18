@@ -67,7 +67,6 @@ describe('Sidebar Component', () => {
 
   describe('navigation', () => {
     it('should highlight active menu item', async () => {
-      const user = userEvent.setup()
       render(<Sidebar />)
       
       const allMusicBtn = screen.getByText('全部音乐').closest('button')

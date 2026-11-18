@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { usePlayerStore, useLibraryStore, useSettingsStore } from '@/stores'
 import { Track, Playlist } from '@/types'
 import { act } from '@testing-library/react'
@@ -37,7 +37,7 @@ describe('PlayerStore', () => {
 
   describe('setCurrentTrack', () => {
     it('should set current track correctly', () => {
-      const { setCurrentTrack, currentTrack } = usePlayerStore.getState()
+      const { setCurrentTrack } = usePlayerStore.getState()
       act(() => setCurrentTrack(mockTrack))
       expect(usePlayerStore.getState().currentTrack).toEqual(mockTrack)
     })

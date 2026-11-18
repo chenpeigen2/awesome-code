@@ -1,16 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import PlayerBar from '@/components/PlayerBar'
-
-const mockTrack = {
-  id: 'test-track-1',
-  path: '/path/to/track.mp3',
-  title: 'Test Track',
-  artist: 'Test Artist',
-  album: 'Test Album',
-  duration: 180,
-}
 
 vi.mock('@/utils/audio', () => ({
   audioManager: {

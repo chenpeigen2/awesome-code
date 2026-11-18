@@ -50,7 +50,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     const { queue, queueIndex, playbackMode } = get()
     if (queue.length === 0) return
 
-    let nextIndex = queueIndex
+    let nextIndex: number
     if (playbackMode === 'random') {
       nextIndex = Math.floor(Math.random() * queue.length)
     } else if (playbackMode === 'single') {
@@ -66,7 +66,7 @@ export const usePlayerStore = create<PlayerStore>((set, get) => ({
     const { queue, queueIndex, playbackMode } = get()
     if (queue.length === 0) return
 
-    let prevIndex = queueIndex
+    let prevIndex: number
     if (playbackMode === 'random') {
       prevIndex = Math.floor(Math.random() * queue.length)
     } else {
@@ -104,8 +104,14 @@ interface LibraryStore {
   getLikedTracks: () => Track[]
 }
 
+/** 落盘形态：Map/Set 无法直接 JSON 序列化，改为数组 */
+type LibraryPersistedState = Omit<LibraryStore, 'tracks' | 'likedTrackIds'> & {
+  tracks: [string, Track][]
+  likedTrackIds: string[]
+}
+
 export const useLibraryStore = create<LibraryStore>()(
-  persist(
+  persist<LibraryStore, [], [], LibraryPersistedState>(
     (set, get) => ({
       tracks: new Map(),
       playlists: [],
@@ -178,17 +184,18 @@ export const useLibraryStore = create<LibraryStore>()(
     }),
     {
       name: 'music-library',
-      serialize: (state: any) => {
-        const tracksArray = Array.from(state.tracks?.entries() || [])
-        const likedArray = Array.from(state.likedTrackIds || [])
-        return JSON.stringify({ ...state, tracks: tracksArray, likedTrackIds: likedArray })
-      },
-      deserialize: (str) => {
-        const data = JSON.parse(str)
-        return { 
-          ...data, 
-          tracks: new Map(data.tracks || []),
-          likedTrackIds: new Set(data.likedTrackIds || [])
+      partialize: (state) => ({
+        ...state,
+        tracks: Array.from(state.tracks.entries()),
+        likedTrackIds: Array.from(state.likedTrackIds),
+      }),
+      merge: (persistedState, currentState) => {
+        const persisted = persistedState as Partial<LibraryPersistedState>
+        return {
+          ...currentState,
+          ...persisted,
+          tracks: new Map(persisted.tracks ?? []),
+          likedTrackIds: new Set(persisted.likedTrackIds ?? []),
         }
       },
     }

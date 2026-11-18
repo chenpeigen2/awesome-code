@@ -2,24 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import OnlineMusic from '@/components/OnlineMusic'
-import { downloadManager } from '@/utils/downloadManager'
-
-const mockSearchResults = [
-  {
-    id: '1',
-    title: 'Test Song 1',
-    artist: 'Test Artist 1',
-    duration: '3:45',
-    downloadUrl: 'https://example.com/song1.mp3',
-  },
-  {
-    id: '2',
-    title: 'Test Song 2',
-    artist: 'Test Artist 2',
-    duration: '4:30',
-    downloadUrl: 'https://example.com/song2.mp3',
-  },
-]
 
 vi.mock('@/utils/downloadManager', () => ({
   downloadManager: {
