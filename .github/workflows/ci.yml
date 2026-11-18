@@ -11,12 +11,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  js:
-    name: JS / TS
+  js-npm:
+    name: JS / TS (npm) - ${{ matrix.project }}
     runs-on: ubuntu-latest
     strategy:
+      # 一个项目失败不要取消其它项目，方便定位
+      fail-fast: false
       matrix:
-        project: [music-player, js/text-dance, js/openrouter-models]
+        project: [music-player, js/text-dance]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -37,31 +39,65 @@ jobs:
         working-directory: ${{ matrix.project }}
         if: matrix.project == 'music-player'
 
+  js-bun:
+    name: JS / TS (bun) - ${{ matrix.project }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        project: [js/openrouter-models, js/bun-demo]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - run: bun install --frozen-lockfile
+        working-directory: ${{ matrix.project }}
+      - run: bun run lint
+        working-directory: ${{ matrix.project }}
+        if: matrix.project == 'js/openrouter-models'
+      - run: bunx vite build
+        working-directory: ${{ matrix.project }}
+        if: matrix.project == 'js/openrouter-models'
+      - run: bun test
+        working-directory: ${{ matrix.project }}
+        if: matrix.project == 'js/bun-demo'
+
   python:
     name: Python
     runs-on: ubuntu-latest
+    env:
+      # 无头环境下跑 PyQt 相关测试
+      QT_QPA_PLATFORM: offscreen
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-      - name: py-imageviewer 测试与静态检查
+      - name: 安装依赖（校验锁文件）
         working-directory: py-imageviewer
-        run: |
-          uv sync --all-extras
-          uv run pytest -q
-          uv run ruff check .
-          uv run mypy src
-      - name: python 工作区静态检查
+        run: uv sync --all-extras --locked
+      - name: pytest
+        working-directory: py-imageviewer
+        run: uv run pytest -q
+      - name: ruff
+        working-directory: py-imageviewer
+        run: uv run ruff check .
+      - name: mypy
+        working-directory: py-imageviewer
+        run: uv run mypy src
+      - name: 安装依赖（python 工作区）
         working-directory: python
-        run: |
-          uv sync --all-extras
-          uv run ruff check .
+        run: uv sync --all-extras --locked
+      - name: ruff（python 工作区）
+        working-directory: python
+        run: uv run ruff check .
 
   flutter:
-    name: Flutter
+    name: Flutter - ${{ matrix.project }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         project: [flutter/flutter_getx_demo, flutter/flutter_widgets_gallery, flutter/flutter_rust_demo]
     steps:
@@ -92,13 +128,21 @@ jobs:
       - run: ./gradlew --console=plain build
 
   rust:
-    name: Rust
+    name: Rust - ${{ matrix.project }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         project: [rust-tauri-demo, flutter/flutter_rust_demo/rust, android/androidx/jni-demo/rust]
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
+      # tauri 在 Linux 上需要这些系统库
+      - name: 安装 Tauri 依赖
+        if: matrix.project == 'rust-tauri-demo'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libayatana-appindicator3-dev \
+            librsvg2-dev libxdo-dev libssl-dev build-essential file
       - run: cargo check --all-targets
         working-directory: ${{ matrix.project }}
