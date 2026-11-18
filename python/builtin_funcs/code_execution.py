@@ -149,8 +149,8 @@ def demo_open() -> None:
     """open() - 打开文件"""
     print("\n=== open() ===")
 
-    import tempfile
     import os
+    import tempfile
 
     # 创建临时文件演示
     with tempfile.NamedTemporaryFile(mode='w', delete=False, suffix='.txt') as f:
@@ -159,12 +159,12 @@ def demo_open() -> None:
 
     try:
         # 读取文件
-        with open(temp_path, 'r', encoding='utf-8') as f:
+        with open(temp_path, encoding='utf-8') as f:
             content = f.read()
             print(f"File content: {content!r}")
 
         # 逐行读取
-        with open(temp_path, 'r', encoding='utf-8') as f:
+        with open(temp_path, encoding='utf-8') as f:
             for i, line in enumerate(f, 1):
                 print(f"Line {i}: {line!r}")
 

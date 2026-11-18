@@ -27,6 +27,23 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I", "N", "UP", "B"]
+# 示例代码刻意保留了题解/其他语言的习惯命名，改名会破坏教学对照
+ignore = [
+    "E501",   # 行长不作为错误
+    "N802",   # 函数名允许非 snake_case（LeetCode 题名等）
+    "N816",   # 全局变量允许混合大小写（类型演示命名）
+    "N803",   # 参数名允许非 snake_case
+    "N806",   # 变量名允许非 snake_case
+]
+
+[tool.ruff.lint.per-file-ignores]
+# 以下文件是官方文档示例的忠实复刻，保持原样写法以保留教学对照
+"builtin_funcs/object_introspection.py" = ["E721", "E701"]
+"builtin_funcs/code_execution.py" = ["F841"]  # x/y 供 eval() 使用
+"builtin_funcs/basis.py" = ["N801", "UP031"]
+"oop/__init__.py" = ["F841", "F821", "B018", "N815", "UP031"]
+"lambdas/__init__.py" = ["E731"]  # 本节主题就是 lambda 赋值
+"pytorch_tutorials/*.py" = ["N812", "E402"]
 
 [tool.mypy]
 python_version = "3.12"

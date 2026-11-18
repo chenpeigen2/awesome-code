@@ -114,7 +114,7 @@ print(re.split('a*', 'hello world'))
 # 转义 pattern 中的特殊字符。如果你想对任意可能包含正则表达式元字符的文本字符串进行匹配，它就是有用的。比如
 print(re.escape('https://www.python.org'))
 legal_chars = string.ascii_lowercase + string.digits + "!#$%&'*+-.^_`|~:"
-print('[%s]+' % re.escape(legal_chars))
+print(f'[{re.escape(legal_chars)}]+')
 
 digits_re = r'\d+'
 sample = '/usr/sbin/sendmail - 0 errors, 12 warnings'

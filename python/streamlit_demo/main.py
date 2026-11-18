@@ -4,13 +4,13 @@ Streamlit 综合示例 Demo
 运行方式: uv run streamlit run main.py
 """
 
-import streamlit as st
-import pandas as pd
-import numpy as np
-import altair as alt
 import time
 from datetime import date
 
+import altair as alt
+import numpy as np
+import pandas as pd
+import streamlit as st
 
 # ---------- 页面配置 ----------
 st.set_page_config(
@@ -65,6 +65,7 @@ st.write(x, "的平方是", x * x)
             ("📊 数据可视化", "内置多种图表支持"),
             ("🧩 丰富组件", "滑块、按钮、表格等"),
         ],
+        strict=False,
     ):
         col.markdown(f"**{title}**  \n{desc}")
 

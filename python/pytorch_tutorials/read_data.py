@@ -1,8 +1,7 @@
-from torch.utils.data import Dataset
+import os
 
 from PIL import Image
-
-import os
+from torch.utils.data import Dataset
 
 
 class MyData(Dataset):

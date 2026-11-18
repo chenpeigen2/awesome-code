@@ -1,4 +1,4 @@
-class A(object):
+class A:
     def __init__(self, num):
         self.num = num
         self.start_num = -1
@@ -104,7 +104,7 @@ if __name__ == '__main__':
 
     """
     pow(base, exp[, mod])
-    返回 base 的 exp 次幂；如果 mod 存在，则返回 base 的 exp 次幂对 mod 
+    返回 base 的 exp 次幂；如果 mod 存在，则返回 base 的 exp 次幂对 mod
     取余（比 pow(base, exp) % mod 更高效）。 两参数形式 pow(base, exp) 等价于乘方运算符: base**exp。
     """
     print(pow(10, 2, mod=7))
@@ -120,11 +120,11 @@ if __name__ == '__main__':
     max(iterable, *[, key, default])¶
     max(arg1, arg2, *args[, key])
     返回可迭代对象中最大的元素，或者返回两个及以上实参中最大的。
-    
+
     min(iterable, *[, key, default])
     min(arg1, arg2, *args[, key])
     返回可迭代对象中最小的元素，或者返回两个及以上实参中最小的。
-    
+
     如果只提供了一个位置参数，它必须是非空 iterable，返回可迭代对象中最大的元素；如果提供了两个及以上的位置参数，则返回最大的位置参数。
     """
     print(max(1, 2, 3, 4))
@@ -133,9 +133,9 @@ if __name__ == '__main__':
     """
     sum(iterable, /, start=0)
     从 start 开始自左向右对 iterable 的项求和并返回总计值。 iterable 的项通常为数字，而 start 值则不允许为字符串。
-    
-    对某些用例来说，存在 sum() 的更好替代。 
-    拼接字符串序列的更好更快方式是调用 ''.join(sequence)。 
+
+    对某些用例来说，存在 sum() 的更好替代。
+    拼接字符串序列的更好更快方式是调用 ''.join(sequence)。
     要以扩展精度对浮点值求和，请参阅 math.fsum()。 要拼接一系列可迭代对象，请考虑使用 itertools.chain()。
     """
     print(sum([1, 2, 3, 4, 5], start=12))
@@ -198,7 +198,7 @@ if __name__ == '__main__':
 
     """
     locals()
-    更新并返回表示当前本地符号表的字典。 
+    更新并返回表示当前本地符号表的字典。
     locals() 函数会以字典类型返回当前位置的全部局部变量。
     在函数代码块但不是类代码块中调用 locals() 时将返回自由变量。 请注意在模块层级上，locals() 和 globals() 是同一个字典。
     """
@@ -221,15 +221,15 @@ if __name__ == '__main__':
     delattr()
     """
     x = A(10)
-    setattr(x, 'foobar', 123)
-    print(getattr(x, 'foobar'))
+    x.foobar = 123
+    print(x.foobar)
     print(hasattr(x, 'foobar'))
     delattr(x, 'foobar')
 
     """
     iter(object[, sentinel])
-    Return an iterator object. 
-    
+    Return an iterator object.
+
     next(iterator[, default])
     Retrieve the next item from the iterator by calling its __next__() method.
     """
@@ -313,9 +313,9 @@ if __name__ == '__main__':
     """
     @staticmethod¶ 将方法转换为静态方法。
     @classmethod¶ 把一个方法封装成类方法。
-    
+
     静态方法对象
-    静态方法对象提供了一种胜过上文所述将函数对象转换为方法对象的方式。 
+    静态方法对象提供了一种胜过上文所述将函数对象转换为方法对象的方式。
     静态方法对象是对任意其他对象的包装器，通常用来包装用户自定义的方法对象。 当从类或类实例获取一个静态方法对象时，实际返回的是经过包装的对象，它不会被进一步转换。 静态方法对象也是可调用对象。 静态方法对象可通过内置的 staticmethod() 构造器来创建。
 
     类方法对象
@@ -323,7 +323,7 @@ if __name__ == '__main__':
     类方法对象在此类获取操作中的行为已在上文 "用户定义方法" 一节中描述。类方法对象可通过内置的 classmethod() 构造器来创建。
     https://docs.python.org/zh-cn/3/reference/datamodel.html#types
     https://www.bilibili.com/read/cv902958/
-    
+
     https://blog.csdn.net/alaitian/article/details/82505487
     """
 

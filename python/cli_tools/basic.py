@@ -8,9 +8,9 @@
     uv run python -m cli_tools.basic greet --name Alice --count 3
 """
 
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
-from typing import Annotated, Optional
+from typing import Annotated
 
 import typer
 
@@ -71,7 +71,7 @@ def greet(
 # ==================== 枚举选项 ====================
 
 
-class Color(str, Enum):
+class Color(StrEnum):
     """颜色枚举"""
     RED = "red"
     GREEN = "green"
@@ -116,7 +116,7 @@ def read_file(
         )
     ],
     lines: Annotated[
-        Optional[int],
+        int | None,
         typer.Option("--lines", "-l", help="只显示前 N 行")
     ] = None,
 ) -> None:
@@ -138,11 +138,11 @@ def read_file(
 def search(
     query: Annotated[str, typer.Argument(help="搜索关键词")],
     tags: Annotated[
-        Optional[list[str]],
+        list[str] | None,
         typer.Option("--tag", "-t", help="过滤标签（可多次使用）")
     ] = None,
     exclude: Annotated[
-        Optional[list[str]],
+        list[str] | None,
         typer.Option("--exclude", "-e", help="排除标签（可多次使用）")
     ] = None,
 ) -> None:
@@ -224,7 +224,7 @@ def version_callback(value: bool) -> None:
 @app.callback()
 def main(
     version: Annotated[
-        Optional[bool],
+        bool | None,
         typer.Option(
             "--version", "-V",
             callback=version_callback,

@@ -3,7 +3,6 @@
 包括: sorted, reversed, enumerate, zip, map, filter, slice, range, len, sum, max, min
 """
 
-from typing import Any
 
 
 def demo_sorted() -> None:
@@ -59,18 +58,18 @@ def demo_zip() -> None:
 
     # 基本用法
     print("zip(names, ages):")
-    for name, age in zip(names, ages):
+    for name, age in zip(names, ages, strict=False):
         print(f"  {name}: {age}")
 
     # 多个序列
     print("\nzip(names, ages, cities):")
-    for name, age, city in zip(names, ages, cities):
+    for name, age, city in zip(names, ages, cities, strict=False):
         print(f"  {name}, {age}, {city}")
 
     # 不同长度 - 以最短的为准
     short = [1, 2]
     long = [10, 20, 30, 40]
-    print(f"\nzip(short, long): {list(zip(short, long))}")
+    print(f"\nzip(short, long): {list(zip(short, long, strict=False))}")
 
     # 使用 strict 模式（Python 3.10+）
     try:

@@ -125,9 +125,9 @@ if __name__ == '__main__':
     del emp1.age  # 删除 'age' 属性
 
     # 你也可以使用以下函数的方式来访问属性：
-    setattr(emp1, 'age', 8)  # 添加属性 'age' 值为 8
+    emp1.age = 8  # 添加属性 'age' 值为 8
     hasattr(emp1, 'age')  # 如果存在 'age' 属性返回 True。
-    getattr(emp1, 'age')  # 返回 'age' 属性的值
+    emp1.age  # 返回 'age' 属性的值
     delattr(emp1, 'age')  # 删除属性 'age'
 
     # __dict__: 类的属性（包含一个字典，由类的数据属性组成）

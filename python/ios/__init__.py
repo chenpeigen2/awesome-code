@@ -1,4 +1,3 @@
-import io
 import os
 
 # 读取键盘输入

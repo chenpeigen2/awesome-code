@@ -1,5 +1,3 @@
-from random import random
-from typing import List
 import random
 
 
@@ -10,7 +8,7 @@ class TreeNode:
         self.right = None
 
 
-class Solution(object):
+class Solution:
     # https://leetcode-cn.com/problems/count-numbers-with-unique-digits/
     def countNumbersWithUniqueDigits(self, n):
         """
@@ -34,7 +32,7 @@ class Solution(object):
         return dp[n]
 
     # https://leetcode-cn.com/problems/number-of-lines-to-write-string/
-    def numberOfLines(self, widths: List[int], s: str) -> List[int]:
+    def numberOfLines(self, widths: list[int], s: str) -> list[int]:
         lines = 1
         width = 0
         for ch in s:
@@ -49,7 +47,7 @@ class Solution(object):
 
     ans = []
 
-    def lexicalOrder(self, n: int) -> List[int]:
+    def lexicalOrder(self, n: int) -> list[int]:
         for i in range(1, 10):
             self.dfs(i, n)
         return self.ans
@@ -112,7 +110,7 @@ class RandomizedSet:
         else:
             return ans
 
-    def numSubarrayProductLessThanK(self, nums: List[int], k: int) -> int:
+    def numSubarrayProductLessThanK(self, nums: list[int], k: int) -> int:
         ret = 0
         prod = 1
         i = 0
@@ -125,17 +123,17 @@ class RandomizedSet:
         return ret
 
     # https://leetcode.cn/problems/di-string-match/
-    def diStringMatch(self, s: str) -> List[int]:
-        l, r = 0, len(s)
+    def diStringMatch(self, s: str) -> list[int]:
+        left, right = 0, len(s)
         ans = []
         for s1 in s:
             if s1 == "I":
-                ans.append(l)
-                l += 1
+                ans.append(left)
+                left += 1
             else:
-                ans.append(r)
-                r -= 1
-        ans.append(l)
+                ans.append(right)
+                right -= 1
+        ans.append(left)
         return ans
 
     def serialize(self, root: TreeNode) -> str:
@@ -150,8 +148,8 @@ class RandomizedSet:
         """
         return self.deserialize1(data.split(","))
 
-    def deserialize1(self, li: List) -> TreeNode:
-        if li[0] is "#":
+    def deserialize1(self, li: list) -> TreeNode:
+        if li[0] == "#":
             li.remove(li[0])
             return None
         n = TreeNode()

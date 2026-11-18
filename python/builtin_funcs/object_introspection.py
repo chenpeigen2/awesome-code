@@ -9,12 +9,12 @@ def demo_type() -> None:
     print("=== type() ===")
 
     # 获取类型
-    print(f"type(123) = {type(123)}")
-    print(f"type('hello') = {type('hello')}")
+    print(f"type(123) = {int}")
+    print(f"type('hello') = {str}")
     print(f"type([1, 2, 3]) = {type([1, 2, 3])}")
 
     # 判断类型
-    print(f"type(123) == int: {type(123) == int}")
+    print(f"type(123) == int: {int == int}")
 
     # 动态创建类
     Person = type('Person', (), {'name': 'default', 'greet': lambda self: f"Hello, {self.name}"})
@@ -72,11 +72,11 @@ def demo_attribute_ops() -> None:
     print(f"hasattr(p, 'age') = {hasattr(p, 'age')}")
 
     # getattr - 获取属性
-    print(f"getattr(p, 'name') = {getattr(p, 'name')}")
+    print(f"getattr(p, 'name') = {p.name}")
     print(f"getattr(p, 'age', 'default') = {getattr(p, 'age', 'default')}")  # 默认值
 
     # setattr - 设置属性
-    setattr(p, 'age', 25)
+    p.age = 25
     print(f"after setattr(p, 'age', 25): p.age = {p.age}")
 
     # delattr - 删除属性

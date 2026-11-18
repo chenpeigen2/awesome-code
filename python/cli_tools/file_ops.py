@@ -13,7 +13,7 @@ import fnmatch
 import re
 import shutil
 from pathlib import Path
-from typing import Annotated, Optional
+from typing import Annotated
 
 import typer
 from rich.console import Console
@@ -31,7 +31,7 @@ def search_files(
     directory: Annotated[Path, typer.Argument(help="搜索目录")] = Path("."),
     pattern: Annotated[str, typer.Option("--pattern", "-p", help="文件模式 (如 *.py)")] = "*",
     content: Annotated[
-        Optional[str],
+        str | None,
         typer.Option("--content", "-c", help="搜索文件内容")
     ] = None,
     ignore_case: Annotated[
@@ -39,7 +39,7 @@ def search_files(
         typer.Option("--ignore-case", "-i", help="忽略大小写")
     ] = False,
     max_depth: Annotated[
-        Optional[int],
+        int | None,
         typer.Option("--max-depth", "-d", help="最大搜索深度")
     ] = None,
 ) -> None:
@@ -119,7 +119,7 @@ def search_files(
 def count_lines(
     directory: Annotated[Path, typer.Argument(help="统计目录")] = Path("."),
     ext: Annotated[
-        Optional[list[str]],
+        list[str] | None,
         typer.Option("--ext", "-e", help="文件扩展名 (如 .py .ts)")
     ] = None,
 ) -> None:
@@ -325,7 +325,7 @@ def clean_files(
 
     # 显示预览
     total_size = 0
-    table = Table(title=f"\n🗑️ 清理预览")
+    table = Table(title="\n🗑️ 清理预览")
     table.add_column("目录", style="yellow")
     table.add_column("大小", justify="right", style="red")
 
@@ -356,7 +356,7 @@ def clean_files(
         except Exception as e:
             typer.secho(f"删除失败: {target} - {e}", fg=typer.colors.RED)
 
-    typer.secho(f"\n清理完成!", fg=typer.colors.GREEN)
+    typer.secho("\n清理完成!", fg=typer.colors.GREEN)
 
 
 # ==================== 辅助函数 ====================

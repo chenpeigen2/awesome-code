@@ -1,6 +1,6 @@
+import matplotlib.pyplot as plt
 import torch
 import torch.nn.functional as F  # 包含激励函数
-import matplotlib.pyplot as plt
 
 # 建立数据集
 x = torch.unsqueeze(torch.linspace(-1, 1, 100), dim=1)  # x data (tensor), shape=(100, 1)
@@ -65,7 +65,7 @@ for t in range(200):
         plt.cla()
         plt.scatter(x.data.numpy(), y.data.numpy())
         plt.plot(x.data.numpy(), prediction.data.numpy(), 'r-', lw=5)
-        plt.text(0.5, 0, 'Loss=%.4f' % loss.data.numpy(), fontdict={'size': 20, 'color': 'red'})
+        plt.text(0.5, 0, f'Loss={loss.data.numpy():.4f}', fontdict={'size': 20, 'color': 'red'})
         plt.pause(0.1)
 
 plt.ioff()

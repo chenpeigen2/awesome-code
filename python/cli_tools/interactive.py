@@ -10,7 +10,7 @@
 """
 
 import time
-from typing import Annotated, Optional
+from typing import Annotated
 
 import typer
 from rich.console import Console
@@ -104,7 +104,7 @@ def download(
                 total=size,
             )
 
-            for j in range(size):
+            for _j in range(size):
                 # 模拟下载延迟
                 time.sleep(0.02)
 

@@ -1,13 +1,11 @@
+import matplotlib.pyplot as plt
+import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
 import torchvision
 from torchvision import datasets, transforms
-from torch.autograd import Variable
-import numpy as np
-
-import matplotlib.pyplot as plt
 
 # Training settings
 batch_size = 64
@@ -35,7 +33,7 @@ test_loader = torch.utils.data.DataLoader(dataset=test_dataset,
 class Net(nn.Module):
 
     def __init__(self):
-        super(Net, self).__init__()
+        super().__init__()
         self.l1 = nn.Linear(784, 520)
         self.l2 = nn.Linear(520, 320)
         self.l3 = nn.Linear(320, 240)
@@ -75,9 +73,7 @@ def train(epoch):
         # update
         optimizer.step()
         if batch_idx % 200 == 0:
-            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                epoch, batch_idx * len(data), len(train_loader.dataset),
-                       100. * batch_idx / len(train_loader), loss.item()))
+            print(f'Train Epoch: {epoch} [{batch_idx * len(data)}/{len(train_loader.dataset)} ({100. * batch_idx / len(train_loader):.0f}%)]\tLoss: {loss.item():.6f}')
 
 
 def test():
@@ -98,9 +94,7 @@ def test():
         correct += pred.eq(target.data.view_as(pred)).cpu().sum()
 
     test_loss /= len(test_loader.dataset)
-    print('\nTest set: Average loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
-        test_loss, correct, len(test_loader.dataset),
-        100. * correct / len(test_loader.dataset)))
+    print(f'\nTest set: Average loss: {test_loss:.4f}, Accuracy: {correct}/{len(test_loader.dataset)} ({100. * correct / len(test_loader.dataset):.0f}%)\n')
 
 
 # functions to show an image

@@ -11,7 +11,7 @@
 
 import json
 from pathlib import Path
-from typing import Annotated, Optional
+from typing import Annotated
 
 import typer
 from typing_extensions import TypedDict
@@ -129,7 +129,7 @@ def create_user(
 @user_app.command("list")
 def list_users(
     role: Annotated[
-        Optional[str],
+        str | None,
         typer.Option("--role", "-r", help="按角色过滤")
     ] = None,
 ) -> None:
@@ -194,7 +194,7 @@ def init_project(
         typer.Option("--python", "-p", help="Python 版本")
     ] = "3.11",
     author: Annotated[
-        Optional[str],
+        str | None,
         typer.Option("--author", "-a", help="作者")
     ] = None,
 ) -> None:
@@ -240,9 +240,9 @@ build-backend = "hatchling.build"
     typer.secho(f"项目 '{name}' 初始化成功!", fg=typer.colors.GREEN)
     typer.echo(f"  Python: {python}")
     typer.echo(f"  作者: {author or '未设置'}")
-    typer.echo(f"\n下一步:")
+    typer.echo("\n下一步:")
     typer.echo(f"  cd {name}")
-    typer.echo(f"  uv sync")
+    typer.echo("  uv sync")
 
 
 @project_app.command("list")
@@ -270,8 +270,8 @@ def list_projects() -> None:
 
 @app.command("config")
 def manage_config(
-    key: Annotated[Optional[str], typer.Argument(help="配置键")] = None,
-    value: Annotated[Optional[str], typer.Argument(help="配置值")] = None,
+    key: Annotated[str | None, typer.Argument(help="配置键")] = None,
+    value: Annotated[str | None, typer.Argument(help="配置值")] = None,
     list_all: Annotated[
         bool,
         typer.Option("--list", "-l", help="列出所有配置")
@@ -293,9 +293,9 @@ def manage_config(
             for k in keys:
                 current = current[k]
             typer.echo(json.dumps(current, indent=2, ensure_ascii=False))
-        except (KeyError, TypeError):
+        except (KeyError, TypeError) as err:
             typer.secho(f"配置键 '{key}' 不存在", fg=typer.colors.RED)
-            raise typer.Exit(1)
+            raise typer.Exit(1) from err
     else:
         # 写入配置 - 简化版本，实际需要更复杂的解析
         typer.secho("设置配置需要更复杂的实现", fg=typer.colors.YELLOW)
