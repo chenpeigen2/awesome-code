@@ -17,16 +17,16 @@ class AdvancedPage extends StatelessWidget {
         ExampleCard(
           title: 'DataTable',
           description: '数据表格',
-          child: _DataTableDemo(),
           code: 'DataTable(columns: [...], rows: [...])',
+          child: _DataTableDemo(),
         ),
 
         // PaginatedDataTable
         ExampleCard(
           title: 'PaginatedDataTable',
           description: '分页数据表格',
-          child: _PaginatedDataTableDemo(),
           code: 'PaginatedDataTable(columns: [...], source: DataTableSource)',
+          child: _PaginatedDataTableDemo(),
         ),
 
         const ExampleSectionHeader(title: '展开收起', icon: Icons.unfold_more),
@@ -35,16 +35,16 @@ class AdvancedPage extends StatelessWidget {
         ExampleCard(
           title: 'ExpansionTile',
           description: '可展开的列表项',
-          child: _ExpansionTileDemo(),
           code: 'ExpansionTile(title: Text(), children: [...])',
+          child: _ExpansionTileDemo(),
         ),
 
         // ExpansionPanelList
         ExampleCard(
           title: 'ExpansionPanelList.radio',
           description: '单选展开面板',
-          child: _ExpansionPanelRadioDemo(),
           code: 'ExpansionPanelList.radio(children: [ExpansionPanelRadio()...])',
+          child: _ExpansionPanelRadioDemo(),
         ),
 
         const ExampleSectionHeader(title: '选择器', icon: Icons.select_all),
@@ -53,17 +53,18 @@ class AdvancedPage extends StatelessWidget {
         ExampleCard(
           title: 'SelectableText',
           description: '可选择文本',
+          code: 'SelectableText("可选文本")',
           child: const SelectableText(
             '这段文本可以被选择和复制。长按或双击文本试试！\n\nFlutter 是 Google 开源的移动 UI 框架，可以快速在 iOS 和 Android 上构建高质量的原生用户界面。',
             style: TextStyle(fontSize: 14),
           ),
-          code: 'SelectableText("可选文本")',
         ),
 
         // SelectionArea
         ExampleCard(
           title: 'SelectionArea',
           description: '选择区域',
+          code: 'SelectionArea(child: Column(children: [Text()...]))',
           child: SelectionArea(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +81,6 @@ class AdvancedPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'SelectionArea(child: Column(children: [Text()...]))',
         ),
 
         const ExampleSectionHeader(title: '状态管理', icon: Icons.account_tree),
@@ -89,48 +89,48 @@ class AdvancedPage extends StatelessWidget {
         ExampleCard(
           title: 'InheritedWidget',
           description: '数据向下传递',
-          child: _InheritedWidgetDemo(),
           code: 'InheritedWidget + InheritedWidget.of(context)',
+          child: _InheritedWidgetDemo(),
         ),
 
         // ValueListenableBuilder
         ExampleCard(
           title: 'ValueListenableBuilder',
           description: '值监听构建器',
-          child: _ValueListenableBuilderDemo(),
           code: 'ValueListenableBuilder(valueListenable: notifier, builder: ...)',
+          child: _ValueListenableBuilderDemo(),
         ),
 
         // ListenableBuilder
         ExampleCard(
           title: 'ListenableBuilder',
           description: '监听器构建器',
-          child: _ListenableBuilderDemo(),
           code: 'ListenableBuilder(listenable: animation, builder: ...)',
+          child: _ListenableBuilderDemo(),
         ),
 
         // AnimatedBuilder
         ExampleCard(
           title: 'AnimatedBuilder',
           description: '动画构建器',
-          child: _AnimatedBuilderDemo(),
           code: 'AnimatedBuilder(animation: controller, builder: ...)',
+          child: _AnimatedBuilderDemo(),
         ),
 
         // StreamBuilder
         ExampleCard(
           title: 'StreamBuilder',
           description: '流构建器',
-          child: _StreamBuilderDemo(),
           code: 'StreamBuilder(stream: stream, builder: ...)',
+          child: _StreamBuilderDemo(),
         ),
 
         // FutureBuilder
         ExampleCard(
           title: 'FutureBuilder',
           description: '异步构建器',
-          child: _FutureBuilderDemo(),
           code: 'FutureBuilder(future: future, builder: ...)',
+          child: _FutureBuilderDemo(),
         ),
 
         const ExampleSectionHeader(title: '布局限制', icon: Icons.aspect_ratio),
@@ -139,14 +139,15 @@ class AdvancedPage extends StatelessWidget {
         ExampleCard(
           title: 'LayoutBuilder',
           description: '布局构建器',
-          child: _LayoutBuilderDemo(),
           code: 'LayoutBuilder(builder: (ctx, constraints) => ...)',
+          child: _LayoutBuilderDemo(),
         ),
 
         // Builder
         ExampleCard(
           title: 'Builder',
           description: '构建器',
+          code: 'Builder(builder: (ctx) => Widget)',
           child: Builder(
             builder: (context) {
               return Text(
@@ -155,13 +156,13 @@ class AdvancedPage extends StatelessWidget {
               );
             },
           ),
-          code: 'Builder(builder: (ctx) => Widget)',
         ),
 
         // MediaQuery
         ExampleCard(
           title: 'MediaQuery',
           description: '媒体查询',
+          code: 'MediaQuery.of(context).size',
           child: Builder(
             builder: (context) {
               final media = MediaQuery.of(context);
@@ -177,7 +178,6 @@ class AdvancedPage extends StatelessWidget {
               );
             },
           ),
-          code: 'MediaQuery.of(context).size',
         ),
 
         const ExampleSectionHeader(title: '其他高级', icon: Icons.extension),
@@ -186,14 +186,15 @@ class AdvancedPage extends StatelessWidget {
         ExampleCard(
           title: 'RefreshIndicator',
           description: '下拉刷新',
-          child: _RefreshIndicatorDemo(),
           code: 'RefreshIndicator(onRefresh: () async {}, child: ListView())',
+          child: _RefreshIndicatorDemo(),
         ),
 
         // RepaintBoundary
         ExampleCard(
           title: 'RepaintBoundary',
           description: '重绘边界，优化性能',
+          code: 'RepaintBoundary(child: Widget)',
           child: Column(
             children: [
               const Text('RepaintBoundary 创建独立的重绘层'),
@@ -221,39 +222,38 @@ class AdvancedPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'RepaintBoundary(child: Widget)',
         ),
 
         // AutomaticKeepAliveClientMixin
         ExampleCard(
           title: 'KeepAlive',
           description: '保持页面状态',
-          child: _KeepAliveDemo(),
           code: 'AutomaticKeepAliveClientMixin',
+          child: _KeepAliveDemo(),
         ),
 
         // IndexedStack (TabBarView 替代)
         ExampleCard(
           title: 'IndexedStack 保持状态',
           description: '切换时保持页面状态',
-          child: _IndexedStackKeepAliveDemo(),
           code: 'IndexedStack(children: [...])',
+          child: _IndexedStackKeepAliveDemo(),
         ),
 
         // WillPopScope / PopScope
         ExampleCard(
           title: 'PopScope',
           description: '拦截返回操作',
-          child: _PopScopeDemo(),
           code: 'PopScope(canPop: false, onPopInvoked: ...)',
+          child: _PopScopeDemo(),
         ),
 
         // RawGestureDetector
         ExampleCard(
           title: 'RawGestureDetector',
           description: '原始手势检测',
-          child: _RawGestureDetectorDemo(),
           code: 'RawGestureDetector(gestures: {...})',
+          child: _RawGestureDetectorDemo(),
         ),
 
         const ExampleSectionHeader(title: '安全区域与主题', icon: Icons.security),
@@ -262,24 +262,24 @@ class AdvancedPage extends StatelessWidget {
         ExampleCard(
           title: 'SafeArea',
           description: '安全区域（避开刘海、状态栏）',
-          child: _SafeAreaDemo(),
           code: 'SafeArea(child: Widget)',
+          child: _SafeAreaDemo(),
         ),
 
         // Theme
         ExampleCard(
           title: 'Theme',
           description: '主题配置',
-          child: _ThemeDemo(),
           code: 'Theme(data: ThemeData(...), child: Widget)',
+          child: _ThemeDemo(),
         ),
 
         // DefaultTextStyle
         ExampleCard(
           title: 'DefaultTextStyle',
           description: '默认文本样式',
-          child: _DefaultTextStyleDemo(),
           code: 'DefaultTextStyle(style: TextStyle(...), child: Widget)',
+          child: _DefaultTextStyleDemo(),
         ),
 
         const ExampleSectionHeader(title: '视觉效果', icon: Icons.palette),
@@ -288,24 +288,24 @@ class AdvancedPage extends StatelessWidget {
         ExampleCard(
           title: 'BackdropFilter',
           description: '背景滤镜（毛玻璃效果）',
-          child: _BackdropFilterDemo(),
           code: 'BackdropFilter(filter: ImageFilter.blur(), child: Widget)',
+          child: _BackdropFilterDemo(),
         ),
 
         // ShaderMask
         ExampleCard(
           title: 'ShaderMask',
           description: '着色器遮罩（渐变效果）',
-          child: _ShaderMaskDemo(),
           code: 'ShaderMask(shaderCallback: (bounds) => Shader, child: Widget)',
+          child: _ShaderMaskDemo(),
         ),
 
         // Directionality
         ExampleCard(
           title: 'Directionality',
           description: '文本方向（RTL/LTR）',
-          child: _DirectionalityDemo(),
           code: 'Directionality(textDirection: TextDirection.rtl, child: Widget)',
+          child: _DirectionalityDemo(),
         ),
 
         const SizedBox(height: 24),

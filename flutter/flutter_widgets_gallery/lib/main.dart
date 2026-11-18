@@ -15,7 +15,7 @@ class FlutterWidgetGalleryApp extends StatefulWidget {
 }
 
 class _FlutterWidgetGalleryAppState extends State<FlutterWidgetGalleryApp> {
-  ThemeMode _themeMode = ThemeMode.system;
+  final ThemeMode _themeMode = ThemeMode.system;
 
   @override
   Widget build(BuildContext context) {

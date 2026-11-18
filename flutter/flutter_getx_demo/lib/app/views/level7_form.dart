@@ -69,9 +69,13 @@ class FormPage extends StatelessWidget {
         CheckboxListTile(title: const Text('音乐'), value: ctrl.checkboxVals[2], onChanged: (v) => ctrl.checkboxVals[2] = v ?? false),
       ]))),
       const Section('Radio 单选'),
-      DemoCard(title: 'RadioListTile', child: Obx(() => Column(children: ['Android', 'iOS', 'Flutter'].asMap().entries.map((e) => RadioListTile<int>(
-        title: Text(e.value), value: e.key, groupValue: ctrl.radioVal.value, onChanged: (v) => ctrl.radioVal.value = v!,
-      )).toList()))),
+      DemoCard(title: 'RadioListTile', child: Obx(() => RadioGroup<int>(
+        groupValue: ctrl.radioVal.value,
+        onChanged: (v) => ctrl.radioVal.value = v ?? ctrl.radioVal.value,
+        child: Column(children: ['Android', 'iOS', 'Flutter'].asMap().entries.map((e) => RadioListTile<int>(
+          title: Text(e.value), value: e.key,
+        )).toList()),
+      ))),
       const Section('Switch 开关'),
       DemoCard(title: 'Switch & SwitchListTile', child: Obx(() => SwitchListTile(
         title: const Text('开启推送通知'),

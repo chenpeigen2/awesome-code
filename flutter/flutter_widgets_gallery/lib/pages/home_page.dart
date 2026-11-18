@@ -97,8 +97,8 @@ class _HomePageState extends State<HomePage> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                _navItems[_currentIndex].color.withOpacity(0.7),
-                _navItems[_currentIndex].color.withOpacity(0.3),
+                _navItems[_currentIndex].color.withValues(alpha: 0.7),
+                _navItems[_currentIndex].color.withValues(alpha: 0.3),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
               leading: Icon(item.icon, color: item.color),
               title: Text(item.label),
               selected: _currentIndex == index,
-              selectedTileColor: item.color.withOpacity(0.1),
+              selectedTileColor: item.color.withValues(alpha: 0.1),
               onTap: () {
                 setState(() => _currentIndex = index);
                 _pageController.jumpToPage(index);

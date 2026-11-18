@@ -75,12 +75,14 @@ class InteractivePage extends StatelessWidget {
         onChanged: (v) => ctrl.checkboxValue.value = v ?? false,
       ))),
       const Section('Radio 单选'),
-      DemoCard(title: 'Radio', child: Obx(() => Column(children: [1, 2, 3].map((i) => RadioListTile<int>(
-        title: Text('选项 $i'),
-        value: i,
+      DemoCard(title: 'Radio', child: Obx(() => RadioGroup<int>(
         groupValue: ctrl.radioValue.value,
-        onChanged: (v) => ctrl.radioValue.value = v!,
-      )).toList()))),
+        onChanged: (v) => ctrl.radioValue.value = v ?? ctrl.radioValue.value,
+        child: Column(children: [1, 2, 3].map((i) => RadioListTile<int>(
+          title: Text('选项 $i'),
+          value: i,
+        )).toList()),
+      ))),
       const Section('PopupMenuButton'),
       DemoCard(title: 'PopupMenuButton', child: PopupMenuButton<String>(
         onSelected: (v) => Get.snackbar('选择', v, duration: const Duration(seconds: 1)),
@@ -142,7 +144,7 @@ class _DragDemoState extends State<_DragDemo> {
         child: Container(width: 60, height: 60, decoration: const BoxDecoration(color: Colors.blue, shape: BoxShape.circle)),
       ),
       DragTarget<Color>(
-        onAccept: (color) => setState(() { _targetColor = color; _targetText = '放下成功!'; }),
+        onAcceptWithDetails: (details) => setState(() { _targetColor = details.data; _targetText = '放下成功!'; }),
         onWillAcceptWithDetails: (_) => true,
         builder: (ctx, accepted, rejected) => Container(
           width: 100, height: 100,
@@ -184,7 +186,7 @@ class _ExpansionDemoState extends State<_ExpansionDemo> {
     return ExpansionPanelList(
       expansionCallback: (i, expanded) => setState(() => _expanded[i] = !expanded),
       children: [0, 1, 2].map((i) => ExpansionPanel(
-        headerBuilder: (_, __) => ListTile(title: Text('面板 ${i + 1}')),
+        headerBuilder: (_, _) => ListTile(title: Text('面板 ${i + 1}')),
         body: Padding(padding: const EdgeInsets.all(16), child: Text('这是面板 ${i + 1} 的内容。')),
         isExpanded: _expanded[i] ?? false,
       )).toList(),

@@ -15,14 +15,15 @@ class InteractivePage extends StatelessWidget {
         ExampleCard(
           title: 'GestureDetector',
           description: '手势检测器',
-          child: _GestureDetectorDemo(),
           code: 'GestureDetector(onTap: () {}, onDoubleTap: () {})',
+          child: _GestureDetectorDemo(),
         ),
 
         // InkWell
         ExampleCard(
           title: 'InkWell',
           description: '带水波纹效果的点击区域',
+          code: 'InkWell(onTap: () {}, child: Container())',
           child: Column(
             children: [
               InkWell(
@@ -46,7 +47,7 @@ class InteractivePage extends StatelessWidget {
                       onTap: () => _showSnackBar(context, '点击 1'),
                       child: Container(
                         padding: const EdgeInsets.all(12),
-                        color: Colors.blue.withOpacity(0.1),
+                        color: Colors.blue.withValues(alpha: 0.1),
                         child: const Center(child: Text('区域 1')),
                       ),
                     ),
@@ -56,7 +57,7 @@ class InteractivePage extends StatelessWidget {
                       onTap: () => _showSnackBar(context, '点击 2'),
                       child: Container(
                         padding: const EdgeInsets.all(12),
-                        color: Colors.green.withOpacity(0.1),
+                        color: Colors.green.withValues(alpha: 0.1),
                         child: const Center(child: Text('区域 2')),
                       ),
                     ),
@@ -65,13 +66,13 @@ class InteractivePage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'InkWell(onTap: () {}, child: Container())',
         ),
 
         // InkResponse
         ExampleCard(
           title: 'InkResponse',
           description: '可自定义的水波纹效果',
+          code: 'InkResponse(onTap: () {}, radius: 30)',
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -83,7 +84,7 @@ class InteractivePage extends StatelessWidget {
                   height: 60,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.blue.withOpacity(0.2),
+                    color: Colors.blue.withValues(alpha: 0.2),
                   ),
                   child: const Icon(Icons.circle_outlined),
                 ),
@@ -98,14 +99,13 @@ class InteractivePage extends StatelessWidget {
                   height: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
-                    color: Colors.green.withOpacity(0.2),
+                    color: Colors.green.withValues(alpha: 0.2),
                   ),
                   child: const Icon(Icons.square_outlined),
                 ),
               ),
             ],
           ),
-          code: 'InkResponse(onTap: () {}, radius: 30)',
         ),
 
         const ExampleSectionHeader(title: '拖拽交互', icon: Icons.drag_indicator),
@@ -114,32 +114,32 @@ class InteractivePage extends StatelessWidget {
         ExampleCard(
           title: 'Draggable',
           description: '可拖拽组件',
-          child: _DraggableDemo(),
           code: 'Draggable(data: data, feedback: Widget, child: Widget)',
+          child: _DraggableDemo(),
         ),
 
         // LongPressDraggable
         ExampleCard(
           title: 'LongPressDraggable',
           description: '长按后可拖拽',
-          child: _LongPressDraggableDemo(),
           code: 'LongPressDraggable(data: data, child: Widget)',
+          child: _LongPressDraggableDemo(),
         ),
 
         // DragTarget
         ExampleCard(
           title: 'DragTarget',
           description: '拖拽目标区域',
-          child: _DragTargetDemo(),
           code: 'DragTarget(onWillAccept: ..., onAccept: ...)',
+          child: _DragTargetDemo(),
         ),
 
         // Dismissible
         ExampleCard(
           title: 'Dismissible',
           description: '可滑出删除的列表项',
-          child: _DismissibleDemo(),
           code: 'Dismissible(key: Key, onDismissed: ...)',
+          child: _DismissibleDemo(),
         ),
 
         const ExampleSectionHeader(title: '滑动选择', icon: Icons.swipe),
@@ -148,6 +148,7 @@ class InteractivePage extends StatelessWidget {
         ExampleCard(
           title: '滑动操作',
           description: '列表项滑动显示操作按钮',
+          code: 'Dismissible(background: Container(), secondaryBackground: ...)',
           child: SizedBox(
             height: 200,
             child: ListView(
@@ -179,7 +180,6 @@ class InteractivePage extends StatelessWidget {
               }),
             ),
           ),
-          code: 'Dismissible(background: Container(), secondaryBackground: ...)',
         ),
 
         const ExampleSectionHeader(title: '缩放旋转', icon: Icons.pinch),
@@ -188,6 +188,7 @@ class InteractivePage extends StatelessWidget {
         ExampleCard(
           title: 'InteractiveViewer',
           description: '可缩放、平移的视图',
+          code: 'InteractiveViewer(minScale: 0.5, maxScale: 4, child: Widget)',
           child: SizedBox(
             height: 180,
             child: ClipRect(
@@ -214,15 +215,14 @@ class InteractivePage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'InteractiveViewer(minScale: 0.5, maxScale: 4, child: Widget)',
         ),
 
         // GestureDetector 缩放旋转
         ExampleCard(
           title: 'GestureDetector 缩放',
           description: '自定义手势缩放',
-          child: _ScaleGestureDemo(),
           code: 'GestureDetector(onScaleStart:, onScaleUpdate:)',
+          child: _ScaleGestureDemo(),
         ),
 
         const ExampleSectionHeader(title: '其他交互', icon: Icons.more_horiz),
@@ -231,12 +231,13 @@ class InteractivePage extends StatelessWidget {
         ExampleCard(
           title: 'IgnorePointer',
           description: '忽略指针事件',
+          code: 'IgnorePointer(ignoring: true, child: Widget)',
           child: Row(
             children: [
               Expanded(
                 child: Container(
                   height: 60,
-                  color: Colors.blue.withOpacity(0.2),
+                  color: Colors.blue.withValues(alpha: 0.2),
                   child: IgnorePointer(
                     ignoring: true,
                     child: ElevatedButton(
@@ -250,7 +251,7 @@ class InteractivePage extends StatelessWidget {
               Expanded(
                 child: Container(
                   height: 60,
-                  color: Colors.green.withOpacity(0.2),
+                  color: Colors.green.withValues(alpha: 0.2),
                   child: IgnorePointer(
                     ignoring: false,
                     child: ElevatedButton(
@@ -262,13 +263,13 @@ class InteractivePage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'IgnorePointer(ignoring: true, child: Widget)',
         ),
 
         // AbsorbPointer
         ExampleCard(
           title: 'AbsorbPointer',
           description: '吸收指针事件',
+          code: 'AbsorbPointer(absorbing: true, child: Widget)',
           child: Stack(
             children: [
               Row(
@@ -302,15 +303,14 @@ class InteractivePage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'AbsorbPointer(absorbing: true, child: Widget)',
         ),
 
         // Listener
         ExampleCard(
           title: 'Listener',
           description: '原始指针事件监听',
-          child: _ListenerDemo(),
           code: 'Listener(onPointerDown:, onPointerMove:, onPointerUp:)',
+          child: _ListenerDemo(),
         ),
 
         const SizedBox(height: 24),
@@ -409,7 +409,7 @@ class _DraggableDemoState extends State<_DraggableDemo> {
             feedback: Container(
               width: 60,
               height: 60,
-              color: Colors.blue.withOpacity(0.7),
+              color: Colors.blue.withValues(alpha: 0.7),
               child: const Center(child: Text('拖拽中')),
             ),
             childWhenDragging: Opacity(
@@ -450,7 +450,7 @@ class _LongPressDraggableDemo extends StatelessWidget {
             data: 1,
             feedback: Container(
               padding: const EdgeInsets.all(16),
-              color: Colors.red.withOpacity(0.8),
+              color: Colors.red.withValues(alpha: 0.8),
               child: const Text('拖拽中'),
             ),
             child: Container(
@@ -463,7 +463,7 @@ class _LongPressDraggableDemo extends StatelessWidget {
             data: 2,
             feedback: Container(
               padding: const EdgeInsets.all(16),
-              color: Colors.green.withOpacity(0.8),
+              color: Colors.green.withValues(alpha: 0.8),
               child: const Text('拖拽中'),
             ),
             child: Container(

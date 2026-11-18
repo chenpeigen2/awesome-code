@@ -15,14 +15,15 @@ class FormPage extends StatelessWidget {
         ExampleCard(
           title: 'TextFormField',
           description: '表单文本输入框',
-          child: _TextFormFieldDemo(),
           code: 'TextFormField(decoration: InputDecoration(), validator: (v) => null)',
+          child: _TextFormFieldDemo(),
         ),
 
         // TextField 样式
         ExampleCard(
           title: 'TextField 样式',
           description: '各种输入框样式',
+          code: 'TextField(decoration: InputDecoration(border: OutlineInputBorder()))',
           child: Column(
             children: [
               TextField(
@@ -54,13 +55,13 @@ class FormPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'TextField(decoration: InputDecoration(border: OutlineInputBorder()))',
         ),
 
         // TextField 类型
         ExampleCard(
           title: 'TextField 输入类型',
           description: '不同的键盘类型',
+          code: 'TextField(keyboardType: TextInputType.emailAddress)',
           child: Column(
             children: [
               TextField(
@@ -105,7 +106,6 @@ class FormPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'TextField(keyboardType: TextInputType.emailAddress)',
         ),
 
         const ExampleSectionHeader(title: '选择控件', icon: Icons.check_box),
@@ -114,48 +114,48 @@ class FormPage extends StatelessWidget {
         ExampleCard(
           title: 'Checkbox',
           description: '复选框',
-          child: _CheckboxDemo(),
           code: 'Checkbox(value: true, onChanged: (v) {})',
+          child: _CheckboxDemo(),
         ),
 
         // CheckboxListTile
         ExampleCard(
           title: 'CheckboxListTile',
           description: '带标题的复选框',
-          child: _CheckboxListTileDemo(),
           code: 'CheckboxListTile(title: Text(), value: true, onChanged: (v) {})',
+          child: _CheckboxListTileDemo(),
         ),
 
         // Radio
         ExampleCard(
           title: 'Radio',
           description: '单选按钮',
-          child: _RadioDemo(),
           code: 'Radio(value: 1, groupValue: selectedValue, onChanged: (v) {})',
+          child: _RadioDemo(),
         ),
 
         // RadioListTile
         ExampleCard(
           title: 'RadioListTile',
           description: '带标题的单选按钮',
-          child: _RadioListTileDemo(),
           code: 'RadioListTile(title: Text(), value: 1, groupValue: selected, onChanged: ...)',
+          child: _RadioListTileDemo(),
         ),
 
         // Switch
         ExampleCard(
           title: 'Switch',
           description: '开关',
-          child: _SwitchDemo(),
           code: 'Switch(value: true, onChanged: (v) {})',
+          child: _SwitchDemo(),
         ),
 
         // SwitchListTile
         ExampleCard(
           title: 'SwitchListTile',
           description: '带标题的开关',
-          child: _SwitchListTileDemo(),
           code: 'SwitchListTile(title: Text(), value: true, onChanged: (v) {})',
+          child: _SwitchListTileDemo(),
         ),
 
         const ExampleSectionHeader(title: '滑块和进度', icon: Icons.linear_scale),
@@ -164,24 +164,24 @@ class FormPage extends StatelessWidget {
         ExampleCard(
           title: 'Slider',
           description: '滑块',
-          child: _SliderDemo(),
           code: 'Slider(value: 50, min: 0, max: 100, onChanged: (v) {})',
+          child: _SliderDemo(),
         ),
 
         // RangeSlider
         ExampleCard(
           title: 'RangeSlider',
           description: '范围滑块',
-          child: _RangeSliderDemo(),
           code: 'RangeSlider(values: RangeValues(20, 80), min: 0, max: 100)',
+          child: _RangeSliderDemo(),
         ),
 
         // CircularProgressIndicator (交互式)
         ExampleCard(
           title: '交互式进度',
           description: '可调整的进度指示器',
-          child: _InteractiveProgressDemo(),
           code: 'CircularProgressIndicator(value: progress)',
+          child: _InteractiveProgressDemo(),
         ),
 
         const ExampleSectionHeader(title: '选择器', icon: Icons.date_range),
@@ -190,24 +190,24 @@ class FormPage extends StatelessWidget {
         ExampleCard(
           title: 'showDatePicker',
           description: '日期选择器',
-          child: _DatePickerDemo(),
           code: 'showDatePicker(context: context, firstDate: ..., lastDate: ...)',
+          child: _DatePickerDemo(),
         ),
 
         // TimePicker
         ExampleCard(
           title: 'showTimePicker',
           description: '时间选择器',
-          child: _TimePickerDemo(),
           code: 'showTimePicker(context: context, initialTime: TimeOfDay.now())',
+          child: _TimePickerDemo(),
         ),
 
         // DateRangePicker
         ExampleCard(
           title: 'showDateRangePicker',
           description: '日期范围选择器',
-          child: _DateRangePickerDemo(),
           code: 'showDateRangePicker(context: context, firstDate: ..., lastDate: ...)',
+          child: _DateRangePickerDemo(),
         ),
 
         const ExampleSectionHeader(title: '下拉选择', icon: Icons.arrow_drop_down),
@@ -216,24 +216,24 @@ class FormPage extends StatelessWidget {
         ExampleCard(
           title: 'DropdownButton',
           description: '下拉按钮',
-          child: _DropdownButtonDemo(),
           code: 'DropdownButton(value: selected, items: [...], onChanged: (v) {})',
+          child: _DropdownButtonDemo(),
         ),
 
         // DropdownButtonFormField
         ExampleCard(
           title: 'DropdownButtonFormField',
           description: '下拉表单字段',
-          child: _DropdownFormFieldDemo(),
           code: 'DropdownButtonFormField(value: selected, items: [...], onChanged: (v) {})',
+          child: _DropdownFormFieldDemo(),
         ),
 
         // Autocomplete
         ExampleCard(
           title: 'Autocomplete',
           description: '自动完成',
-          child: _AutocompleteDemo(),
           code: 'Autocomplete(optionsBuilder: (text) => ...)',
+          child: _AutocompleteDemo(),
         ),
 
         const ExampleSectionHeader(title: '完整表单', icon: Icons.assignment),
@@ -242,8 +242,8 @@ class FormPage extends StatelessWidget {
         ExampleCard(
           title: 'Form 表单示例',
           description: '完整的表单验证示例',
-          child: _CompleteFormDemo(),
           code: 'Form(key: formKey, child: Column(children: [TextFormField()...]))',
+          child: _CompleteFormDemo(),
         ),
 
         const SizedBox(height: 24),
@@ -392,15 +392,15 @@ class _RadioDemoState extends State<_RadioDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [1, 2, 3].map((i) {
-        return Radio<int>(
-          value: i,
-          groupValue: _selected,
-          onChanged: (v) => setState(() => _selected = v),
-        );
-      }).toList(),
+    return RadioGroup<int>(
+      groupValue: _selected,
+      onChanged: (v) => setState(() => _selected = v ?? _selected),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [1, 2, 3]
+            .map((i) => Radio<int>(value: i))
+            .toList(),
+      ),
     );
   }
 }
@@ -416,16 +416,18 @@ class _RadioListTileDemoState extends State<_RadioListTileDemo> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [1, 2, 3].map((i) {
-        return RadioListTile<int>(
-          title: Text('选项 $i'),
-          subtitle: Text('选项 $i 的描述'),
-          value: i,
-          groupValue: _selected,
-          onChanged: (v) => setState(() => _selected = v!),
-        );
-      }).toList(),
+    return RadioGroup<int>(
+      groupValue: _selected,
+      onChanged: (v) => setState(() => _selected = v ?? _selected),
+      child: Column(
+        children: [1, 2, 3]
+            .map((i) => RadioListTile<int>(
+                  title: Text('选项 $i'),
+                  subtitle: Text('选项 $i 的描述'),
+                  value: i,
+                ))
+            .toList(),
+      ),
     );
   }
 }
@@ -450,7 +452,7 @@ class _SwitchDemoState extends State<_SwitchDemo> {
         ),
         Switch(
           value: true,
-          activeColor: Colors.red,
+          activeThumbColor: Colors.red,
           onChanged: null,
         ),
         Switch.adaptive(
@@ -481,7 +483,7 @@ class _SwitchListTileDemoState extends State<_SwitchListTileDemo> {
       children: _settings.keys.map((key) {
         return SwitchListTile(
           title: Text(key),
-          subtitle: Text('${key}设置'),
+          subtitle: Text('$key设置'),
           value: _settings[key]!,
           onChanged: (v) => setState(() => _settings[key] = v),
         );
@@ -695,7 +697,7 @@ class _DropdownFormFieldDemoState extends State<_DropdownFormFieldDemo> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      value: _selectedValue,
+      initialValue: _selectedValue,
       decoration: const InputDecoration(
         labelText: '请选择',
         border: OutlineInputBorder(),

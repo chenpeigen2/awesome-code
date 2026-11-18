@@ -15,6 +15,7 @@ class ContainerPage extends StatelessWidget {
         ExampleCard(
           title: 'Container',
           description: '多功能容器组件',
+          code: 'Container(padding: EdgeInsets.all(16), decoration: BoxDecoration(...))',
           child: Column(
             children: [
               Container(
@@ -59,13 +60,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Container(padding: EdgeInsets.all(16), decoration: BoxDecoration(...))',
         ),
 
         // DecoratedBox
         ExampleCard(
           title: 'DecoratedBox',
           description: '装饰盒子',
+          code: 'DecoratedBox(decoration: BoxDecoration(gradient: ...))',
           child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: const RadialGradient(
@@ -80,13 +81,13 @@ class ContainerPage extends StatelessWidget {
               child: const Text('径向渐变装饰', style: TextStyle(fontWeight: FontWeight.bold)),
             ),
           ),
-          code: 'DecoratedBox(decoration: BoxDecoration(gradient: ...))',
         ),
 
         // ColoredBox
         ExampleCard(
           title: 'ColoredBox',
           description: '简单的颜色盒子',
+          code: 'ColoredBox(color: Colors.teal, child: Widget)',
           child: const ColoredBox(
             color: Colors.teal,
             child: SizedBox(
@@ -97,7 +98,6 @@ class ContainerPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'ColoredBox(color: Colors.teal, child: Widget)',
         ),
 
         const ExampleSectionHeader(title: '间距与填充', icon: Icons.padding),
@@ -106,6 +106,7 @@ class ContainerPage extends StatelessWidget {
         ExampleCard(
           title: 'Padding',
           description: '内边距组件',
+          code: 'Padding(padding: EdgeInsets.all(16), child: Widget)',
           child: Container(
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
             child: Padding(
@@ -117,13 +118,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'Padding(padding: EdgeInsets.all(16), child: Widget)',
         ),
 
         // EdgeInsets 演示
         ExampleCard(
           title: 'EdgeInsets',
           description: '各种边距用法',
+          code: 'EdgeInsets.all(16) / symmetric(horizontal: 16, vertical: 8)',
           child: Column(
             children: [
               _buildEdgeInsetsDemo(context, 'all(16)', const EdgeInsets.all(16)),
@@ -138,7 +139,6 @@ class ContainerPage extends StatelessWidget {
                 const EdgeInsets.fromLTRB(10, 20, 30, 40)),
             ],
           ),
-          code: 'EdgeInsets.all(16) / symmetric(horizontal: 16, vertical: 8)',
         ),
 
         const ExampleSectionHeader(title: '对齐与定位', icon: Icons.align_horizontal_left),
@@ -147,6 +147,7 @@ class ContainerPage extends StatelessWidget {
         ExampleCard(
           title: 'Center',
           description: '居中对齐组件',
+          code: 'Center(child: Widget)',
           child: Container(
             height: 100,
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -154,13 +155,13 @@ class ContainerPage extends StatelessWidget {
               child: Text('居中的内容'),
             ),
           ),
-          code: 'Center(child: Widget)',
         ),
 
         // Align
         ExampleCard(
           title: 'Align',
           description: '对齐组件',
+          code: 'Align(alignment: Alignment.center, child: Widget)',
           child: Column(
             children: [
               SizedBox(
@@ -210,13 +211,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Align(alignment: Alignment.center, child: Widget)',
         ),
 
         // FractionalOffset
         ExampleCard(
           title: 'Alignment & FractionalOffset',
           description: '对齐位置常量',
+          code: 'Alignment.topLeft / Alignment.center',
           child: Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -232,7 +233,6 @@ class ContainerPage extends StatelessWidget {
               _buildAlignmentChip('bottomRight', Alignment.bottomRight),
             ],
           ),
-          code: 'Alignment.topLeft / Alignment.center',
         ),
 
         const ExampleSectionHeader(title: '限制尺寸', icon: Icons.open_in_full),
@@ -241,6 +241,7 @@ class ContainerPage extends StatelessWidget {
         ExampleCard(
           title: 'LimitedBox',
           description: '限制最大尺寸',
+          code: 'LimitedBox(maxWidth: 150, maxHeight: 60, child: Widget)',
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
@@ -261,13 +262,13 @@ class ContainerPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'LimitedBox(maxWidth: 150, maxHeight: 60, child: Widget)',
         ),
 
         // UnconstrainedBox
         ExampleCard(
           title: 'UnconstrainedBox',
           description: '移除父组件约束',
+          code: 'UnconstrainedBox(child: Widget)',
           child: Container(
             width: 100,
             height: 100,
@@ -282,13 +283,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'UnconstrainedBox(child: Widget)',
         ),
 
         // OverflowBox
         ExampleCard(
           title: 'OverflowBox',
           description: '允许溢出父组件',
+          code: 'OverflowBox(maxWidth: 200, child: Widget)',
           child: Container(
             width: 150,
             height: 80,
@@ -305,13 +306,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'OverflowBox(maxWidth: 200, child: Widget)',
         ),
 
         // ClipRect
         ExampleCard(
           title: 'ClipRect',
           description: '矩形裁剪',
+          code: 'ClipRect(child: Widget)',
           child: ClipRect(
             child: Container(
               width: double.infinity,
@@ -328,13 +329,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'ClipRect(child: Widget)',
         ),
 
         // ClipRRect
         ExampleCard(
           title: 'ClipRRect',
           description: '圆角矩形裁剪',
+          code: 'ClipRRect(borderRadius: BorderRadius.circular(20), child: Widget)',
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: Container(
@@ -346,13 +347,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'ClipRRect(borderRadius: BorderRadius.circular(20), child: Widget)',
         ),
 
         // ClipOval
         ExampleCard(
           title: 'ClipOval',
           description: '椭圆裁剪',
+          code: 'ClipOval(child: Widget)',
           child: Center(
             child: ClipOval(
               child: Container(
@@ -365,13 +366,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'ClipOval(child: Widget)',
         ),
 
         // ClipPath
         ExampleCard(
           title: 'ClipPath',
           description: '自定义路径裁剪',
+          code: 'ClipPath(clipper: CustomClipper, child: Widget)',
           child: Center(
             child: ClipPath(
               clipper: _TriangleClipper(),
@@ -388,7 +389,6 @@ class ContainerPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'ClipPath(clipper: CustomClipper, child: Widget)',
         ),
 
         const ExampleSectionHeader(title: '装饰与变换', icon: Icons.transform),
@@ -397,6 +397,7 @@ class ContainerPage extends StatelessWidget {
         ExampleCard(
           title: 'Transform',
           description: '变换组件',
+          code: 'Transform.rotate(angle: 0.5, child: Widget)',
           child: Column(
             children: [
               Row(
@@ -445,13 +446,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Transform.rotate(angle: 0.5, child: Widget)',
         ),
 
         // RotatedBox
         ExampleCard(
           title: 'RotatedBox',
           description: '旋转盒子',
+          code: 'RotatedBox(quarterTurns: 1, child: Widget)',
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(4, (index) {
@@ -465,13 +466,13 @@ class ContainerPage extends StatelessWidget {
               );
             }),
           ),
-          code: 'RotatedBox(quarterTurns: 1, child: Widget)',
         ),
 
         // FittedBox
         ExampleCard(
           title: 'FittedBox',
           description: '自适应缩放',
+          code: 'FittedBox(fit: BoxFit.contain, child: Widget)',
           child: Column(
             children: [
               Container(
@@ -494,13 +495,13 @@ class ContainerPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'FittedBox(fit: BoxFit.contain, child: Widget)',
         ),
 
         // Opacity
         ExampleCard(
           title: 'Opacity',
           description: '透明度',
+          code: 'Opacity(opacity: 0.5, child: Widget)',
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -510,23 +511,22 @@ class ContainerPage extends StatelessWidget {
               _buildOpacityBox(context, 0.2),
             ],
           ),
-          code: 'Opacity(opacity: 0.5, child: Widget)',
         ),
 
         // Visibility
         ExampleCard(
           title: 'Visibility',
           description: '可见性控制',
-          child: _VisibilityDemo(),
           code: 'Visibility(visible: true, child: Widget)',
+          child: _VisibilityDemo(),
         ),
 
         // Offstage
         ExampleCard(
           title: 'Offstage',
           description: '离场控制',
-          child: _OffstageDemo(),
           code: 'Offstage(offstage: true, child: Widget)',
+          child: _OffstageDemo(),
         ),
 
         const SizedBox(height: 24),
@@ -552,7 +552,7 @@ class ContainerPage extends StatelessWidget {
   Widget _buildAlignmentChip(String label, Alignment alignment) {
     return Chip(
       label: Text(label, style: const TextStyle(fontSize: 10)),
-      backgroundColor: Colors.primaries[label.hashCode % Colors.primaries.length].withOpacity(0.2),
+      backgroundColor: Colors.primaries[label.hashCode % Colors.primaries.length].withValues(alpha: 0.2),
     );
   }
 

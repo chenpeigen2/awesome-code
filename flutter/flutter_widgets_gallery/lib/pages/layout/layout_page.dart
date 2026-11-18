@@ -15,6 +15,7 @@ class LayoutPage extends StatelessWidget {
         ExampleCard(
           title: 'Row',
           description: '水平布局子组件',
+          code: 'Row(children: [Widget1, Widget2, Widget3])',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -78,13 +79,13 @@ class LayoutPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Row(children: [Widget1, Widget2, Widget3])',
         ),
 
         // Column
         ExampleCard(
           title: 'Column',
           description: '垂直布局子组件',
+          code: 'Column(children: [Widget1, Widget2, Widget3])',
           child: Row(
             children: [
               Expanded(
@@ -127,13 +128,13 @@ class LayoutPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Column(children: [Widget1, Widget2, Widget3])',
         ),
 
         // MainAxisAlignment 和 CrossAxisAlignment
         ExampleCard(
           title: 'MainAxis/CrossAxis Alignment',
           description: '主轴和交叉轴对齐方式',
+          code: 'Row(mainAxisAlignment: MainAxisAlignment.center)',
           child: Column(
             children: [
               _buildAlignmentDemo(context, 'MainAxisAlignment.start', 
@@ -149,7 +150,6 @@ class LayoutPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround),
             ],
           ),
-          code: 'Row(mainAxisAlignment: MainAxisAlignment.center)',
         ),
 
         const ExampleSectionHeader(title: '弹性布局', icon: Icons.expand),
@@ -158,6 +158,7 @@ class LayoutPage extends StatelessWidget {
         ExampleCard(
           title: 'Expanded',
           description: '扩展填充剩余空间',
+          code: 'Expanded(flex: 1, child: Widget)',
           child: Column(
             children: [
               Container(
@@ -185,13 +186,13 @@ class LayoutPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Expanded(flex: 1, child: Widget)',
         ),
 
         // Flexible
         ExampleCard(
           title: 'Flexible',
           description: '灵活调整子组件大小',
+          code: 'Flexible(flex: 1, fit: FlexFit.loose, child: Widget)',
           child: Container(
             height: 60,
             decoration: BoxDecoration(
@@ -210,17 +211,17 @@ class LayoutPage extends StatelessWidget {
                   fit: FlexFit.loose,
                   child: _ColorBox(color: Colors.purple, label: 'loose', width: 40),
                 ),
-                const _ColorBox(color: Colors.teal, label: '固定', width: 60),
+                _ColorBox(color: Colors.teal, label: '固定', width: 60),
               ],
             ),
           ),
-          code: 'Flexible(flex: 1, fit: FlexFit.loose, child: Widget)',
         ),
 
         // Spacer
         ExampleCard(
           title: 'Spacer',
           description: '创建空白填充',
+          code: 'Row(children: [Widget, Spacer(), Widget])',
           child: Container(
             padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(
@@ -237,7 +238,6 @@ class LayoutPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'Row(children: [Widget, Spacer(), Widget])',
         ),
 
         const ExampleSectionHeader(title: '堆叠布局', icon: Icons.layers),
@@ -246,13 +246,14 @@ class LayoutPage extends StatelessWidget {
         ExampleCard(
           title: 'Stack',
           description: '堆叠布局，子组件可以重叠',
+          code: 'Stack(children: [Widget1, Positioned(child: Widget2)])',
           child: SizedBox(
             height: 180,
             child: Stack(
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.blue.withOpacity(0.7),
+                    color: Colors.blue.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
@@ -263,7 +264,7 @@ class LayoutPage extends StatelessWidget {
                     width: 120,
                     height: 80,
                     decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.7),
+                      color: Colors.green.withValues(alpha: 0.7),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Center(child: Text('位置1')),
@@ -276,7 +277,7 @@ class LayoutPage extends StatelessWidget {
                     width: 100,
                     height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.7),
+                      color: Colors.red.withValues(alpha: 0.7),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Center(child: Text('位置2')),
@@ -291,21 +292,21 @@ class LayoutPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'Stack(children: [Widget1, Positioned(child: Widget2)])',
         ),
 
         // IndexedStack
         ExampleCard(
           title: 'IndexedStack',
           description: '只显示指定索引的子组件',
-          child: _IndexedStackDemo(),
           code: 'IndexedStack(index: 0, children: [...])',
+          child: _IndexedStackDemo(),
         ),
 
         // Positioned
         ExampleCard(
           title: 'Positioned',
           description: '绝对定位组件',
+          code: 'Positioned(top: 10, left: 10, child: Widget)',
           child: SizedBox(
             height: 150,
             child: Stack(
@@ -344,7 +345,6 @@ class LayoutPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'Positioned(top: 10, left: 10, child: Widget)',
         ),
 
         const ExampleSectionHeader(title: '流式布局', icon: Icons.grid_view),
@@ -353,6 +353,7 @@ class LayoutPage extends StatelessWidget {
         ExampleCard(
           title: 'Wrap',
           description: '流式布局，自动换行',
+          code: 'Wrap(spacing: 8, runSpacing: 8, children: [...])',
           child: Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -360,17 +361,17 @@ class LayoutPage extends StatelessWidget {
               20,
               (index) => Chip(
                 label: Text('标签 ${index + 1}'),
-                backgroundColor: Colors.primaries[index % Colors.primaries.length].withOpacity(0.3),
+                backgroundColor: Colors.primaries[index % Colors.primaries.length].withValues(alpha: 0.3),
               ),
             ),
           ),
-          code: 'Wrap(spacing: 8, runSpacing: 8, children: [...])',
         ),
 
         // Flow
         ExampleCard(
           title: 'Flow',
           description: '自定义流式布局',
+          code: 'Flow(delegate: FlowDelegate, children: [...])',
           child: SizedBox(
             height: 150,
             child: Flow(
@@ -394,7 +395,6 @@ class LayoutPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'Flow(delegate: FlowDelegate, children: [...])',
         ),
 
         const ExampleSectionHeader(title: '约束布局', icon: Icons.aspect_ratio),
@@ -403,6 +403,7 @@ class LayoutPage extends StatelessWidget {
         ExampleCard(
           title: 'ConstrainedBox',
           description: '约束子组件的大小',
+          code: 'ConstrainedBox(constraints: BoxConstraints(minWidth: 100), child: Widget)',
           child: Column(
             children: [
               ConstrainedBox(
@@ -419,13 +420,13 @@ class LayoutPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'ConstrainedBox(constraints: BoxConstraints(minWidth: 100), child: Widget)',
         ),
 
         // SizedBox
         ExampleCard(
           title: 'SizedBox',
           description: '固定尺寸盒子',
+          code: 'SizedBox(width: 100, height: 50, child: Widget)',
           child: Column(
             children: [
               const SizedBox(width: 100, height: 50, child: _ColorBox(color: Colors.red, label: '固定')),
@@ -435,13 +436,13 @@ class LayoutPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'SizedBox(width: 100, height: 50, child: Widget)',
         ),
 
         // AspectRatio
         ExampleCard(
           title: 'AspectRatio',
           description: '固定宽高比',
+          code: 'AspectRatio(aspectRatio: 16/9, child: Widget)',
           child: Column(
             children: [
               AspectRatio(
@@ -455,13 +456,13 @@ class LayoutPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'AspectRatio(aspectRatio: 16/9, child: Widget)',
         ),
 
         // FractionallySizedBox
         ExampleCard(
           title: 'FractionallySizedBox',
           description: '按比例设置尺寸',
+          code: 'FractionallySizedBox(widthFactor: 0.5, child: Widget)',
           child: Container(
             height: 100,
             color: Theme.of(context).colorScheme.surfaceContainerHighest,
@@ -474,13 +475,13 @@ class LayoutPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'FractionallySizedBox(widthFactor: 0.5, child: Widget)',
         ),
 
         // IntrinsicHeight & IntrinsicWidth
         ExampleCard(
           title: 'IntrinsicHeight/IntrinsicWidth',
           description: '根据子组件调整高度/宽度',
+          code: 'IntrinsicHeight(child: Row(children: [...]))',
           child: IntrinsicHeight(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -503,7 +504,6 @@ class LayoutPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'IntrinsicHeight(child: Row(children: [...]))',
         ),
 
         const SizedBox(height: 24),

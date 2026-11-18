@@ -157,9 +157,13 @@ class _ScrollNotificationDemoState extends State<_ScrollNotificationDemo> {
       Expanded(child: NotificationListener<ScrollNotification>(
         onNotification: (notification) {
           setState(() {
-            if (notification is ScrollStartNotification) _status = '滚动开始';
-            else if (notification is ScrollUpdateNotification) _status = '滚动中: ${notification.metrics.pixels.toStringAsFixed(0)}px';
-            else if (notification is ScrollEndNotification) _status = '滚动结束';
+            if (notification is ScrollStartNotification) {
+              _status = '滚动开始';
+            } else if (notification is ScrollUpdateNotification) {
+              _status = '滚动中: ${notification.metrics.pixels.toStringAsFixed(0)}px';
+            } else if (notification is ScrollEndNotification) {
+              _status = '滚动结束';
+            }
           });
           return true;
         },

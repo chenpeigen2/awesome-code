@@ -15,6 +15,7 @@ class BasicsPage extends StatelessWidget {
         ExampleCard(
           title: 'Text',
           description: '用于显示简单文本',
+          code: 'Text("Hello World")',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -42,13 +43,13 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Text("Hello World")',
         ),
 
         // RichText
         ExampleCard(
           title: 'RichText',
           description: '富文本，支持多种样式',
+          code: 'RichText(text: TextSpan(children: [...]))',
           child: RichText(
             text: TextSpan(
               style: DefaultTextStyle.of(context).style,
@@ -72,18 +73,17 @@ class BasicsPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'RichText(text: TextSpan(children: [...]))',
         ),
 
         // SelectableText
         ExampleCard(
           title: 'SelectableText',
           description: '可选择复制的文本',
+          code: 'SelectableText("可选文本")',
           child: const SelectableText(
             '这段文本可以被选择和复制。长按文本试试！',
             style: TextStyle(fontSize: 16),
           ),
-          code: 'SelectableText("可选文本")',
         ),
 
         const ExampleSectionHeader(title: '图片组件', icon: Icons.image),
@@ -92,6 +92,7 @@ class BasicsPage extends StatelessWidget {
         ExampleCard(
           title: 'Image',
           description: '图片显示组件',
+          code: 'Image.network("url", fit: BoxFit.cover)',
           child: Column(
             children: [
               ClipRRect(
@@ -134,13 +135,13 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Image.network("url", fit: BoxFit.cover)',
         ),
 
         // AssetImage
         ExampleCard(
           title: 'Image.asset',
           description: '从资源加载图片',
+          code: 'Image.asset("assets/image.png")',
           child: Container(
             height: 100,
             decoration: BoxDecoration(
@@ -151,13 +152,13 @@ class BasicsPage extends StatelessWidget {
               child: Text('从 pubspec.yaml 中声明的资源加载图片'),
             ),
           ),
-          code: 'Image.asset("assets/image.png")',
         ),
 
         // DecorationImage
         ExampleCard(
           title: 'DecorationImage',
           description: '装饰图片，用作容器背景',
+          code: 'BoxDecoration(image: DecorationImage(...))',
           child: Container(
             height: 120,
             decoration: BoxDecoration(
@@ -182,7 +183,6 @@ class BasicsPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'BoxDecoration(image: DecorationImage(...))',
         ),
 
         const ExampleSectionHeader(title: '图标组件', icon: Icons.emoji_emotions),
@@ -191,6 +191,7 @@ class BasicsPage extends StatelessWidget {
         ExampleCard(
           title: 'Icon',
           description: 'Material Design 图标',
+          code: 'Icon(Icons.home, size: 32, color: Colors.blue)',
           child: Wrap(
             spacing: 16,
             runSpacing: 16,
@@ -205,13 +206,13 @@ class BasicsPage extends StatelessWidget {
               _buildIconItem(Icons.camera, 'camera'),
             ],
           ),
-          code: 'Icon(Icons.home, size: 32, color: Colors.blue)',
         ),
 
         // IconButton
         ExampleCard(
           title: 'IconButton',
           description: '可点击的图标按钮',
+          code: 'IconButton(icon: Icon(Icons.star), onPressed: () {})',
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -239,7 +240,6 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'IconButton(icon: Icon(Icons.star), onPressed: () {})',
         ),
 
         const ExampleSectionHeader(title: '按钮组件', icon: Icons.smart_button),
@@ -248,6 +248,7 @@ class BasicsPage extends StatelessWidget {
         ExampleCard(
           title: 'ElevatedButton',
           description: '浮动按钮，带阴影效果',
+          code: 'ElevatedButton(onPressed: () {}, child: Text("按钮"))',
           child: Wrap(
             spacing: 12,
             runSpacing: 12,
@@ -267,13 +268,13 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'ElevatedButton(onPressed: () {}, child: Text("按钮"))',
         ),
 
         // FilledButton
         ExampleCard(
           title: 'FilledButton',
           description: '填充按钮，Material 3 风格',
+          code: 'FilledButton(onPressed: () {}, child: Text("按钮"))',
           child: Wrap(
             spacing: 12,
             runSpacing: 12,
@@ -293,13 +294,13 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'FilledButton(onPressed: () {}, child: Text("按钮"))',
         ),
 
         // OutlinedButton
         ExampleCard(
           title: 'OutlinedButton',
           description: '边框按钮',
+          code: 'OutlinedButton(onPressed: () {}, child: Text("按钮"))',
           child: Wrap(
             spacing: 12,
             runSpacing: 12,
@@ -315,13 +316,13 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'OutlinedButton(onPressed: () {}, child: Text("按钮"))',
         ),
 
         // TextButton
         ExampleCard(
           title: 'TextButton',
           description: '文本按钮，无背景',
+          code: 'TextButton(onPressed: () {}, child: Text("按钮"))',
           child: Wrap(
             spacing: 12,
             runSpacing: 12,
@@ -337,13 +338,13 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'TextButton(onPressed: () {}, child: Text("按钮"))',
         ),
 
         // FloatingActionButton
         ExampleCard(
           title: 'FloatingActionButton',
           description: '浮动操作按钮',
+          code: 'FloatingActionButton(onPressed: () {}, child: Icon(Icons.add))',
           child: Wrap(
             spacing: 16,
             runSpacing: 16,
@@ -371,7 +372,6 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'FloatingActionButton(onPressed: () {}, child: Icon(Icons.add))',
         ),
 
         const ExampleSectionHeader(title: '输入组件', icon: Icons.edit),
@@ -380,6 +380,7 @@ class BasicsPage extends StatelessWidget {
         ExampleCard(
           title: 'TextField',
           description: '文本输入框',
+          code: 'TextField(decoration: InputDecoration(labelText: "标签"))',
           child: Column(
             children: [
               TextField(
@@ -422,13 +423,13 @@ class BasicsPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'TextField(decoration: InputDecoration(labelText: "标签"))',
         ),
 
         // TextFormField
         ExampleCard(
           title: 'TextFormField',
           description: '带验证的表单输入框',
+          code: 'TextFormField(validator: (value) => null)',
           child: Form(
             child: Column(
               children: [
@@ -464,7 +465,6 @@ class BasicsPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'TextFormField(validator: (value) => null)',
         ),
 
         const SizedBox(height: 24),

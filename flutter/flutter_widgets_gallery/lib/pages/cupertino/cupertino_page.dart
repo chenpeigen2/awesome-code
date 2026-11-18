@@ -16,16 +16,16 @@ class CupertinoPage extends StatelessWidget {
         ExampleCard(
           title: 'CupertinoNavigationBar',
           description: 'iOS 风格导航栏',
-          child: _CupertinoNavBarDemo(),
           code: 'CupertinoNavigationBar(middle: Text("标题"))',
+          child: _CupertinoNavBarDemo(),
         ),
 
         // CupertinoTabBar
         ExampleCard(
           title: 'CupertinoTabBar',
           description: 'iOS 风格底部标签栏',
-          child: _CupertinoTabBarDemo(),
           code: 'CupertinoTabBar(items: [...])',
+          child: _CupertinoTabBarDemo(),
         ),
 
         const ExampleSectionHeader(title: '按钮', icon: CupertinoIcons.hand_draw),
@@ -34,16 +34,16 @@ class CupertinoPage extends StatelessWidget {
         ExampleCard(
           title: 'CupertinoButton',
           description: 'iOS 风格按钮',
-          child: _CupertinoButtonDemo(),
           code: 'CupertinoButton(child: Text("按钮"), onPressed: ...)',
+          child: _CupertinoButtonDemo(),
         ),
 
         // CupertinoActionSheet
         ExampleCard(
           title: 'CupertinoActionSheet',
           description: 'iOS 风格操作表',
-          child: _CupertinoActionSheetDemo(),
           code: 'showCupertinoModalPopup(context: context, builder: ...)',
+          child: _CupertinoActionSheetDemo(),
         ),
 
         const ExampleSectionHeader(title: '输入组件', icon: CupertinoIcons.textbox),
@@ -52,32 +52,32 @@ class CupertinoPage extends StatelessWidget {
         ExampleCard(
           title: 'CupertinoTextField',
           description: 'iOS 风格文本输入框',
-          child: const _CupertinoTextFieldDemo(),
           code: 'CupertinoTextField(placeholder: "请输入")',
+          child: const _CupertinoTextFieldDemo(),
         ),
 
         // CupertinoPicker
         ExampleCard(
           title: 'CupertinoPicker',
           description: 'iOS 风格选择器',
-          child: _CupertinoPickerDemo(),
           code: 'CupertinoPicker(itemCount: n, onSelectedItemChanged: ...)',
+          child: _CupertinoPickerDemo(),
         ),
 
         // CupertinoDatePicker
         ExampleCard(
           title: 'CupertinoDatePicker',
           description: 'iOS 风格日期选择器',
-          child: _CupertinoDatePickerDemo(),
           code: 'CupertinoDatePicker(onDateTimeChanged: ...)',
+          child: _CupertinoDatePickerDemo(),
         ),
 
         // CupertinoTimerPicker
         ExampleCard(
           title: 'CupertinoTimerPicker',
           description: 'iOS 风格时间选择器',
-          child: _CupertinoTimerPickerDemo(),
           code: 'CupertinoTimerPicker(onTimerDurationChanged: ...)',
+          child: _CupertinoTimerPickerDemo(),
         ),
 
         const ExampleSectionHeader(title: '滑块与开关', icon: CupertinoIcons.slider_horizontal_3),
@@ -86,24 +86,24 @@ class CupertinoPage extends StatelessWidget {
         ExampleCard(
           title: 'CupertinoSlider',
           description: 'iOS 风格滑块',
-          child: _CupertinoSliderDemo(),
           code: 'CupertinoSlider(value: value, onChanged: ...)',
+          child: _CupertinoSliderDemo(),
         ),
 
         // CupertinoSwitch
         ExampleCard(
           title: 'CupertinoSwitch',
           description: 'iOS 风格开关',
-          child: _CupertinoSwitchDemo(),
           code: 'CupertinoSwitch(value: value, onChanged: ...)',
+          child: _CupertinoSwitchDemo(),
         ),
 
         // CupertinoSegmentedControl
         ExampleCard(
           title: 'CupertinoSegmentedControl',
           description: 'iOS 风格分段控件',
-          child: _CupertinoSegmentedControlDemo(),
           code: 'CupertinoSegmentedControl(children: {...})',
+          child: _CupertinoSegmentedControlDemo(),
         ),
 
         const ExampleSectionHeader(title: '对话框', icon: CupertinoIcons.chat_bubble),
@@ -112,8 +112,8 @@ class CupertinoPage extends StatelessWidget {
         ExampleCard(
           title: 'CupertinoAlertDialog',
           description: 'iOS 风格警告对话框',
-          child: _CupertinoAlertDialogDemo(),
           code: 'showCupertinoDialog(context: context, builder: ...)',
+          child: _CupertinoAlertDialogDemo(),
         ),
 
         const ExampleSectionHeader(title: '进度指示器', icon: CupertinoIcons.time),
@@ -122,16 +122,16 @@ class CupertinoPage extends StatelessWidget {
         ExampleCard(
           title: 'CupertinoActivityIndicator',
           description: 'iOS 风格加载指示器',
-          child: _CupertinoActivityIndicatorDemo(),
           code: 'CupertinoActivityIndicator(radius: 15)',
+          child: _CupertinoActivityIndicatorDemo(),
         ),
 
         // CupertinoProgressIndicator
         ExampleCard(
           title: 'CupertinoLinearProgressIndicator',
           description: 'iOS 风格线性进度条',
-          child: _CupertinoLinearProgressDemo(),
           code: 'LinearProgressIndicator(value: progress)',
+          child: _CupertinoLinearProgressDemo(),
         ),
 
         const ExampleSectionHeader(title: '其他组件', icon: CupertinoIcons.ellipsis_circle),
@@ -140,16 +140,16 @@ class CupertinoPage extends StatelessWidget {
         ExampleCard(
           title: 'CupertinoContextMenu',
           description: 'iOS 风格上下文菜单',
-          child: _CupertinoContextMenuDemo(),
           code: 'CupertinoContextMenu(actions: [...], child: Widget)',
+          child: _CupertinoContextMenuDemo(),
         ),
 
         // CupertinoSearchTextField
         ExampleCard(
           title: 'CupertinoSearchTextField',
           description: 'iOS 风格搜索框',
-          child: const _CupertinoSearchTextFieldDemo(),
           code: 'CupertinoSearchTextField(onChanged: ...)',
+          child: const _CupertinoSearchTextFieldDemo(),
         ),
 
         const SizedBox(height: 24),

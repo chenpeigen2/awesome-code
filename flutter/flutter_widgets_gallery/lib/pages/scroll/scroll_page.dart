@@ -15,6 +15,7 @@ class ScrollPage extends StatelessWidget {
         ExampleCard(
           title: 'SingleChildScrollView',
           description: '单个子组件的滚动视图',
+          code: 'SingleChildScrollView(scrollDirection: Axis.horizontal)',
           child: SizedBox(
             height: 120,
             child: SingleChildScrollView(
@@ -40,7 +41,6 @@ class ScrollPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'SingleChildScrollView(scrollDirection: Axis.horizontal)',
         ),
 
         const ExampleSectionHeader(title: '列表视图', icon: Icons.list),
@@ -49,6 +49,7 @@ class ScrollPage extends StatelessWidget {
         ExampleCard(
           title: 'ListView',
           description: '列表视图',
+          code: 'ListView.builder(itemCount: 10, itemBuilder: (ctx, i) => ListTile())',
           child: SizedBox(
             height: 200,
             child: ListView.builder(
@@ -66,13 +67,13 @@ class ScrollPage extends StatelessWidget {
               },
             ),
           ),
-          code: 'ListView.builder(itemCount: 10, itemBuilder: (ctx, i) => ListTile())',
         ),
 
         // ListView.separated
         ExampleCard(
           title: 'ListView.separated',
           description: '带分隔线的列表',
+          code: 'ListView.separated(itemBuilder: ..., separatorBuilder: ...)',
           child: SizedBox(
             height: 180,
             child: ListView.separated(
@@ -87,13 +88,13 @@ class ScrollPage extends StatelessWidget {
               },
             ),
           ),
-          code: 'ListView.separated(itemBuilder: ..., separatorBuilder: ...)',
         ),
 
         // ListTile
         ExampleCard(
           title: 'ListTile',
           description: 'Material Design 列表项',
+          code: 'ListTile(leading: Icon(), title: Text(), subtitle: Text())',
           child: Column(
             children: [
               ListTile(
@@ -131,18 +132,17 @@ class ScrollPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'ListTile(leading: Icon(), title: Text(), subtitle: Text())',
         ),
 
         // ReorderableListView
         ExampleCard(
           title: 'ReorderableListView',
           description: '可重新排序的列表',
+          code: 'ReorderableListView(onReorder: (old, new) => ...)',
           child: SizedBox(
             height: 200,
             child: _ReorderableListDemo(),
           ),
-          code: 'ReorderableListView(onReorder: (old, new) => ...)',
         ),
 
         const ExampleSectionHeader(title: '网格视图', icon: Icons.grid_view),
@@ -151,6 +151,7 @@ class ScrollPage extends StatelessWidget {
         ExampleCard(
           title: 'GridView.count',
           description: '固定列数的网格',
+          code: 'GridView.count(crossAxisCount: 3, children: [...])',
           child: SizedBox(
             height: 180,
             child: GridView.count(
@@ -174,13 +175,13 @@ class ScrollPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'GridView.count(crossAxisCount: 3, children: [...])',
         ),
 
         // GridView.builder
         ExampleCard(
           title: 'GridView.builder',
           description: '动态构建网格项',
+          code: 'GridView.builder(gridDelegate: SliverGridDelegate..., itemBuilder: ...)',
           child: SizedBox(
             height: 200,
             child: GridView.builder(
@@ -194,7 +195,7 @@ class ScrollPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 return Container(
                   decoration: BoxDecoration(
-                    color: Colors.primaries[index % Colors.primaries.length].withOpacity(0.7),
+                    color: Colors.primaries[index % Colors.primaries.length].withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Column(
@@ -209,13 +210,13 @@ class ScrollPage extends StatelessWidget {
               },
             ),
           ),
-          code: 'GridView.builder(gridDelegate: SliverGridDelegate..., itemBuilder: ...)',
         ),
 
         // GridView.extent
         ExampleCard(
           title: 'GridView.extent',
           description: '按最大宽度创建网格',
+          code: 'GridView.extent(maxCrossAxisExtent: 100)',
           child: SizedBox(
             height: 160,
             child: GridView.extent(
@@ -233,7 +234,6 @@ class ScrollPage extends StatelessWidget {
               ),
             ),
           ),
-          code: 'GridView.extent(maxCrossAxisExtent: 100)',
         ),
 
         const ExampleSectionHeader(title: '高级滚动', icon: Icons.auto_awesome),
@@ -242,6 +242,7 @@ class ScrollPage extends StatelessWidget {
         ExampleCard(
           title: 'CustomScrollView',
           description: '自定义滚动视图，可组合多种 Sliver',
+          code: 'CustomScrollView(slivers: [SliverAppBar(), SliverList()...])',
           child: SizedBox(
             height: 300,
             child: CustomScrollView(
@@ -262,7 +263,7 @@ class ScrollPage extends StatelessWidget {
                   ),
                   delegate: SliverChildBuilderDelegate(
                     (context, index) => Container(
-                      color: Colors.primaries[index % Colors.primaries.length].withOpacity(0.5),
+                      color: Colors.primaries[index % Colors.primaries.length].withValues(alpha: 0.5),
                       child: Center(child: Text('$index')),
                     ),
                     childCount: 12,
@@ -284,13 +285,13 @@ class ScrollPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'CustomScrollView(slivers: [SliverAppBar(), SliverList()...])',
         ),
 
         // SliverList
         ExampleCard(
           title: 'SliverList',
           description: 'Sliver 列表',
+          code: 'SliverList(delegate: SliverChildBuilderDelegate(...))',
           child: SizedBox(
             height: 200,
             child: CustomScrollView(
@@ -317,13 +318,13 @@ class ScrollPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'SliverList(delegate: SliverChildBuilderDelegate(...))',
         ),
 
         // SliverGrid
         ExampleCard(
           title: 'SliverGrid',
           description: 'Sliver 网格',
+          code: 'SliverGrid(gridDelegate: ..., delegate: ...)',
           child: SizedBox(
             height: 180,
             child: CustomScrollView(
@@ -345,13 +346,13 @@ class ScrollPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'SliverGrid(gridDelegate: ..., delegate: ...)',
         ),
 
         // SliverAppBar
         ExampleCard(
           title: 'SliverAppBar',
           description: '可折叠的应用栏',
+          code: 'SliverAppBar(expandedHeight: 120, pinned: true)',
           child: SizedBox(
             height: 250,
             child: CustomScrollView(
@@ -384,13 +385,13 @@ class ScrollPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'SliverAppBar(expandedHeight: 120, pinned: true)',
         ),
 
         // SliverPersistentHeader
         ExampleCard(
           title: 'SliverPersistentHeader',
           description: '持久化头部',
+          code: 'SliverPersistentHeader(delegate: SliverPersistentHeaderDelegate)',
           child: SizedBox(
             height: 200,
             child: CustomScrollView(
@@ -417,23 +418,22 @@ class ScrollPage extends StatelessWidget {
               ],
             ),
           ),
-          code: 'SliverPersistentHeader(delegate: SliverPersistentHeaderDelegate)',
         ),
 
         // ScrollController
         ExampleCard(
           title: 'ScrollController',
           description: '滚动控制器',
-          child: _ScrollControllerDemo(),
           code: 'ScrollController scrollController = ScrollController()',
+          child: _ScrollControllerDemo(),
         ),
 
         // ScrollNotification
         ExampleCard(
           title: 'NotificationListener',
           description: '滚动通知监听',
-          child: _ScrollNotificationDemo(),
           code: 'NotificationListener<ScrollNotification>(onNotification: ...)',
+          child: _ScrollNotificationDemo(),
         ),
 
         const SizedBox(height: 24),
@@ -454,9 +454,8 @@ class _ReorderableListDemoState extends State<_ReorderableListDemo> {
   @override
   Widget build(BuildContext context) {
     return ReorderableListView(
-      onReorder: (oldIndex, newIndex) {
+      onReorderItem: (oldIndex, newIndex) {
         setState(() {
-          if (newIndex > oldIndex) newIndex--;
           final item = _items.removeAt(oldIndex);
           _items.insert(newIndex, item);
         });

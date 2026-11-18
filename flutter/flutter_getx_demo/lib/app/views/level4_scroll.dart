@@ -36,7 +36,7 @@ class ScrollPage extends StatelessWidget {
         height: 200,
         child: ListView.separated(
           itemCount: 6,
-          separatorBuilder: (_, __) => const Divider(height: 1),
+          separatorBuilder: (_, _) => const Divider(height: 1),
           itemBuilder: (ctx, i) => Padding(padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), child: Text('Separator Item ${i + 1}')),
         ),
       )),

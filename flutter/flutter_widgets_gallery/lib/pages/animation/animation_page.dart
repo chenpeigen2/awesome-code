@@ -17,64 +17,64 @@ class AnimationPage extends StatelessWidget {
         ExampleCard(
           title: 'AnimatedContainer',
           description: '动画容器',
-          child: _AnimatedContainerDemo(),
           code: 'AnimatedContainer(duration: Duration(milliseconds: 300))',
+          child: _AnimatedContainerDemo(),
         ),
 
         // AnimatedOpacity
         ExampleCard(
           title: 'AnimatedOpacity',
           description: '动画透明度',
-          child: _AnimatedOpacityDemo(),
           code: 'AnimatedOpacity(opacity: 1.0, duration: Duration(...))',
+          child: _AnimatedOpacityDemo(),
         ),
 
         // AnimatedAlign
         ExampleCard(
           title: 'AnimatedAlign',
           description: '动画对齐',
-          child: _AnimatedAlignDemo(),
           code: 'AnimatedAlign(alignment: Alignment.center, duration: ...)',
+          child: _AnimatedAlignDemo(),
         ),
 
         // AnimatedPadding
         ExampleCard(
           title: 'AnimatedPadding',
           description: '动画内边距',
-          child: _AnimatedPaddingDemo(),
           code: 'AnimatedPadding(padding: EdgeInsets.all(16), duration: ...)',
+          child: _AnimatedPaddingDemo(),
         ),
 
         // AnimatedPositioned
         ExampleCard(
           title: 'AnimatedPositioned',
           description: '动画定位',
-          child: _AnimatedPositionedDemo(),
           code: 'AnimatedPositioned(left: 0, top: 0, duration: ...)',
+          child: _AnimatedPositionedDemo(),
         ),
 
         // AnimatedCrossFade
         ExampleCard(
           title: 'AnimatedCrossFade',
           description: '交叉淡入淡出动画',
-          child: _AnimatedCrossFadeDemo(),
           code: 'AnimatedCrossFade(firstChild: ..., secondChild: ...)',
+          child: _AnimatedCrossFadeDemo(),
         ),
 
         // AnimatedSize
         ExampleCard(
           title: 'AnimatedSize',
           description: '动画尺寸变化',
-          child: _AnimatedSizeDemo(),
           code: 'AnimatedSize(duration: Duration(...), child: ...)',
+          child: _AnimatedSizeDemo(),
         ),
 
         // AnimatedDefaultTextStyle
         ExampleCard(
           title: 'AnimatedDefaultTextStyle',
           description: '动画文本样式',
-          child: _AnimatedTextStyleDemo(),
           code: 'AnimatedDefaultTextStyle(style: TextStyle(...), duration: ...)',
+          child: _AnimatedTextStyleDemo(),
         ),
 
         const ExampleSectionHeader(title: '过渡动画', icon: Icons.swap_horiz),
@@ -83,16 +83,16 @@ class AnimationPage extends StatelessWidget {
         ExampleCard(
           title: 'AnimatedSwitcher',
           description: '子组件切换动画',
-          child: _AnimatedSwitcherDemo(),
           code: 'AnimatedSwitcher(duration: Duration(...), child: ...)',
+          child: _AnimatedSwitcherDemo(),
         ),
 
         // TweenAnimationBuilder
         ExampleCard(
           title: 'TweenAnimationBuilder',
           description: '补间动画构建器',
-          child: _TweenAnimationBuilderDemo(),
           code: 'TweenAnimationBuilder(tween: Tween(...), builder: ...)',
+          child: _TweenAnimationBuilderDemo(),
         ),
 
         const ExampleSectionHeader(title: '显式动画', icon: Icons.animation),
@@ -101,24 +101,24 @@ class AnimationPage extends StatelessWidget {
         ExampleCard(
           title: 'AnimationController',
           description: '动画控制器（需要 StatefulWidget）',
-          child: _AnimationControllerDemo(),
           code: 'AnimationController(duration: Duration(...), vsync: this)',
+          child: _AnimationControllerDemo(),
         ),
 
         // AnimatedBuilder
         ExampleCard(
           title: 'AnimatedBuilder',
           description: '动画构建器',
-          child: _AnimatedBuilderDemo(),
           code: 'AnimatedBuilder(animation: controller, builder: ...)',
+          child: _AnimatedBuilderDemo(),
         ),
 
         // Curves
         ExampleCard(
           title: 'Curves 动画曲线',
           description: '不同的动画效果曲线',
-          child: _CurvesDemo(),
           code: 'Curves.easeInOut / Curves.elasticOut',
+          child: _CurvesDemo(),
         ),
 
         const ExampleSectionHeader(title: 'Hero动画', icon: Icons.star),
@@ -127,6 +127,7 @@ class AnimationPage extends StatelessWidget {
         ExampleCard(
           title: 'Hero',
           description: '共享元素过渡动画',
+          code: 'Hero(tag: "unique-tag", child: Widget)',
           child: Column(
             children: [
               const Text('点击卡片跳转到详情页查看 Hero 动画效果'),
@@ -153,7 +154,6 @@ class AnimationPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Hero(tag: "unique-tag", child: Widget)',
         ),
 
         const ExampleSectionHeader(title: '高级动画', icon: Icons.auto_awesome),
@@ -162,24 +162,24 @@ class AnimationPage extends StatelessWidget {
         ExampleCard(
           title: '自定义动画绘制',
           description: '使用 CustomPainter 创建动画',
-          child: _CustomPainterAnimationDemo(),
           code: 'CustomPaint(painter: CustomPainter())',
+          child: _CustomPainterAnimationDemo(),
         ),
 
         // 粒子动画
         ExampleCard(
           title: '粒子动画',
           description: '多个动画组合',
-          child: _ParticleAnimationDemo(),
           code: 'Stack + AnimatedBuilder + CustomPaint',
+          child: _ParticleAnimationDemo(),
         ),
 
         // 物理动画
         ExampleCard(
           title: '物理动画',
           description: '模拟物理效果',
-          child: _PhysicsAnimationDemo(),
           code: 'AnimationController + SpringSimulation',
+          child: _PhysicsAnimationDemo(),
         ),
 
         const SizedBox(height: 24),

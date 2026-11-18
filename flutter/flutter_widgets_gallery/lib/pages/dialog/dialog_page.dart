@@ -16,6 +16,7 @@ class DialogPage extends StatelessWidget {
         ExampleCard(
           title: 'AlertDialog',
           description: '警告对话框',
+          code: 'showDialog(context: context, builder: (ctx) => AlertDialog(...))',
           child: ElevatedButton(
             onPressed: () {
               showDialog(
@@ -38,13 +39,13 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示 AlertDialog'),
           ),
-          code: 'showDialog(context: context, builder: (ctx) => AlertDialog(...))',
         ),
 
         // SimpleDialog
         ExampleCard(
           title: 'SimpleDialog',
           description: '简单对话框',
+          code: 'showDialog(builder: (ctx) => SimpleDialog(children: [SimpleDialogOption()...]))',
           child: ElevatedButton(
             onPressed: () {
               showDialog(
@@ -85,6 +86,7 @@ class DialogPage extends StatelessWidget {
                   ],
                 ),
               ).then((value) {
+                if (!context.mounted) return;
                 if (value != null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('选择了: $value')),
@@ -94,13 +96,13 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示 SimpleDialog'),
           ),
-          code: 'showDialog(builder: (ctx) => SimpleDialog(children: [SimpleDialogOption()...]))',
         ),
 
         // Dialog (自定义)
         ExampleCard(
           title: '自定义 Dialog',
           description: '完全自定义的对话框',
+          code: 'Dialog(shape: RoundedRectangleBorder(...), child: ...)',
           child: ElevatedButton(
             onPressed: () {
               showDialog(
@@ -132,13 +134,13 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示自定义 Dialog'),
           ),
-          code: 'Dialog(shape: RoundedRectangleBorder(...), child: ...)',
         ),
 
         // FullscreenDialog
         ExampleCard(
           title: '全屏对话框',
           description: '全屏显示的对话框',
+          code: 'Navigator.push(context, MaterialPageRoute(fullscreenDialog: true))',
           child: ElevatedButton(
             onPressed: () {
               Navigator.push(
@@ -162,7 +164,6 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示全屏对话框'),
           ),
-          code: 'Navigator.push(context, MaterialPageRoute(fullscreenDialog: true))',
         ),
 
         const ExampleSectionHeader(title: '底部抽屉', icon: Icons.vertical_align_bottom),
@@ -171,6 +172,7 @@ class DialogPage extends StatelessWidget {
         ExampleCard(
           title: 'ModalBottomSheet',
           description: '模态底部抽屉',
+          code: 'showModalBottomSheet(builder: (ctx) => DraggableScrollableSheet(...))',
           child: ElevatedButton(
             onPressed: () {
               showModalBottomSheet(
@@ -217,15 +219,14 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示 ModalBottomSheet'),
           ),
-          code: 'showModalBottomSheet(builder: (ctx) => DraggableScrollableSheet(...))',
         ),
 
         // PersistentBottomSheet
         ExampleCard(
           title: 'PersistentBottomSheet',
           description: '持久化底部抽屉',
-          child: _PersistentBottomSheetDemo(),
           code: 'Scaffold.of(context).showBottomSheet((ctx) => ...)',
+          child: _PersistentBottomSheetDemo(),
         ),
 
         const ExampleSectionHeader(title: '菜单', icon: Icons.menu),
@@ -234,6 +235,7 @@ class DialogPage extends StatelessWidget {
         ExampleCard(
           title: 'PopupMenuButton',
           description: '弹出菜单按钮',
+          code: 'PopupMenuButton(itemBuilder: (ctx) => [PopupMenuItem()...])',
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -270,23 +272,22 @@ class DialogPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'PopupMenuButton(itemBuilder: (ctx) => [PopupMenuItem()...])',
         ),
 
         // DropdownMenu (Material 3)
         ExampleCard(
           title: 'DropdownMenu',
           description: 'Material 3 下拉菜单',
-          child: _DropdownMenuDemo(),
           code: 'DropdownMenu(entries: [DropdownMenuEntry()...], onSelected: ...)',
+          child: _DropdownMenuDemo(),
         ),
 
         // MenuAnchor
         ExampleCard(
           title: 'MenuAnchor',
           description: '菜单锚点 (Material 3)',
-          child: _MenuAnchorDemo(),
           code: 'MenuAnchor(menuChildren: [MenuItemButton()...], child: ...)',
+          child: _MenuAnchorDemo(),
         ),
 
         const ExampleSectionHeader(title: '其他弹窗', icon: Icons.more_horiz),
@@ -295,6 +296,7 @@ class DialogPage extends StatelessWidget {
         ExampleCard(
           title: 'showDatePicker',
           description: '日期选择对话框',
+          code: 'showDatePicker(context: context, initialDate: ..., firstDate: ..., lastDate: ...)',
           child: ElevatedButton(
             onPressed: () async {
               final date = await showDatePicker(
@@ -316,6 +318,7 @@ class DialogPage extends StatelessWidget {
                   );
                 },
               );
+              if (!context.mounted) return;
               if (date != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('选择了: ${date.year}-${date.month}-${date.day}')),
@@ -324,13 +327,13 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示日期选择器'),
           ),
-          code: 'showDatePicker(context: context, initialDate: ..., firstDate: ..., lastDate: ...)',
         ),
 
         // TimePickerDialog
         ExampleCard(
           title: 'showTimePicker',
           description: '时间选择对话框',
+          code: 'showTimePicker(context: context, initialTime: TimeOfDay.now())',
           child: ElevatedButton(
             onPressed: () async {
               final time = await showTimePicker(
@@ -343,6 +346,7 @@ class DialogPage extends StatelessWidget {
                   );
                 },
               );
+              if (!context.mounted) return;
               if (time != null) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('选择了: ${time.hour}:${time.minute.toString().padLeft(2, '0')}')),
@@ -351,13 +355,13 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示时间选择器'),
           ),
-          code: 'showTimePicker(context: context, initialTime: TimeOfDay.now())',
         ),
 
         // showLicensePage
         ExampleCard(
           title: 'showLicensePage',
           description: '许可证页面',
+          code: 'showLicensePage(context: context, applicationName: ...)',
           child: ElevatedButton(
             onPressed: () {
               showLicensePage(
@@ -368,13 +372,13 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示许可证页面'),
           ),
-          code: 'showLicensePage(context: context, applicationName: ...)',
         ),
 
         // showAboutDialog
         ExampleCard(
           title: 'showAboutDialog',
           description: '关于对话框',
+          code: 'showAboutDialog(context: context, applicationName: ...)',
           child: ElevatedButton(
             onPressed: () {
               showAboutDialog(
@@ -391,13 +395,13 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示关于对话框'),
           ),
-          code: 'showAboutDialog(context: context, applicationName: ...)',
         ),
 
         // showSearch
         ExampleCard(
           title: 'showSearch',
           description: '搜索页面',
+          code: 'showSearch(context: context, delegate: SearchDelegate())',
           child: ElevatedButton(
             onPressed: () {
               showSearch(
@@ -407,13 +411,13 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示搜索页面'),
           ),
-          code: 'showSearch(context: context, delegate: SearchDelegate())',
         ),
 
         // Adaptive dialog
         ExampleCard(
           title: '自适应对话框',
           description: '根据平台显示不同样式',
+          code: 'showDialog / showCupertinoDialog',
           child: ElevatedButton(
             onPressed: () {
               if (Theme.of(context).platform == TargetPlatform.iOS) {
@@ -457,7 +461,6 @@ class DialogPage extends StatelessWidget {
             },
             child: const Text('显示自适应对话框'),
           ),
-          code: 'showDialog / showCupertinoDialog',
         ),
 
         const SizedBox(height: 24),

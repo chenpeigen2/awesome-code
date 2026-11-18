@@ -15,6 +15,7 @@ class MaterialPage extends StatelessWidget {
         ExampleCard(
           title: 'AppBar',
           description: '应用栏',
+          code: 'AppBar(title: Text("标题"), actions: [IconButton()...])',
           child: Column(
             children: [
               AppBar(
@@ -33,39 +34,38 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'AppBar(title: Text("标题"), actions: [IconButton()...])',
         ),
 
         // TabBar
         ExampleCard(
           title: 'TabBar',
           description: '标签栏',
-          child: _TabBarDemo(),
           code: 'TabBar(tabs: [Tab(text: "标签1"), Tab(text: "标签2")])',
+          child: _TabBarDemo(),
         ),
 
         // BottomNavigationBar
         ExampleCard(
           title: 'BottomNavigationBar',
           description: '底部导航栏',
-          child: _BottomNavDemo(),
           code: 'BottomNavigationBar(items: [BottomNavigationBarItem()...])',
+          child: _BottomNavDemo(),
         ),
 
         // NavigationRail
         ExampleCard(
           title: 'NavigationRail',
           description: '侧边导航栏',
-          child: _NavigationRailDemo(),
           code: 'NavigationRail(destinations: [NavigationRailDestination()...])',
+          child: _NavigationRailDemo(),
         ),
 
         // NavigationBar
         ExampleCard(
           title: 'NavigationBar (Material 3)',
           description: 'Material 3 底部导航栏',
-          child: _NavigationBarDemo(),
           code: 'NavigationBar(destinations: [NavigationDestination()...])',
+          child: _NavigationBarDemo(),
         ),
 
         const ExampleSectionHeader(title: '信息展示', icon: Icons.info),
@@ -74,6 +74,7 @@ class MaterialPage extends StatelessWidget {
         ExampleCard(
           title: 'Card',
           description: '卡片组件',
+          code: 'Card(child: Padding(padding: EdgeInsets.all(16), child: ...))',
           child: Column(
             children: [
               Card(
@@ -99,13 +100,13 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Card(child: Padding(padding: EdgeInsets.all(16), child: ...))',
         ),
 
         // ListTile
         ExampleCard(
           title: 'ListTile',
           description: '列表项组件',
+          code: 'ListTile(leading: Icon(), title: Text(), subtitle: Text())',
           child: const Column(
             children: [
               ListTile(
@@ -122,13 +123,13 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'ListTile(leading: Icon(), title: Text(), subtitle: Text())',
         ),
 
         // Chip
         ExampleCard(
           title: 'Chip',
           description: '标签芯片',
+          code: 'Chip(label: Text("标签")) / FilterChip / ChoiceChip',
           child: Wrap(
             spacing: 8,
             runSpacing: 8,
@@ -159,13 +160,13 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Chip(label: Text("标签")) / FilterChip / ChoiceChip',
         ),
 
         // Badge
         ExampleCard(
           title: 'Badge',
           description: '徽章标记',
+          code: 'Badge(label: Text("3"), child: Icon(Icons.mail))',
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -183,13 +184,13 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Badge(label: Text("3"), child: Icon(Icons.mail))',
         ),
 
         // ProgressIndicator
         ExampleCard(
           title: 'ProgressIndicator',
           description: '进度指示器',
+          code: 'CircularProgressIndicator() / LinearProgressIndicator(value: 0.7)',
           child: Column(
             children: [
               const Row(
@@ -223,13 +224,13 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'CircularProgressIndicator() / LinearProgressIndicator(value: 0.7)',
         ),
 
         // Divider
         ExampleCard(
           title: 'Divider & VerticalDivider',
           description: '分割线',
+          code: 'Divider(height: 32) / VerticalDivider(width: 32)',
           child: const Column(
             children: [
               Text('上方内容'),
@@ -244,7 +245,6 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Divider(height: 32) / VerticalDivider(width: 32)',
         ),
 
         const ExampleSectionHeader(title: '底部组件', icon: Icons.vertical_align_bottom),
@@ -253,6 +253,7 @@ class MaterialPage extends StatelessWidget {
         ExampleCard(
           title: 'BottomSheet',
           description: '底部抽屉',
+          code: 'showModalBottomSheet(context: context, builder: (ctx) => Widget)',
           child: ElevatedButton(
             onPressed: () {
               showModalBottomSheet(
@@ -278,13 +279,13 @@ class MaterialPage extends StatelessWidget {
             },
             child: const Text('显示 BottomSheet'),
           ),
-          code: 'showModalBottomSheet(context: context, builder: (ctx) => Widget)',
         ),
 
         // SnackBar
         ExampleCard(
           title: 'SnackBar',
           description: '消息提示条',
+          code: 'ScaffoldMessenger.of(context).showSnackBar(SnackBar(...))',
           child: ElevatedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -303,13 +304,13 @@ class MaterialPage extends StatelessWidget {
             },
             child: const Text('显示 SnackBar'),
           ),
-          code: 'ScaffoldMessenger.of(context).showSnackBar(SnackBar(...))',
         ),
 
         // Banner
         ExampleCard(
           title: 'MaterialBanner',
           description: '横幅提示',
+          code: 'ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(...))',
           child: ElevatedButton(
             onPressed: () {
               ScaffoldMessenger.of(context).showMaterialBanner(
@@ -327,7 +328,6 @@ class MaterialPage extends StatelessWidget {
             },
             child: const Text('显示 MaterialBanner'),
           ),
-          code: 'ScaffoldMessenger.of(context).showMaterialBanner(MaterialBanner(...))',
         ),
 
         const ExampleSectionHeader(title: '其他组件', icon: Icons.more_horiz),
@@ -336,14 +336,15 @@ class MaterialPage extends StatelessWidget {
         ExampleCard(
           title: 'Drawer',
           description: '侧边抽屉（点击左上角菜单查看）',
-          child: const Text('已在主页面的 Scaffold.drawer 中配置'),
           code: 'Scaffold(drawer: Drawer(child: ListView(...)))',
+          child: const Text('已在主页面的 Scaffold.drawer 中配置'),
         ),
 
         // FloatingActionButton
         ExampleCard(
           title: 'FloatingActionButton',
           description: '浮动操作按钮',
+          code: 'FloatingActionButton(onPressed: () {}, child: Icon(Icons.add))',
           child: Wrap(
             spacing: 16,
             runSpacing: 16,
@@ -366,13 +367,13 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'FloatingActionButton(onPressed: () {}, child: Icon(Icons.add))',
         ),
 
         // Tooltip
         ExampleCard(
           title: 'Tooltip',
           description: '工具提示',
+          code: 'Tooltip(message: "提示信息", child: Widget)',
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -393,31 +394,30 @@ class MaterialPage extends StatelessWidget {
               ),
             ],
           ),
-          code: 'Tooltip(message: "提示信息", child: Widget)',
         ),
 
         // Stepper
         ExampleCard(
           title: 'Stepper',
           description: '步骤指示器',
-          child: _StepperDemo(),
           code: 'Stepper(steps: [Step()...], onStepContinue: ...)',
+          child: _StepperDemo(),
         ),
 
         // ExpansionPanel
         ExampleCard(
           title: 'ExpansionPanelList',
           description: '展开面板列表',
-          child: _ExpansionPanelDemo(),
           code: 'ExpansionPanelList(children: [ExpansionPanel()...])',
+          child: _ExpansionPanelDemo(),
         ),
 
         // SearchAnchor
         ExampleCard(
           title: 'SearchAnchor',
           description: '搜索栏 (Material 3)',
-          child: _SearchAnchorDemo(),
           code: 'SearchAnchor(builder: ..., suggestionsBuilder: ...)',
+          child: _SearchAnchorDemo(),
         ),
 
         const SizedBox(height: 24),
