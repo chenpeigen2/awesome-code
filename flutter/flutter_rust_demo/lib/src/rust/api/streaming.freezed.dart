@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'streaming.dart';
@@ -9,6 +9,7 @@ part of 'streaming.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$ProgressEvent {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProgressEvent);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProgressEvent);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'ProgressEvent()';
+    return 'ProgressEvent()';
 }
 
 
@@ -195,16 +196,18 @@ $ProgressEvent_ProgressCopyWith<ProgressEvent_Progress> get copyWith => _$Progre
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProgressEvent_Progress&&(identical(other.done, done) || other.done == done)&&(identical(other.total, total) || other.total == total)&&(identical(other.partialEstimate, partialEstimate) || other.partialEstimate == partialEstimate));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProgressEvent_Progress&&(identical(other.done, done) || other.done == done)&&(identical(other.total, total) || other.total == total)&&(identical(other.partialEstimate, partialEstimate) || other.partialEstimate == partialEstimate));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,done,total,partialEstimate);
+int get hashCode {
+    return Object.hash(runtimeType,done,total,partialEstimate);
+}
 
 @override
 String toString() {
-  return 'ProgressEvent.progress(done: $done, total: $total, partialEstimate: $partialEstimate)';
+    return 'ProgressEvent.progress(done: $done, total: $total, partialEstimate: $partialEstimate)';
 }
 
 
@@ -266,16 +269,18 @@ $ProgressEvent_DoneCopyWith<ProgressEvent_Done> get copyWith => _$ProgressEvent_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ProgressEvent_Done&&(identical(other.estimate, estimate) || other.estimate == estimate)&&(identical(other.absError, absError) || other.absError == absError)&&(identical(other.elapsedMs, elapsedMs) || other.elapsedMs == elapsedMs));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is ProgressEvent_Done&&(identical(other.estimate, estimate) || other.estimate == estimate)&&(identical(other.absError, absError) || other.absError == absError)&&(identical(other.elapsedMs, elapsedMs) || other.elapsedMs == elapsedMs));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,estimate,absError,elapsedMs);
+int get hashCode {
+    return Object.hash(runtimeType,estimate,absError,elapsedMs);
+}
 
 @override
 String toString() {
-  return 'ProgressEvent.done(estimate: $estimate, absError: $absError, elapsedMs: $elapsedMs)';
+    return 'ProgressEvent.done(estimate: $estimate, absError: $absError, elapsedMs: $elapsedMs)';
 }
 
 

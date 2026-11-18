@@ -13,6 +13,8 @@ analyzer:
     - android/**
     - ios/**
     - macos/**
+    # cargokit 是 vendored 的第三方构建工具，依赖不在本项目解析范围内
+    - rust_builder/cargokit/**
 include: package:flutter_lints/flutter.yaml
 
 linter:

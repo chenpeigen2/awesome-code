@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 import 'package:flutter_rust_demo/main.dart';
 import 'package:flutter_rust_demo/src/rust/api/primes.dart' as primes;
 import 'package:flutter_rust_demo/src/rust/api/simple.dart' as simple;

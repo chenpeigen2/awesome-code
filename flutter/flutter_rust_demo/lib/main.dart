@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated.dart';
 
 import 'src/pages/home_shell.dart';
 import 'src/rust/frb_generated.dart';
