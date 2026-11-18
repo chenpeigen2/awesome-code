@@ -10,7 +10,7 @@ export default function MatrixCanvas() {
   const mouseRef = useRef<MousePos>({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
 
   const {
-    columnsRef, userColumnsRef, ripplesRef, timeRef, addRipple,
+    columnsRef, userColumnsRef, ripplesRef, addRipple,
   } = useMatrixRain();
 
   // Keep latest values in refs for the stable animation loop
