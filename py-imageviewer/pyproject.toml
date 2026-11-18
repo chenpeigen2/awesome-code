@@ -65,6 +65,12 @@ warn_return_any = true
 warn_unused_configs = true
 ignore_missing_imports = true
 
+# PyQt6 自带的类型存根对 signal 签名、menuBar() 等返回值的描述不完整，
+# 会产生大量与真实缺陷无关的报错，这里对 UI 层关闭相应检查
+[[tool.mypy.overrides]]
+module = "imageviewer.ui.*"
+disable_error_code = ["call-arg", "union-attr", "arg-type", "override"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"

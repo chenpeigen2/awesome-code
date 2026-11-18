@@ -102,7 +102,7 @@ class ImageCollection:
 
 
 class CollectionService:
-    def __init__(self):
+    def __init__(self) -> None:
         settings = get_settings()
         self.collections_dir = Path(settings.collections_dir)
         self._collections: dict[str, ImageCollection] = {}

@@ -1,6 +1,7 @@
 """Unsplash API service for online image search."""
 
 from datetime import datetime
+from typing import Any
 
 import httpx
 
@@ -35,7 +36,7 @@ class UnsplashService:
     async def search_photos(self, query: SearchQuery) -> SearchResult:
         self._check_api_key()
         client = await self._get_client()
-        params = {
+        params: dict[str, str | int] = {
             "query": query.query,
             "page": query.page,
             "per_page": query.per_page,
@@ -48,7 +49,7 @@ class UnsplashService:
         try:
             response = await client.get(f"{UNSPLASH_API_BASE}/search/photos", params=params)
             response.raise_for_status()
-            data = response.json()
+            data: dict[str, Any] = response.json()
             images = [self._parse_photo(photo) for photo in data.get("results", [])]
             return SearchResult(
                 images=images,
@@ -103,7 +104,8 @@ class UnsplashService:
                 params={"page": page, "per_page": per_page},
             )
             response.raise_for_status()
-            return response.json()
+            collections: list[dict[str, Any]] = response.json()
+            return collections
         except httpx.HTTPStatusError as e:
             logger.error(f"Failed to get collections: {e}")
             return []

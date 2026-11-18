@@ -235,7 +235,7 @@ class OnlineViewerPanel(QWidget):
         data = thumbnail.tobytes("raw", "RGB")
         from PyQt6.QtGui import QImage
         qimage = QImage(data, thumbnail.width, thumbnail.height, QImage.Format.Format_RGB888)
-        pixmap = QPixmap.fromImage(qimage)
+        pixmap: QPixmap = QPixmap.fromImage(qimage)
         item.setIcon(QIcon(pixmap))
 
     def _cleanup_downloader(self, downloader: ThumbnailDownloader) -> None:

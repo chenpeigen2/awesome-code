@@ -4,7 +4,7 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-from imageviewer.core.models import ImageFormat, ImageItem, ImageTransform
+from imageviewer.core.models import ImageFormat, ImageItem, ImageSource, ImageTransform
 from imageviewer.utils.logger import get_logger
 
 logger = get_logger()
@@ -97,7 +97,7 @@ def create_image_item_from_path(file_path: Path) -> ImageItem | None:
         return None
     return ImageItem(
         id=str(file_path),
-        source="local",
+        source=ImageSource.LOCAL,
         file_path=file_path,
         title=file_path.name,
         width=info.get("width", 0),
