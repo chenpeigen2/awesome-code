@@ -86,7 +86,7 @@ mmkv = "2.4.3"
 securityCrypto = "1.1.0"
 
 # Biometric 版本
-biometric = "1.4.0-alpha07"
+biometric = "1.4.0-beta01"
 
 # SplashScreen 版本
 splashscreen = "1.2.0"
@@ -98,7 +98,7 @@ navigation = "2.10.2"
 paging = "3.5.3"
 
 # CameraX 版本
-camerax = "1.7.0-alpha03"
+camerax = "1.7.0-rc02"
 
 # AndroidX DynamicAnimation 版本
 androidxDynamicanimation = "1.1.0"
