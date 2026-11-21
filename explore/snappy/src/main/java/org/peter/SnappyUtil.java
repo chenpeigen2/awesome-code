@@ -8,6 +8,11 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public class SnappyUtil {
 
@@ -93,6 +98,89 @@ public class SnappyUtil {
                 oStream = null;//赋值为null,等待垃圾回收
                 e.printStackTrace();
             }
+        }
+    }
+
+    // ---------- 字符串便捷方法 ----------
+
+    /**
+     * 压缩 UTF-8 字符串，null 或空串返回 null
+     */
+    public static byte[] compressString(String text) {
+        if (text == null || text.isEmpty()) {
+            return null;
+        }
+        return compress(text.getBytes(StandardCharsets.UTF_8));
+    }
+
+    /**
+     * 解压为 UTF-8 字符串，入参为 null 或空数组时返回 null
+     */
+    public static String unCompressToString(byte[] bytes) {
+        if (bytes == null || bytes.length == 0) {
+            return null;
+        }
+        byte[] uncompressed = unCompress(bytes);
+        if (uncompressed == null) {
+            return null;
+        }
+        return new String(uncompressed, StandardCharsets.UTF_8);
+    }
+
+    // ---------- 文件压缩（流格式，带 snappy 头） ----------
+
+    /**
+     * 将 src 文件压缩为流格式写入 dst，成功返回 true
+     */
+    public static boolean compressFile(Path src, Path dst) {
+        if (src == null || dst == null || Files.notExists(src)) {
+            return false;
+        }
+        try (InputStream in = Files.newInputStream(src);
+             OutputStream out = new SnappyOutputStream(Files.newOutputStream(dst))) {
+            in.transferTo(out);
+            out.flush();
+            return true;
+        } catch (Exception e) {
+            deleteQuietly(dst);
+            return false;
+        }
+    }
+
+    /**
+     * 将流格式的压缩文件 src 解压写入 dst，成功返回 true
+     */
+    public static boolean unCompressFile(Path src, Path dst) {
+        if (src == null || dst == null || Files.notExists(src)) {
+            return false;
+        }
+        try (InputStream in = new SnappyInputStream(Files.newInputStream(src));
+             OutputStream out = Files.newOutputStream(dst)) {
+            in.transferTo(out);
+            return true;
+        } catch (Exception e) {
+            deleteQuietly(dst);
+            return false;
+        }
+    }
+
+    // ---------- 统计 ----------
+
+    /**
+     * 压缩比 = 原始字节数 / 压缩后字节数，大于 1 表示确实变小了
+     */
+    public static double compressionRatio(byte[] compressed, byte[] original) {
+        if (compressed == null || original == null || compressed.length == 0) {
+            return 0;
+        }
+        return (double) original.length / compressed.length;
+    }
+
+    private static void deleteQuietly(Path path) {
+        try {
+            Files.deleteIfExists(path);
+        } catch (IOException ignored) {
+            // 清理失败不影响返回值语义
         }
     }
 

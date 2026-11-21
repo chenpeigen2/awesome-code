@@ -1,10 +1,17 @@
 package org.peter;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -73,5 +80,69 @@ class SnappyUtilTest {
     @Test
     void streamUnCompressReturnsNullForCorruptedData() {
         assertNull(SnappyUtil.unCompressWithHeader(new byte[]{1, 2, 3, 4, 5}));
+    }
+
+    // ---------- 字符串压缩 ----------
+
+    @Test
+    void stringRoundTripRestoresOriginalTextIncludingChinese() {
+        String original = "Hello snappy! 你好，斯纳皮！🎵";
+        byte[] compressed = SnappyUtil.compressString(original);
+        assertEquals(original, SnappyUtil.unCompressToString(compressed));
+    }
+
+    @Test
+    void compressStringReturnsNullForNullOrEmptyInput() {
+        assertNull(SnappyUtil.compressString(null));
+        assertNull(SnappyUtil.compressString(""));
+    }
+
+    @Test
+    void unCompressToStringReturnsNullForNullOrEmptyInput() {
+        assertNull(SnappyUtil.unCompressToString(null));
+        assertNull(SnappyUtil.unCompressToString(new byte[0]));
+    }
+
+    // ---------- 文件压缩 ----------
+
+    @Test
+    void fileRoundTripRestoresOriginalContent(@TempDir Path tempDir) throws IOException {
+        byte[] original = "0123456789abcdef".repeat(64 * 1024).getBytes(StandardCharsets.UTF_8);
+        Path src = tempDir.resolve("src.bin");
+        Path compressed = tempDir.resolve("src.bin.snappy");
+        Path dst = tempDir.resolve("dst.bin");
+        Files.write(src, original);
+
+        assertTrue(SnappyUtil.compressFile(src, compressed));
+        assertTrue(Files.size(compressed) < Files.size(src));
+        assertTrue(SnappyUtil.unCompressFile(compressed, dst));
+        assertArrayEquals(original, Files.readAllBytes(dst));
+    }
+
+    @Test
+    void fileCompressFailsForMissingSource(@TempDir Path tempDir) {
+        Path missing = tempDir.resolve("not-exist.bin");
+        Path out = tempDir.resolve("out.snappy");
+        assertFalse(SnappyUtil.compressFile(missing, out));
+        assertTrue(Files.notExists(out));
+    }
+
+    @Test
+    void fileUnCompressFailsForCorruptedData(@TempDir Path tempDir) throws IOException {
+        Path corrupted = tempDir.resolve("corrupted.snappy");
+        Path out = tempDir.resolve("out.bin");
+        Files.write(corrupted, new byte[]{1, 2, 3, 4, 5});
+        assertFalse(SnappyUtil.unCompressFile(corrupted, out));
+        assertTrue(Files.notExists(out));
+    }
+
+    // ---------- 压缩率统计 ----------
+
+    @Test
+    void compressionRatioUsesOriginalSizeAsTruth() {
+        byte[] original = new byte[10_000];
+        Arrays.fill(original, (byte) 'a');
+        byte[] compressed = SnappyUtil.compress(original);
+        assertTrue(SnappyUtil.compressionRatio(compressed, original) > 1.0);
     }
 }
